@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  /* Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+
+
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: rgb(232, 241, 250);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #0f172a;
+    border-radius: 5px;
+  }
+}
+
+.table-container {
+  overflow-x: auto; /* Allows horizontal scrolling if needed */
+}
+
+@media (max-width: 768px) {
+  .ant-table {
+    font-size: 12px; /* Adjust font size for smaller screens */
+  }
+  .ant-table th,
+  .ant-table td {
+    padding: 8px; /* Adjust padding for smaller screens */
+  }
+  
+}
+
+@keyframes flicker {
+  0% {
+    color: rgb(1, 87, 1);
+  }
+  50% {
+    color: rgb(5, 5, 24);
+  }
+  100% {
+    color: green;
+  }
+}
+
+.flicker-text {
+  animation: flicker 0.25s infinite alternate; /* Faster flicker */
+  transition: animation 0.2s ease-in-out; /* Smooth transition for stopping animation */
+}
+
+.flicker-text:hover {
+  animation-play-state: paused; /* Pause the animation on hover */
+}
+
+.slow-flicker-text {
+  animation: flicker 3s infinite alternate; /* Slower flicker */
+  transition: animation 0.2s ease-in-out; /* Smooth transition for stopping animation */
+}
+
+.slow-flicker-text:hover {
+  animation-play-state: paused; /* Pause the animation on hover */
+}
+
+/* Drawer glass effect */
+.glass-drawer .ant-drawer-content {
+  background: rgba(2, 2, 2, 0.8) !important;
+}
+.glass-drawer .ant-drawer-header,
+.glass-drawer .ant-drawer-body {
+  background: transparent !important;
+}
+
+
+
+
+
+
+

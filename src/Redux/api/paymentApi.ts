@@ -1,0 +1,51 @@
+
+import { baseApi } from "./baseApi";
+
+export const PAYMENT = "/payment";
+
+const paymentApi = baseApi.injectEndpoints({
+  endpoints: (build) => ({
+    getPayment: build.query({
+      query: (arg: Record<string, any>) => {
+        return {
+          url: `${PAYMENT}/`,
+          method: "GET",
+          params: arg,
+        };
+      },
+      transformResponse: (response) => {
+        return {
+          myPayments: response,
+        };
+      },
+      providesTags: ["payment"],
+    }),
+
+
+    initPayment: build.mutation({
+      query: (items: any) => ({
+        url: `${PAYMENT}/init`,
+        method: "POST",
+        data: items
+      }),
+      invalidatesTags: ["payment"],
+    }),
+
+    createPayment: build.mutation({
+      query: (item: any) => ({
+        url: `${PAYMENT}/create`,
+        method: "POST",
+        data: item
+      }),
+      invalidatesTags: ["payment"],
+    }),
+  }),
+});
+
+export const {
+  useGetPaymentQuery,
+  useInitPaymentMutation,
+  useCreatePaymentMutation
+} = paymentApi;
+
+export default paymentApi;
