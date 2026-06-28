@@ -17,7 +17,7 @@ const ProductFilterOptions = ({
       <section className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between w-full">
         {/* Header */}
         <h3 className="text-xl md:text-2xl font-bold text-gray-600">
-          Auctions
+          Cars for Sale
         </h3>
 
         {/* Filters */}

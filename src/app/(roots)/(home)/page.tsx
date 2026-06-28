@@ -4,7 +4,7 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "CarClickBD | Home ",
-  description: "Auction of cool modern cars, trucks SUVs",
+  description: "Dealer and private seller car marketplace in Bangladesh",
 };
 const HomePage = () => {
   return <LandingHomePage />;

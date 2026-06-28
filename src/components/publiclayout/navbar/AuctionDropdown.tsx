@@ -27,7 +27,7 @@ const AuctionDropdown = () => {
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center text-gray-600 hover:text-black transition px-3 py-2"
       >
-        Auctions
+        Cars
         <ChevronDown
           size={16}
           className={`ml-1 transform transition-transform duration-500 ${isOpen ? "rotate-180" : "rotate-0"}`}
@@ -40,14 +40,17 @@ const AuctionDropdown = () => {
           isOpen ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
         }`}
       >
-        <Link href="/live-auctions" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-          Live Auctions
+        <Link href="/cars" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+          All Cars
         </Link>
-        <Link href="/past-auctions" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-          Past Auctions
+        <Link href="/cars?condition=new" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+          New Cars
         </Link>
-        <Link href="/featured-auctions" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-          Featured Auctions
+        <Link href="/cars?condition=reconditioned" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+          Reconditioned Cars
+        </Link>
+        <Link href="/cars?sellerType=private" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+          Private Seller Cars
         </Link>
       </div>
     </div>

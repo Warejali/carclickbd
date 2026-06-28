@@ -31,13 +31,10 @@ const CarClickBDAutoAuction = () => {
     ],
 
     Featured: [
-      "Buy It Now Vehicles", "Clean Title Cars", "Donated Cars", "Featured Vehicles",
-      "Fleet Cars", "Classic Cars", "Front End Damaged Vehicles", "Hail Damaged Cars",
-      "Exotic Cars", "Impound Cars", "Auctions With Bids", "Minor Dents/Scratches",
-      "Newly Added Vehicles", "Auctions With No Bids", "No License Required",
-      "Nonrepairable Vehicles", "Used Vehicles", "Offsite Sale Vehicles", "Pure Sale Vehicles",
-      "Theft Recovery Cars", "Used Rental Cars", "Repossessed Cars", "Run and Drive Vehicles",
-      "Salvage Cars", "Flood Damaged Cars", "Public and General Auctions",
+      "Dealer Listings", "Private Seller Cars", "Clean Title Cars", "Featured Vehicles",
+      "Fleet Cars", "Classic Cars", "Minor Dents/Scratches", "Newly Added Vehicles",
+      "New Cars", "Reconditioned Cars", "Local Used Cars", "Low Mileage Cars",
+      "Verified Listings", "TRUE REPORT Available", "Finance Available",
     ],
 
     Types: [
@@ -58,7 +55,7 @@ const CarClickBDAutoAuction = () => {
     <section className="bg-[#f5f7fb] py-14 px-4 md:px-12 text-gray-800">
        {/* Title */}
           <h2 className="text-2xl md:text-3xl font-bold text-center text-[#003399] mb-8">
-            CarClickBD Auto Auction – Used & Repairable Cars for Sale
+            CarClickBD Car Marketplace - Dealer & Private Seller Cars
           </h2>
       <div className="flex flex-col lg:flex-row gap-10">
         {/* ===== Left Section ===== */}
@@ -122,7 +119,7 @@ const CarClickBDAutoAuction = () => {
                 OF VEHICLES
               </h3>
               <div className="bg-[#F0B90B] text-black font-bold text-[14px] rounded-full px-4 py-1 inline-block mb-4">
-                NO LICENSE REQUIRED
+                VERIFIED LISTINGS
               </div>
               <img
                 src="https://www.copart.com/content/minor-damage-370x520.png"

@@ -1,5 +1,4 @@
 import { IDNavMenuItem } from "@/Interface/content";
-import { RiAuctionLine } from "react-icons/ri";
 import HasAccess from "./RoleBasedRouteGenerator";
 import {
   DashboardOutlined,
@@ -50,7 +49,7 @@ const superRoutes: IDNavMenuItem[] = ([
     label: "All Product",
     children: [
       { label: "Product", route: "/admin/product" },
-      { label: "Past Auctions", route: "/admin/product/past-auction" },
+      { label: "Listing Approval", route: "/admin/product/past-auction" },
       { label: "Disable Product", route: "/admin/product/disable-product" },
     ],
   },
@@ -59,17 +58,17 @@ const superRoutes: IDNavMenuItem[] = ([
     label: "My Product",
     children: [
       { label: "My-Product", route: "/admin/my-product" },
-      { label: "Past Auctions", route: "/admin/my-product/past-auction" },
+      { label: "Listing Approval", route: "/admin/my-product/past-auction" },
       { label: "Disable Product", route: "/admin/my-product/disable-product" },
       { label: "Create Product", route: "/admin/product/create-product" },
     ],
   },
   {
-    icon: <RiAuctionLine />,
-    label: "Bids",
+    icon: <FileTextOutlined />,
+    label: "Leads",
     children: [
-      { label: "Bids", route: "/admin/bids" },
-      { label: "Past Auctions", route: "/admin/bids/past-auction" },
+      { label: "Buyer Inquiries", route: "/admin/bids" },
+      { label: "Lead Archive", route: "/admin/bids/past-auction" },
     ],
   },
   { icon: <BiPurchaseTag />, label: "Orders", route: "/admin/order" },
@@ -115,5 +114,4 @@ const superRoutes: IDNavMenuItem[] = ([
 ] as IDNavMenuItem[]).filter(Boolean);
 
 export { superRoutes };
-
 

@@ -6,15 +6,15 @@ import { Dropdown, MenuProps } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 
 const inventoryMenu: MenuProps["items"] = [
-  { key: "1", label: <Link href="/auction">Cars</Link> },
-  { key: "2", label: <Link href="/auction">Trucks</Link> },
-  { key: "3", label: <Link href="/auction">SUVs</Link> },
+  { key: "1", label: <Link href="/cars">Cars</Link> },
+  { key: "2", label: <Link href="/cars?bodyStyle=truck">Trucks</Link> },
+  { key: "3", label: <Link href="/cars?bodyStyle=suv/crossover">SUVs</Link> },
 ];
 
 const auctionsMenu: MenuProps["items"] = [
-  { key: "1", label: <Link href="/auction">Live Auctions</Link> },
-  { key: "2", label: <Link href="/auction">Upcoming</Link> },
-  { key: "3", label: <Link href="/auction">Closed</Link> },
+  { key: "1", label: <Link href="/cars">All Cars</Link> },
+  { key: "2", label: <Link href="/cars?condition=new">New Cars</Link> },
+  { key: "3", label: <Link href="/cars?condition=reconditioned">Reconditioned Cars</Link> },
 ];
 
 const servicesMenu: MenuProps["items"] = [
@@ -56,7 +56,7 @@ const SecondaryNav: React.FC = () => {
               onClick={(e) => e.preventDefault()}
               className="relative flex items-center gap-1 text-gray-300 hover:text-yellow-400 transition-all duration-300 after:absolute after:left-0 after:bottom-[-3px] after:w-0 after:h-[2px] after:bg-yellow-400 hover:after:w-full after:transition-all after:duration-300"
             >
-              Auctions <DownOutlined className="text-xs" />
+              Listings <DownOutlined className="text-xs" />
             </a>
           </Dropdown>
 

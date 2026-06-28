@@ -34,11 +34,8 @@ const ProductsResult = ({
     return baseFilters;
   }, [isWinner, isDraft,isFeatured, searchParams]);
 
-  const { data, isLoading } = useGetAllProductQuery();
+  const { data, isLoading } = useGetAllProductQuery(filters);
   const products: IProduct[] = useMemo(() => data?.data || [], [data]);  
-
-  console.log("ProductsResult data:", data);
-  console.log("ProductsResult data:", products);
   
 
   const sortedProducts = useMemo(() => {
@@ -46,18 +43,16 @@ const ProductsResult = ({
     switch (sortParam) {
       case "listed":
         return [...products].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-      case "ending":
-        return [...products].sort((a, b) => (new Date(a.endBid || 0).getTime()) - (new Date(b.endBid || 0).getTime()));
-      case "RecentEnded":
-        return [...products].sort((a, b) => (new Date(b.endBid || 0).getTime()) - (new Date(a.endBid || 0).getTime()));
+      case "newest":
+        return [...products].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
       case "lowestMileage":
         return [...products].sort((a, b) => (parseFloat(a.mileage) || 0) - (parseFloat(b.mileage) || 0));
       case "highestMileage":
         return [...products].sort((a, b) => (parseFloat(b.mileage) || 0) - (parseFloat(a.mileage) || 0));
       case "HighestPrice":
-        return [...products].sort((a, b) => (parseInt(b.highestBid?.toString() || "0") || 0) - (parseInt(a.highestBid?.toString() || "0") || 0));
+        return [...products].sort((a, b) => Number(b.mainPrice || b.highestBid || 0) - Number(a.mainPrice || a.highestBid || 0));
       case "LowestPrice":
-        return [...products].sort((a, b) => (parseInt(a.highestBid?.toString() || "0") || 0) - (parseInt(b.highestBid?.toString() || "0") || 0));
+        return [...products].sort((a, b) => Number(a.mainPrice || a.highestBid || 0) - Number(b.mainPrice || b.highestBid || 0));
       default:
         return products;
     }
@@ -94,8 +89,8 @@ const ProductsResult = ({
 
       {products.length > 15 && !isShowAll && (
         <div className="text-end mt-6">
-          <Button onClick={() => router.push("/live-auctions")}>
-            Show All auctions
+          <Button onClick={() => router.push("/cars")}>
+            Show All Cars
           </Button>
         </div>
       )}

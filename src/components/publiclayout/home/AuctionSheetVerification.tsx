@@ -1,0 +1,146 @@
+"use client";
+
+import {
+  ArrowRight,
+  FileSearch,
+  Gauge,
+  Languages,
+  SearchCheck,
+  ShieldCheck,
+} from "lucide-react";
+import Link from "next/link";
+
+const services = [
+  {
+    title: "Auction Grade Check",
+    description:
+      "Verify the Japanese inspection grade, exterior notes, interior grade, and condition remarks before you make a buying decision.",
+    icon: ShieldCheck,
+    cta: "Verify Sheet",
+    href: "/contact",
+    accent: "from-red-500 to-rose-600",
+  },
+  {
+    title: "Actual Mileage",
+    description:
+      "Cross-check mileage records from the Japanese auction sheet so dealers and private sellers cannot misrepresent the vehicle.",
+    icon: Gauge,
+    cta: "Check Mileage",
+    href: "/contact",
+    accent: "from-blue-500 to-cyan-600",
+  },
+  {
+    title: "Scam & Forgery Review",
+    description:
+      "Spot edited sheets, fake grades, missing damage notes, and suspicious import documents with a manual expert review.",
+    icon: SearchCheck,
+    cta: "Request Review",
+    href: "/contact",
+    accent: "from-emerald-500 to-teal-600",
+  },
+  {
+    title: "Sheet Translation",
+    description:
+      "Get Japanese auction sheet notes translated into clear buyer-friendly language, including scratches, dents, rust, and repairs.",
+    icon: Languages,
+    cta: "Translate Sheet",
+    href: "/contact",
+    accent: "from-amber-500 to-orange-600",
+  },
+];
+
+const AuctionSheetVerification = () => {
+  return (
+    <section className="relative overflow-hidden bg-white py-16 md:py-20">
+      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-red-500 via-blue-500 to-emerald-500" />
+
+      <div className="mx-auto max-w-7xl px-4 md:px-8">
+        <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+          <div>
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-red-100 bg-red-50 px-4 py-2 text-sm font-semibold text-red-600">
+              <FileSearch size={16} />
+              Japanese Car Auction Sheet Verification
+            </div>
+
+            <h2 className="max-w-xl text-3xl font-extrabold leading-tight text-gray-950 md:text-5xl">
+              Know the real condition before you buy.
+            </h2>
+
+            <p className="mt-5 max-w-2xl text-base leading-7 text-gray-600 md:text-lg">
+              CarClickBD helps buyers verify Japanese auction sheets, mileage,
+              grades, damage notes, and translated inspection details for
+              reconditioned vehicles. Get a clearer view before paying for a car.
+            </p>
+
+            <div className="mt-7 grid gap-3 sm:grid-cols-3">
+              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4">
+                <div className="text-2xl font-bold text-gray-950">24h</div>
+                <div className="text-sm text-gray-600">Support response</div>
+              </div>
+              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4">
+                <div className="text-2xl font-bold text-gray-950">4+</div>
+                <div className="text-sm text-gray-600">Report checks</div>
+              </div>
+              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4">
+                <div className="text-2xl font-bold text-gray-950">BD</div>
+                <div className="text-sm text-gray-600">Buyer focused</div>
+              </div>
+            </div>
+
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center gap-2 rounded-lg bg-gray-950 px-6 py-3 text-sm font-semibold text-white transition hover:bg-red-600"
+              >
+                Verify Auction Sheet <ArrowRight size={17} />
+              </Link>
+              <Link
+                href="/cars?condition=reconditioned"
+                className="inline-flex items-center justify-center rounded-lg border border-gray-300 px-6 py-3 text-sm font-semibold text-gray-800 transition hover:border-gray-950 hover:bg-gray-950 hover:text-white"
+              >
+                Browse Reconditioned Cars
+              </Link>
+            </div>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            {services.map((service) => {
+              const Icon = service.icon;
+
+              return (
+                <Link
+                  key={service.title}
+                  href={service.href}
+                  className="group flex min-h-[260px] flex-col rounded-lg border border-gray-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-gray-300 hover:shadow-xl"
+                >
+                  <div
+                    className={`mb-5 flex h-14 w-14 items-center justify-center rounded-lg bg-gradient-to-br ${service.accent} text-white shadow-lg`}
+                  >
+                    <Icon size={28} strokeWidth={2.4} />
+                  </div>
+
+                  <h3 className="text-xl font-bold text-gray-950">
+                    {service.title}
+                  </h3>
+                  <p className="mt-3 flex-1 text-sm leading-6 text-gray-600">
+                    {service.description}
+                  </p>
+
+                  <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-red-600">
+                    {service.cta}
+                    <ArrowRight
+                      size={16}
+                      className="transition group-hover:translate-x-1"
+                    />
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default AuctionSheetVerification;

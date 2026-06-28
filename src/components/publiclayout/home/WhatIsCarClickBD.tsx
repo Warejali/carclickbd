@@ -41,7 +41,7 @@ const WhatIsCarClickBD = () => {
 
         <p className="text-gray-300 text-sm leading-relaxed mb-4">
           <span className="text-[#F0B90B] font-semibold">CarClickBD</span> is an innovative online
-          auto auction marketplace designed to make buying and selling vehicles easier,
+          car marketplace designed to make buying and selling vehicles easier,
           faster, and more transparent for everyone. From car enthusiasts and small business
           owners to professional dealers, CarClickBD offers a single, trusted platform to
           connect buyers and sellers around the world.
@@ -50,28 +50,25 @@ const WhatIsCarClickBD = () => {
         <p className="text-gray-300 text-sm leading-relaxed mb-4">
           We specialize in a wide range of listings including{" "}
           <span className="text-[#F0B90B] font-semibold">
-            used cars, salvage title vehicles, repairable autos, motorcycles, trucks, and SUVs
+            new cars, reconditioned cars, local used cars, motorcycles, trucks, and SUVs
           </span>
-          . Every week, thousands of verified vehicles are made available for bidding — each
+          . Every week, verified vehicles are listed by dealers and private sellers, each
           with detailed condition reports, clear photos, and accurate documentation so you
-          can bid with confidence.
+          can inquire with confidence.
         </p>
 
         <p className="text-gray-300 text-sm leading-relaxed mb-4">
-          What makes CarClickBD unique is its accessibility. You don’t need to be a dealer to
-          participate —{" "}
-          <span className="text-[#F0B90B] font-semibold">“No License Required”</span> auctions
-          are open to the general public, giving everyday people the same opportunities that
-          professional buyers enjoy. Our{" "}
-          <span className="text-[#F0B90B] font-semibold">public auto auctions</span> make
-          purchasing clean and salvage title cars simple, secure, and cost-effective.
+          What makes CarClickBD unique is its accessibility. Dealers can manage inventory,
+          private sellers can upload up to 40 photos, and buyers can contact sellers directly
+          through inquiries and WhatsApp. Our marketplace makes purchasing cars simple,
+          secure, and cost-effective.
         </p>
 
         <p className="text-gray-300 text-sm leading-relaxed mb-4">
           Whether you’re buying your first car, expanding your fleet, or restoring classics,
           CarClickBD provides all the tools you need: smart filters, watchlists, vehicle alerts,
-          and easy online payments. You can search, bid, and win — all from your phone or
-          computer — with real-time auction updates and support.
+          finance tools, TRUE REPORT support, and easy online payments. You can search,
+          compare, save favorites, and inquire from your phone or computer.
         </p>
 
         <p className="text-gray-300 text-sm leading-relaxed mb-8">

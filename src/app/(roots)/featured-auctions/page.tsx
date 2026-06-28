@@ -1,11 +1,5 @@
-import AuctionProducts from "@/components/product/AuctionProducts";
+import { redirect } from "next/navigation";
 
-const FeaturedAuctions = () => {
-  return (
-    <div className="container mx-auto">
-      <AuctionProducts isShowAll={false} isPaginate={false} isFeatured={true} />
-    </div>
-  );
-};
-
-export default FeaturedAuctions;
+export default function FeaturedAuctionsRedirect() {
+  redirect("/cars?featured=true");
+}

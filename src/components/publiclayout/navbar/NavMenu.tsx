@@ -99,8 +99,8 @@ const NavMenu: React.FC<NavMenuProps> = ({ isMobile = false }) => {
           <FaCar size={40} className="text-primary" />
           <h2 className="text-xl font-bold">Get the Daily Mail</h2>
           <p className="text-gray-600 text-sm">
-            Get the latest auctions and market info delivered right to your
-            inbox, plus a heads up on featured vehicles and auction updates.
+            Get the latest dealer and private seller listings delivered right to
+            your inbox, plus market updates and featured vehicle alerts.
           </p>
           <Input
             placeholder="Enter your email"

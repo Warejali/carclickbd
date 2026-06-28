@@ -1,13 +1,5 @@
-"use client";
-import React from "react";
-import AuctionProducts from "@/components/product/AuctionProducts";
+import { redirect } from "next/navigation";
 
-const PastAuction = () => {
-  return (
-    <div className="container mx-auto">
-          <AuctionProducts isShowAll={false} isPaginate={false} isWinner={true} />
-    </div>
-  );
-};
-
-export default PastAuction;
+export default function PastAuctionsRedirect() {
+  redirect("/cars");
+}

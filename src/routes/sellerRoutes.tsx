@@ -1,5 +1,4 @@
 import { IDNavMenuItem } from "@/Interface/content";
-import { RiAuctionLine } from "react-icons/ri";
 import {
   DashboardOutlined,
   UserOutlined,
@@ -23,18 +22,18 @@ const sellerRoutes: IDNavMenuItem[] = ([
     label: "Product",
     children: [
       { label: "My-Product", route: "/seller/my-product" },
-      { label: "Past Auctions", route: "/seller/my-product/past-auction" },
+      { label: "Listing Approval", route: "/seller/my-product/past-auction" },
       { label: "Disable Product", route: "/seller/my-product/disable-product" },
       { label: "Create Product", route: "/seller/my-product/create-product" },
     ],
   },
   {
-    icon: <RiAuctionLine />,
-    label: "Bid",
+    icon: <FileTextOutlined />,
+    label: "Leads",
     children: [
-      { label: "Bid", route: "/seller/bid" },
-      { label: "My Bid", route: "/seller/bid/my-bid" },
-      { label: "Past Auctions", route: "/seller/bid/past-auction" },
+      { label: "Buyer Inquiries", route: "/seller/bid" },
+      { label: "My Leads", route: "/seller/bid/my-bid" },
+      { label: "Lead Archive", route: "/seller/bid/past-auction" },
     ],
   },
   { icon: <BiPurchaseTag />, label: "Orders", route: "/seller/order" },

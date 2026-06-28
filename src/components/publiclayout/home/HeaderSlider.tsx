@@ -18,7 +18,7 @@ export default function HeroSlider() {
         loop
         className="w-full h-full"
       >
-        {/* ---------------- SLIDE 1 (Auto Auctions) ---------------- */}
+        {/* ---------------- SLIDE 1 (Marketplace) ---------------- */}
         <SwiperSlide>
           <div className="relative flex items-center justify-between h-full text-white overflow-hidden bg-gradient-to-r from-blue-900 via-blue-800 to-indigo-900">
             {/* Fog Layer */}
@@ -49,17 +49,17 @@ export default function HeroSlider() {
                   backgroundSize: "400%",
                 }}
               >
-                100% Online Auto Auctions
+                Dealer & Private Seller Cars
               </motion.h2>
 
               <p className="text-lg text-gray-200 mb-6">
                 Over{" "}
                 <span className="text-yellow-400 font-bold">4+ Million</span>{" "}
-                Used, Wholesale & Repairable Cars, Trucks & SUVs sold per year!
+                New, reconditioned, and local used cars listed by verified sellers.
               </p>
 
               <div className="grid grid-cols-3 gap-4 mb-6">
-                {["Register", "Find", "Bid"].map((item, i) => (
+                {["Register", "Find", "Inquire"].map((item, i) => (
                   <div
                     key={i}
                     className="bg-blue-700/60 p-4 rounded-xl hover:bg-blue-700/80 transition"
@@ -72,7 +72,7 @@ export default function HeroSlider() {
                         ? "Sign up for membership."
                         : item === "Find"
                         ? "Search 390,000+ vehicles."
-                        : "Join live auto auctions daily."}
+                        : "Contact sellers directly."}
                     </p>
                   </div>
                 ))}
@@ -80,7 +80,7 @@ export default function HeroSlider() {
 
               <div className="flex gap-4">
                 <button className="px-6 py-3 bg-yellow-500 hover:bg-yellow-600 text-black font-bold rounded-lg shadow-md">
-                  Register to Start Bidding
+                  Register to Inquire
                 </button>
                 <button className="px-6 py-3 border border-yellow-400 text-yellow-400 font-semibold rounded-lg hover:bg-yellow-400 hover:text-black transition">
                   Learn More
@@ -106,7 +106,7 @@ export default function HeroSlider() {
           </div>
         </SwiperSlide>
 
-        {/* ---------------- SLIDE 2 (Wholesale Auctions) ---------------- */}
+        {/* ---------------- SLIDE 2 (Dealer Inventory) ---------------- */}
         <SwiperSlide>
           <div className="relative flex items-center justify-between h-full text-white overflow-hidden bg-gradient-to-r from-[#001a4d] via-[#002b8f] to-[#001a4d]">
             {/* Fog Layer */}
@@ -137,7 +137,7 @@ export default function HeroSlider() {
                   backgroundSize: "400%",
                 }}
               >
-                Introducing Wholesale Auctions
+                Dealer Inventory & Reconditioned Cars
               </motion.h2>
 
               <p className="text-lg mb-6 font-medium text-gray-200">
@@ -218,7 +218,7 @@ export default function HeroSlider() {
                   whileTap={{ scale: 0.98 }}
                   className="relative group px-6 py-3 bg-gradient-to-r from-[#0052FF] to-[#007AFF] text-white font-semibold rounded-md overflow-hidden shadow-lg"
                 >
-                  <span className="relative z-10">Bid Now</span>
+                  <span className="relative z-10">Inquire Now</span>
                   <span className="absolute inset-0 bg-white/20 group-hover:opacity-0 transition-opacity"></span>
                 </motion.button>
                 <motion.button
@@ -239,7 +239,7 @@ export default function HeroSlider() {
               className="absolute right-0 bottom-0 w-[55%] flex justify-center items-end"
             >
               <motion.img
-                src="https://www.copart.com/content/21-bugatti-car.webp"
+                src="https://www.copart.com/content/us/en/landing-page/finance-vehicles/suvs.png"
                 alt="Bugatti Chiron"
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}

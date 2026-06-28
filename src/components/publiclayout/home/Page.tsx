@@ -7,6 +7,7 @@ import WhatIsCarClickBD from "./WhatIsCarClickBD";
 import RegisterBanner from "./RegisterBanner";
 import FollowUs from "./FollowUs";
 import PromoTiles from "./PromoTiles";
+import AuctionSheetVerification from "./AuctionSheetVerification";
 
 
 const LandingHomePage = () => {
@@ -14,6 +15,7 @@ const LandingHomePage = () => {
     <div>
       <HeaderSlider />
       <AuctionProducts isShowAll={false} isPaginate={false} isDraft={false} isWinner={false} />
+      <AuctionSheetVerification />
       <MembershipHome />
       <CarClickBDAutoAuction />
       <WhatIsCarClickBD />

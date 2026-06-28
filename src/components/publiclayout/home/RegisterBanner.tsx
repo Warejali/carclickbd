@@ -27,7 +27,7 @@ const RegisterBanner = () => {
         {/* Text section */}
         <div className="max-w-3xl">
           <h2 className="text-2xl md:text-3xl font-bold mb-2">
-            Ready to Start Bidding on CarClickBD?
+            Ready to Find Your Next Car on CarClickBD?
           </h2>
           <p className="text-[15px] md:text-[16px] text-white/90 leading-relaxed">
             Join thousands of smart buyers who find their next{" "}
@@ -36,7 +36,7 @@ const RegisterBanner = () => {
             </span>{" "}
             and more — all through{" "}
             <span className="text-[#F0B90B] font-semibold">
-              100% online auctions
+              verified dealer and private seller listings
             </span>{" "}
             powered by CarClickBD. Safe, fast, and fully transparent.
           </p>

@@ -2,18 +2,18 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
-import { ClockCircleOutlined } from "@ant-design/icons";
-import { Card, Typography, Space, Skeleton, Tag } from "antd";
+import { Card, Typography, Skeleton, Tag } from "antd";
 import { setSelectedProduct } from "@/Redux/Slices/productSlice";
 import { IProduct } from "@/Interface/product";
-import useBiddingTimer from "@/hooks/useBiddingTimer";
 import CustomButton from "@/components/shared/CustomButton";
 
 const { Text } = Typography;
 
 const ProductCard = ({ product }: { product: IProduct }) => {
   const dispatch = useDispatch();
-  const { timeRemaining, isCritical, daysLeft } = useBiddingTimer(product.endBid);
+  const price = product.mainPrice || product.highestBid || product.minBid || 0;
+  const sellerType =
+    product.sellerType?.toLowerCase() === "private" ? "Private Seller" : "Dealer";
 
   const handleClick = () => {
     dispatch(setSelectedProduct(product));
@@ -59,6 +59,20 @@ const ProductCard = ({ product }: { product: IProduct }) => {
             </Tag>
           )}
 
+          <Tag
+            color="blue"
+            style={{
+              position: "absolute",
+              top: product.isSoldOut ? 44 : 12,
+              left: 12,
+              zIndex: 3,
+              fontWeight: "bold",
+              borderRadius: "6px",
+            }}
+          >
+            {sellerType}
+          </Tag>
+
           {/* Product Image with hover zoom */}
           <div className="overflow-hidden relative">
             <Image
@@ -80,42 +94,14 @@ const ProductCard = ({ product }: { product: IProduct }) => {
           </div>
 
           {/* Bottom Info Bar */}
-          {product.isAuction ? (
-            <div className="absolute bottom-0 left-0 right-0 flex justify-between items-center bg-white/90 backdrop-blur-sm px-4 py-2 border-t z-10">
-              <Space>
-                <ClockCircleOutlined />
-                <Text
-                  style={{
-                    color: isCritical ? "red" : "",
-                    fontWeight: isCritical ? "bold" : "normal",
-                  }}
-                  className="drop-shadow-sm"
-                >
-                  {daysLeft || timeRemaining}
-                </Text>
-              </Space>
-              <Text strong className="text-white drop-shadow-sm">
-                {product.highestBid > 0 ? (
-                  <span>
-                    {product.isWinner
-                      ? `Sold for $${product?.highestBid?.toLocaleString()}`
-                      : `Bid $${product?.highestBid?.toLocaleString()}`}
-                  </span>
-                ) : (
-                  <span>Min Bid: ${product?.minBid?.toLocaleString()}</span>
-                )}
-              </Text>
-            </div>
-          ) : (
-            <div className="absolute bottom-0 left-0 right-0 flex justify-between items-center bg-white/90 backdrop-blur-sm px-4 py-2 border-t z-10">
-              <p className="text-gray-200 font-medium drop-shadow-sm">
-                {product.mileage} Miles
-              </p>
-              <Text strong className="text-green-400 drop-shadow-sm">
-                Price: ${product.mainPrice?.toLocaleString()}
-              </Text>
-            </div>
-          )}
+          <div className="absolute bottom-0 left-0 right-0 flex justify-between items-center bg-white/95 backdrop-blur-sm px-4 py-2 border-t z-10">
+            <p className="text-gray-700 font-medium drop-shadow-sm">
+              {product.mileage} Miles
+            </p>
+            <Text strong className="text-green-700 drop-shadow-sm">
+              Price: ${price?.toLocaleString()}
+            </Text>
+          </div>
         </div>
       }
     >
@@ -130,7 +116,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
 
         {/* View Details Button */}
         <div className="pt-2">
-          <Link href={`/auction-details/${product._id}`} passHref>
+          <Link href={`/car-details/${product._id}`} passHref>
             <CustomButton label="View Details" variant="primary" className="w-full" />
           </Link>
         </div>

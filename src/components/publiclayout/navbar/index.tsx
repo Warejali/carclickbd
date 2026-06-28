@@ -228,8 +228,8 @@ const Header: React.FC = () => {
 
           <div className="flex flex-col gap-3 text-base text-gray-200">
             <Link href="/how-it-works">How It Works</Link>
-            <Link href="/auction">Inventory</Link>
-            <Link href="/auction">Auctions</Link>
+            <Link href="/cars">Inventory</Link>
+            <Link href="/cars">Listings</Link>
             <Link href="/contact">Locations</Link>
             <Link href="/support">Services & Support</Link>
           </div>

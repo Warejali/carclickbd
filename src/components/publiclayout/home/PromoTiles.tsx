@@ -4,14 +4,14 @@ import { motion } from "framer-motion";
 
 const tiles = [
   {
-    title: "Bid Anytime,\nAnywhere",
+    title: "Browse Anytime,\nAnywhere",
     subtitle: "Join real-time online auctions — from your phone or desktop.",
     cta: "LEARN MORE",
     image:
       "https://www.copart.com/content/us/en/banners/homepage-300x250/4-300x250.jpg",
   },
   {
-    title: "Night Cap Auctions",
+    title: "Fresh Listings",
     subtitle: "Find late-night listings and exclusive dealer vehicles.",
     cta: "EXPLORE NOW",
     image:
@@ -25,9 +25,9 @@ const tiles = [
       "https://www.copart.com/content/us/en/banners/homepage-300x250/2-300x250.jpg",
   },
   {
-    title: "Highest Bid Wins",
+    title: "Compare & Inquire",
     subtitle: "Bid fair, bid fast — secure your dream car in seconds.",
-    cta: "JOIN AUCTION",
+    cta: "VIEW CARS",
     image:
       "https://www.copart.com/content/us/en/banners/homepage-300x250/1-300x250.jpg",
   },
