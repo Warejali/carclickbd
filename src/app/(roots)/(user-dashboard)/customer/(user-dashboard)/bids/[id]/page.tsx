@@ -96,7 +96,7 @@ const ProductBids: React.FC = () => {
             value={0}
             icon={<TbCalendarTime />}
             bgColor="bg-white"
-            textColor="text-red-500"
+            textColor="text-[#003399]"
           />
         </Col> */}
       </Row>

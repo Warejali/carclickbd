@@ -18,7 +18,7 @@ const services = [
     icon: ShieldCheck,
     cta: "Verify Sheet",
     href: "/contact",
-    accent: "from-red-500 to-rose-600",
+    accent: "from-[#003399] to-[#f0b90b]",
   },
   {
     title: "Actual Mileage",
@@ -52,12 +52,12 @@ const services = [
 const AuctionSheetVerification = () => {
   return (
     <section className="relative overflow-hidden bg-white py-16 md:py-20">
-      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-red-500 via-blue-500 to-emerald-500" />
+      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#003399] via-[#f0b90b] to-[#003399]" />
 
       <div className="mx-auto max-w-7xl px-4 md:px-8">
         <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <div>
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-red-100 bg-red-50 px-4 py-2 text-sm font-semibold text-red-600">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#f0b90b]/40 bg-[#f0b90b]/10 px-4 py-2 text-sm font-semibold text-[#003399]">
               <FileSearch size={16} />
               Japanese Car Auction Sheet Verification
             </div>
@@ -90,7 +90,7 @@ const AuctionSheetVerification = () => {
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center gap-2 rounded-lg bg-gray-950 px-6 py-3 text-sm font-semibold text-white transition hover:bg-red-600"
+                className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#003399] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#00266f]"
               >
                 Verify Auction Sheet <ArrowRight size={17} />
               </Link>
@@ -126,7 +126,7 @@ const AuctionSheetVerification = () => {
                     {service.description}
                   </p>
 
-                  <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-red-600">
+                  <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#003399]">
                     {service.cta}
                     <ArrowRight
                       size={16}

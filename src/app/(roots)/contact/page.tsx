@@ -70,7 +70,7 @@ export default function ContactUsPage() {
             </div>
           </div>
           <div className="flex items-start gap-4">
-            <MailOutlined className="text-2xl text-red-500" />
+            <MailOutlined className="text-2xl text-[#003399]" />
             <div>
               <p className="text-lg font-semibold text-gray-700">Email</p>
               <p className="text-gray-600">evalles35645@gmail.com</p>

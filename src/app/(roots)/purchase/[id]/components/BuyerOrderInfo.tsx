@@ -19,14 +19,14 @@ const BuyerOrderInfo = ({ onSubmit }: { onSubmit: (values: any) => void }) => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Form.Item
             name="fullName"
-            label={<span className="flex"><span className="text-red-500 mr-1">*</span>Full Name</span>}
+            label={<span className="flex"><span className="text-[#f0b90b] mr-1">*</span>Full Name</span>}
             rules={[{ required: true, message: "Please enter your full name" }]}
           >
             <Input size="large" />
           </Form.Item>
           <Form.Item
             name="email"
-            label={<span className="flex"><span className="text-red-500 mr-1">*</span>Email</span>}
+            label={<span className="flex"><span className="text-[#f0b90b] mr-1">*</span>Email</span>}
             rules={[
               { required: true, message: "Please enter your email" },
               { type: "email", message: "Please enter a valid email" },
@@ -36,35 +36,35 @@ const BuyerOrderInfo = ({ onSubmit }: { onSubmit: (values: any) => void }) => {
           </Form.Item>
           <Form.Item
             name="phone"
-            label={<span className="flex"><span className="text-red-500 mr-1">*</span>Phone Number</span>}
+            label={<span className="flex"><span className="text-[#f0b90b] mr-1">*</span>Phone Number</span>}
             rules={[{ required: true, message: "Please enter your phone number" }]}
           >
             <Input size="large" />
           </Form.Item>
           <Form.Item
             name="address"
-            label={<span className="flex"><span className="text-red-500 mr-1">*</span>Address</span>}
+            label={<span className="flex"><span className="text-[#f0b90b] mr-1">*</span>Address</span>}
             rules={[{ required: true, message: "Please enter your address" }]}
           >
             <Input size="large" />
           </Form.Item>
           <Form.Item
             name="city"
-            label={<span className="flex"><span className="text-red-500 mr-1">*</span>City</span>}
+            label={<span className="flex"><span className="text-[#f0b90b] mr-1">*</span>City</span>}
             rules={[{ required: true, message: "Please enter your city" }]}
           >
             <Input size="large" />
           </Form.Item>
           <Form.Item
             name="state"
-            label={<span className="flex"><span className="text-red-500 mr-1">*</span>State</span>}
+            label={<span className="flex"><span className="text-[#f0b90b] mr-1">*</span>State</span>}
             rules={[{ required: true, message: "Please enter your state" }]}
           >
             <Input size="large" />
           </Form.Item>
           <Form.Item
             name="zipCode"
-            label={<span className="flex"><span className="text-red-500 mr-1">*</span>ZIP Code</span>}
+            label={<span className="flex"><span className="text-[#f0b90b] mr-1">*</span>ZIP Code</span>}
             rules={[{ required: true, message: "Please enter your ZIP code" }]}
           >
             <Input size="large" />

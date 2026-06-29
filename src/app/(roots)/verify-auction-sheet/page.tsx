@@ -25,11 +25,11 @@ const VerifyAuctionSheetPage = () => {
             priority
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 to-black/65" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-[#003399]/45 to-black/65" />
         </div>
 
         <div className="relative mx-auto flex min-h-[350px] max-w-6xl flex-col items-center justify-center px-4 py-12 text-center md:px-8">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white backdrop-blur">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#f0b90b]/40 bg-[#f0b90b]/15 px-4 py-2 text-sm font-semibold text-white backdrop-blur">
             <ShieldCheck size={16} />
             Japanese Auction Sheet Check
           </div>
@@ -45,19 +45,19 @@ const VerifyAuctionSheetPage = () => {
             <label className="relative">
               <FileSearch
                 size={18}
-                className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+                className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[#003399]"
               />
               <input
                 value={chassisNo}
                 onChange={(event) => setChassisNo(event.target.value)}
                 placeholder="ENTER CHASSIS NO. EG: XXT123-986754"
-                className="h-14 w-full rounded-lg border border-slate-300 bg-white pl-12 pr-4 text-center text-sm font-semibold uppercase tracking-wide text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-red-500 focus:ring-2 focus:ring-red-100"
+                className="h-14 w-full rounded-lg border border-slate-300 bg-white pl-12 pr-4 text-center text-sm font-semibold uppercase tracking-wide text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-[#003399] focus:ring-2 focus:ring-blue-100"
               />
             </label>
 
             <button
               type="submit"
-              className="inline-flex h-14 items-center justify-center gap-2 rounded-lg bg-[#e41419] px-10 text-sm font-bold uppercase text-white shadow-lg transition hover:bg-[#c91015]"
+              className="inline-flex h-14 items-center justify-center gap-2 rounded-lg bg-[#f0b90b] px-10 text-sm font-bold uppercase text-slate-950 shadow-lg transition hover:bg-[#d9a609]"
             >
               <Search size={17} />
               Search
@@ -70,7 +70,7 @@ const VerifyAuctionSheetPage = () => {
           </p>
 
           {searchedChassis && (
-            <div className="mt-5 rounded-lg border border-emerald-300/50 bg-emerald-500/15 px-5 py-3 text-sm font-semibold text-emerald-50 backdrop-blur">
+            <div className="mt-5 rounded-lg border border-[#f0b90b]/60 bg-[#003399]/35 px-5 py-3 text-sm font-semibold text-white backdrop-blur">
               Search request received for chassis:{" "}
               <span className="uppercase">{searchedChassis}</span>. Our team
               will verify the auction sheet details.

@@ -72,7 +72,7 @@ const CheckoutPage = () => {
                             <Row gutter={16} className=" bg-white my-4 px-10 ms-6">
                                 <h3>Order Summary</h3>
                                 <Card title="Products">
-                                    <DeleteOutlined className=' text-red-500' onClick={() => dispatch(clearCart(items))} />
+                                    <DeleteOutlined className=' text-[#003399]' onClick={() => dispatch(clearCart(items))} />
                                     <h4>Total Price: {cartTotalPrice}</h4>
                                     <h4>Total Item: {totalQuantity}</h4>
                                     {items?.map((item) => <>

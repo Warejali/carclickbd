@@ -114,7 +114,7 @@ const LeftSidebar: React.FC<ISidebarProps> = ({ menuGroups = [] }) => {
             >
               <div className="flex items-center gap-2">
                 <span className={`${!isSidebarOpen ? "text-[22px]" : ""}`}>
-                  <TbLogout className="text-red-200" />
+                  <TbLogout className="text-[#f0b90b]" />
                 </span>
                 <span
                   className={`${!isSidebarOpen ? "hidden" : "text-sm text-nowrap font-bold"}`}

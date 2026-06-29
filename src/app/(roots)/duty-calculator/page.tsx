@@ -97,7 +97,7 @@ const DutyCalculatorPage = () => {
   return (
     <main className="bg-white px-4 py-14 md:px-8">
       <section className="mx-auto max-w-5xl text-center">
-        <p className="text-sm font-medium tracking-wide text-red-600">
+        <p className="text-sm font-medium tracking-wide text-[#003399]">
           Duty Calculator of Bangladesh
         </p>
         <h1 className="mt-2 text-4xl font-black tracking-wide text-black md:text-5xl">
@@ -112,7 +112,7 @@ const DutyCalculatorPage = () => {
       </section>
 
       <section className="mx-auto mt-8 max-w-[460px] overflow-hidden rounded-sm bg-white shadow-[0_2px_12px_rgba(0,0,0,0.18)]">
-        <div className="relative bg-[#e41419] px-6 pb-10 pt-6 text-center text-white">
+        <div className="relative bg-[#003399] px-6 pb-10 pt-6 text-center text-white">
           <h2 className="text-2xl font-bold tracking-wide">CAR DUTY CALCULATOR</h2>
           <div className="absolute inset-x-0 bottom-[-1px] h-10 rounded-b-[50%] bg-white" />
         </div>
@@ -149,11 +149,11 @@ const DutyCalculatorPage = () => {
             onChange={setEngineSize}
           />
 
-          <div className="rounded-lg border border-red-100 bg-red-50 px-4 py-4 text-left">
-            <p className="text-xs font-semibold uppercase tracking-wide text-red-600">
+          <div className="rounded-lg border border-[#f0b90b]/40 bg-[#f0b90b]/10 px-4 py-4 text-left">
+            <p className="text-xs font-semibold uppercase tracking-wide text-[#003399]">
               Estimated Duty
             </p>
-            <p className="mt-1 text-2xl font-black text-red-700">
+            <p className="mt-1 text-2xl font-black text-[#003399]">
               {estimatedDuty > 0
                 ? `BDT ${estimatedDuty.toLocaleString("en-IN")}`
                 : "Select year and CC"}
@@ -164,7 +164,7 @@ const DutyCalculatorPage = () => {
 
       <section className="mx-auto mt-7 max-w-4xl text-center">
         <p className="text-sm text-slate-900">
-          <span className="text-red-600">Last Updated on</span>{" "}
+          <span className="text-[#003399]">Last Updated on</span>{" "}
           2026-05-13 06:44:47.794567
         </p>
         <p className="mt-8 text-base leading-7 text-slate-700">
@@ -191,8 +191,8 @@ const DutyCalculatorPage = () => {
               onClick={() => handleBrandChange(brandName)}
               className={`rounded-lg border px-4 py-3 text-sm font-bold transition ${
                 brand === brandName
-                  ? "border-red-600 bg-red-600 text-white"
-                  : "border-gray-200 bg-white text-slate-800 hover:border-red-300 hover:bg-red-50"
+                  ? "border-[#003399] bg-[#003399] text-white"
+                  : "border-gray-200 bg-white text-slate-800 hover:border-[#f0b90b] hover:bg-[#f0b90b]/10"
               }`}
             >
               {brandName}
@@ -219,12 +219,12 @@ const DutySelect = ({
     <label className="relative block">
       <Icon
         size={16}
-        className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-red-500"
+        className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[#003399]"
       />
       <select
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="h-12 w-full appearance-auto border border-gray-300 bg-white pl-12 pr-4 text-sm uppercase text-slate-700 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-100"
+        className="h-12 w-full appearance-auto border border-gray-300 bg-white pl-12 pr-4 text-sm uppercase text-slate-700 outline-none transition focus:border-[#003399] focus:ring-2 focus:ring-blue-100"
       >
         {options.map((option) => (
           <option key={option} value={option}>

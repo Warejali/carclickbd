@@ -91,7 +91,7 @@ const PhotoguidePage = () => {
                 </ul>
               </div>
               <div className="space-y-4">
-                <Title level={3} className="text-xl font-semibold text-red-600 dark:text-red-400">Bad Example Explanation</Title>
+                <Title level={3} className="text-xl font-semibold text-[#003399] dark:text-[#f0b90b]">Bad Example Explanation</Title>
                 <ul className="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-400">
                   <li>Blurry or out-of-focus subject.</li>
                   <li>Low resolution or incorrect aspect ratio.</li>

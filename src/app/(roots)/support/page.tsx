@@ -96,7 +96,7 @@ const SupportPage = () => {
           Connect with us on social media for the latest updates, announcements, and community discussions:
         </Paragraph>
         <div className="flex justify-center gap-6">
-          <a href="#" className="text-red-500 hover:text-red-700 transition-colors" aria-label="YouTube">
+          <a href="#" className="text-[#003399] hover:text-[#f0b90b] transition-colors" aria-label="YouTube">
             <YoutubeOutlined className="text-3xl" />
           </a>
           <a href="#" className="text-blue-600 hover:text-blue-800 transition-colors" aria-label="Facebook">

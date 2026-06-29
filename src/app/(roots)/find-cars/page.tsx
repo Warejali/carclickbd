@@ -242,13 +242,13 @@ const FindCarsPage = () => {
                   value={cmId}
                   onChange={(event) => setCmId(event.target.value)}
                   placeholder="e.g. CM-00123"
-                  className="h-12 rounded-lg border border-slate-200 bg-white px-4 text-sm outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-100"
+                  className="h-12 rounded-lg border border-slate-200 bg-white px-4 text-sm outline-none transition focus:border-[#003399] focus:ring-2 focus:ring-blue-100"
                 />
               </label>
 
               <button
                 type="submit"
-                className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-[#cf372d] px-6 text-sm font-bold text-white shadow-lg transition hover:bg-[#b92d25] lg:mt-auto"
+                className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-[#f0b90b] px-6 text-sm font-bold text-slate-950 shadow-lg transition hover:bg-[#d9a609] lg:mt-auto"
               >
                 <Search size={16} />
                 Search
@@ -274,7 +274,7 @@ const FindCarsPage = () => {
           </div>
           <Link
             href="/verify-auction-sheet"
-            className="text-sm font-bold text-[#cf372d] hover:underline"
+            className="text-sm font-bold text-[#003399] hover:underline"
           >
             Verify auction sheet before buying
           </Link>
@@ -316,7 +316,7 @@ const FilterSelect = ({
       <select
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="h-12 rounded-lg border border-slate-200 bg-white px-4 text-sm outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-100"
+        className="h-12 rounded-lg border border-slate-200 bg-white px-4 text-sm outline-none transition focus:border-[#003399] focus:ring-2 focus:ring-blue-100"
       >
         {options.map((option) => (
           <option key={option} value={option}>
@@ -370,13 +370,13 @@ const CarCard = ({ car }: { car: CarListing }) => {
         <div className="mt-5 flex items-end justify-between border-t border-slate-100 pt-4">
           <div>
             <p className="text-xs text-slate-400">Price</p>
-            <p className="text-xl font-black text-[#d73328]">
+            <p className="text-xl font-black text-[#003399]">
               {car.price.toLocaleString("en-IN")}
             </p>
           </div>
           <Link
             href={`/car-details/${car.id}`}
-            className="inline-flex items-center justify-center rounded-lg bg-[#cf372d] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#b92d25]"
+            className="inline-flex items-center justify-center rounded-lg bg-[#003399] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#00266f]"
           >
             View Details
           </Link>

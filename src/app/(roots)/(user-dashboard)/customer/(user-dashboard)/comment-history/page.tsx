@@ -68,7 +68,7 @@ const CommentTable: React.FC = () => {
       key: "totalLikes",
       render: (_, record) => (
         <Space>
-          <LikeOutlined className="text-red-500" /> {/* Like Icon */}
+          <LikeOutlined className="text-[#003399]" /> {/* Like Icon */}
           {record.likes?.length || 0}
         </Space>
       ),

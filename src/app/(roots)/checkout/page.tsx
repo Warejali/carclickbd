@@ -89,7 +89,7 @@ const PaymentCalculator = () => {
             <div className="flex md:items-center justify-between md:flex-row flex-col">
               <h3 className="text-nowrap mb-2   md:mb-0 ">Lot# or VIN</h3>
               <input
-                className="md:w-[70%] w-full  p-3 md:p-4  rounded  outline-none border  focus:red-200  hover:bg-gray-200"
+                className="md:w-[70%] w-full  p-3 md:p-4  rounded  outline-none border  focus:border-[#003399]  hover:bg-gray-200"
                 placeholder="Enter Lot # or VIN "
                 type="text"
                 name=""
@@ -104,7 +104,7 @@ const PaymentCalculator = () => {
                 disabled
                 value={selectedCountry}
                 onChange={handleChange}
-                className="md:w-[70%] w-full  p-3 md:p-4  rounded  outline-none border  focus:red-200  hover:bg-gray-200"
+                className="md:w-[70%] w-full  p-3 md:p-4  rounded  outline-none border  focus:border-[#003399]  hover:bg-gray-200"
               >
                 <option value="">NY - NewBurgh</option>
                 {countries.map((country) => (
@@ -124,7 +124,7 @@ const PaymentCalculator = () => {
               <select
                 value={selectedCountry}
                 onChange={handleChange}
-                className="md:w-[70%] w-full  p-3 md:p-4  rounded  outline-none border  focus:red-200  hover:bg-gray-200"
+                className="md:w-[70%] w-full  p-3 md:p-4  rounded  outline-none border  focus:border-[#003399]  hover:bg-gray-200"
               >
                 {countries.map((country) => (
                   <option key={country.value} value={country.value}>
@@ -141,7 +141,7 @@ const PaymentCalculator = () => {
               <select
                 value={selectedCountry}
                 onChange={handleChange}
-                className="md:w-[70%] w-full  p-3 md:p-4  rounded  outline-none border  focus:red-200  hover:bg-gray-200"
+                className="md:w-[70%] w-full  p-3 md:p-4  rounded  outline-none border  focus:border-[#003399]  hover:bg-gray-200"
               >
                 {countries.map((country) => (
                   <option key={country.value} value={country.value}>
@@ -159,7 +159,7 @@ const PaymentCalculator = () => {
                 disabled
                 value={selectedCountry}
                 onChange={handleChange}
-                className="md:w-[70%] w-full  p-3 md:p-4  rounded  outline-none border  focus:red-200  hover:bg-gray-200"
+                className="md:w-[70%] w-full  p-3 md:p-4  rounded  outline-none border  focus:border-[#003399]  hover:bg-gray-200"
               >
                 {countries.map((country) => (
                   <option key={country.value} value={country.value}>
