@@ -6,6 +6,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 export default function HeroSlider() {
   return (
@@ -249,6 +250,47 @@ export default function HeroSlider() {
           </div>
         </SwiperSlide>
       </Swiper>
+
+      <div className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9 }}
+          className="pointer-events-auto w-[min(300px,100%)] overflow-hidden rounded-xl bg-white/75 shadow-2xl backdrop-blur-md"
+        >
+          <div className="relative bg-[#003399]/85 px-5 pb-7 pt-4 text-center">
+            <h3 className="text-base font-black uppercase leading-6 text-white">
+              Auction Sheet Verification
+              <span className="block">of Japanese Cars</span>
+            </h3>
+            <div className="absolute inset-x-0 bottom-[-1px] h-7 rounded-b-[50%] bg-white/75" />
+          </div>
+
+          <div className="px-6 pb-6 pt-5 text-center">
+            <div className="relative mb-3 inline-flex w-full items-center justify-center rounded-md bg-[#f0b90b]/95 px-4 py-2.5 text-xs font-bold uppercase text-slate-950">
+              Chassis Number
+              <span className="absolute -bottom-1.5 h-3 w-3 rotate-45 bg-[#f0b90b]/95" />
+            </div>
+            <input
+              aria-label="Chassis number"
+              placeholder="XXT240-545657"
+              className="h-10 w-full border border-slate-300/80 bg-white/75 px-3 text-center text-xs font-semibold uppercase text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-[#003399] focus:ring-2 focus:ring-blue-100"
+            />
+            <Link
+              href="/verify-auction-sheet"
+              className="mt-4 inline-flex h-11 w-full items-center justify-center rounded-md bg-[#003399]/95 text-sm font-bold text-white transition hover:bg-[#00266f]"
+            >
+              Search
+            </Link>
+            <Link
+              href="/verify-auction-sheet"
+              className="mt-4 inline-block text-xs font-semibold text-[#003399] transition hover:text-[#f0b90b]"
+            >
+              How To Verify Auction Sheet &gt;
+            </Link>
+          </div>
+        </motion.div>
+      </div>
     </div>
   );
 }
