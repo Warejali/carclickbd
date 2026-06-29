@@ -3,7 +3,6 @@
 import { usePathname } from "next/navigation";
 import Navbar from "@/components/publiclayout/navbar";
 import AppFooter from "../shared/footer/Footer";
-import SecondaryNav from "@/components/publiclayout/navbar/SecondaryNav";
 
 export default function RootLayout({
   children,
@@ -22,11 +21,8 @@ export default function RootLayout({
 
   return (
     <main>
-      <Navbar/>
-      <SecondaryNav />
-      <div>
-        {children}
-      </div>
+      <Navbar />
+      <div>{children}</div>
       {shouldShowFooter && <AppFooter />}
     </main>
   );
