@@ -24,6 +24,8 @@ const ProductsResult = ({
     if (isDraft !== undefined) baseFilters.push({ name: "isDraft", value: isDraft });
     if (isFeatured !== undefined) baseFilters.push({ name: "isFeatured", value: isFeatured });
 
+    if (searchParams.get("make")) baseFilters.push({ name: "make", value: searchParams.get("make") });
+    if (searchParams.get("model")) baseFilters.push({ name: "model", value: searchParams.get("model") });
     if (searchParams.get("transmission")) baseFilters.push({ name: "transmission", value: searchParams.get("transmission") });
     if (searchParams.get("bodyStyle")) baseFilters.push({ name: "bodyStyle", value: searchParams.get("bodyStyle") });
     if (searchParams.get("startYear") && searchParams.get("endYear")) {

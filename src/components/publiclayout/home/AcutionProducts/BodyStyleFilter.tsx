@@ -1,28 +1,45 @@
 "use client";
-import { productBodyStyle } from "@/content/product.constant";
+import { homeFilterModelsByMaker } from "@/content/product.constant";
 import { updateSearchParams } from "@/helpers/filter/updateSearchParams";
 import { Select } from "antd";
-import { useRouter } from "next/navigation";
-import React from "react";
+import { useSearchParams } from "next/navigation";
+import React, { useMemo } from "react";
 
 const BodyStyleFilter = () => {
-  const router = useRouter();
+  const searchParams = useSearchParams();
+  const selectedMaker = searchParams.get("make") || "";
+
+  const modelOptions = useMemo(() => {
+    const makerModels = homeFilterModelsByMaker[selectedMaker] || [];
+    const allModels = Object.values(homeFilterModelsByMaker)
+      .flat()
+      .filter(
+        (model, index, models) =>
+          models.findIndex((item) => item.value === model.value) === index,
+      );
+
+    return [
+      { value: "all", label: selectedMaker ? "All Car Names" : "All Models" },
+      ...(makerModels.length ? makerModels : allModels),
+    ];
+  }, [selectedMaker]);
+
   const handleChange = (value: string) => {
     if (value == "all") {
-      router.push("/");
+      updateSearchParams({ model: undefined });
       return;
     }
 
-    updateSearchParams({ bodyStyle: value });
+    updateSearchParams({ model: value });
   };
   return (
     <div>
       <Select
-        placeholder={<span className="text-gray-800 text-md">Body Style</span>}
+        placeholder={<span className="text-gray-800 text-md">Car Name</span>}
         // defaultValue="all"
-        style={{ width: 150 }}
+        style={{ width: 160 }}
         onChange={handleChange}
-        options={productBodyStyle}
+        options={modelOptions}
       />
     </div>
   );

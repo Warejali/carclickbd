@@ -6,9 +6,7 @@ export const updateSearchParams = (
 
   Object.entries(params).forEach(([key, value]) => {
     if (value) {
-      // Encode value and decode specific characters (e.g., `/`)
-      const encodedValue = encodeURIComponent(value).replace(/%2F/g, "/");
-      currentUrl.searchParams.set(key, encodedValue);
+      currentUrl.searchParams.set(key, value);
     } else {
       currentUrl.searchParams.delete(key);
     }

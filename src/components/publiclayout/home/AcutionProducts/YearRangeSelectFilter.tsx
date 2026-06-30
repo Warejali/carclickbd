@@ -9,7 +9,7 @@ const { Option } = Select;
 
 const YearRangeSelectFilter: React.FC = () => {
   const [startYear, setStartYear] = useState<number | undefined>(1981);
-  const [endYear, setEndYear] = useState<number | undefined>(2025);
+  const [endYear, setEndYear] = useState<number | undefined>(2026);
 
   const yearRange = `${startYear} to ${endYear}`;
 
@@ -18,7 +18,7 @@ const YearRangeSelectFilter: React.FC = () => {
 
   const generateYearOptions = () => {
     const years = [];
-    for (let year = 1980; year <= 2025; year++) {
+    for (let year = 1980; year <= 2026; year++) {
       years.push(
         <Option key={year} value={year}>
           {year}

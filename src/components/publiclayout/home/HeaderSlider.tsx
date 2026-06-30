@@ -8,6 +8,47 @@ import "swiper/css/pagination";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
+const AuctionSheetVerificationCard = () => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.9 }}
+    className="w-[min(380px,100%)] overflow-hidden rounded-2xl border border-white/30 bg-white/85 shadow-[0_28px_70px_rgba(0,18,48,0.35)] backdrop-blur-md"
+  >
+    <div className="relative bg-gradient-to-r from-[#002a86] via-[#003399] to-[#0047c7] px-6 pb-9 pt-6 text-center">
+      <h3 className="text-lg font-black uppercase leading-7 text-white md:text-xl">
+        Auction Sheet Verification
+        <span className="block">of Japanese Cars</span>
+      </h3>
+      <div className="absolute inset-x-0 bottom-[-1px] h-8 rounded-b-[50%] bg-white/85" />
+    </div>
+
+    <div className="px-7 pb-7 pt-6 text-center">
+      <div className="relative mb-4 inline-flex w-full items-center justify-center rounded-lg bg-gradient-to-r from-[#f0b90b] to-[#ffd34d] px-5 py-3 text-sm font-black uppercase text-slate-950 shadow-sm">
+        Chassis Number
+        <span className="absolute -bottom-1.5 h-3 w-3 rotate-45 bg-[#f0b90b]" />
+      </div>
+      <input
+        aria-label="Chassis number"
+        placeholder="XXT240-545657"
+        className="h-12 w-full border border-slate-300/80 bg-white/90 px-4 text-center text-sm font-bold uppercase text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-[#003399] focus:ring-2 focus:ring-blue-100"
+      />
+      <Link
+        href="/verify-auction-sheet"
+        className="mt-5 inline-flex h-12 w-full items-center justify-center rounded-lg bg-[#003399] text-base font-bold text-white shadow-md shadow-blue-950/20 transition hover:-translate-y-0.5 hover:bg-[#00266f] hover:shadow-lg"
+      >
+        Search
+      </Link>
+      <Link
+        href="/verify-auction-sheet"
+        className="mt-5 inline-block text-sm font-bold text-[#003399] transition hover:text-[#f0b90b]"
+      >
+        How To Verify Auction Sheet &gt;
+      </Link>
+    </div>
+  </motion.div>
+);
+
 export default function HeroSlider() {
   return (
     <div className="relative w-full h-[340px] sm:h-[440px] md:h-[520px] lg:h-[460px] overflow-hidden">
@@ -122,38 +163,9 @@ export default function HeroSlider() {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.2 }}
-              className="flex flex-col justify-center px-8 md:px-16 lg:w-1/2 z-20"
+              className="z-20 flex flex-col items-center justify-center px-8 md:px-16 lg:w-1/2"
             >
-              <motion.h2
-                className="text-3xl md:text-5xl font-extrabold mb-4 uppercase"
-                animate={{
-                  backgroundPosition: ["200% center", "-200% center"],
-                }}
-                transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-                style={{
-                  backgroundImage:
-                    "linear-gradient(90deg, #F0B90B 0%, #ffffff 50%, #F0B90B 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundSize: "400%",
-                }}
-              >
-                Dealer Inventory & Reconditioned Cars
-              </motion.h2>
-
-              <p className="text-lg mb-6 font-medium text-gray-200">
-                Including <span className="font-bold">Bank-Repo</span>, Fleet,
-                Finance & CarClickBD Select Vehicles
-              </p>
-
-              <div className="flex gap-4">
-                <button className="px-6 py-3 bg-yellow-500 hover:bg-yellow-600 text-black font-bold rounded-lg shadow-md">
-                  View Inventory
-                </button>
-                <button className="px-6 py-3 border border-yellow-400 text-yellow-400 font-semibold rounded-lg hover:bg-yellow-400 hover:text-black transition">
-                  Learn More
-                </button>
-              </div>
+              <AuctionSheetVerificationCard />
             </motion.div>
 
             {/* Right Car */}
@@ -193,43 +205,14 @@ export default function HeroSlider() {
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
             />
 
-            {/* Left Text */}
+            {/* Left Verification Card */}
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.5 }}
-              className="flex flex-col justify-center px-8 md:px-16 lg:w-[45%] z-20"
+              className="z-20 flex flex-col items-center justify-center px-8 md:px-16 lg:w-[45%]"
             >
-              <p className="uppercase tracking-widest text-sm text-gray-300 mb-3">
-                CarClickBD Featured Vehicle
-              </p>
-              <h2 className="text-3xl md:text-5xl font-extrabold mb-3 leading-tight text-[#ffffff]">
-                <span className="text-[#0052FF]">2021 Bugatti</span> Chiron Pur Sport
-              </h2>
-              <p className="italic text-gray-300 mb-2">
-                “Precision. Power. Passion. Experience performance redefined.”
-              </p>
-              <p className="uppercase text-[#F0B90B] font-semibold mb-8 tracking-wide">
-                Selling Exclusively at CarClickBD
-              </p>
-
-              <div className="flex flex-wrap gap-4">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="relative group px-6 py-3 bg-gradient-to-r from-[#0052FF] to-[#007AFF] text-white font-semibold rounded-md overflow-hidden shadow-lg"
-                >
-                  <span className="relative z-10">Inquire Now</span>
-                  <span className="absolute inset-0 bg-white/20 group-hover:opacity-0 transition-opacity"></span>
-                </motion.button>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="px-6 py-3 border-2 border-[#F0B90B] text-[#F0B90B] font-semibold rounded-md hover:bg-[#F0B90B] hover:text-black transition-all duration-300"
-                >
-                  View Details
-                </motion.button>
-              </div>
+              <AuctionSheetVerificationCard />
             </motion.div>
 
             {/* Right Car */}
@@ -240,7 +223,7 @@ export default function HeroSlider() {
               className="absolute right-0 bottom-0 w-[55%] flex justify-center items-end"
             >
               <motion.img
-                src="https://www.copart.com/content/us/en/landing-page/finance-vehicles/suvs.png"
+                src="https://cdn.pixabay.com/photo/2015/10/01/17/17/car-967387_1280.png"
                 alt="Bugatti Chiron"
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
@@ -251,46 +234,6 @@ export default function HeroSlider() {
         </SwiperSlide>
       </Swiper>
 
-      <div className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9 }}
-          className="pointer-events-auto w-[min(300px,100%)] overflow-hidden rounded-xl bg-white/75 shadow-2xl backdrop-blur-md"
-        >
-          <div className="relative bg-[#003399]/85 px-5 pb-7 pt-4 text-center">
-            <h3 className="text-base font-black uppercase leading-6 text-white">
-              Auction Sheet Verification
-              <span className="block">of Japanese Cars</span>
-            </h3>
-            <div className="absolute inset-x-0 bottom-[-1px] h-7 rounded-b-[50%] bg-white/75" />
-          </div>
-
-          <div className="px-6 pb-6 pt-5 text-center">
-            <div className="relative mb-3 inline-flex w-full items-center justify-center rounded-md bg-[#f0b90b]/95 px-4 py-2.5 text-xs font-bold uppercase text-slate-950">
-              Chassis Number
-              <span className="absolute -bottom-1.5 h-3 w-3 rotate-45 bg-[#f0b90b]/95" />
-            </div>
-            <input
-              aria-label="Chassis number"
-              placeholder="XXT240-545657"
-              className="h-10 w-full border border-slate-300/80 bg-white/75 px-3 text-center text-xs font-semibold uppercase text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-[#003399] focus:ring-2 focus:ring-blue-100"
-            />
-            <Link
-              href="/verify-auction-sheet"
-              className="mt-4 inline-flex h-11 w-full items-center justify-center rounded-md bg-[#003399]/95 text-sm font-bold text-white transition hover:bg-[#00266f]"
-            >
-              Search
-            </Link>
-            <Link
-              href="/verify-auction-sheet"
-              className="mt-4 inline-block text-xs font-semibold text-[#003399] transition hover:text-[#f0b90b]"
-            >
-              How To Verify Auction Sheet &gt;
-            </Link>
-          </div>
-        </motion.div>
-      </div>
     </div>
   );
 }
