@@ -86,7 +86,7 @@ const NotificationDropdown: React.FC = () => {
         placement={dropdownPlacement}
       >
         <Badge size="small" count={unreadCount} overflowCount={9} className="cursor-pointer">
-          <AiOutlineBell className="text-xl lg:text-2xl transition-all duration-200" />
+          <AiOutlineBell className="text-xl text-white lg:text-2xl transition-all duration-200" />
         </Badge>
       </Dropdown>
     </div>

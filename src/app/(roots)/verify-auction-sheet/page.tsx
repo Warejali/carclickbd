@@ -66,7 +66,7 @@ const VerifyAuctionSheetPage = () => {
 
           <p className="mt-4 max-w-4xl text-base font-semibold leading-7 text-white md:text-xl">
             অকশনশীট ভেরিফিকেশন করতে আপনার চ্যাসিস নাম্বারটি ঠিক সহ সার্চ বারে
-            লিখুন (উদাহরণ: NZT260-3173714) এরপর সার্চ বাটনটি ক্লিক করুন।
+            লিখুন (উদাহরণ: NKE165-7245648) এরপর সার্চ বাটনটি ক্লিক করুন।
           </p>
 
           {searchedChassis && (

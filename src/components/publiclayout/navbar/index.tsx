@@ -23,9 +23,11 @@ const Header: React.FC = () => {
   if (isLoggedIn === undefined) return null;
 
   const btnBlue =
-    "bg-gradient-to-r from-[#0052ff] to-[#007bff] text-white font-semibold rounded-full px-5 py-2.5 shadow-md hover:from-[#0041cc] hover:to-[#0066cc] hover:shadow-blue-500/40 transition-all duration-300";
+    "rounded-full border border-white/10 bg-gradient-to-r from-[#0052ff] to-[#007bff] px-4 py-2 text-xs font-bold text-white shadow-sm shadow-blue-950/20 transition-all duration-300 hover:-translate-y-0.5 hover:from-[#0041cc] hover:to-[#0066cc] hover:shadow-md hover:shadow-blue-500/30";
   const btnGold =
-    "bg-gradient-to-r from-[#f0b90b] to-[#ffd54f] text-black font-semibold rounded-full px-5 py-2.5 shadow-md hover:from-[#d8a90b] hover:to-[#f0c000] hover:shadow-yellow-500/40 transition-all duration-300";
+    "rounded-full border border-yellow-200/40 bg-gradient-to-r from-[#f0b90b] to-[#ffd54f] px-4 py-2 text-xs font-bold text-slate-950 shadow-sm shadow-yellow-950/20 transition-all duration-300 hover:-translate-y-0.5 hover:from-[#d8a90b] hover:to-[#f0c000] hover:shadow-md hover:shadow-yellow-500/30";
+  const btnOutline =
+    "rounded-full border border-[#f0b90b]/70 bg-white/10 px-4 py-2 text-xs font-bold text-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#f0b90b] hover:text-slate-950 hover:shadow-md hover:shadow-yellow-500/25";
 
   const languageMenu: MenuProps["items"] = [
     {
@@ -71,7 +73,6 @@ const Header: React.FC = () => {
 
   const navItems = [
     { label: "Home", href: "/" },
-    { label: "Verify Auction Sheet", href: "/verify-auction-sheet" },
     { label: "Duty Calculator", href: "/duty-calculator" },
     { label: "Find Cars", href: "/find-cars" },
     { label: "Year of Manufacture", href: "/year-of-manufacture" },
@@ -80,8 +81,24 @@ const Header: React.FC = () => {
   ];
 
   const sellMenu: MenuProps["items"] = [
-    { key: "1", label: <Link href="/sell-item">Sell a Car</Link> },
-    { key: "2", label: <Link href="/seller-signup">Seller Signup</Link> },
+    { key: "dealer", label: <Link href="/sell-item?seller=dealer">Dealer</Link> },
+    {
+      key: "individual",
+      label: <Link href="/sell-item?seller=individual">Individual</Link>,
+    },
+    { key: "broker", label: <Link href="/sell-item?seller=broker">Broker</Link> },
+  ];
+
+  const buyMenu: MenuProps["items"] = [
+    { key: "new", label: <Link href="/find-cars?condition=new">New</Link> },
+    {
+      key: "reconditioned",
+      label: <Link href="/find-cars?condition=reconditioned">Reconditioned</Link>,
+    },
+    {
+      key: "local-used",
+      label: <Link href="/find-cars?condition=local-used">Local Used</Link>,
+    },
   ];
 
   const navLinkClass =
@@ -102,12 +119,18 @@ const Header: React.FC = () => {
           ))}
         </nav>
 
-        <div className="hidden shrink-0 items-center gap-4 md:flex">
-          <Link href="/help" className="hidden lg:block">
-            <button className="rounded-full border border-white/20 bg-white/10 px-4 py-2 font-semibold text-gray-100 transition-all duration-300 hover:bg-white/20 hover:text-white">
-              Help center
+        <div className="hidden shrink-0 items-center gap-3 md:flex">
+          <Link href="/verify-auction-sheet" className="hidden lg:block">
+            <button className={btnOutline}>
+              Verify Auction Sheet
             </button>
           </Link>
+
+          <Dropdown menu={{ items: buyMenu }} trigger={["hover"]}>
+            <button className={`${btnGold} flex items-center gap-1`}>
+              Buy your car <DownOutlined className="text-xs" />
+            </button>
+          </Dropdown>
 
           <Dropdown menu={{ items: sellMenu }} trigger={["hover"]}>
             <button className={`${btnGold} flex items-center gap-1`}>
@@ -116,8 +139,11 @@ const Header: React.FC = () => {
           </Dropdown>
 
           <Dropdown menu={{ items: languageMenu }} placement="bottomRight">
-            <button className="flex items-center gap-2 text-white transition hover:text-[#F0B90B]">
-              <GlobalOutlined /> Language
+            <button
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/10 text-lg text-white transition hover:border-[#F0B90B]/60 hover:bg-white/15 hover:text-[#F0B90B]"
+              aria-label="Change language"
+            >
+              <GlobalOutlined />
             </button>
           </Dropdown>
 
@@ -141,7 +167,10 @@ const Header: React.FC = () => {
 
         <div className="flex items-center gap-3 md:hidden">
           <Dropdown menu={{ items: languageMenu }}>
-            <button className="text-white hover:text-[#F0B90B]">
+            <button
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/10 text-white hover:text-[#F0B90B]"
+              aria-label="Change language"
+            >
               <GlobalOutlined />
             </button>
           </Dropdown>
@@ -190,6 +219,12 @@ const Header: React.FC = () => {
             )}
           </div>
 
+          <Link href="/verify-auction-sheet" className="mb-5 block">
+            <button className={`${btnOutline} w-full py-3`}>
+              Verify Auction Sheet
+            </button>
+          </Link>
+
           <div className="flex flex-col gap-3 text-base text-gray-200">
             {navItems.map((item) => (
               <Link key={item.href} href={item.href}>
@@ -199,19 +234,21 @@ const Header: React.FC = () => {
           </div>
         </div>
 
-        <div className="sticky bottom-0 left-0 right-0 flex gap-2 border-t border-white/10 bg-[#0b0b0b]/95 p-3">
+        <div className="sticky bottom-0 left-0 right-0 grid grid-cols-2 gap-2 border-t border-white/10 bg-[#0b0b0b]/95 p-3">
+          <Dropdown menu={{ items: buyMenu }} trigger={["click"]}>
+            <button
+              className={`${btnGold} flex items-center justify-center gap-1 px-3 py-2.5`}
+            >
+              Buy your car <DownOutlined />
+            </button>
+          </Dropdown>
           <Dropdown menu={{ items: sellMenu }} trigger={["click"]}>
             <button
-              className={`${btnGold} flex w-1/2 items-center justify-center gap-1 font-semibold`}
+              className={`${btnGold} flex items-center justify-center gap-1 px-3 py-2.5`}
             >
               Sell your car <DownOutlined />
             </button>
           </Dropdown>
-          <Link href="/help" className="w-1/2">
-            <button className={`${btnBlue} w-full py-3 font-semibold`}>
-              Help Center
-            </button>
-          </Link>
         </div>
       </Drawer>
     </header>
