@@ -1,13 +1,15 @@
 import { DetailsProductItems } from "./DetailsProductItems";
 
 interface VehicleDetailsProps {
-  highlights: string[];
-  equipment: string[];
-  modification: string[];
-  recentServiceHistory: string[];
-  otherItemsIncludedInSale: string[];
-  sellerNotes: string[];
-  videos: string[];
+  highlights?: string[];
+  equipment?: string[];
+  modification?: string[];
+  recentServiceHistory?: string[];
+  otherItemsIncludedInSale?: string[];
+  sellerNotes?: string[];
+  videos?: string[];
+  featuresAndOptions?: string[];
+  featuresOptions?: string[];
 }
 
 export function DetailProductItemParents({
@@ -15,53 +17,40 @@ export function DetailProductItemParents({
 }: {
   product: VehicleDetailsProps;
 }) {
-  const {
-    highlights,
-    equipment,
-    modification,
-    recentServiceHistory,
-    otherItemsIncludedInSale,
-    sellerNotes,
-    videos,
-  } = product || {};
+  const sections = [
+    {
+      title: "Features & Options",
+      items: product?.featuresAndOptions || product?.featuresOptions || product?.equipment,
+    },
+    { title: "Highlights", items: product?.highlights },
+    { title: "Modifications", items: product?.modification },
+    { title: "Recent Service History", items: product?.recentServiceHistory },
+    {
+      title: "Other Items Included in Sale",
+      items: product?.otherItemsIncludedInSale,
+    },
+    { title: "Seller Notes", items: product?.sellerNotes },
+  ].filter((section) => section.items?.length);
 
-
+  if (!sections.length) return null;
 
   return (
-    <div className="space-y-8">
-      <DetailsProductItems title="Highlights" items={highlights} />
-      <DetailsProductItems title="Equipment" items={equipment} />
-      <DetailsProductItems title="Modifications" items={modification} />
-      <DetailsProductItems
-        title="Recent Service History"
-        items={recentServiceHistory}
-      />
-      <DetailsProductItems
-        title="Other Items Included in Sale"
-        items={otherItemsIncludedInSale}
-      />
-      <DetailsProductItems title="Seller Notes" items={sellerNotes} />
-      {/* {videos?.length > 0 && (
-        <div>
-          <h3 className="text-lg font-semibold">Videos</h3>
-          <div className="space-y-4">
-            {videos.map((video, index) => (
-              <div
-                key={index}
-                className="relative overflow-hidden rounded-lg"
-                style={{ paddingTop: "56.25%" }} // Maintain 16:9 aspect ratio
-              >
-                <iframe
-                  src={video}
-                  className="absolute top-0 left-0 w-full h-full"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      )} */}
-    </div>
+    <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-[0_16px_45px_rgba(15,23,42,0.08)]">
+      <p className="text-xs font-bold uppercase tracking-[0.18em] text-sky-600">
+        Equipment
+      </p>
+      <h2 className="mt-1 text-2xl font-extrabold text-slate-950">
+        Features & notes
+      </h2>
+      <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-2">
+        {sections.map((section) => (
+          <DetailsProductItems
+            key={section.title}
+            title={section.title}
+            items={section.items || []}
+          />
+        ))}
+      </div>
+    </section>
   );
 }

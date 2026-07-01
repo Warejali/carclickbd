@@ -20,7 +20,7 @@ const YearOfManufacturePage = () => {
         {years.map((year) => (
           <a
             key={year}
-            href={`/find-cars?year=${year}`}
+            href={`/cars?startYear=${year}&endYear=${year}`}
             className="rounded-lg border border-gray-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:border-blue-500 hover:shadow-lg"
           >
             <div className="text-2xl font-bold text-gray-950">{year}</div>

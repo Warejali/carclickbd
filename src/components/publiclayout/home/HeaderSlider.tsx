@@ -1,239 +1,157 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import { ArrowRight, BadgeCheck, FileSearch, Search, ShieldCheck } from "lucide-react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { motion } from "framer-motion";
-import Link from "next/link";
 
-const AuctionSheetVerificationCard = () => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.9 }}
-    className="w-[min(380px,100%)] overflow-hidden rounded-2xl border border-white/30 bg-white/85 shadow-[0_28px_70px_rgba(0,18,48,0.35)] backdrop-blur-md"
-  >
-    <div className="relative bg-gradient-to-r from-[#002a86] via-[#003399] to-[#0047c7] px-6 pb-9 pt-6 text-center">
-      <h3 className="text-lg font-black uppercase leading-7 text-white md:text-xl">
-        Auction Sheet Verification
-        <span className="block">of Japanese Cars</span>
-      </h3>
-      <div className="absolute inset-x-0 bottom-[-1px] h-8 rounded-b-[50%] bg-white/85" />
-    </div>
+type Slide = {
+  eyebrow: string;
+  title: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+  primaryLabel: string;
+  primaryHref: string;
+  secondaryLabel: string;
+  secondaryHref: string;
+};
 
-    <div className="px-7 pb-7 pt-6 text-center">
-      <div className="relative mb-4 inline-flex w-full items-center justify-center rounded-lg bg-gradient-to-r from-[#f0b90b] to-[#ffd34d] px-5 py-3 text-sm font-black uppercase text-slate-950 shadow-sm">
-        Chassis Number
-        <span className="absolute -bottom-1.5 h-3 w-3 rotate-45 bg-[#f0b90b]" />
-      </div>
-      <input
-        aria-label="Chassis number"
-        placeholder="XXT240-545657"
-        className="h-12 w-full border border-slate-300/80 bg-white/90 px-4 text-center text-sm font-bold uppercase text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-[#003399] focus:ring-2 focus:ring-blue-100"
-      />
-      <Link
-        href="/verify-auction-sheet"
-        className="mt-5 inline-flex h-12 w-full items-center justify-center rounded-lg bg-[#003399] text-base font-bold text-white shadow-md shadow-blue-950/20 transition hover:-translate-y-0.5 hover:bg-[#00266f] hover:shadow-lg"
-      >
-        Search
-      </Link>
-      <Link
-        href="/verify-auction-sheet"
-        className="mt-5 inline-block text-sm font-bold text-[#003399] transition hover:text-[#f0b90b]"
-      >
-        How To Verify Auction Sheet &gt;
-      </Link>
-    </div>
-  </motion.div>
-);
+const slides: Slide[] = [
+  {
+    eyebrow: "Verified dealer and private seller cars",
+    title: "Dealer & Private Seller Cars",
+    description:
+      "Browse new, reconditioned, and local used cars with clear photos, specs, pricing, and direct inquiry support.",
+    image: "https://cdn.pixabay.com/photo/2015/10/01/17/17/car-967387_1280.png",
+    imageAlt: "Yellow sports car",
+    primaryLabel: "Browse Cars",
+    primaryHref: "/cars",
+    secondaryLabel: "Learn More",
+    secondaryHref: "/how-it-works",
+  },
+  {
+    eyebrow: "Inspection confidence",
+    title: "Auction Sheet Verification",
+    description:
+      "Check chassis details, mileage records, grade, and condition notes before making a buying decision.",
+    image: "https://www.pngmart.com/files/23/Luxury-Car-PNG-Picture.png",
+    imageAlt: "Luxury car",
+    primaryLabel: "Verify Sheet",
+    primaryHref: "/verify-auction-sheet",
+    secondaryLabel: "Browse Reconditioned",
+    secondaryHref: "/cars?condition=reconditioned",
+  },
+  {
+    eyebrow: "Premium buying support",
+    title: "Shortlist Better Cars Faster",
+    description:
+      "Use smart filters, compare key details, and contact sellers directly when you find the right car.",
+    image:
+      "https://www.pngall.com/wp-content/uploads/2016/07/Car-PNG-Clipart.png",
+    imageAlt: "Premium cars",
+    primaryLabel: "Find Cars",
+    primaryHref: "/cars",
+    secondaryLabel: "Contact Support",
+    secondaryHref: "/contact",
+  },
+];
 
 export default function HeroSlider() {
   return (
-    <div className="relative w-full h-[340px] sm:h-[440px] md:h-[520px] lg:h-[460px] overflow-hidden">
+    <section className="relative h-auto overflow-hidden bg-slate-950 lg:h-[620px]">
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         navigation
         pagination={{ clickable: true }}
-        autoplay={{ delay: 6000, disableOnInteraction: false }}
+        autoplay={{ delay: 6500, disableOnInteraction: false }}
         loop
-        className="w-full h-full"
+        className="h-full w-full"
       >
-        {/* ---------------- SLIDE 1 (Marketplace) ---------------- */}
-        <SwiperSlide>
-          <div className="relative flex items-center justify-between h-full text-white overflow-hidden bg-gradient-to-r from-blue-900 via-blue-800 to-indigo-900">
-            {/* Fog Layer */}
-            <motion.div
-              className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/soft-wallpaper.png')] opacity-25"
-              animate={{ opacity: [0.2, 0.35, 0.2] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            />
+        {slides.map((slide) => (
+          <SwiperSlide key={slide.title}>
+            <div className="relative min-h-[620px] overflow-hidden bg-gradient-to-br from-[#001b46] via-[#003399] to-[#00142f] text-white lg:h-[620px]">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_74%_48%,rgba(255,255,255,0.18),transparent_30%),linear-gradient(90deg,rgba(0,0,0,0.22),transparent)]" />
+              <div className="absolute inset-0 opacity-20 [background-image:linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px)] [background-size:48px_48px]" />
 
-            {/* Left Section */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.2 }}
-              className="flex flex-col justify-center px-8 md:px-16 lg:w-1/2 z-20"
-            >
-              <motion.h2
-                className="text-3xl md:text-5xl font-extrabold mb-3"
-                animate={{
-                  backgroundPosition: ["200% center", "-200% center"],
-                }}
-                transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-                style={{
-                  backgroundImage:
-                    "linear-gradient(90deg, #F0B90B 0%, #ffffff 50%, #F0B90B 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundSize: "400%",
-                }}
-              >
-                Dealer & Private Seller Cars
-              </motion.h2>
-
-              <p className="text-lg text-gray-200 mb-6">
-                Over{" "}
-                <span className="text-yellow-400 font-bold">4+ Million</span>{" "}
-                New, reconditioned, and local used cars listed by verified sellers.
-              </p>
-
-              <div className="grid grid-cols-3 gap-4 mb-6">
-                {["Register", "Find", "Inquire"].map((item, i) => (
-                  <div
-                    key={i}
-                    className="bg-blue-700/60 p-4 rounded-xl hover:bg-blue-700/80 transition"
-                  >
-                    <h3 className="font-bold">
-                      {i + 1}. {item}
-                    </h3>
-                    <p className="text-sm opacity-90">
-                      {item === "Register"
-                        ? "Sign up for membership."
-                        : item === "Find"
-                        ? "Search 390,000+ vehicles."
-                        : "Contact sellers directly."}
-                    </p>
+              <div className="relative mx-auto grid min-h-[620px] max-w-7xl grid-cols-1 items-center gap-8 px-4 py-14 md:px-8 lg:grid-cols-[0.92fr_1.08fr] lg:py-0">
+                <div className="z-20">
+                  <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-bold backdrop-blur">
+                    {slide.primaryHref.includes("verify") ? (
+                      <FileSearch size={16} className="text-[#f0b90b]" />
+                    ) : (
+                      <BadgeCheck size={16} className="text-[#f0b90b]" />
+                    )}
+                    {slide.eyebrow}
                   </div>
-                ))}
+
+                  <h1 className="max-w-2xl text-4xl font-black leading-tight tracking-normal md:text-6xl">
+                    {slide.title}
+                  </h1>
+                  <p className="mt-5 max-w-xl text-base font-medium leading-7 text-slate-200 md:text-lg">
+                    {slide.description}
+                  </p>
+
+                  <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                    <Link
+                      href={slide.primaryHref}
+                      className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-[#f0b90b] px-6 text-sm font-extrabold text-slate-950 shadow-lg transition hover:bg-[#d9a609]"
+                    >
+                      {slide.primaryLabel}
+                      <ArrowRight size={17} />
+                    </Link>
+                    <Link
+                      href={slide.secondaryHref}
+                      className="inline-flex h-12 items-center justify-center rounded-md border border-white/30 bg-white/10 px-6 text-sm font-bold text-white backdrop-blur transition hover:bg-white hover:text-slate-950"
+                    >
+                      {slide.secondaryLabel}
+                    </Link>
+                  </div>
+
+                  <div className="mt-8 hidden max-w-xl grid-cols-3 gap-3 sm:grid">
+                    {[
+                      ["Verified", ShieldCheck],
+                      ["Search", Search],
+                      ["Support", BadgeCheck],
+                    ].map(([label, Icon]) => {
+                      const DisplayIcon = Icon as typeof ShieldCheck;
+                      return (
+                        <div
+                          key={label as string}
+                          className="rounded-md border border-white/10 bg-white/10 p-3 backdrop-blur"
+                        >
+                          <DisplayIcon size={18} className="text-[#f0b90b]" />
+                          <p className="mt-2 text-xs font-bold uppercase tracking-wide text-slate-200">
+                            {label as string}
+                          </p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="relative z-10 flex min-h-[300px] items-center justify-center lg:min-h-[520px]">
+                  <div className="relative h-[300px] w-full sm:h-[360px] lg:h-[520px]">
+                    <div className="absolute inset-x-8 bottom-10 h-16 rounded-full bg-black/30 blur-3xl" />
+                    <Image
+                      src={slide.image}
+                      alt={slide.imageAlt}
+                      fill
+                      priority
+                      sizes="(max-width: 1024px) 90vw, 760px"
+                      className="object-contain object-center drop-shadow-[0_24px_45px_rgba(0,0,0,0.55)]"
+                    />
+                  </div>
+                </div>
               </div>
-
-              <div className="flex gap-4">
-                <button className="px-6 py-3 bg-yellow-500 hover:bg-yellow-600 text-black font-bold rounded-lg shadow-md">
-                  Register to Inquire
-                </button>
-                <button className="px-6 py-3 border border-yellow-400 text-yellow-400 font-semibold rounded-lg hover:bg-yellow-400 hover:text-black transition">
-                  Learn More
-                </button>
-              </div>
-            </motion.div>
-
-            {/* Right Car */}
-            <motion.div
-              initial={{ x: 80, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 1.3 }}
-              className="absolute right-0 bottom-0 w-[55%] flex justify-center items-end"
-            >
-              <motion.img
-                src="https://cdn.pixabay.com/photo/2015/10/01/17/17/car-967387_1280.png"
-                alt="SUV"
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                className="relative z-10 w-[85%] drop-shadow-[0_25px_50px_rgba(0,0,0,0.5)]"
-              />
-            </motion.div>
-          </div>
-        </SwiperSlide>
-
-        {/* ---------------- SLIDE 2 (Dealer Inventory) ---------------- */}
-        <SwiperSlide>
-          <div className="relative flex items-center justify-between h-full text-white overflow-hidden bg-gradient-to-r from-[#001a4d] via-[#002b8f] to-[#001a4d]">
-            {/* Fog Layer */}
-            <motion.div
-              className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/soft-wallpaper.png')] opacity-25"
-              animate={{ opacity: [0.2, 0.35, 0.2] }}
-              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-            />
-
-            {/* Left Section */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.2 }}
-              className="z-20 flex flex-col items-center justify-center px-8 md:px-16 lg:w-1/2"
-            >
-              <AuctionSheetVerificationCard />
-            </motion.div>
-
-            {/* Right Car */}
-            <motion.div
-              initial={{ x: 80, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 1.3 }}
-              className="absolute right-0 bottom-0 w-[55%] flex justify-center items-end"
-            >
-              <motion.img
-                src="https://www.pngmart.com/files/23/Luxury-Car-PNG-Picture.png"
-                alt="Luxury Car"
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                className="relative z-10 w-[90%] h-auto drop-shadow-[0_25px_50px_rgba(0,0,0,0.5)]"
-              />
-            </motion.div>
-          </div>
-        </SwiperSlide>
-        
-
-        {/* ---------------- SLIDE 4 (Bugatti Cinematic) ---------------- */}
-        <SwiperSlide>
-          <div className="relative flex items-center justify-between h-full bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white overflow-hidden">
-            {/* Animated Gradient */}
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-[#001a4d] via-[#002b8f] to-[#001a4d] opacity-90"
-              animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
-              transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-              style={{ backgroundSize: "200% 200%" }}
-            />
-
-            {/* Light Beam */}
-            <motion.div
-              className="absolute top-0 left-[-30%] w-[60%] h-full bg-gradient-to-r from-transparent via-white/20 to-transparent rotate-12"
-              animate={{ left: ["-30%", "130%"] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            />
-
-            {/* Left Verification Card */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.5 }}
-              className="z-20 flex flex-col items-center justify-center px-8 md:px-16 lg:w-[45%]"
-            >
-              <AuctionSheetVerificationCard />
-            </motion.div>
-
-            {/* Right Car */}
-            <motion.div
-              initial={{ x: 100, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 1.8 }}
-              className="absolute right-0 bottom-0 w-[55%] flex justify-center items-end"
-            >
-              <motion.img
-                src="https://cdn.pixabay.com/photo/2015/10/01/17/17/car-967387_1280.png"
-                alt="Bugatti Chiron"
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                className="relative z-10 w-[85%] h-auto drop-shadow-[0_25px_50px_rgba(0,0,0,0.5)]"
-              />
-            </motion.div>
-          </div>
-        </SwiperSlide>
+            </div>
+          </SwiperSlide>
+        ))}
       </Swiper>
-
-    </div>
+    </section>
   );
 }

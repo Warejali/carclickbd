@@ -209,7 +209,7 @@ const RefundRequestPage = () => {
         dataIndex: 'orderId',
         key: 'orderId',
         render: (text: string) => (
-          <a href={`/admin/order/${text}`} className="text-blue-500 hover:underline">
+          <a href={`/admin/orders/view/${text}`} className="text-blue-500 hover:underline">
             {text} <ArrowRightOutlined style={{ fontSize: '0.7em' }} />
           </a>
         ),

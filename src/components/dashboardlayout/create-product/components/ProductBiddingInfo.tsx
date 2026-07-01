@@ -1,47 +1,44 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import {
-  DatePicker,
   Form,
   InputNumber,
-  Input,
   Row,
   Col,
   Tooltip,
   message,
-  Switch,
+  Input,
+  Select,
 } from "antd";
-import { IProduct } from "@/Interface/product";
-import ProductFormStep from "./ProductFormStep";
+import { InfoCircleOutlined } from "@ant-design/icons";
 import { useAppDispatch } from "@/Redux/hooks";
 import { setProductFormStep } from "@/Redux/Slices/productSlice";
-import { InfoCircleOutlined } from "@ant-design/icons";
-import moment from "moment";
-import { base64ToFile } from "@/utils/file";
+import { useCreateProductMutation } from "@/Redux/api/productApi";
+import { useGetAllCategoriesQuery } from "@/Redux/api/categoryApi";
+import ProductFormStep from "./ProductFormStep";
 import {
   getFromLocalStorageAsParse,
   removeFromLocalStorage,
   setToLocalStorageAsStringify,
 } from "@/utils/local-storage";
-import { useCreateProductMutation } from "@/Redux/api/productApi";
+import { base64ToFile } from "@/utils/file";
 import { productFormStepValueKeys } from "../../product.storage-key";
+import { IProduct } from "@/Interface/product";
 
-// File validation constants
+const { Option } = Select;
+
+// ---------- File Validation ----------
 const FILE_LIMITS = {
   MAIN_PHOTO: 1,
   OTHER_PHOTOS: 10,
-  Enterior_PHOTOS: 10,
-  EXTERIOR_PHOTOS: 10,
-  MECHANICAL_PHOTOS: 10,
-  DOC_PHOTOS: 10,
 };
 
 const validateFiles = (
-  files: File[],
+  files: File[] | null,
   maxCount: number,
   fieldName: string
 ): boolean => {
-  if (!files.length) {
+  if (!files || files.length === 0) {
     message.error(`${fieldName} is required`);
     return false;
   }
@@ -52,285 +49,114 @@ const validateFiles = (
   return true;
 };
 
+// ---------- Component ----------
 const ProductBiddingInfo = () => {
   const [form] = Form.useForm();
   const dispatch = useAppDispatch();
+
+  const [stepOneFormData, setStepOneFormData] = useState<IProduct | null>(null);
+  const [mainPhotoFile, setMainPhotoFile] = useState<File | null>(null);
+  const [otherPhotoFiles, setOtherPhotosFiles] = useState<File[]>([]);
+  const [videoLinks, setVideoLinks] = useState<string[]>([]);
+
+  const [subcategories, setSubcategories] = useState<any[]>([]);
+  const { data: response } = useGetAllCategoriesQuery({});
+  const categories = response?.data || [];
+
+  const mainCategory = categories.filter((cat: any) => !cat.parentCategory);
+  const subCategory = categories.filter((cat: any) => cat.parentCategory);
+
   const [createProduct, { isLoading }] = useCreateProductMutation();
 
-  // Step form states
-  const [stepOneFormData, setStepOneFormData] = useState<IProduct | null>(null);
-  const [stepThreeFormData, setStepThreeFormData] = useState<IProduct | null>(
-    null
-  );
-  const [stepFourFormData, setStepFourFormData] = useState<IProduct | null>(
-    null
-  );
-
-  // Media states
-  const [mainPhotoFile, setMainPhotoFile] = useState<File | null>(null);
-  const [enteriorPhotoFiles, setEnteriorPhotosFiles] = useState<File[]>([]);
-  const [exteriorPhotoFiles, setExteriorPhotosFiles] = useState<File[]>([]);
-  const [mechanicalPhotoFiles, setMechanicalPhotosFiles] = useState<File[]>([]);
-  const [otherPhotoFiles, setOtherPhotosFiles] = useState<File[]>([]);
-  const [docsPhotoFiles, setDocsPhotosFiles] = useState<File[]>([]);
-  const [videoLinks, setVideoLinks] = useState<string[]>([]);
-  const [isAuction, setIsAuction] = useState<boolean>(true); // Switch control
-
+  // ---------- Load Step One Data ----------
   useEffect(() => {
-    const loadFormDataFromLocalStorage = () => {
-      try {
-        const parseJSON = <T,>(key: string, fallback: T): T => {
-          const item = localStorage.getItem(key);
-          if (!item) return fallback;
-          try {
-            return JSON.parse(item);
-          } catch {
-            return fallback;
-          }
-        };
-
-        const savedStepFiveData = parseJSON(
-          productFormStepValueKeys.stepFive,
-          null
-        ) as any;
-        if (savedStepFiveData) {
-          if (savedStepFiveData.startBid || savedStepFiveData.endBid) {
-            savedStepFiveData.startBid =
-              savedStepFiveData.startBid && moment(savedStepFiveData.startBid);
-            savedStepFiveData.endBid =
-              savedStepFiveData.endBid && moment(savedStepFiveData.endBid);
-          }
-          form.setFieldsValue(savedStepFiveData);
-        }
-
-        const stepOne = getFromLocalStorageAsParse(
-          productFormStepValueKeys.stepOne
-        );
-        if (!stepOne) {
-          dispatch(setProductFormStep(0));
-          return;
-        }
-
-        const mainPhoto = parseJSON<string | null>("mainPhoto", null);
-        if (mainPhoto) {
-          setMainPhotoFile(base64ToFile(mainPhoto, "mainProductImg"));
-        } else {
-          dispatch(setProductFormStep(1));
-          return;
-        }
-
-        const enteriorPhotos = parseJSON<string[]>("enteriorPhotos", []);
-        if (enteriorPhotos.length > 0) {
-          const files = enteriorPhotos.map((url, index) =>
-            base64ToFile(url, `enterior${index}`)
-          );
-          if (
-            !validateFiles(
-              files,
-              FILE_LIMITS.Enterior_PHOTOS,
-              "Enterior Photos"
-            )
-          ) {
-            dispatch(setProductFormStep(1));
-            return;
-          }
-          setEnteriorPhotosFiles(files);
-        }
-
-        const exteriorPhotos = parseJSON<string[]>("exteriorPhotos", []);
-        if (exteriorPhotos.length > 0) {
-          const files = exteriorPhotos.map((url, index) =>
-            base64ToFile(url, `productPhoto-${index}`)
-          );
-          if (
-            !validateFiles(
-              files,
-              FILE_LIMITS.EXTERIOR_PHOTOS,
-              "Exterior Photos"
-            )
-          ) {
-            dispatch(setProductFormStep(1));
-            return;
-          }
-          setExteriorPhotosFiles(files);
-        }
-
-        const mechanicalPhotos = parseJSON<string[]>("mechanicalPhotos", []);
-        if (mechanicalPhotos.length > 0) {
-          const files = mechanicalPhotos.map((url, index) =>
-            base64ToFile(url, `mechanical${index}`)
-          );
-          if (
-            !validateFiles(
-              files,
-              FILE_LIMITS.MECHANICAL_PHOTOS,
-              "Mechanical Photos"
-            )
-          ) {
-            dispatch(setProductFormStep(1));
-            return;
-          }
-          setMechanicalPhotosFiles(files);
-        }
-
-        const otherPhotos = parseJSON<string[]>("otherPhotos", []);
-        if (otherPhotos.length > 0) {
-          const files = otherPhotos.map((url, index) =>
-            base64ToFile(url, `othersproductphoto${index + 1}`)
-          );
-          if (!validateFiles(files, FILE_LIMITS.OTHER_PHOTOS, "Other Photos")) {
-            dispatch(setProductFormStep(1));
-            return;
-          }
-          setOtherPhotosFiles(files);
-        }
-
-        const docsPhotos = parseJSON<string[]>("docsPhotos", []);
-        if (docsPhotos.length > 0) {
-          const files = docsPhotos.map((url, index) =>
-            base64ToFile(url, `productDocPhoto${index}`)
-          );
-          if (
-            !validateFiles(files, FILE_LIMITS.DOC_PHOTOS, "Document Photos")
-          ) {
-            dispatch(setProductFormStep(1));
-            return;
-          }
-          setDocsPhotosFiles(files);
-        }
-
-        setVideoLinks(parseJSON<string[]>("videoLinks", []));
-        const stepThree = getFromLocalStorageAsParse(
-          productFormStepValueKeys.stepThree
-        );
-        const stepFour = getFromLocalStorageAsParse(
-          productFormStepValueKeys.stepFour
-        );
-        if (!stepThree) {
-          dispatch(setProductFormStep(2));
-          return;
-        }
-        if (!stepFour) {
-          dispatch(setProductFormStep(3));
-          return;
-        }
-
-        setStepOneFormData(stepOne);
-        setStepThreeFormData(stepThree);
-        setStepFourFormData(stepFour);
-
-        const auctionFlag = parseJSON<boolean>("isAuction", false);
-        setIsAuction(auctionFlag);
-      } catch (error) {
-        message.error("Failed to load form data");
+    try {
+      const stepOne = getFromLocalStorageAsParse(
+        productFormStepValueKeys.stepOne
+      );
+      if (!stepOne) {
         dispatch(setProductFormStep(0));
+        return;
       }
-    };
 
-    loadFormDataFromLocalStorage();
-  }, [dispatch, form]);
+      // Load main photo
+      const mainPhoto = localStorage.getItem("mainPhoto");
+      if (mainPhoto) {
+        setMainPhotoFile(base64ToFile(mainPhoto, "mainProductImg"));
+      }
 
+      // Load other photos
+      const otherPhotos = getFromLocalStorageAsParse("otherPhotos") || [];
+      if (otherPhotos.length > 0) {
+        const files = otherPhotos.map((url: string, index: number) =>
+          base64ToFile(url, `othersproductphoto${index + 1}`)
+        );
+        setOtherPhotosFiles(files);
+      }
+
+      // Load video links
+      const videos = getFromLocalStorageAsParse("videoLinks") || [];
+      setVideoLinks(videos);
+
+      setStepOneFormData(stepOne);
+    } catch (error) {
+      message.error("Failed to load form data");
+      dispatch(setProductFormStep(0));
+    }
+  }, [dispatch]);
+
+  // ---------- Subcategory Logic ----------
+  const handleMainCategoryChange = (selectedCategoryId: string) => {
+    const subs = subCategory.filter(
+      (cat: any) => cat.parentCategory.id === selectedCategoryId
+    );
+    setSubcategories(subs);
+  };
+
+  // ---------- Save Step Two Values ----------
   const onValuesChange = (_: any, allValues: IProduct) => {
     setToLocalStorageAsStringify(
-      productFormStepValueKeys.stepFive,
+      productFormStepValueKeys.stepTwo,
       JSON.stringify(allValues)
     );
   };
 
+  // ---------- Submit ----------
   const onFinish = async (values: IProduct) => {
     try {
-      if (
-        !validateFiles([mainPhotoFile!], FILE_LIMITS.MAIN_PHOTO, "Main Photo")
-      )
+      if (!validateFiles([mainPhotoFile!], FILE_LIMITS.MAIN_PHOTO, "Main Photo"))
         return;
       if (
-        !validateFiles(
-          otherPhotoFiles,
-          FILE_LIMITS.OTHER_PHOTOS,
-          "Other Photos"
-        )
-      )
-        return;
-      if (
-        !validateFiles(
-          docsPhotoFiles,
-          FILE_LIMITS.DOC_PHOTOS,
-          "Document Photos"
-        )
-      )
-        return;
-      if (
-        !validateFiles(
-          exteriorPhotoFiles,
-          FILE_LIMITS.EXTERIOR_PHOTOS,
-          "Exterior Photos"
-        )
-      )
-        return;
-      if (
-        !validateFiles(
-          enteriorPhotoFiles,
-          FILE_LIMITS.Enterior_PHOTOS,
-          "Enterior Photos"
-        )
-      )
-        return;
-      if (
-        !validateFiles(
-          mechanicalPhotoFiles,
-          FILE_LIMITS.MECHANICAL_PHOTOS,
-          "Mechanical Photos"
-        )
+        !validateFiles(otherPhotoFiles, FILE_LIMITS.OTHER_PHOTOS, "Other Photos")
       )
         return;
 
       const productData: IProduct = {
         ...values,
-        videos: videoLinks,
-        isAuction,
         ...stepOneFormData,
-        ...stepThreeFormData,
-        ...stepFourFormData,
+        videos: videoLinks,
       };
 
       const formData = new FormData();
       formData.append("data", JSON.stringify(productData));
-      formData.append("mainPhoto", mainPhotoFile!);
-      const appendFiles = (key: string, files: File[]) => {
-        files.forEach((file) => formData.append(key, file));
-      };
-      appendFiles("interior", enteriorPhotoFiles);
-      appendFiles("exterior", exteriorPhotoFiles);
-      appendFiles("mechanical", mechanicalPhotoFiles);
-      appendFiles("others", otherPhotoFiles);
-      appendFiles("docs", docsPhotoFiles);
+      if (mainPhotoFile) formData.append("mainPhoto", mainPhotoFile);
+      otherPhotoFiles.forEach((file) => formData.append("others", file));
 
       const response = await createProduct(formData).unwrap();
       if (response?.statusCode === 201) {
-        message.success("Product created successfully");
-        dispatch(setProductFormStep(5));
+        message.success("✅ Product created successfully");
+        dispatch(setProductFormStep(0));
 
         [
           productFormStepValueKeys.stepOne,
-          productFormStepValueKeys.stepThree,
-          productFormStepValueKeys.stepFour,
-          productFormStepValueKeys.stepFive,
+          productFormStepValueKeys.stepTwo,
           "mainPhoto",
-          "enteriorPhotos",
-          "exteriorPhotos",
-          "mechanicalPhotos",
           "otherPhotos",
-          "docsPhotos",
           "videoLinks",
-          "isAuction",
         ].forEach((key) => removeFromLocalStorage(key));
 
         setMainPhotoFile(null);
-        setEnteriorPhotosFiles([]);
-        setExteriorPhotosFiles([]);
-        setMechanicalPhotosFiles([]);
         setOtherPhotosFiles([]);
-        setDocsPhotosFiles([]);
         setVideoLinks([]);
         form.resetFields();
       }
@@ -340,6 +166,7 @@ const ProductBiddingInfo = () => {
     }
   };
 
+  // ---------- UI ----------
   return (
     <Form
       form={form}
@@ -349,174 +176,112 @@ const ProductBiddingInfo = () => {
       className="bg-white p-4 rounded"
       disabled={isLoading}
     >
-      <Form.Item label="Enable Auction" className="mb-4">
-        <Switch
-          checked={isAuction}
-          onChange={(checked) => {
-            setIsAuction(checked);
-            setToLocalStorageAsStringify("isAuction", checked);
-          }}
-        />
+      <div className="md:grid grid-cols-4 items-center gap-5 w-full">
+        <div className="col-span-2">
+          <Form.Item
+            name="title"
+            label="Title"
+            rules={[
+              { required: true, message: "Please enter the product title" },
+              { min: 3, message: "Title must be at least 3 characters" },
+            ]}
+          >
+            <Input placeholder="Enter product title" />
+          </Form.Item>
+        </div>
+
+        <Form.Item name="mainCategory" label="Main Category">
+          <Select
+            placeholder="Select Main Category"
+            onChange={handleMainCategoryChange}
+            allowClear
+          >
+            {mainCategory.map((category: any) => (
+              <Option key={category.id} value={category.id}>
+                {category.title}
+              </Option>
+            ))}
+          </Select>
+        </Form.Item>
+
+        {subcategories.length > 0 && (
+          <Form.Item name="subCategory" label="Subcategory">
+            <Select placeholder="Select Subcategory" allowClear>
+              {subcategories.map((subcategory: any) => (
+                <Option key={subcategory.id} value={subcategory.id}>
+                  {subcategory.title}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
+        )}
+      </div>
+
+      <Form.Item
+        name="description"
+        label="Description"
+        rules={[
+          { required: true, message: "Please enter the product description" },
+          { min: 10, message: "Description must be at least 10 characters" },
+        ]}
+      >
+        <Input placeholder="Enter product description" />
       </Form.Item>
+
+      <div className="md:grid grid-cols-2 items-center gap-5 w-full">
+        <Form.Item name="brand" label="Brand">
+          <Input placeholder="Enter Brand" />
+        </Form.Item>
+
+        <Form.Item name="model" label="Model">
+          <Input placeholder="Enter Model" />
+        </Form.Item>
+      </div>
 
       <Row gutter={[16, 16]}>
         <Col span={24} md={12}>
           <Form.Item
-            name={["minBid"]}
+            name="price"
             label={
               <span>
-                Minimum Bid{" "}
+                Price{" "}
                 <Tooltip title="The starting bid amount for the product">
                   <InfoCircleOutlined />
                 </Tooltip>
               </span>
             }
             rules={[
-              { required: false, message: "Please enter the minimum bid" },
-              {
-                type: "number",
-                min: 0,
-                message: "Minimum bid must be greater than 0",
-              },
+              { required: true, message: "Please enter the minimum bid" },
+              { type: "number", min: 0, message: "Must be greater than 0" },
             ]}
           >
-            <InputNumber
-              disabled={!isAuction}
-              min={0}
-              placeholder="Enter minimum bid"
-              className="w-full"
-              style={{ width: "100%" }}
-            />
+            <InputNumber min={0} placeholder="Enter Price" className="w-full" />
           </Form.Item>
-        
         </Col>
 
         <Col span={24} md={12}>
           <Form.Item
-            name={["mainPrice"]}
+            name="offerPrice"
             label={
               <span>
-                Price{" "}
-                <Tooltip title="Enable the 'Buy Now' functionality for the buyer only if a mainPrice is provided. If mainPrice is not provided, the buying functionality will be disabled.">
+                Offer Price{" "}
+                <Tooltip title="Optional: Buy now price for direct purchase">
                   <InfoCircleOutlined />
                 </Tooltip>
               </span>
             }
-            rules={[{ required: false }]}
           >
             <InputNumber
               min={0}
-              placeholder="Enter minimum Price"
+              placeholder="Enter Offer Price"
               className="w-full"
-              style={{ width: "100%" }}
-            />
-          </Form.Item>
-        </Col>
-      </Row>
-
-      <Row gutter={[16, 16]}>
-        <Col span={24} md={12}>
-          <Form.Item
-            name="startBid"
-            label={
-              <span>
-                Start Bidding Time{" "}
-                <Tooltip title="The date and time when bidding starts">
-                  <InfoCircleOutlined />
-                </Tooltip>
-              </span>
-            }
-            rules={[
-              {
-                validator: (_, value) => {
-                  if (!isAuction) return Promise.resolve();
-                  const now = moment();
-                  if (value && value.isBefore(now, "minute")) {
-                    return Promise.reject("Start time cannot be in the past");
-                  }
-                  return Promise.resolve();
-                },
-              },
-            ]}
-          >
-            <DatePicker
-              showTime
-              disabled={!isAuction}
-              placeholder="Select start time"
-              className="w-full"
-              disabledDate={(current) =>
-                current && current < moment().startOf("day")
-              }
             />
           </Form.Item>
         </Col>
 
         <Col span={24} md={12}>
-          <Form.Item
-            name="endBid"
-            label={
-              <span>
-                End Bidding Time{" "}
-                <Tooltip title="The date and time when bidding ends">
-                  <InfoCircleOutlined />
-                </Tooltip>
-              </span>
-            }
-            rules={[
-              ({ getFieldValue }) => ({
-                validator(_, value) {
-                  if (!isAuction) return Promise.resolve();
-                  const startBid = getFieldValue("startBid");
-                  if (value && startBid && value.isBefore(startBid)) {
-                    return Promise.reject("End time must be after start time");
-                  }
-                  return Promise.resolve();
-                },
-              }),
-            ]}
-          >
-            <DatePicker
-              showTime
-              disabled={!isAuction}
-              placeholder="Select end time"
-              className="w-full"
-              disabledDate={(current) => {
-                const startDate = form.getFieldValue("startBid");
-                return (
-                  current &&
-                  (current <= moment().startOf("day") ||
-                    (startDate && current <= startDate))
-                );
-              }}
-            />
-          </Form.Item>
-        </Col>
-      </Row>
-
-      <Row gutter={[16, 16]}>
-        <Col span={24} md={12}>
-          <Form.Item
-            name={["location", "city"]}
-            label="City"
-            rules={[
-              { required: true, message: "Please enter the city name" },
-              {
-                pattern: /^[a-zA-Z\s-]+$/,
-                message: "Please enter a valid city name",
-              },
-            ]}
-          >
-            <Input placeholder="Enter city" className="w-full" />
-          </Form.Item>
-        </Col>
-
-        <Col span={24} md={12}>
-          <Form.Item
-            name={["location", "zipCode"]}
-            label="Zip Code"
-            rules={[{ required: true, message: "Please enter the zip code" }]}
-          >
-            <Input placeholder="Enter zip code" className="w-full" />
+          <Form.Item name="highlights" label="Highlights">
+            <Select mode="tags" placeholder="Add product highlights" />
           </Form.Item>
         </Col>
       </Row>

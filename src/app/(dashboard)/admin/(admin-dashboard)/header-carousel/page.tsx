@@ -11,7 +11,7 @@ import { useAppDispatch, useAppSelector } from "@/Redux/hooks";
 import { setProductFormStep } from "@/Redux/Slices/productSlice";
 import {PlusOutlined} from "@ant-design/icons";
 import { productMedia } from "@/components/dashboardlayout/create-product/action/store";
-import { ISecondStepStoreAbleData } from "@/components/dashboardlayout/create-product/type/type";
+import { HeaderCarouselMediaData, ISecondStepStoreAbleData } from "@/components/dashboardlayout/create-product/type/type";
 
 const HeaderCarousel: React.FC = () => {
   const [form] = Form.useForm();
@@ -39,10 +39,6 @@ const HeaderCarousel: React.FC = () => {
       await productMedia.loadProductMediaFromLocalStorage(form, {
         mainPhoto: setMainPhotoFile,
         otherPhotos: setOtherPhotos,
-        docsPhotos: setDocsPhotos,
-        enteriorPhotos: setEnteriorPhotos,
-        exteriorPhotos: setExteriorPhotos,
-        mechanicalPhotos: setMechanicalPhotos,
         videoLinks: setVideoLinks,
       });
     };
@@ -51,7 +47,7 @@ const HeaderCarousel: React.FC = () => {
   }, [form]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const data: ISecondStepStoreAbleData = {
+  const data: HeaderCarouselMediaData = {
     mainPhotoFile,
     enteriorPhotoFiles,
     exteriorPhotoFiles,

@@ -47,7 +47,7 @@ const MembershipHome = () => {
   ];
 
   return (
-    <section className="relative overflow-hidden py-16 px-4 lg:px-12">
+    <section className="relative overflow-hidden py-16">
       {/* ==== Gradient Background ==== */}
       <div className="absolute inset-0 bg-gradient-to-br from-gray-100 via-[#eaf1ff] to-[#dce6ff]"></div>
 
@@ -77,7 +77,7 @@ const MembershipHome = () => {
         </svg>
       </div>
 
-      <div className="relative text-gray-800 z-10">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 text-gray-800 md:px-8">
         {/* ===== Title Section ===== */}
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-[#0052FF] mb-3">

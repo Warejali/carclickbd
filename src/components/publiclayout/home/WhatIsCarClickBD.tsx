@@ -34,9 +34,10 @@ const WhatIsCarClickBD = () => {
   ];
 
   return (
-    <section className="flex flex-col lg:flex-row">
+    <section className="bg-slate-950 py-14">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 overflow-hidden rounded-lg px-4 md:px-8 lg:grid-cols-[0.82fr_1.18fr]">
       {/* ===== Left Section (40%) ===== */}
-      <div className="bg-[#181818] text-white lg:w-[40%] w-full p-8 lg:p-14">
+      <div className="bg-[#181818] text-white p-8 lg:p-12">
         <h2 className="text-3xl font-bold mb-6">What is CarClickBD?</h2>
 
         <p className="text-gray-300 text-sm leading-relaxed mb-4">
@@ -90,7 +91,7 @@ const WhatIsCarClickBD = () => {
       </div>
 
       {/* ===== Right Section (60%) ===== */}
-      <div className="bg-[#002b8f] text-white lg:w-[60%] w-full p-8 lg:p-14">
+      <div className="bg-[#002b8f] text-white p-8 lg:p-12">
         <h3 className="text-xl lg:text-2xl font-semibold mb-10 text-center lg:text-left">
           Search CarClickBD’s Extensive Used & Repairable Cars for Sale
         </h3>
@@ -130,6 +131,7 @@ const WhatIsCarClickBD = () => {
             </div>
           ))}
         </div>
+      </div>
       </div>
     </section>
   );

@@ -18,7 +18,7 @@ const ProductFormStep: React.FC<{ isLoading?: boolean }> = ({
 
   return (
     <div className="flex items-center gap-3  ">
-      {currentStep < 4 && (
+      {currentStep < 1 && (
         <Form.Item>
           <Button htmlType="submit" type="primary">
             Next
@@ -32,7 +32,7 @@ const ProductFormStep: React.FC<{ isLoading?: boolean }> = ({
           </Button>
         </Form.Item>
       )}
-      {currentStep === 4 && (
+      {currentStep === 1 && (
         <Form.Item>
           <Button loading={isLoading} type="primary" htmlType="submit">
             Submit

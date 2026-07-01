@@ -18,13 +18,7 @@ import {productMedia} from "../action/store";
 const ProductMedia: React.FC = () => {
   const [form] = Form.useForm();
   const [mainPhotoFile, setMainPhotoFile] = useState<File | any>(null);
-  const [enteriorPhotoFiles, setEnteriorPhotos] = useState<File[] | any>([]);
-  const [exteriorPhotoFiles, setExteriorPhotos] = useState<File[] | any>([]);
-  const [mechanicalPhotoFiles, setMechanicalPhotos] = useState<File[] | any>(
-    []
-  );
   const [otherPhotoFiles, setOtherPhotos] = useState<File[] | any>([]);
-  const [docsPhotoFiles, setDocsPhotos] = useState<File[] | any>([]);
 
   const [videoLinks, setVideoLinks] = useState<string[]>([]);
   const [previewImage, setPreviewImage] = useState<string>("");
@@ -41,10 +35,6 @@ const ProductMedia: React.FC = () => {
       await productMedia.loadProductMediaFromLocalStorage(form, {
         mainPhoto: setMainPhotoFile,
         otherPhotos: setOtherPhotos,
-        docsPhotos: setDocsPhotos,
-        enteriorPhotos: setEnteriorPhotos,
-        exteriorPhotos: setExteriorPhotos,
-        mechanicalPhotos: setMechanicalPhotos,
         videoLinks: setVideoLinks,
       });
     };
@@ -55,11 +45,7 @@ const ProductMedia: React.FC = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const data: ISecondStepStoreAbleData = {
     mainPhotoFile,
-    enteriorPhotoFiles,
-    exteriorPhotoFiles,
-    mechanicalPhotoFiles,
     otherPhotoFiles,
-    docsPhotoFiles,
     videoLinks,
   };
   // Save to local storage whenever there’s a change
@@ -127,7 +113,6 @@ const ProductMedia: React.FC = () => {
     <div className="overflow-y-auto">
       <Form form={form} layout="vertical" onFinish={handleSubmit}>
         <Card>
-          {/* main photo */}
           <Form.Item
             name="mainPhoto"
             label="Main Photo"
@@ -136,7 +121,7 @@ const ProductMedia: React.FC = () => {
             ]}
           >
             <Upload
-              listType="picture"
+              listType="picture-card"
               fileList={mainPhotoFile ? [mainPhotoFile] : []}
               onPreview={handlePreview}
               onChange={handleMainPhotoChange}
@@ -147,91 +132,9 @@ const ProductMedia: React.FC = () => {
           </Form.Item>
 
           <div className="md:grid grid-cols-2 gap-4">
-            {/* Enterer photos */}
-            <Form.Item
-              name="enteriorPhotos"
-              label="Enterior Photos"
-              rules={[
-                {
-                  required: true,
-                  message: "Please upload at least one other photo!",
-                },
-              ]}
-            >
-              <Upload
-                listType="picture-card"
-                fileList={enteriorPhotoFiles as any}
-                onPreview={handlePreview}
-                onChange={
-                  ({ fileList }) =>
-                    handleChangePhotos({
-                      fileList,
-                      setFileList: setEnteriorPhotos,
-                    }) // Pass the correct setter function
-                }
-                multiple
-              >
-                {enteriorPhotoFiles.length < 10 && uploadButton}
-              </Upload>
-            </Form.Item>
-
-            {/* Exterior photos */}
-            <Form.Item
-              name="exteriorPhotos"
-              label="Exterior Photos"
-              rules={[
-                {
-                  required: true,
-                  message: "Please upload at least one document photo!",
-                },
-              ]}
-            >
-              <Upload
-                listType="picture-card"
-                fileList={exteriorPhotoFiles as any}
-                onPreview={handlePreview}
-                onChange={({ fileList }) =>
-                  handleChangePhotos({
-                    fileList,
-                    setFileList: setExteriorPhotos,
-                  })
-                }
-                multiple
-              >
-                {exteriorPhotoFiles.length < 10 && uploadButton}
-              </Upload>
-            </Form.Item>
-
-            {/*  Mechanical photos */}
-            <Form.Item
-              name="mechanicalPhotos"
-              label="Mechanical Photos"
-              rules={[
-                {
-                  required: true,
-                  message: "Please upload at least one document photo!",
-                },
-              ]}
-            >
-              <Upload
-                listType="picture-card"
-                fileList={mechanicalPhotoFiles as any}
-                onPreview={handlePreview}
-                onChange={({ fileList }) =>
-                  handleChangePhotos({
-                    fileList,
-                    setFileList: setMechanicalPhotos,
-                  })
-                }
-                multiple
-              >
-                {mechanicalPhotoFiles.length < 10 && uploadButton}
-              </Upload>
-            </Form.Item>
           </div>
 
-          <div className="md:grid grid-cols-2 gap-4">
-            {/* Other photos */}
+          <div className="md:grid grid-cols-2 gap-4">            
             <Form.Item
               name="otherPhotos"
               label="Other Photos"
@@ -258,27 +161,7 @@ const ProductMedia: React.FC = () => {
               </Upload>
             </Form.Item>
 
-            {/* Documents */}
-            <Form.Item
-              name="docsPhotos"
-              label="Documents"
-            
-            >
-              <Upload
-                listType="picture-card"
-                fileList={docsPhotoFiles as any}
-                onPreview={handlePreview}
-                onChange={({ fileList }) =>
-                  handleChangePhotos({
-                    fileList,
-                    setFileList: setDocsPhotos,
-                  })
-                }
-                multiple
-              >
-                {docsPhotoFiles.length < 10 && uploadButton}
-              </Upload>
-            </Form.Item>
+           
           </div>
         </Card>
         <Card className="!my-4">

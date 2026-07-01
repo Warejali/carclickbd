@@ -12,22 +12,10 @@ export const getProductMediaStoreAbleData = async (
   if (typeof window === "undefined") return;
 
   const mainPhotoUrl = await getStoreAbleFile(storeAbleData.mainPhotoFile);
-
-  const enteriorPhotosUrls = await Promise.all(
-    storeAbleData.enteriorPhotoFiles.map(getStoreAbleFile)
-  );
-  const exteriorPhotosUrls = await Promise.all(
-    storeAbleData.exteriorPhotoFiles.map(getStoreAbleFile)
-  );
-  const mechanicalPhotosUrls = await Promise.all(
-    storeAbleData.mechanicalPhotoFiles.map(getStoreAbleFile)
-  );
   const otherPhotosUrls = await Promise.all(
     storeAbleData.otherPhotoFiles.map(getStoreAbleFile)
   );
-  const docsPhotosUrls = await Promise.all(
-    storeAbleData.docsPhotoFiles.map(getStoreAbleFile)
-  );
+ 
 
   const data: IStoreAbleData[] = [
     {
@@ -38,22 +26,7 @@ export const getProductMediaStoreAbleData = async (
       key: productStorageKey.OTHER_PHOTOS,
       value: otherPhotosUrls,
     },
-    {
-      key: productStorageKey.DOCS_PHOTOS,
-      value: docsPhotosUrls,
-    },
-    {
-      key: productStorageKey.EXTERIOR_PHOTOS,
-      value: exteriorPhotosUrls,
-    },
-    {
-      key: productStorageKey.ENTERIOR_PHOTOS,
-      value: enteriorPhotosUrls,
-    },
-    {
-      key: productStorageKey.MECHANICAL_PHOTOS,
-      value: mechanicalPhotosUrls,
-    },
+
     {
       key: productStorageKey.VIDEO_LINKS,
       value: storeAbleData.videoLinks,
@@ -99,10 +72,6 @@ const loadProductMediaFromLocalStorage = async (
   stateSetters: {
     mainPhoto: React.Dispatch<React.SetStateAction<File | null>>;
     otherPhotos: React.Dispatch<React.SetStateAction<File[]>>;
-    docsPhotos: React.Dispatch<React.SetStateAction<File[]>>;
-    enteriorPhotos: React.Dispatch<React.SetStateAction<File[]>>;
-    exteriorPhotos: React.Dispatch<React.SetStateAction<File[]>>;
-    mechanicalPhotos: React.Dispatch<React.SetStateAction<File[]>>;
     videoLinks: React.Dispatch<React.SetStateAction<string[]>>;
   }
 ) => {
@@ -112,10 +81,6 @@ const loadProductMediaFromLocalStorage = async (
   const {
     mainPhoto: setMainPhotoFile,
     otherPhotos: setOtherPhotos,
-    docsPhotos: setDocsPhotos,
-    enteriorPhotos: setEnteriorPhotos,
-    exteriorPhotos: setExteriorPhotos,
-    mechanicalPhotos: setMechanicalPhotos,
     videoLinks: setVideoLinks,
   } = stateSetters;
 
@@ -139,37 +104,6 @@ const loadProductMediaFromLocalStorage = async (
     "otherPhotos"
   );
 
-  await loadFromLocalStorage(
-    productStorageKey.DOCS_PHOTOS,
-    "docs",
-    setDocsPhotos,
-    form,
-    "docsPhotos"
-  );
-
-  await loadFromLocalStorage(
-    productStorageKey.ENTERIOR_PHOTOS,
-    "enterior",
-    setEnteriorPhotos,
-    form,
-    "enteriorPhotos"
-  );
-
-  await loadFromLocalStorage(
-    productStorageKey.EXTERIOR_PHOTOS,
-    "exterior",
-    setExteriorPhotos,
-    form,
-    "exteriorPhotos"
-  );
-
-  await loadFromLocalStorage(
-    productStorageKey.MECHANICAL_PHOTOS,
-    "mechanical",
-    setMechanicalPhotos,
-    form,
-    "mechanicalPhotos"
-  );
 
   // Load video links
   const savedVideoLinks =

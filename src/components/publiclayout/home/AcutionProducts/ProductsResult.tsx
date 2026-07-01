@@ -28,6 +28,8 @@ const ProductsResult = ({
     if (searchParams.get("model")) baseFilters.push({ name: "model", value: searchParams.get("model") });
     if (searchParams.get("transmission")) baseFilters.push({ name: "transmission", value: searchParams.get("transmission") });
     if (searchParams.get("bodyStyle")) baseFilters.push({ name: "bodyStyle", value: searchParams.get("bodyStyle") });
+    if (searchParams.get("condition")) baseFilters.push({ name: "condition", value: searchParams.get("condition") });
+    if (searchParams.get("searchTerm")) baseFilters.push({ name: "searchTerm", value: searchParams.get("searchTerm") });
     if (searchParams.get("startYear") && searchParams.get("endYear")) {
       baseFilters.push({ name: "startYear", value: parseInt(searchParams.get("startYear")!) });
       baseFilters.push({ name: "endYear", value: parseInt(searchParams.get("endYear")!) });
@@ -74,7 +76,10 @@ const ProductsResult = ({
     );
   }
 
-  const displayedProducts = isShowAll ? sortedProducts : sortedProducts.slice(0, 10);
+  const previewLimit = isPaginate ? 10 : 8;
+  const displayedProducts = isShowAll
+    ? sortedProducts
+    : sortedProducts.slice(0, previewLimit);
   return (
     <section className="mt-6">
       {displayedProducts.length === 0 ? (
@@ -89,10 +94,14 @@ const ProductsResult = ({
         </div>
       )}
 
-      {products.length > 15 && !isShowAll && (
-        <div className="text-end mt-6">
-          <Button onClick={() => router.push("/cars")}>
-            Show All Cars
+      {products.length > previewLimit && !isShowAll && (
+        <div className="mt-8 flex justify-center">
+          <Button
+            size="large"
+            className="!h-12 !rounded-md !border-slate-950 !px-8 !font-bold !text-slate-950 hover:!border-sky-600 hover:!text-sky-600"
+            onClick={() => router.push("/cars")}
+          >
+            Load More Cars
           </Button>
         </div>
       )}

@@ -1,144 +1,154 @@
 "use client";
+
 import React from "react";
+import Link from "next/link";
 import {
   FacebookOutlined,
   InstagramOutlined,
   LinkedinOutlined,
   YoutubeOutlined,
 } from "@ant-design/icons";
+import { Mail, MapPin, Phone } from "lucide-react";
 import { SiTiktok } from "react-icons/si";
-import Image from "next/image";
-import Link from "next/link";
+
+const footerColumns = [
+  {
+    title: "Buy",
+    links: [
+      { label: "Browse Cars", href: "/cars" },
+      { label: "Featured Auctions", href: "/featured-auctions" },
+      { label: "Past Auctions", href: "/past-auctions" },
+      { label: "Duty Calculator", href: "/duty-calculator" },
+      { label: "Verify Auction Sheet", href: "/verify-auction-sheet" },
+    ],
+  },
+  {
+    title: "Sell",
+    links: [
+      { label: "Sell a Vehicle", href: "/sell-item" },
+      { label: "Seller Signup", href: "/seller-signup" },
+      { label: "Photo Guide", href: "/photoguide" },
+      { label: "How It Works", href: "/how-it-works" },
+    ],
+  },
+  {
+    title: "Support",
+    links: [
+      { label: "Help Center", href: "/help" },
+      { label: "Support", href: "/support" },
+      { label: "Shipping", href: "/shipping" },
+      { label: "SafePay", href: "/safepay" },
+      { label: "Contact", href: "/contact" },
+    ],
+  },
+  {
+    title: "Company",
+    links: [
+      { label: "About", href: "/about" },
+      { label: "Blog", href: "/blog" },
+      { label: "Community", href: "/community" },
+      { label: "Gallery", href: "/gallery" },
+      { label: "Sitemap", href: "/sitemap" },
+    ],
+  },
+];
+
+const socialLinks = [
+  { label: "Facebook", href: "https://facebook.com", icon: FacebookOutlined },
+  { label: "Instagram", href: "https://instagram.com", icon: InstagramOutlined },
+  { label: "TikTok", href: "https://tiktok.com", icon: SiTiktok },
+  { label: "LinkedIn", href: "https://linkedin.com", icon: LinkedinOutlined },
+  { label: "YouTube", href: "https://youtube.com", icon: YoutubeOutlined },
+];
 
 const Footer = () => {
   return (
-    <footer className="bg-[#111111] text-gray-300 pt-12 pb-6 px-6 md:px-10 lg:px-20">
-      {/* Top Row */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-8 border-b border-gray-700 pb-10">
-        {/* ==== Column 1 ==== */}
-        <div>
-          <h4 className="text-[#F0B90B] font-semibold mb-4">Get to Know Us</h4>
-          <ul className="space-y-2 text-sm">
-            <li>About CarClickBD</li>
-            <li>Our History</li>
-            <li>How Auctions Work</li>
-            <li>Community</li>
-            <li>Member News</li>
-            <li>Reviews</li>
-            <li>Careers</li>
-            <li>Press Releases</li>
-            <li>Investor Relations</li>
-          </ul>
-        </div>
+    <footer className="bg-slate-950 text-slate-300">
+      <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 lg:py-16">
+        <div className="grid gap-10 lg:grid-cols-[1.1fr_1.6fr]">
+          <div>
+            <Link href="/" className="inline-flex items-center">
+              <span className="text-3xl font-black italic tracking-tight text-white">
+                Car<span className="text-sky-400">ClickBD</span>
+              </span>
+            </Link>
+            <p className="mt-4 max-w-md text-sm font-medium leading-7 text-slate-400">
+              A cleaner way to browse verified cars, compare details, verify
+              auction sheets, and contact sellers with confidence.
+            </p>
 
-        {/* ==== Column 2 ==== */}
-        <div>
-          <h4 className="text-[#F0B90B] font-semibold mb-4">Find a Vehicle</h4>
-          <ul className="space-y-2 text-sm">
-            <li>Vehicle Finder</li>
-            <li>Sales List</li>
-            <li>Watchlist</li>
-            <li>Saved Searches</li>
-            <li>Vehicle Alerts</li>
-          </ul>
-        </div>
+            <div className="mt-6 space-y-3 text-sm">
+              <p className="flex items-center gap-3">
+                <Phone size={16} className="text-[#f0b90b]" />
+                <span>+880 1576 611703</span>
+              </p>
+              <p className="flex items-center gap-3">
+                <Mail size={16} className="text-[#f0b90b]" />
+                <span>support@carclickbd.com</span>
+              </p>
+              <p className="flex items-center gap-3">
+                <MapPin size={16} className="text-[#f0b90b]" />
+                <span>Dhaka, Bangladesh</span>
+              </p>
+            </div>
 
-        {/* ==== Column 3 ==== */}
-        <div>
-          <h4 className="text-[#F0B90B] font-semibold mb-4">Auctions</h4>
-          <ul className="space-y-2 text-sm">
-            <li>Today’s Auctions</li>
-            <li>Auctions Calendar</li>
-            <li>Join Auction</li>
-            <li>Night Cap Sales</li>
-            <li>Bank-Repo Vehicles</li>
-            <li>Rental Auctions</li>
-            <li>Wholesale Auctions</li>
-          </ul>
-        </div>
+            <div className="mt-7 flex flex-wrap gap-3">
+              {socialLinks.map((social) => {
+                const Icon = social.icon;
+                return (
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={social.label}
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-lg text-white transition hover:border-[#f0b90b] hover:bg-[#f0b90b] hover:text-slate-950"
+                  >
+                    <Icon />
+                  </a>
+                );
+              })}
+            </div>
+          </div>
 
-        {/* ==== Column 4 ==== */}
-        <div>
-          <h4 className="text-[#F0B90B] font-semibold mb-4">Services</h4>
-          <ul className="space-y-2 text-sm">
-            <li>Brokers</li>
-            <li>Vehicle Reports</li>
-            <li>Industry Links</li>
-            <li>Shipping</li>
-            <li>Tow Providers</li>
-            <li>International Buyers</li>
-          </ul>
-        </div>
-
-        {/* ==== Column 5 ==== */}
-        <div>
-          <h4 className="text-[#F0B90B] font-semibold mb-4">Support</h4>
-          <ul className="space-y-2 text-sm">
-            <li>Help Center</li>
-            <li>Glossary of Terms</li>
-            <li>Resource Center</li>
-            <li>Help With Licensing</li>
-            <li>Videos</li>
-            <li>Member Fees</li>
-            <li>Seller Mobile</li>
-            <li>New Member Guide</li>
-          </ul>
-        </div>
-
-        {/* ==== Column 6 ==== */}
-        <div>
-          <h4 className="text-[#F0B90B] font-semibold mb-4">Connect with Us</h4>
-          <ul className="space-y-2 text-sm">
-            <li className="flex items-center gap-2 hover:text-white transition">
-              <FacebookOutlined /> Facebook
-            </li>
-            <li className="flex items-center gap-2 hover:text-white transition">
-              <InstagramOutlined /> Instagram
-            </li>
-            <li className="flex items-center gap-2 hover:text-white transition">
-              <SiTiktok /> TikTok
-            </li>
-            <li className="flex items-center gap-2 hover:text-white transition">
-              <LinkedinOutlined /> LinkedIn
-            </li>
-            <li className="flex items-center gap-2 hover:text-white transition">
-              <YoutubeOutlined /> YouTube
-            </li>
-            <li>Blog</li>
-          </ul>
-
-          <h4 className="text-[#F0B90B] font-semibold mt-6 mb-2">
-            Download the App
-          </h4>
-          <div className="flex flex-col gap-3">
-            <Image
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS17Dlfop0XoXj0yd3Q_B_io3z4W6koxAOpYg&s"
-              alt="App Store"
-              width={140}
-              height={40}
-            />
-            <Image
-              src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
-              alt="Google Play"
-              width={140}
-              height={40}
-            />
+          <div className="grid grid-cols-2 gap-7 md:grid-cols-4">
+            {footerColumns.map((column) => (
+              <div key={column.title}>
+                <h4 className="text-sm font-extrabold uppercase tracking-[0.16em] text-[#f0b90b]">
+                  {column.title}
+                </h4>
+                <ul className="mt-4 space-y-3 text-sm">
+                  {column.links.map((link) => (
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
+                        className="font-medium text-slate-400 transition hover:text-white"
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
-      </div>
 
-      {/* Bottom Row */}
-      <div className="flex flex-col md:flex-row justify-between items-center text-sm mt-6 gap-3">
-        <p className="text-gray-500">
-          Copyright © 2026 CarClickBD Inc. All rights reserved.
-        </p>
-        <div className="flex flex-wrap justify-center gap-4 text-gray-400 text-xs">
-          <Link href="/">Site Map</Link>
-          <Link href="/contact">Contact Us</Link>
-          <Link href="/sell-item">Sell a Vehicle</Link>
-          <Link href="/terms-service">Terms of Service</Link>
-          <Link href="/privacy-policy">Privacy Policy</Link>
-          <Link href="/privacy-policy">Cookie Policy</Link>
+        <div className="mt-12 flex flex-col gap-4 border-t border-white/10 pt-6 text-sm md:flex-row md:items-center md:justify-between">
+          <p className="text-slate-500">
+            Copyright © 2026 CarClickBD. All rights reserved.
+          </p>
+          <div className="flex flex-wrap gap-4 text-xs font-semibold text-slate-400">
+            <Link href="/terms-service" className="hover:text-white">
+              Terms
+            </Link>
+            <Link href="/privacy-policy" className="hover:text-white">
+              Privacy
+            </Link>
+            <Link href="/cookie-policy" className="hover:text-white">
+              Cookie Policy
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

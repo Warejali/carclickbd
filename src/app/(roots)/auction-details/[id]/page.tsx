@@ -2,26 +2,16 @@
 
 import { useParams } from "next/navigation";
 import { useGetProductByIdQuery } from "@/Redux/api/productApi";
-import { Button } from "antd";
-import { useEffect, useState } from "react";
 import Gallery from "@/components/product/Gallery";
 import ProductSkeletonContainer from "@/components/product/skeleton/ProductSkeletonContainer";
-import moment from "moment";
 import VehicleDetails from "../components/VehicleDetails";
 import BidInformation from "../components/BidInformation";
 import SaleInformation from "../components/SaleInformation";
-import ShippingEstimate from "../components/ShippingEstimate";
-import ReportsAndServices from "../components/ReportsAndServices";
-import Alerts from "../components/Alerts";
 import ProductsResult from "@/components/publiclayout/home/AcutionProducts/ProductsResult";
+import { DetailProductItemParents } from "@/components/product/DetailProductItemParents";
 
 export default function ProductDetailsPage() {
   const { id } = useParams();
-  const [zip, setZip] = useState("");
-  const [progress, setProgress] = useState(0);
-  const [shippingType, setShippingType] = useState<
-    "domestic" | "international"
-  >("domestic");
 
   const { data, isLoading } = useGetProductByIdQuery(`${id}`, {
     skip: !id,
@@ -29,80 +19,84 @@ export default function ProductDetailsPage() {
   });
 
   const product = data?.data;
-
-  // Calculate auction time progress
-  const endBid = product?.endBid ? moment(product.endBid) : null;
-  const startBid = product?.startBid ? moment(product.startBid) : null;
-  const startTime = startBid ?? moment().subtract(1, "day");
-  const endTime = endBid ?? moment();
-  const totalDuration = endTime.diff(startTime, "seconds");
-
-  useEffect(() => {
-    if (!product || !endBid) return;
-    const interval = setInterval(() => {
-      const now = moment();
-      const remaining = endTime.diff(now, "seconds");
-      const percent = Math.max(
-        0,
-        Math.min(100, ((totalDuration - remaining) / totalDuration) * 100)
-      );
-      setProgress(percent);
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [product, endBid, endTime, totalDuration]);
-
-  const timeLeft = endBid ? endBid.fromNow(true) : "";
+  const title =
+    product?.title ||
+    [product?.launchingYear, product?.make, product?.model]
+      .filter(Boolean)
+      .join(" ");
+  const location = [product?.location?.city, product?.location?.zipCode]
+    .filter(Boolean)
+    .join(", ");
 
   if (isLoading) return <ProductSkeletonContainer />;
-  if (!product)
-    return <div className="text-center mt-20">Product not found.</div>;
+  if (!product) {
+    return (
+      <div className="mx-auto max-w-7xl px-4 py-24 text-center">
+        <h1 className="text-2xl font-bold text-slate-950">Product not found</h1>
+        <p className="mt-2 text-slate-500">This vehicle is no longer available.</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="px-4 py-6 space-y-6">
-      {/* Title / Watchlist */}
-      <div className="flex justify-between items-center">
-        <h1 className="text-xl font-semibold">{product.title}</h1>
-        <Button type="link">Add to watchlist</Button>
-      </div>
-
-      {/* Top Section – 3 columns */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left: Gallery */}
-        <div>
-          <Gallery product={product} />
+    <main className="bg-slate-50">
+      <section className="mx-auto max-w-7xl px-4 py-6 lg:py-8">
+        <div className="mb-5 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <div className="mb-2 flex flex-wrap items-center gap-2">
+              <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold uppercase tracking-wide text-emerald-700 ring-1 ring-emerald-200">
+                {product?.isSoldOut ? "Reserved" : "Available"}
+              </span>
+              {product?.isFeatured && (
+                <span className="rounded-full bg-sky-50 px-3 py-1 text-xs font-bold uppercase tracking-wide text-sky-700 ring-1 ring-sky-200">
+                  Featured
+                </span>
+              )}
+            </div>
+            <h1 className="text-3xl font-extrabold tracking-normal text-slate-950 lg:text-4xl">
+              {title}
+            </h1>
+            {location && (
+              <p className="mt-2 text-sm font-medium text-slate-500">
+                Located in {location}
+              </p>
+            )}
+          </div>
         </div>
 
-        {/* Middle: Vehicle details */}
-        <VehicleDetails product={product} />
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_380px]">
+          <div className="space-y-6">
+            <Gallery product={product} />
+            <VehicleDetails product={product} />
+            <DetailProductItemParents product={product} />
+          </div>
 
-        {/* Right: Bid & Sale info */}
-        <div className="space-y-6">
-          <BidInformation product={product} />
-          <SaleInformation product={product} />
+          <aside className="space-y-5 lg:sticky lg:top-24 lg:self-start">
+            <BidInformation product={product} />
+            <SaleInformation product={product} />
+          </aside>
         </div>
-      </div>
 
-      {/* Lower Full-width Cards */}
-      <div className="mt-6 space-y-6 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-        <ShippingEstimate
-          zip={zip}
-          setZip={setZip}
-          shippingType={shippingType}
-          setShippingType={setShippingType}
-        />
-        <ReportsAndServices />
-        <Alerts />
-      </div>
-      <div>
-        <h2 className="text-lg font-semibold mb-4">View similar vehicles</h2>
-        <ProductsResult
-          className="grid grid-cols-1 lg:grid-cols-4 xl:grid-cols-5 gap-6"
-          isPaginate={true}
-          isShowAll={false}
-          isWinner={false}
-          isDraft={false}
-        />
-      </div>
-    </div>
+        <section className="mt-12 border-t border-slate-200 pt-8">
+          <div className="mb-5 flex items-end justify-between gap-4">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-sky-600">
+                More Options
+              </p>
+              <h2 className="mt-1 text-2xl font-extrabold text-slate-950">
+                Similar vehicles
+              </h2>
+            </div>
+          </div>
+          <ProductsResult
+            className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+            isPaginate={false}
+            isShowAll={false}
+            isWinner={false}
+            isDraft={false}
+          />
+        </section>
+      </section>
+    </main>
   );
 }

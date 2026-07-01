@@ -13,12 +13,9 @@ const ProductFilterOptions = ({
   isWinner?: boolean;
 }) => {
   return (
-    <div className="flex flex-col gap-6 mt-8 bg-white w-full px-4">
+    <div className="mx-auto mt-8 flex w-full max-w-7xl flex-col gap-6 bg-white px-4 md:px-8">
       <section className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between w-full">
-        {/* Header */}
-        <h3 className="text-xl md:text-2xl font-bold text-gray-600">
-          Cars for Sale
-        </h3>
+     
 
         {/* Filters */}
         <div className="flex flex-col gap-4 w-full lg:flex-row lg:items-center lg:justify-between">

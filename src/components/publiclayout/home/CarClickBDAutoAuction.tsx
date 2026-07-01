@@ -1,155 +1,159 @@
 "use client";
+
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import Button from "@/components/shared/PrimaryButton";
+import Link from "next/link";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowRight, BadgeCheck, Sparkles } from "lucide-react";
+
+const tabs = ["Makes", "Models", "Featured", "Types", "Trending"];
+
+const data: Record<string, string[]> = {
+  Makes: [
+    "Acura", "Audi", "BMW", "Buick", "Cadillac", "Chevrolet", "Chrysler", "Dodge",
+    "Ford", "Freightliner", "GMC", "Harley", "Honda", "Hummer", "Hyundai", "Infiniti",
+    "International", "Isuzu", "Jaguar", "Jeep", "Kia", "Lamborghini", "Land Rover", "Lexus",
+    "Lincoln", "Lotus", "Maserati", "Mazda", "McLaren", "Mercedes-Benz", "Mini", "Mitsubishi",
+    "Nissan", "Polaris", "Pontiac", "Porsche", "Ram", "Rolls-Royce", "Saab", "Scion",
+    "Subaru", "Suzuki", "Tesla", "Toyota", "Volkswagen", "Volvo", "Yamaha",
+  ],
+  Models: [
+    "Chevrolet Camaro", "Chevrolet Colorado", "Chevrolet Corvette", "Chevrolet Cruze",
+    "Chevrolet Equinox", "Chevrolet Impala", "Chevrolet Malibu", "Chevrolet Silverado",
+    "Chevrolet Tahoe", "Chevrolet Traverse", "Chrysler Town & Country", "Dodge Charger",
+    "Dodge Grand Caravan", "Ford Econoline", "Ford Escape", "Ford Explorer", "Ford F150",
+    "Ford F250", "Ford Focus", "Ford Fusion", "Ford Mustang", "Honda Accord", "Honda Civic",
+    "Honda CR-V", "Honda Odyssey", "Hyundai Elantra", "Hyundai Sonata", "Jeep Grand Cherokee",
+    "Kia Optima", "Nissan Altima", "Nissan Maxima", "Nissan Rogue", "Nissan Sentra",
+    "Nissan Versa", "Toyota 4Runner", "Toyota Camry", "Toyota Corolla", "Toyota Highlander",
+    "Toyota Prius", "Toyota RAV4", "Toyota Tacoma",
+  ],
+  Featured: [
+    "Dealer Listings", "Private Seller Cars", "Clean Title Cars", "Featured Vehicles",
+    "Fleet Cars", "Classic Cars", "Minor Dents/Scratches", "Newly Added Vehicles",
+    "New Cars", "Reconditioned Cars", "Local Used Cars", "Low Mileage Cars",
+    "Verified Listings", "TRUE REPORT Available", "Finance Available",
+  ],
+  Types: [
+    "Automobiles", "Pickup Trucks", "SUVs", "Sedans", "Hatchbacks", "Crossovers",
+    "Motorcycles", "Commercial Vehicles", "Vans", "Wagons", "Coupes", "Convertibles",
+  ],
+  Trending: [
+    "ALL MODELS", "COROLLA", "CAMRY", "RAV4", "CIVIC", "ACCORD", "CR-V",
+    "ALTIMA", "ROGUE", "TOYOTA", "FORD", "HONDA", "CHEVROLET", "NISSAN",
+    "HYUNDAI", "MERCEDES-BENZ", "BMW", "KIA", "JEEP",
+  ],
+};
 
 const CarClickBDAutoAuction = () => {
-  const tabs = ["Makes", "Models", "Featured", "Types", "Trending"];
   const [activeTab, setActiveTab] = useState("Makes");
 
-  // ======= Static Demo Data =======
-  const data: Record<string, string[]> = {
-    Makes: [
-      "Acura", "Audi", "BMW", "Buick", "Cadillac", "Chevrolet", "Chrysler", "Dodge",
-      "Ford", "Freightliner", "GMC", "Harley", "Honda", "Hummer", "Hyundai", "Infiniti",
-      "International", "Isuzu", "Jaguar", "Jeep", "Kia", "Lamborghini", "Land Rover", "Lexus",
-      "Lincoln", "Lotus", "Maserati", "Mazda", "McLaren", "Mercedes-Benz", "Mini", "Mitsubishi",
-      "Nissan", "Polaris", "Pontiac", "Porsche", "Ram", "Rolls-Royce", "Saab", "Scion",
-      "Subaru", "Suzuki", "Tesla", "Toyota", "Volkswagen", "Volvo", "Yamaha",
-    ],
-
-    Models: [
-      "Chevrolet Camaro", "Chevrolet Colorado", "Chevrolet Corvette", "Chevrolet Cruze",
-      "Chevrolet Equinox", "Chevrolet Impala", "Chevrolet Malibu", "Chevrolet Silverado",
-      "Chevrolet Tahoe", "Chevrolet Traverse", "Chrysler Town & Country", "Dodge Charger",
-      "Dodge Grand Caravan", "Ford Econoline", "Ford Escape", "Ford Explorer", "Ford F150",
-      "Ford F250", "Ford Focus", "Ford Fusion", "Ford Mustang", "Honda Accord", "Honda Civic",
-      "Honda CR-V", "Honda Odyssey", "Hyundai Elantra", "Hyundai Sonata", "Jeep Grand Cherokee",
-      "Kia Optima", "Nissan Altima", "Nissan Maxima", "Nissan Rogue", "Nissan Sentra",
-      "Nissan Versa", "Toyota 4Runner", "Toyota Camry", "Toyota Corolla", "Toyota Highlander",
-      "Toyota Prius", "Toyota RAV4", "Toyota Tacoma",
-    ],
-
-    Featured: [
-      "Dealer Listings", "Private Seller Cars", "Clean Title Cars", "Featured Vehicles",
-      "Fleet Cars", "Classic Cars", "Minor Dents/Scratches", "Newly Added Vehicles",
-      "New Cars", "Reconditioned Cars", "Local Used Cars", "Low Mileage Cars",
-      "Verified Listings", "TRUE REPORT Available", "Finance Available",
-    ],
-
-    Types: [
-      "ATVs", "Agriculture and Farm Equipment", "Automobiles", "Boats", "Bus",
-      "Construction Equipment", "Dirt Bikes", "Heavy Duty Trucks", "Industrial Equipment",
-      "Jet Skis", "Medium Duty/Box Trucks", "Motorcycles", "Pickup Trucks", "RVs",
-      "Snowmobile", "Trailers",
-    ],
-
-    Trending: [
-      "ALL MODELS", "COROLLA", "CAMRY", "RAV4", "CIVIC", "ACCORD", "ALL MODELS",
-      "CRV", "ALTIMA", "ROGUE", "TOYOTA", "FORD", "HONDA", "CHEVROLET", "NISSAN",
-      "HYUNDAI", "MERCEDES-BENZ", "BMW", "KIA", "JEEP",
-    ],
-  };
-
   return (
-    <section className="bg-[#f5f7fb] py-14 px-4 md:px-12 text-gray-800">
-       {/* Title */}
-          <h2 className="text-2xl md:text-3xl font-bold text-center text-[#003399] mb-8">
-            CarClickBD Car Marketplace - Dealer & Private Seller Cars
-          </h2>
-      <div className="flex flex-col lg:flex-row gap-10">
-        {/* ===== Left Section ===== */}
-        <div className="flex-1">
-         
-
-          {/* Tabs */}
-          <div className="flex justify-start gap-6 mb-8 flex-wrap">
-            {tabs.map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`text-lg font-semibold transition-all border-b-2 pb-1 ${
-                  activeTab === tab
-                    ? "border-[#0052FF] text-black"
-                    : "border-transparent text-gray-600 hover:text-[#0052FF]"
-                }`}
-              >
-                {tab}
-              </button>
-            ))}
+    <section className="bg-slate-50 py-16 text-slate-900">
+      <div className="mx-auto max-w-7xl px-4 md:px-8">
+        <div className="mb-9 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-sky-200 bg-sky-50 px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-sky-700">
+              <Sparkles size={15} />
+              Marketplace Explorer
+            </div>
+            <h2 className="max-w-3xl text-3xl font-extrabold leading-tight tracking-normal text-slate-950 md:text-4xl">
+              Explore CarClickBD by maker, model, body type, and featured picks.
+            </h2>
           </div>
-
-          {/* Animated Grid */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTab}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.4, ease: "easeInOut" }}
-              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-y-3 gap-x-4 mb-8 text-[#0052FF] text-[15px] font-medium text-center md:text-left"
-            >
-              {data[activeTab].map((item, index) => (
-                <p
-                  key={index}
-                  className="hover:underline cursor-pointer hover:text-[#003ad6] transition-all truncate"
-                  title={item}
-                >
-                  {item}
-                </p>
-              ))}
-            </motion.div>
-          </AnimatePresence>
-
-          {/* View More */}
-          <div className="flex justify-center mt-8">
-            <Button size="md" className="rounded-full">
-              VIEW MORE
-            </Button>
-          </div>
+          <Link
+            href="/cars"
+            className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-slate-950 px-5 text-sm font-bold text-white shadow-lg shadow-slate-950/15 transition hover:bg-sky-600"
+          >
+            Browse Inventory <ArrowRight size={17} />
+          </Link>
         </div>
 
-        {/* ===== Right Promo Banner ===== */}
-        <div className="w-full lg:w-1/3 flex justify-center">
-          <div className="bg-gradient-to-b from-[#0046c9] to-[#002d8d] text-white rounded-xl overflow-hidden w-[320px] md:w-[340px] shadow-xl text-center relative">
-            <div className="p-6">
-              <h3 className="text-2xl font-bold leading-tight mb-2">
-                THOUSANDS
-                <br />
-                OF VEHICLES
-              </h3>
-              <div className="bg-[#F0B90B] text-black font-bold text-[14px] rounded-full px-4 py-1 inline-block mb-4">
-                VERIFIED LISTINGS
-              </div>
-              <img
-                src="https://www.copart.com/content/minor-damage-370x520.png"
-                alt="Car promo"
-                className="w-full h-auto rounded-md mb-6"
-              />
-              <Button variant="secondary" size="md" className="rounded-full">
-                VIEW NOW
-              </Button>
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
+          <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-[0_18px_50px_rgba(15,23,42,0.08)] md:p-6">
+            <div className="mb-6 flex flex-wrap gap-2 border-b border-slate-100 pb-4">
+              {tabs.map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className={`rounded-full px-4 py-2 text-sm font-extrabold transition ${
+                    activeTab === tab
+                      ? "bg-slate-950 text-white shadow-md shadow-slate-950/15"
+                      : "bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-950"
+                  }`}
+                >
+                  {tab}
+                </button>
+              ))}
             </div>
 
-            {/* Dotted Pattern */}
-            <div className="absolute inset-0 pointer-events-none opacity-15">
-              <svg width="100%" height="100%">
-                <defs>
-                  <pattern
-                    id="dotPattern"
-                    x="0"
-                    y="0"
-                    width="20"
-                    height="20"
-                    patternUnits="userSpaceOnUse"
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeTab}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.25, ease: "easeOut" }}
+                className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
+              >
+                {data[activeTab].map((item) => (
+                  <Link
+                    key={`${activeTab}-${item}`}
+                    href={`/cars?searchTerm=${encodeURIComponent(item)}`}
+                    className="group flex min-h-[46px] items-center justify-between rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-bold text-slate-700 transition hover:border-sky-300 hover:bg-sky-50 hover:text-sky-700"
+                    title={item}
                   >
-                    <circle cx="2" cy="2" r="2" fill="white" />
-                  </pattern>
-                </defs>
-                <rect width="100%" height="100%" fill="url(#dotPattern)" />
-              </svg>
-            </div>
+                    <span className="truncate">{item}</span>
+                    <ArrowRight
+                      size={14}
+                      className="shrink-0 opacity-0 transition group-hover:translate-x-0.5 group-hover:opacity-100"
+                    />
+                  </Link>
+                ))}
+              </motion.div>
+            </AnimatePresence>
           </div>
+
+          <aside className="overflow-hidden rounded-lg border border-sky-200 bg-gradient-to-b from-[#003399] to-[#001f66] text-white shadow-[0_24px_60px_rgba(0,51,153,0.24)]">
+            <div className="relative p-6">
+              <div className="absolute inset-0 opacity-20 [background-image:radial-gradient(circle,white_1px,transparent_1px)] [background-size:18px_18px]" />
+              <div className="relative">
+                <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-[#f0b90b] px-4 py-1.5 text-xs font-black uppercase text-slate-950">
+                  <BadgeCheck size={14} />
+                  Verified Listings
+                </div>
+                <h3 className="text-3xl font-black leading-tight">
+                  Thousands of vehicles, curated for smarter browsing.
+                </h3>
+              </div>
+            </div>
+
+            <div className="relative mx-5 overflow-hidden rounded-lg border border-white/15 bg-white/10">
+              <img
+                src="https://www.copart.com/content/minor-damage-370x520.png"
+                alt="Verified vehicle inventory"
+                className="h-72 w-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/10 to-transparent" />
+              <div className="absolute bottom-4 left-4 right-4">
+                <p className="text-sm font-bold text-white/80">Cars, Trucks & SUVs</p>
+                <p className="mt-1 text-xl font-black text-white">Ready to compare now</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3 p-5">
+              {[
+                ["40+", "Photos"],
+                ["Fast", "Inquiry"],
+              ].map(([value, label]) => (
+                <div key={label} className="rounded-md bg-white/10 p-4">
+                  <p className="text-2xl font-black">{value}</p>
+                  <p className="text-xs font-bold uppercase tracking-wide text-white/70">
+                    {label}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </aside>
         </div>
       </div>
     </section>

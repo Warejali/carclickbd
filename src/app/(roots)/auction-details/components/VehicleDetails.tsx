@@ -1,46 +1,58 @@
 "use client";
-import { Card, Button } from "antd";
+
+const getValue = (...values: any[]) =>
+  values.find((value) => value !== undefined && value !== null && value !== "") ||
+  "N/A";
 
 export default function VehicleDetails({ product }: { product: any }) {
-  return (
-    <Card className="shadow rounded-lg">
-      <div className="flex justify-between items-center mb-2">
-        <h2 className="text-lg font-medium">Vehicle details</h2>
-        <Button type="link" className="text-sm px-0">Share</Button>
-      </div>
-      <table className="w-full text-sm border border-gray-200">
-        <tbody>
-          <DetailRow label="Lot number:" value={product.lotNumber} />
-          <DetailRow label="VIN:" value={product.vin} />
-          <DetailRow label="Title code:" value={product.titleCode} />
-          <DetailRow label="Odometer:" value={product.odometer} />
-          <DetailRow label="Primary damage:" value={product.primaryDamage} />
-          <DetailRow label="Secondary damage:" value={product.secondaryDamage} />
-          <DetailRow label="Estimated retail value:" value={`$${product.retailValue}`} />
-          <DetailRow label="Cylinders:" value={product.cylinders} />
-          <DetailRow label="Body style:" value={product.bodyStyle} />
-          <DetailRow label="Color:" value={product.color} />
-          <DetailRow label="Engine type:" value={product.engineType} />
-          <DetailRow label="Transmission:" value={product.transmission} />
-          <DetailRow label="Drive:" value={product.drive} />
-          <DetailRow label="Vehicle type:" value={product.vehicleType} />
-          <DetailRow label="Fuel:" value={product.fuel} />
-          <DetailRow label="Keys:" value={product.keys} />
-          <DetailRow label="Highlights:" value={product.highlights} />
-          <DetailRow label="Notes:" value={product.notes} />
-        </tbody>
-      </table>
-    </Card>
-  );
-}
+  const specs = [
+    ["Maker", getValue(product?.maker, product?.make)],
+    ["Model", product?.model],
+    ["Grade", product?.grade],
+    ["Year", getValue(product?.year, product?.launchingYear)],
+    ["Registration Year", product?.registrationYear],
+    ["Mileage", product?.mileage ? `${product.mileage} km` : undefined],
+    ["Engine Size", getValue(product?.engineSize, product?.engine)],
+    ["Fuel Type", getValue(product?.fuelType, product?.fuel)],
+    ["Transmission", product?.transmission],
+    ["Drive Type", getValue(product?.driveType, product?.drivetrain, product?.drive)],
+    ["Body Type", getValue(product?.bodyType, product?.bodyStyle)],
+    ["Color", getValue(product?.color, product?.exteriorColor)],
+    ["VIN/Chassis", getValue(product?.vinChassisNumber, product?.vin)],
+    ["Auction Grade", product?.auctionGrade],
+    ["Condition", getValue(product?.condition, product?.titleStatus)],
+    [
+      "Location",
+      [product?.location?.city, product?.location?.zipCode].filter(Boolean).join(", "),
+    ],
+  ].filter(([, value]) => value && value !== "N/A");
 
-function DetailRow({ label, value }: { label: string; value: any }) {
   return (
-    <tr className="border-b">
-      <td className="py-1.5 px-3 font-medium text-gray-600 w-1/3 bg-gray-50">
-        {label}
-      </td>
-      <td className="py-1.5 px-3">{value ?? "—"}</td>
-    </tr>
+    <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-[0_16px_45px_rgba(15,23,42,0.08)]">
+      <div className="mb-5 flex items-center justify-between gap-4">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-sky-600">
+            Specification
+          </p>
+          <h2 className="mt-1 text-2xl font-extrabold text-slate-950">
+            Vehicle details
+          </h2>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {specs.map(([label, value]) => (
+          <div
+            key={label}
+            className="rounded-md border border-slate-200 bg-slate-50 px-4 py-3"
+          >
+            <p className="text-[11px] font-bold uppercase tracking-wide text-slate-400">
+              {label}
+            </p>
+            <p className="mt-1 text-sm font-bold text-slate-900">{value}</p>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }

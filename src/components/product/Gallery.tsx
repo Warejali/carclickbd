@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
+import { ChevronLeft, ChevronRight, Images } from "lucide-react";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 interface GalleryProps {
@@ -22,16 +23,15 @@ interface GalleryProps {
 
 export default function Gallery({ product }: GalleryProps) {
   const isMobile = useMediaQuery("(max-width: 640px)");
-
-  // ✅ Normalize all photos into a single array
   const allPhotos: string[] = [
-    product.photos.mainPhoto,
-    ...(product.photos.exterior || []),
-    ...(product.photos.interior || []),
-    ...(product.photos.others || []),
-    ...(product.photos.mechanical || []),
-    ...(product.photos.docs || []),
+    product.photos?.mainPhoto,
+    ...(product.photos?.exterior || []),
+    ...(product.photos?.interior || []),
+    ...(product.photos?.others || []),
+    ...(product.photos?.mechanical || []),
   ].filter(Boolean);
+
+  if (!allPhotos.length) return null;
 
   return (
     <div className="w-full">
@@ -45,85 +45,82 @@ export default function Gallery({ product }: GalleryProps) {
 }
 
 function DesktopGallery({ photos, title }: { photos: string[]; title: string }) {
-  const [activePhoto, setActivePhoto] = useState(photos[0]);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const activePhoto = photos[activeIndex];
+
+  const goToPhoto = (direction: "prev" | "next") => {
+    setActiveIndex((current) => {
+      if (direction === "prev") {
+        return (current - 1 + photos.length) % photos.length;
+      }
+      return (current + 1) % photos.length;
+    });
+  };
 
   return (
-    <div className="space-y-3">
-      {/* Main image */}
-      <div className="relative w-full h-[420px] rounded-lg overflow-hidden border">
+    <section className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-[0_16px_45px_rgba(15,23,42,0.08)]">
+      <div className="relative h-[520px] w-full overflow-hidden bg-slate-100">
         <Image
           src={activePhoto}
-          alt={`${title} - Main`}
+          alt={`${title} - photo ${activeIndex + 1}`}
           fill
           className="object-cover"
           priority
         />
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-slate-950/75 to-transparent" />
 
-        {/* Prev/Next arrows */}
-        <button
-          onClick={() =>
-            setActivePhoto(
-              photos[(photos.indexOf(activePhoto) - 1 + photos.length) % photos.length]
-            )
-          }
-          className="absolute top-1/2 left-2 -translate-y-1/2 bg-white/80 rounded-full px-2 py-1 shadow hover:bg-white"
-        >
-          ‹
-        </button>
-        <button
-          onClick={() =>
-            setActivePhoto(photos[(photos.indexOf(activePhoto) + 1) % photos.length])
-          }
-          className="absolute top-1/2 right-2 -translate-y-1/2 bg-white/80 rounded-full px-2 py-1 shadow hover:bg-white"
-        >
-          ›
-        </button>
-
-        {/* Top-right buttons */}
-        <div className="absolute top-2 right-2 flex gap-2">
-          <button className="bg-white px-3 py-1 rounded shadow text-sm">
-            Add to watchlist
-          </button>
-        </div>
-
-        {/* Bottom-left overlays */}
-        <div className="absolute bottom-2 left-2 flex gap-2">
-          <span className="bg-white px-1 text-xs rounded shadow">✔</span>
-          <span className="bg-white px-1 text-xs rounded shadow">HD</span>
-        </div>
-
-        {/* Bottom-right */}
-        <div className="absolute bottom-2 right-2 flex gap-2">
-          <button className="bg-white px-2 py-1 text-sm rounded shadow">⬇</button>
-          <button className="bg-white px-3 py-1 text-sm rounded shadow">
-            See all {photos.length} Photos
-          </button>
-        </div>
-      </div>
-
-      {/* Thumbnail row */}
-      <div className="flex gap-2 overflow-x-auto">
-        {photos.map((photo, idx) => {
-          const isActive = activePhoto === photo;
-          return (
-            <div
-              key={idx}
-              onClick={() => setActivePhoto(photo)}
-              className={`relative h-20 w-28 cursor-pointer rounded border ${
-                isActive ? "ring-2 ring-blue-500" : "hover:opacity-80"
-              }`}
+        {photos.length > 1 && (
+          <>
+            <button
+              onClick={() => goToPhoto("prev")}
+              className="absolute left-4 top-1/2 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-slate-950 shadow-lg backdrop-blur transition hover:bg-white"
+              aria-label="Previous photo"
             >
-              <Image
-                src={photo}
-                alt={`Thumb ${idx + 1}`}
-                fill
-                className="object-cover rounded"
-              />
-            </div>
-          );
-        })}
+              <ChevronLeft size={22} />
+            </button>
+            <button
+              onClick={() => goToPhoto("next")}
+              className="absolute right-4 top-1/2 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-slate-950 shadow-lg backdrop-blur transition hover:bg-white"
+              aria-label="Next photo"
+            >
+              <ChevronRight size={22} />
+            </button>
+          </>
+        )}
+
+        <div className="absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 text-sm font-bold text-slate-900 shadow-lg backdrop-blur">
+          <Images size={17} />
+          {activeIndex + 1} / {photos.length} photos
+        </div>
       </div>
-    </div>
+
+      {photos.length > 1 && (
+        <div className="flex gap-3 overflow-x-auto p-3">
+          {photos.map((photo, index) => {
+            const isActive = activeIndex === index;
+            return (
+              <button
+                key={`${photo}-${index}`}
+                onClick={() => setActiveIndex(index)}
+                className={`relative h-20 w-28 shrink-0 overflow-hidden rounded-md border transition ${
+                  isActive
+                    ? "border-sky-500 ring-2 ring-sky-200"
+                    : "border-slate-200 opacity-80 hover:opacity-100"
+                }`}
+                aria-label={`Show photo ${index + 1}`}
+              >
+                <Image
+                  src={photo}
+                  alt={`${title} thumbnail ${index + 1}`}
+                  fill
+                  className="object-cover"
+                />
+              </button>
+            );
+          })}
+        </div>
+      )}
+    </section>
   );
 }
 
@@ -135,11 +132,11 @@ function MobileGallery({ photos, title }: { photos: string[]; title: string }) {
       slidesPerView={1}
       navigation
       pagination={{ clickable: true }}
-      className="rounded-lg border"
+      className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-[0_16px_45px_rgba(15,23,42,0.08)]"
     >
       {photos.map((photo, idx) => (
-        <SwiperSlide key={idx}>
-          <div className="relative w-full h-72">
+        <SwiperSlide key={`${photo}-${idx}`}>
+          <div className="relative h-80 w-full">
             <Image
               src={photo}
               alt={`${title} - ${idx + 1}`}

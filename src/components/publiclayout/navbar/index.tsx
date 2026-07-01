@@ -74,7 +74,7 @@ const Header: React.FC = () => {
   const navItems = [
     { label: "Home", href: "/" },
     { label: "Duty Calculator", href: "/duty-calculator" },
-    { label: "Find Cars", href: "/find-cars" },
+    { label: "Find Cars", href: "/cars" },
     { label: "Year of Manufacture", href: "/year-of-manufacture" },
     { label: "Gallery", href: "/gallery" },
     { label: "Blog", href: "/blog" },
@@ -90,14 +90,14 @@ const Header: React.FC = () => {
   ];
 
   const buyMenu: MenuProps["items"] = [
-    { key: "new", label: <Link href="/find-cars?condition=new">New</Link> },
+    { key: "new", label: <Link href="/cars?condition=new">New</Link> },
     {
       key: "reconditioned",
-      label: <Link href="/find-cars?condition=reconditioned">Reconditioned</Link>,
+      label: <Link href="/cars?condition=reconditioned">Reconditioned</Link>,
     },
     {
       key: "local-used",
-      label: <Link href="/find-cars?condition=local-used">Local Used</Link>,
+      label: <Link href="/cars?condition=local-used">Local Used</Link>,
     },
   ];
 

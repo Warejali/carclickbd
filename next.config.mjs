@@ -16,7 +16,10 @@ const nextConfig = {
       "content.copart.com",
       "cs.copart.com",
       "cdn.discordapp.com",
-      "encrypted-tbn0.gstatic.com"
+      "encrypted-tbn0.gstatic.com",
+      "www.pngmart.com",
+      "www.pngall.com",
+      "cdn.pixabay.com"
     ],
   },
 };

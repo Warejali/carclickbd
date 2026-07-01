@@ -2,18 +2,51 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
-import { Card, Typography, Skeleton, Tag } from "antd";
+import { Card, Skeleton } from "antd";
+import {
+  ArrowUpRight,
+  BadgeCheck,
+  CalendarDays,
+  Gauge,
+  MapPin,
+  Settings,
+  ShieldCheck,
+} from "lucide-react";
 import { setSelectedProduct } from "@/Redux/Slices/productSlice";
 import { IProduct } from "@/Interface/product";
-import CustomButton from "@/components/shared/CustomButton";
 
-const { Text } = Typography;
+const formatPrice = (value: number | string) => {
+  const numericValue = Number(value || 0);
+  if (!numericValue) return "Contact for price";
+
+  return `BDT ${numericValue.toLocaleString("en-US")}/-`;
+};
 
 const ProductCard = ({ product }: { product: IProduct }) => {
   const dispatch = useDispatch();
   const price = product.mainPrice || product.highestBid || product.minBid || 0;
-  const sellerType =
-    product.sellerType?.toLowerCase() === "private" ? "Private Seller" : "Dealer";
+  const statusLabel = product.isSoldOut ? "Reserved" : "Available";
+  const statusClass = product.isSoldOut
+    ? "bg-amber-50 text-amber-700 ring-amber-200"
+    : "bg-emerald-50 text-emerald-700 ring-emerald-200";
+  const location = [product?.location?.city, product?.location?.zipCode]
+    .filter(Boolean)
+    .join(", ");
+
+  const specs = [
+    {
+      icon: CalendarDays,
+      label: product.launchingYear || "Year N/A",
+    },
+    {
+      icon: Settings,
+      label: product.engine || "Engine N/A",
+    },
+    {
+      icon: Gauge,
+      label: product.mileage ? `${product.mileage} km` : "Mileage N/A",
+    },
+  ];
 
   const handleClick = () => {
     dispatch(setSelectedProduct(product));
@@ -23,101 +56,92 @@ const ProductCard = ({ product }: { product: IProduct }) => {
     <Card
       hoverable
       onClick={handleClick}
-      className="rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden"
+      bodyStyle={{ padding: 0 }}
+      className="group overflow-hidden rounded-lg border border-slate-200/80 bg-white shadow-[0_14px_40px_rgba(15,23,42,0.10)] transition-all duration-300 hover:-translate-y-1 hover:border-sky-200 hover:shadow-[0_22px_55px_rgba(15,23,42,0.16)]"
       cover={
-        <div style={{ position: "relative" }} className="overflow-hidden group">
-          {/* Labels */}
-          {product.isSoldOut && (
-            <Tag
-              color="red"
-              style={{
-                position: "absolute",
-                top: 12,
-                left: 12,
-                zIndex: 3,
-                fontWeight: "bold",
-                borderRadius: "6px",
-              }}
+        <div className="relative h-[230px] overflow-hidden bg-slate-100">
+          <Image
+            src={product.photos?.mainPhoto || "/placeholder.png"}
+            alt={product.title || "Vehicle"}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            priority
+            className="object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/10 to-transparent opacity-90" />
+
+          <div className="absolute left-3 top-3 flex flex-wrap gap-2">
+            <span
+              className={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-wide ring-1 ${statusClass}`}
             >
-              Sold Out
-            </Tag>
-          )}
-
-          {product.isFeatured && (
-            <Tag
-              color="gold"
-              style={{
-                position: "absolute",
-                top: 12,
-                right: 12,
-                zIndex: 3,
-                fontWeight: "bold",
-                borderRadius: "6px",
-              }}
-            >
-              Featured
-            </Tag>
-          )}
-
-          <Tag
-            color="blue"
-            style={{
-              position: "absolute",
-              top: product.isSoldOut ? 44 : 12,
-              left: 12,
-              zIndex: 3,
-              fontWeight: "bold",
-              borderRadius: "6px",
-            }}
-          >
-            {sellerType}
-          </Tag>
-
-          {/* Product Image with hover zoom */}
-          <div className="overflow-hidden relative">
-            <Image
-              src={product.photos.mainPhoto}
-              alt={product.title}
-              width={500}
-              height={300}
-              priority
-              style={{
-                objectFit: "cover",
-                height: "220px",
-                width: "100%",
-              }}
-              className="rounded-t-xl transform transition-transform duration-500 group-hover:scale-105"
-            />
-
-            {/* Dark gradient overlay on hover */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <BadgeCheck size={13} />
+              {statusLabel}
+            </span>
+            {product.isFeatured && (
+              <span className="inline-flex items-center gap-1 rounded-full bg-sky-50 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-sky-700 ring-1 ring-sky-200">
+                <ShieldCheck size={13} />
+                Featured
+              </span>
+            )}
           </div>
 
-          {/* Bottom Info Bar */}
-          <div className="absolute bottom-0 left-0 right-0 flex justify-between items-center bg-white/95 backdrop-blur-sm px-4 py-2 border-t z-10">
-            <p className="text-gray-700 font-medium drop-shadow-sm">
-              {product.mileage} Miles
+          <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-sky-100">
+              {product.make || "Premium Selection"}
             </p>
-            <Text strong className="text-green-700 drop-shadow-sm">
-              Price: ${price?.toLocaleString()}
-            </Text>
+            <h3 className="mt-1 line-clamp-1 text-xl font-extrabold tracking-normal">
+              {product.title || [product.launchingYear, product.make, product.model].filter(Boolean).join(" ")}
+            </h3>
           </div>
         </div>
       }
     >
-      {/* Content */}
-      <div className="space-y-2">
-        <h3 className="text-lg font-bold text-gray-800 truncate">
-          {product.title}
-        </h3>
-        <p className="text-sm text-gray-500">
-          {`${product?.location?.city}, ${product?.location?.zipCode}`}
-        </p>
+      <div className="space-y-4 p-4">
+        <div className="grid grid-cols-3 gap-2">
+          {specs.map(({ icon: Icon, label }) => (
+            <div
+              key={String(label)}
+              className="flex min-h-[54px] flex-col items-center justify-center rounded-md border border-slate-200 bg-slate-50 px-2 text-center"
+            >
+              <Icon size={15} className="mb-1 text-slate-500" />
+              <span className="line-clamp-1 text-[11px] font-semibold text-slate-700">
+                {label}
+              </span>
+            </div>
+          ))}
+        </div>
 
-        {/* View Details Button */}
-        <div className="pt-2">
-          <Link href={`/car-details/${product._id}`} passHref>
-            <CustomButton label="View Details" variant="primary" className="w-full" />
+        <div className="border-t border-slate-100 pt-4">
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0">
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">
+                Price
+              </p>
+              <p className="mt-0.5 text-lg font-extrabold text-slate-950">
+                {formatPrice(price)}
+              </p>
+            </div>
+            {location && (
+              <div className="max-w-[42%] rounded-md bg-slate-50 px-2.5 py-2 text-right">
+                <p className="text-[10px] font-bold uppercase tracking-wide text-slate-400">
+                  Location
+                </p>
+                <p className="mt-1 flex items-center justify-end gap-1 text-xs font-bold text-slate-700">
+                  <MapPin size={13} className="shrink-0 text-sky-600" />
+                  <span className="line-clamp-1">{location}</span>
+                </p>
+              </div>
+            )}
+          </div>
+
+          <Link
+            href={`/car-details/${product._id}`}
+            className="mt-4 inline-flex h-11 w-full items-center justify-center gap-2 rounded-md bg-slate-950 px-4 text-sm font-bold text-white shadow-lg shadow-slate-950/20 transition-colors hover:bg-sky-600"
+            aria-label={`View details for ${product.title}`}
+            onClick={(event) => event.stopPropagation()}
+          >
+            View Details
+            <ArrowUpRight size={17} />
           </Link>
         </div>
       </div>
@@ -127,11 +151,11 @@ const ProductCard = ({ product }: { product: IProduct }) => {
 
 const SkeletonComponent = () => (
   <Card
-    hoverable
-    className="rounded-xl shadow-md"
-    cover={<Skeleton.Image active style={{ height: 220, borderRadius: "8px" }} />}
+    className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-[0_14px_40px_rgba(15,23,42,0.10)]"
+    bodyStyle={{ padding: 16 }}
+    cover={<Skeleton.Image active style={{ height: 230, width: "100%" }} />}
   >
-    <Skeleton active />
+    <Skeleton active paragraph={{ rows: 3 }} />
   </Card>
 );
 
