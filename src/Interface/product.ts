@@ -10,6 +10,13 @@ export interface BidInfo {
 
 }
 
+export type ProductListingStatus =
+  | "pending"
+  | "approval"
+  | "reserve"
+  | "under_negotiations"
+  | "sold";
+
 export type IProduct = {
   _id: string;
   photos: {
@@ -22,6 +29,7 @@ export type IProduct = {
   mainPrice: number;
   isAuction: boolean;
   isSoldOut: boolean;
+  status?: ProductListingStatus;
   isWinner: boolean;
   title: string;
   make: string;
@@ -85,4 +93,3 @@ export type IProduct = {
   totalComment: number;
   createdAt: Date;
 };
-

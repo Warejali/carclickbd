@@ -67,12 +67,27 @@ const LeftSidebar: React.FC<ISidebarProps> = ({ menuGroups = [] }) => {
     ? "bg-blue-800"
     : tokenInfo?.role === "customer"
     ? "bg-blue-100"
+    : tokenInfo?.role === "seller"
+    ? "bg-gradient-to-b from-slate-950 via-[#071d49] to-[#003399]"
     : "bg-gray-200"
  
     }`}
   >
       {/* <!-- SIDEBAR HEADER --> */}
       <div className="flex items-center flex-col  justify-center gap-2   w-full">
+        {isSidebarOpen && tokenInfo?.role === "seller" && (
+          <div className="mt-5 w-full px-5">
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-[#f0b90b]">
+              CarClickBD
+            </p>
+            <h2 className="mt-1 text-lg font-black text-white">
+              Seller Panel
+            </h2>
+            <p className="mt-1 text-xs font-medium text-slate-300">
+              Manage listings, leads, and sales.
+            </p>
+          </div>
+        )}
         <div>
         
           {tokenInfo?.role === "seller" && (

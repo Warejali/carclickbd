@@ -9,6 +9,7 @@ import BidInformation from "../components/BidInformation";
 import SaleInformation from "../components/SaleInformation";
 import ProductsResult from "@/components/publiclayout/home/AcutionProducts/ProductsResult";
 import { DetailProductItemParents } from "@/components/product/DetailProductItemParents";
+import { getProductStatusMeta } from "@/utils/productStatus";
 
 export default function ProductDetailsPage() {
   const { id } = useParams();
@@ -27,6 +28,7 @@ export default function ProductDetailsPage() {
   const location = [product?.location?.city, product?.location?.zipCode]
     .filter(Boolean)
     .join(", ");
+  const statusMeta = getProductStatusMeta(product);
 
   if (isLoading) return <ProductSkeletonContainer />;
   if (!product) {
@@ -44,8 +46,8 @@ export default function ProductDetailsPage() {
         <div className="mb-5 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <div className="mb-2 flex flex-wrap items-center gap-2">
-              <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold uppercase tracking-wide text-emerald-700 ring-1 ring-emerald-200">
-                {product?.isSoldOut ? "Reserved" : "Available"}
+              <span className={`rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wide ring-1 ${statusMeta.badgeClass}`}>
+                {statusMeta.label}
               </span>
               {product?.isFeatured && (
                 <span className="rounded-full bg-sky-50 px-3 py-1 text-xs font-bold uppercase tracking-wide text-sky-700 ring-1 ring-sky-200">

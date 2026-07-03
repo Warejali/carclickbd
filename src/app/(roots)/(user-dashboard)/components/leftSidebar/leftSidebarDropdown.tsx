@@ -44,7 +44,7 @@ const LeftSidebarDropdown: React.FC<IMenuItem> = ({
       {/* Toggle Button */}
       <button
         onClick={onToggle}
-        className="flex items-center justify-between w-full px-3 py-1.5 rounded-md hover:bg-green-600 hover:text-white transition-colors duration-300"
+        className="flex w-full items-center justify-between rounded-md px-3 py-2.5 text-slate-200 transition-colors duration-300 hover:bg-white/10 hover:text-white"
       >
         <div className="flex items-center gap-2">
           {icon && (
@@ -52,7 +52,7 @@ const LeftSidebarDropdown: React.FC<IMenuItem> = ({
               {icon}
             </span>
           )}
-          <span className={`${!isSidebarOpen ? "hidden" : "text-sm text-nowrap"}`}>
+          <span className={`${!isSidebarOpen ? "hidden" : "text-sm text-nowrap font-semibold"}`}>
             {label}
           </span>
         </div>
@@ -68,12 +68,11 @@ const LeftSidebarDropdown: React.FC<IMenuItem> = ({
         style={{ maxHeight: `${height}px` }}
       >
         {isSidebarOpen && (
-          <div className="ml-4 mt-2 space-y-1">
+          <div className="ml-4 mt-2 space-y-1 border-l border-white/10 pl-2">
             {children.map((menu, index) => (
               <Link
                 key={index}
-                className="flex items-center text-nowrap text-xs gap-3 px-3 py-2 rounded-md 
-                hover:bg-green-500 hover:text-white transition-colors duration-300"
+                className="flex items-center text-nowrap text-xs gap-3 rounded-md px-3 py-2 text-slate-300 transition-colors duration-300 hover:bg-white/10 hover:text-white"
                 href={menu.route}
                 onClick={() => {
                   if (onItemClick) {

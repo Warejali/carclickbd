@@ -10,7 +10,7 @@ export default function VehicleDetails({ product }: { product: any }) {
     ["Model", product?.model],
     ["Grade", product?.grade],
     ["Year", getValue(product?.year, product?.launchingYear)],
-    ["Registration Year", product?.registrationYear],
+    ["Production Year", product?.registrationYear],
     ["Mileage", product?.mileage ? `${product.mileage} km` : undefined],
     ["Engine Size", getValue(product?.engineSize, product?.engine)],
     ["Fuel Type", getValue(product?.fuelType, product?.fuel)],
@@ -18,7 +18,7 @@ export default function VehicleDetails({ product }: { product: any }) {
     ["Drive Type", getValue(product?.driveType, product?.drivetrain, product?.drive)],
     ["Body Type", getValue(product?.bodyType, product?.bodyStyle)],
     ["Color", getValue(product?.color, product?.exteriorColor)],
-    ["VIN/Chassis", getValue(product?.vinChassisNumber, product?.vin)],
+    ["Chassis Number", getValue(product?.vinChassisNumber, product?.vin)],
     ["Auction Grade", product?.auctionGrade],
     ["Condition", getValue(product?.condition, product?.titleStatus)],
     [

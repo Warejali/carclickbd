@@ -2,7 +2,7 @@ import { getTokenInfo } from "@/service/auth.service";
 
 const GetRoleBasisUrl = () => {
   const tokenInfo = getTokenInfo();
-  const isAdmin = tokenInfo?.role === "admin" || tokenInfo?.role === "super_admin";
+  const isAdmin = tokenInfo?.role === "admin" || tokenInfo?.role === "super-admin";
   const isCustomer = tokenInfo?.role === "customer";
   const isSeller = tokenInfo?.role === "seller";
   
@@ -11,7 +11,7 @@ const GetRoleBasisUrl = () => {
   } else if (isCustomer) {
     return "/customer";
   } else if (isSeller) {
-    ("/seller");
+    return "/seller";
   }
 };
 

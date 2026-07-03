@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { setSelectedProduct } from "@/Redux/Slices/productSlice";
 import { IProduct } from "@/Interface/product";
+import { getProductStatusMeta } from "@/utils/productStatus";
 
 const formatPrice = (value: number | string) => {
   const numericValue = Number(value || 0);
@@ -25,10 +26,7 @@ const formatPrice = (value: number | string) => {
 const ProductCard = ({ product }: { product: IProduct }) => {
   const dispatch = useDispatch();
   const price = product.mainPrice || product.highestBid || product.minBid || 0;
-  const statusLabel = product.isSoldOut ? "Reserved" : "Available";
-  const statusClass = product.isSoldOut
-    ? "bg-amber-50 text-amber-700 ring-amber-200"
-    : "bg-emerald-50 text-emerald-700 ring-emerald-200";
+  const statusMeta = getProductStatusMeta(product);
   const location = [product?.location?.city, product?.location?.zipCode]
     .filter(Boolean)
     .join(", ");
@@ -72,10 +70,10 @@ const ProductCard = ({ product }: { product: IProduct }) => {
 
           <div className="absolute left-3 top-3 flex flex-wrap gap-2">
             <span
-              className={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-wide ring-1 ${statusClass}`}
+              className={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-wide ring-1 ${statusMeta.badgeClass}`}
             >
               <BadgeCheck size={13} />
-              {statusLabel}
+              {statusMeta.label}
             </span>
             {product.isFeatured && (
               <span className="inline-flex items-center gap-1 rounded-full bg-sky-50 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-sky-700 ring-1 ring-sky-200">
@@ -86,10 +84,10 @@ const ProductCard = ({ product }: { product: IProduct }) => {
           </div>
 
           <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-sky-100">
+            <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-sky-100">
               {product.make || "Premium Selection"}
             </p>
-            <h3 className="mt-1 line-clamp-1 text-xl font-extrabold tracking-normal">
+            <h3 className="mt-1 line-clamp-1 text-lg font-semibold leading-snug tracking-normal">
               {product.title || [product.launchingYear, product.make, product.model].filter(Boolean).join(" ")}
             </h3>
           </div>
@@ -104,7 +102,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
               className="flex min-h-[54px] flex-col items-center justify-center rounded-md border border-slate-200 bg-slate-50 px-2 text-center"
             >
               <Icon size={15} className="mb-1 text-slate-500" />
-              <span className="line-clamp-1 text-[11px] font-semibold text-slate-700">
+              <span className="line-clamp-1 text-[11px] font-medium text-slate-700">
                 {label}
               </span>
             </div>
@@ -117,7 +115,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
               <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">
                 Price
               </p>
-              <p className="mt-0.5 text-lg font-extrabold text-slate-950">
+              <p className="mt-0.5 text-lg font-semibold leading-snug text-slate-950">
                 {formatPrice(price)}
               </p>
             </div>
@@ -126,7 +124,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
                 <p className="text-[10px] font-bold uppercase tracking-wide text-slate-400">
                   Location
                 </p>
-                <p className="mt-1 flex items-center justify-end gap-1 text-xs font-bold text-slate-700">
+                <p className="mt-1 flex items-center justify-end gap-1 text-xs font-medium text-slate-700">
                   <MapPin size={13} className="shrink-0 text-sky-600" />
                   <span className="line-clamp-1">{location}</span>
                 </p>

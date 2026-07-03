@@ -1,39 +1,42 @@
 import { IDNavMenuItem } from "@/Interface/content";
 import HasAccess from "./RoleBasedRouteGenerator";
 import {
-  DashboardOutlined,
-  UserOutlined,
-  TeamOutlined,
   AppstoreOutlined,
-  ShopOutlined,
-  FileTextOutlined,
-  CommentOutlined,
-  GiftOutlined,
-  SettingOutlined,
-  MailOutlined,
   BarChartOutlined,
-  StockOutlined,
-  DollarOutlined,
-  NotificationOutlined,
   CustomerServiceOutlined,
+  DashboardOutlined,
+  FileTextOutlined,
+  MailOutlined,
+  NotificationOutlined,
   SafetyOutlined,
-  CalendarOutlined,
-  BellOutlined
+  SettingOutlined,
+  ShopOutlined,
+  TeamOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import { BiPurchaseTag } from "react-icons/bi";
-
 
 const isSuperAdmin = HasAccess("super-admin");
 
 const adminRoutes: IDNavMenuItem[] = ([
   { icon: <DashboardOutlined />, label: "Dashboard", route: "/admin" },
   { icon: <UserOutlined />, label: "Profile", route: "/admin/profile" },
-  {
-    icon: <TeamOutlined />,
-    label: "Customers",
+  isSuperAdmin && {
+    icon: <SafetyOutlined />,
+    label: "Admin Users",
     children: [
-      { label: "All Customers", route: "/admin/user" },
-      { label: "Create Customer", route: "/admin/user/create-customer" },
+      { label: "All Admins", route: "/admin/admins" },
+      { label: "Create Admin", route: "/admin/admins/create-admin" },
+    ],
+  },
+  {
+    icon: <ShopOutlined />,
+    label: "Listings",
+    children: [
+      { label: "All Listings", route: "/admin/product" },
+      { label: "Create Listing", route: "/admin/product/create-product" },
+      { label: "Pending Approval", route: "/admin/product/disable-product" },
+      { label: "My Listings", route: "/admin/my-product" },
     ],
   },
   {
@@ -44,82 +47,58 @@ const adminRoutes: IDNavMenuItem[] = ([
       { label: "Create Seller", route: "/admin/seller/create-seller" },
     ],
   },
-  isSuperAdmin && {
-    icon: <SafetyOutlined />,
-    label: "Admin",
-    children: [
-      { label: "Admin", route: "/admin/admins" },
-      { label: "Create Admin", route: "/admin/create-admin" },
-    ],
-  },
   {
-    icon: <ShopOutlined />,
-    label: "All Product",
+    icon: <TeamOutlined />,
+    label: "Customers",
     children: [
-      { label: "Product", route: "/admin/product" },
-      { label: "Listing Approval", route: "/admin/product/past-auction" },
-      { label: "Disable Product", route: "/admin/product/disable-product" },
+      { label: "All Customers", route: "/admin/user" },
+      { label: "Create Customer", route: "/admin/user/create-customer" },
     ],
   },
+  { icon: <FileTextOutlined />, label: "Inquiries", route: "/admin/comment-history" },
   {
-    icon: <FileTextOutlined />,
-    label: "My Product",
+    icon: <BiPurchaseTag />,
+    label: "Sales & Inventory",
     children: [
-      { label: "My-Product", route: "/admin/my-product" },
-      { label: "Listing Approval", route: "/admin/my-product/past-auction" },
-      { label: "Disable Product", route: "/admin/my-product/disable-product" },
-      { label: "Create Product", route: "/admin/product/create-product" },
+      { label: "Orders", route: "/admin/order" },
+      { label: "Refunds", route: "/admin/refund" },
+      { label: "Stock", route: "/admin/stock" },
     ],
   },
-  {
-    icon: <FileTextOutlined />,
-    label: "Leads",
-    children: [
-      { label: "Buyer Inquiries", route: "/admin/bids" },
-      { label: "Lead Archive", route: "/admin/bids/past-auction" },
-    ],
-  },
-  { icon: <BiPurchaseTag />, label: "Orders", route: "/admin/order" },
-
-  {
-    icon: <CommentOutlined />,
-    label: "Comment",
-    children: [
-      { label: "All Comment", route: "/admin/comment-history" },
-      { label: "My Comment", route: "/admin/comment-history" },
-    ],
-  },
-
-  { icon: <BellOutlined />, label: "Notification", route: "/admin/notification" },
-  { icon: <GiftOutlined />, label: "Offer", route: "/admin/offer" },
-  { icon: <AppstoreOutlined />, label: "Category", route: "/admin/category" },
-  { icon: <DollarOutlined />, label: "Refund", route: "/admin/refund" },
+  { icon: <AppstoreOutlined />, label: "Vehicle Categories", route: "/admin/category" },
   {
     icon: <NotificationOutlined />,
     label: "Marketing",
     children: [
+      { label: "Promo Offers", route: "/admin/offer" },
       { label: "Flash Deals", route: "/admin/marketing/flash-deals" },
       { label: "Dynamic Pop-up", route: "/admin/marketing/dynamic-pop-up" },
       { label: "Custom Alerts", route: "/admin/custom-alerts" },
-      { label: "Email Templates", route: "/admin/email-template" },
       { label: "Newsletter", route: "/admin/newsletter" },
+      { label: "Email Templates", route: "/admin/email-template" },
       { label: "Bulk SMS", route: "/admin/bulk-sms" },
+      { label: "Notifications", route: "/admin/notification" },
     ],
   },
   {
     icon: <FileTextOutlined />,
-    label: "Report",
+    label: "Content",
+    children: [
+      { label: "Header Slider", route: "/admin/header-carousel" },
+      { label: "Website Content", route: "/admin/web-content" },
+    ],
+  },
+  {
+    icon: <BarChartOutlined />,
+    label: "Reports",
     children: [
       { label: "Selling Report", route: "/admin/report/selling" },
       { label: "Earning Report", route: "/admin/report/earning" },
     ],
   },
-  { icon: <StockOutlined />, label: "Stock", route: "/admin/stock" },
-  { icon: <CalendarOutlined />, label: "Event", route: "/admin/event" },
-  { icon: <MailOutlined />, label: "Mailbox", route: "/admin/mailbox" },
   { icon: <CustomerServiceOutlined />, label: "Support", route: "/admin/support" },
+  { icon: <MailOutlined />, label: "Mailbox", route: "/admin/mailbox" },
   { icon: <SettingOutlined />, label: "Settings", route: "/admin/settings" },
 ] as IDNavMenuItem[]).filter(Boolean);
 
 export { adminRoutes };
-

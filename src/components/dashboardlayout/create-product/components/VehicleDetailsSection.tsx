@@ -19,6 +19,8 @@ const VehicleDetailsSection = () => (
             <Option value="Diesel">Diesel</Option>
             <Option value="Hybrid">Hybrid</Option>
             <Option value="Electric">Electric</Option>
+            <Option value="EV">EV</Option>
+            <Option value="HEV">HEV</Option>
             <Option value="CNG">CNG</Option>
             <Option value="LPG">LPG</Option>
           </Select>
@@ -38,10 +40,8 @@ const VehicleDetailsSection = () => (
       <Col xs={24} md={8}>
         <Form.Item name="drivetrain" label="Drive Type">
           <Select placeholder="Select" allowClear>
-            <Option value="FWD">FWD</Option>
-            <Option value="RWD">RWD</Option>
-            <Option value="AWD">AWD</Option>
             <Option value="4WD">4WD</Option>
+            <Option value="2WD">2WD</Option>
           </Select>
         </Form.Item>
       </Col>
@@ -69,8 +69,8 @@ const VehicleDetailsSection = () => (
 
     <Row gutter={[16, 16]}>
       <Col xs={24} md={8}>
-        <Form.Item name="vin" label="VIN/Chassis Number (last 3 digit hide)">
-          <Input placeholder="e.g. ZVW50-1234***" />
+        <Form.Item name="vin" label="Chassis Number">
+          <Input placeholder="e.g. ZVW50-1234567" />
         </Form.Item>
       </Col>
       <Col xs={24} md={8}>
@@ -84,6 +84,7 @@ const VehicleDetailsSection = () => (
             <Option value="New">New</Option>
             <Option value="Reconditioned">Reconditioned</Option>
             <Option value="Local Used">Local Used</Option>
+            <Option value="Pre Owned">Pre Owned</Option>
             <Option value="Used">Used</Option>
           </Select>
         </Form.Item>

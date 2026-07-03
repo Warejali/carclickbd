@@ -63,7 +63,7 @@ const slides: Slide[] = [
 
 export default function HeroSlider() {
   return (
-    <section className="relative h-auto overflow-hidden bg-slate-950 lg:h-[620px]">
+    <section className="relative h-auto overflow-hidden bg-slate-950 lg:h-[430px]">
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         navigation
@@ -74,13 +74,13 @@ export default function HeroSlider() {
       >
         {slides.map((slide) => (
           <SwiperSlide key={slide.title}>
-            <div className="relative min-h-[620px] overflow-hidden bg-gradient-to-br from-[#001b46] via-[#003399] to-[#00142f] text-white lg:h-[620px]">
+            <div className="relative min-h-[430px] overflow-hidden bg-gradient-to-br from-[#001b46] via-[#003399] to-[#00142f] text-white lg:h-[430px]">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_74%_48%,rgba(255,255,255,0.18),transparent_30%),linear-gradient(90deg,rgba(0,0,0,0.22),transparent)]" />
               <div className="absolute inset-0 opacity-20 [background-image:linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px)] [background-size:48px_48px]" />
 
-              <div className="relative mx-auto grid min-h-[620px] max-w-7xl grid-cols-1 items-center gap-8 px-4 py-14 md:px-8 lg:grid-cols-[0.92fr_1.08fr] lg:py-0">
+              <div className="relative mx-auto grid min-h-[430px] max-w-7xl grid-cols-1 items-center gap-6 px-4 py-8 md:px-8 lg:grid-cols-[0.92fr_1.08fr] lg:py-0">
                 <div className="z-20">
-                  <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-bold backdrop-blur">
+                  <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3.5 py-1.5 text-xs font-bold backdrop-blur">
                     {slide.primaryHref.includes("verify") ? (
                       <FileSearch size={16} className="text-[#f0b90b]" />
                     ) : (
@@ -89,30 +89,30 @@ export default function HeroSlider() {
                     {slide.eyebrow}
                   </div>
 
-                  <h1 className="max-w-2xl text-4xl font-black leading-tight tracking-normal md:text-6xl">
+                  <h1 className="max-w-2xl text-3xl font-black leading-tight tracking-normal md:text-4xl">
                     {slide.title}
                   </h1>
-                  <p className="mt-5 max-w-xl text-base font-medium leading-7 text-slate-200 md:text-lg">
+                  <p className="mt-3 max-w-xl text-sm font-medium leading-6 text-slate-200 md:text-base">
                     {slide.description}
                   </p>
 
-                  <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                  <div className="mt-5 flex flex-col gap-3 sm:flex-row">
                     <Link
                       href={slide.primaryHref}
-                      className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-[#f0b90b] px-6 text-sm font-extrabold text-slate-950 shadow-lg transition hover:bg-[#d9a609]"
+                      className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-[#f0b90b] px-5 text-sm font-extrabold text-slate-950 shadow-lg transition hover:bg-[#d9a609]"
                     >
                       {slide.primaryLabel}
                       <ArrowRight size={17} />
                     </Link>
                     <Link
                       href={slide.secondaryHref}
-                      className="inline-flex h-12 items-center justify-center rounded-md border border-white/30 bg-white/10 px-6 text-sm font-bold text-white backdrop-blur transition hover:bg-white hover:text-slate-950"
+                      className="inline-flex h-10 items-center justify-center rounded-md border border-white/30 bg-white/10 px-5 text-sm font-bold text-white backdrop-blur transition hover:bg-white hover:text-slate-950"
                     >
                       {slide.secondaryLabel}
                     </Link>
                   </div>
 
-                  <div className="mt-8 hidden max-w-xl grid-cols-3 gap-3 sm:grid">
+                  <div className="mt-5 hidden max-w-xl grid-cols-3 gap-2 sm:grid">
                     {[
                       ["Verified", ShieldCheck],
                       ["Search", Search],
@@ -122,10 +122,13 @@ export default function HeroSlider() {
                       return (
                         <div
                           key={label as string}
-                          className="rounded-md border border-white/10 bg-white/10 p-3 backdrop-blur"
+                          className="flex h-11 items-center gap-2.5 rounded-md border border-white/10 bg-white/10 px-3 backdrop-blur"
                         >
-                          <DisplayIcon size={18} className="text-[#f0b90b]" />
-                          <p className="mt-2 text-xs font-bold uppercase tracking-wide text-slate-200">
+                          <DisplayIcon
+                            size={17}
+                            className="shrink-0 text-[#f0b90b]"
+                          />
+                          <p className="text-xs font-bold uppercase tracking-wide text-slate-200">
                             {label as string}
                           </p>
                         </div>
@@ -134,8 +137,8 @@ export default function HeroSlider() {
                   </div>
                 </div>
 
-                <div className="relative z-10 flex min-h-[300px] items-center justify-center lg:min-h-[520px]">
-                  <div className="relative h-[300px] w-full sm:h-[360px] lg:h-[520px]">
+                <div className="relative z-10 flex min-h-[230px] items-center justify-center lg:min-h-[350px]">
+                  <div className="relative h-[230px] w-full sm:h-[280px] lg:h-[350px]">
                     <div className="absolute inset-x-8 bottom-10 h-16 rounded-full bg-black/30 blur-3xl" />
                     <Image
                       src={slide.image}

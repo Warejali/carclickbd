@@ -26,7 +26,12 @@ const AdminProtect = ({ children }: PrivateRouteProps) => {
       return;
     }
 
-    if (!(tokenInfo?.role === "admin" || tokenInfo?.role === "super-admin")) {
+    if (
+      !(
+        tokenInfo?.role === "admin" ||
+        tokenInfo?.role === "super-admin"
+      )
+    ) {
       dispatch(setLogOut()); 
       router.push("/"); 
     }

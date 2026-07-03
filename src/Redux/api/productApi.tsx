@@ -120,10 +120,11 @@ const productApi: any = baseApi.injectEndpoints({
       invalidatesTags: ["product"],
     }),
     updateProduct: build.mutation({
-      query: ({ data, id }: { data: IProduct; id: string }) => ({
+      query: ({ data, id }: { data: IProduct | FormData; id: string }) => ({
         url: `${url}/${id}`,
         method: "PATCH",
         data: data,
+        contentType: data instanceof FormData ? "multipart/form-data" : undefined,
       }),
       invalidatesTags: ["product"],
     }),

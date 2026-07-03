@@ -46,13 +46,26 @@ const LeftSidebar: React.FC<ISidebarProps> = ({ menuGroups = [] }) => {
         isSidebarOpen
           ? "w-[14rem]"
           : "md:w-[5rem] opacity-0 pointer-events-none md:pointer-events-auto md:opacity-100"
-      } !transition-all !ease-in-out !duration-300 h-full absolute md:sticky top-0 left-0 z-[9999999999] text-[1rem] 
-   bg-white`}
+      } !transition-all !ease-in-out !duration-300 h-full absolute md:sticky top-0 left-0 z-[9999999999] overflow-hidden text-[1rem] text-white
+   bg-gradient-to-b from-slate-950 via-[#071d49] to-[#003399] shadow-[18px_0_45px_rgba(15,23,42,0.22)]`}
     >
-      {/* <!-- SIDEBAR HEADER --> */}
-      <div className="flex items-center flex-col  justify-center gap-2   w-full">
+      <div className="absolute inset-0 opacity-20 [background-image:radial-gradient(circle,white_1px,transparent_1px)] [background-size:18px_18px]" />
+      <div className="relative flex w-full flex-col items-center justify-center gap-2 border-b border-white/10 px-4 py-5">
+        {isSidebarOpen && (
+          <div className="w-full">
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-[#f0b90b]">
+              CarClickBD
+            </p>
+            <h2 className="mt-1 text-lg font-black text-white">
+              Buyer Panel
+            </h2>
+            <p className="mt-1 text-xs font-medium text-slate-300">
+              Manage inquiries, saved cars, and orders.
+            </p>
+          </div>
+        )}
         <button
-          className="  text-3xl top-4 lg:hidden p-5"
+          className="text-3xl top-4 lg:hidden p-3 text-white"
           onClick={() => dispatch(sidebarToggle())}
         >
           {isSidebarOpen ? (
@@ -67,9 +80,9 @@ const LeftSidebar: React.FC<ISidebarProps> = ({ menuGroups = [] }) => {
         </button>
       </div>
 
-      <div className="no-scrollbar flex flex-col overflow-y-auto h-[calc(100vh-130px)] duration-300 ease-linear">
-        <section className="mt-2   px-4 py-4 lg:mt-9 lg:px-6">
-          <nav className="space-y-4">
+      <div className="relative no-scrollbar flex h-[calc(100vh-120px)] flex-col overflow-y-auto duration-300 ease-linear">
+        <section className="px-3 py-4 lg:px-4">
+          <nav className="space-y-2">
             {menuGroups?.map((group, groupIndex) => (
               <div key={groupIndex}>
                 {group.children ? (
@@ -89,7 +102,7 @@ const LeftSidebar: React.FC<ISidebarProps> = ({ menuGroups = [] }) => {
                   </LeftSidebarDropdown>
                 ) : (
                   <Link
-                    className="flex items-center text-sm text-nowrap gap-2 px-3 py-1.5 rounded-md hover:bg-green-600 hover:text-white transition-colors duration-300"
+                    className="flex items-center gap-2 rounded-md px-3 py-2.5 text-sm font-semibold text-nowrap text-slate-200 transition-colors duration-300 hover:bg-white/10 hover:text-white"
                     href={group.route || "/"}
                     onClick={() => {
                       if (window.innerWidth < 768) {
@@ -110,11 +123,11 @@ const LeftSidebar: React.FC<ISidebarProps> = ({ menuGroups = [] }) => {
 
             <button
               onClick={handleLogOut}
-              className="flex items-center justify-between w-full"
+              className="mt-4 flex w-full items-center justify-between rounded-md border border-red-300/20 px-3 py-2.5 text-red-100 transition hover:bg-red-500/15"
             >
               <div className="flex items-center gap-2">
                 <span className={`${!isSidebarOpen ? "text-[22px]" : ""}`}>
-                  <TbLogout className="text-[#f0b90b]" />
+                  <TbLogout className="text-red-200" />
                 </span>
                 <span
                   className={`${!isSidebarOpen ? "hidden" : "text-sm text-nowrap font-bold"}`}

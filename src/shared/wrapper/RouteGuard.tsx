@@ -22,9 +22,15 @@ const RouteGuard = ({ children }: { children: ReactNode }) => {
     }
 
     const restrictedRoutes: Record<string, boolean> = {
-      "/admin": !(userRole === "admin" || userRole === "super-admin"),
+      "/admin": !(
+        userRole === "admin" ||
+        userRole === "super-admin" ||
+        userRole === "agent" ||
+        userRole === "sub-agent"
+      ),
       "/admin/create-admin": userRole !== "super-admin",
       "/admin/admins": userRole !== "super-admin",
+      "/seller": userRole !== "seller",
       "/customer": userRole !== "customer",
       "/profile": userRole === "admin" || userRole === "super-admin",
     };

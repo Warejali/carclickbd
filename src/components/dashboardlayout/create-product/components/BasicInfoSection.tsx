@@ -51,8 +51,8 @@ const BasicInfoSection = () => (
         </Form.Item>
       </Col>
       <Col xs={24} md={8}>
-        <Form.Item name="registrationYear" label="Registration Year">
-          <Select showSearch placeholder="Select registration year" allowClear>
+        <Form.Item name="registrationYear" label="Production Year">
+          <Select showSearch placeholder="Select production year" allowClear>
             {years.map((year) => (
               <Option key={year} value={year}>
                 {year}

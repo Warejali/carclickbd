@@ -2,6 +2,7 @@ import { setLogOut } from "@/Redux/Slices/authSlice";
 import { adminRoutes } from "@/routes/adminRoutes";
 import { agentRoutes } from "@/routes/agentRoutes";
 import { customerRoutes } from "@/routes/customerRoutes";
+import { sellerRoutes } from "@/routes/sellerRoutes";
 import { subAgentRoutes } from "@/routes/subAgentRoutes";
 import { superRoutes } from "@/routes/superRoutes";
 
@@ -16,6 +17,8 @@ export const getMenuContent = (tokenInfo: any, dispatch: any) => {
       return agentRoutes;
     case "sub-agent":
       return subAgentRoutes;
+    case "seller":
+      return sellerRoutes;
     case "customer":
       return customerRoutes;
     default:

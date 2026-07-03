@@ -1,6 +1,7 @@
 "use client";
 
 import { BadgeCheck, Clock3, ShieldCheck } from "lucide-react";
+import { getProductStatusMeta } from "@/utils/productStatus";
 
 const formatBDT = (value: number | string) => {
   const numericValue = Number(value || 0);
@@ -10,8 +11,9 @@ const formatBDT = (value: number | string) => {
 
 export default function SaleInformation({ product }: { product: any }) {
   const price = product?.mainPrice || product?.highestBid || product?.minBid || 0;
+  const statusMeta = getProductStatusMeta(product);
   const rows = [
-    ["Listing status", product?.isSoldOut ? "Reserved" : "Available"],
+    ["Listing status", statusMeta.label],
     ["Seller type", product?.sellerType || "Verified dealer"],
     ["Stock ID", product?._id?.slice(-8)?.toUpperCase()],
   ].filter(([, value]) => value);

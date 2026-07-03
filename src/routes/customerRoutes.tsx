@@ -1,39 +1,42 @@
 import { IDNavMenuItem } from "@/Interface/content";
 import {
-  DashboardOutlined,
-  UserOutlined,
-  ShopOutlined,
-  FileTextOutlined,
-  CommentOutlined,
   BarChartOutlined,
-  CalendarOutlined,
-  BellOutlined
+  BellOutlined,
+  CarOutlined,
+  CommentOutlined,
+  DashboardOutlined,
+  FileProtectOutlined,
+  HeartOutlined,
+  QuestionCircleOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import { BiPurchaseTag } from "react-icons/bi";
 
-
-
-const customerRoutes: IDNavMenuItem[] = ([
+const customerRoutes: IDNavMenuItem[] = [
   { icon: <DashboardOutlined />, label: "Dashboard", route: "/customer" },
   { icon: <UserOutlined />, label: "Profile", route: "/customer/profile" },
-
+  { icon: <CarOutlined />, label: "Browse Cars", route: "/cars" },
   {
-    icon: <FileTextOutlined />,
+    icon: <CommentOutlined />,
     label: "Inquiries",
     children: [
       { label: "My Inquiries", route: "/customer/bids" },
       { label: "Inquiry Archive", route: "/customer/bids/past-auction" },
     ],
   },
+  {
+    icon: <HeartOutlined />,
+    label: "Saved & Cart",
+    children: [
+      { label: "Saved Cars", route: "/customer/cart" },
+      { label: "Cart", route: "/customer/cart" },
+    ],
+  },
   { icon: <BiPurchaseTag />, label: "Orders", route: "/customer/order" },
-
-  { icon: <CommentOutlined />, label: "Comment", route: "/customer/comment-history" },
-  { icon: <BellOutlined />, label: "Notification", route: "/customer/notification" },
-  { icon: <FileTextOutlined />, label: "Report", route: "/customer/report" },
-  { icon: <FileTextOutlined />, label: "Membership", route: "/customer/membership" },
-  { icon: <CalendarOutlined />, label: "Event", route: "/customer/event" },
-  { icon: <BarChartOutlined />, label: "Support", route: "/customer/support" },
-
-] as IDNavMenuItem[]).filter(Boolean);
+  { icon: <FileProtectOutlined />, label: "Membership", route: "/customer/membership" },
+  { icon: <BellOutlined />, label: "Notifications", route: "/customer/notification" },
+  { icon: <BarChartOutlined />, label: "Activity Report", route: "/customer/report" },
+  { icon: <QuestionCircleOutlined />, label: "Support", route: "/customer/support" },
+];
 
 export { customerRoutes };
