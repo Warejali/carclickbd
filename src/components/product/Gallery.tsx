@@ -6,9 +6,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import { ChevronLeft, ChevronRight, Images } from "lucide-react";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { getProductStatusMeta } from "@/utils/productStatus";
+import { IProduct } from "@/Interface/product";
 
 interface GalleryProps {
-  product: {
+  product: Partial<IProduct> & {
     title: string;
     photos: {
       mainPhoto: string;
@@ -18,6 +20,9 @@ interface GalleryProps {
       mechanical?: string[];
       docs?: string[];
     };
+    status?: any;
+    isDraft?: boolean;
+    isSoldOut?: boolean;
   };
 }
 
@@ -36,17 +41,26 @@ export default function Gallery({ product }: GalleryProps) {
   return (
     <div className="w-full">
       {isMobile ? (
-        <MobileGallery photos={allPhotos} title={product.title} />
+        <MobileGallery photos={allPhotos} title={product.title} product={product} />
       ) : (
-        <DesktopGallery photos={allPhotos} title={product.title} />
+        <DesktopGallery photos={allPhotos} title={product.title} product={product} />
       )}
     </div>
   );
 }
 
-function DesktopGallery({ photos, title }: { photos: string[]; title: string }) {
+function DesktopGallery({
+  photos,
+  title,
+  product,
+}: {
+  photos: string[];
+  title: string;
+  product: GalleryProps["product"];
+}) {
   const [activeIndex, setActiveIndex] = useState(0);
   const activePhoto = photos[activeIndex];
+  const statusMeta = getProductStatusMeta(product);
 
   const goToPhoto = (direction: "prev" | "next") => {
     setActiveIndex((current) => {
@@ -68,6 +82,14 @@ function DesktopGallery({ photos, title }: { photos: string[]; title: string }) 
           priority
         />
         <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-slate-950/75 to-transparent" />
+        <div className="absolute left-4 top-4 flex flex-wrap gap-2">
+          <span
+            className={`inline-flex items-center rounded-full px-4 py-2 text-xs font-black uppercase tracking-wide ring-1 shadow-lg backdrop-blur ${statusMeta.badgeClass}`}
+            style={statusMeta.badgeStyle}
+          >
+            {statusMeta.label}
+          </span>
+        </div>
 
         {photos.length > 1 && (
           <>
@@ -124,7 +146,16 @@ function DesktopGallery({ photos, title }: { photos: string[]; title: string }) 
   );
 }
 
-function MobileGallery({ photos, title }: { photos: string[]; title: string }) {
+function MobileGallery({
+  photos,
+  title,
+  product,
+}: {
+  photos: string[];
+  title: string;
+  product: GalleryProps["product"];
+}) {
+  const statusMeta = getProductStatusMeta(product);
   return (
     <Swiper
       modules={[Navigation, Pagination]}
@@ -143,6 +174,14 @@ function MobileGallery({ photos, title }: { photos: string[]; title: string }) {
               fill
               className="object-cover"
             />
+            <div className="absolute left-4 top-4">
+              <span
+                className={`inline-flex items-center rounded-full px-4 py-2 text-xs font-black uppercase tracking-wide ring-1 shadow-lg backdrop-blur ${statusMeta.badgeClass}`}
+                style={statusMeta.badgeStyle}
+              >
+                {statusMeta.label}
+              </span>
+            </div>
           </div>
         </SwiperSlide>
       ))}

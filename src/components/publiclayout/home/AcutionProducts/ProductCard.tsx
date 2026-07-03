@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { Card, Skeleton } from "antd";
 import {
@@ -25,6 +26,7 @@ const formatPrice = (value: number | string) => {
 
 const ProductCard = ({ product }: { product: IProduct }) => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const price = product.mainPrice || product.highestBid || product.minBid || 0;
   const statusMeta = getProductStatusMeta(product);
   const location = [product?.location?.city, product?.location?.zipCode]
@@ -48,6 +50,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
 
   const handleClick = () => {
     dispatch(setSelectedProduct(product));
+    router.push(`/car-details/${product._id}`);
   };
 
   return (
@@ -71,6 +74,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
           <div className="absolute left-3 top-3 flex flex-wrap gap-2">
             <span
               className={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-wide ring-1 ${statusMeta.badgeClass}`}
+              style={statusMeta.badgeStyle}
             >
               <BadgeCheck size={13} />
               {statusMeta.label}

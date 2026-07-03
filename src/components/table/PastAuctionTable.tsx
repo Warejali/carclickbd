@@ -150,7 +150,11 @@ const PastAuctionTable: React.FC<ProductTableProps> = ({
       key: "status",
       render: (_, record) => {
         const meta = getProductStatusMeta(record);
-        return <Tag color={meta.tagColor}>{meta.label}</Tag>;
+        return (
+          <Tag color={meta.tagColor} style={meta.badgeStyle}>
+            {meta.label}
+          </Tag>
+        );
       },
       filters: productStatuses.map((status) => ({
         text: productStatusMeta[status].label,

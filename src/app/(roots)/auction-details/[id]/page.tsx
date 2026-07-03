@@ -46,7 +46,10 @@ export default function ProductDetailsPage() {
         <div className="mb-5 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <div className="mb-2 flex flex-wrap items-center gap-2">
-              <span className={`rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wide ring-1 ${statusMeta.badgeClass}`}>
+              <span
+                className={`rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wide ring-1 ${statusMeta.badgeClass}`}
+                style={statusMeta.badgeStyle}
+              >
                 {statusMeta.label}
               </span>
               {product?.isFeatured && (

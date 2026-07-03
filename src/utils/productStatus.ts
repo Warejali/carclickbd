@@ -10,32 +10,66 @@ export const productStatuses: ProductListingStatus[] = [
 
 export const productStatusMeta: Record<
   ProductListingStatus,
-  { label: string; tagColor: string; badgeClass: string }
+  {
+    label: string;
+    tagColor: string;
+    badgeClass: string;
+    badgeStyle: {
+      backgroundColor: string;
+      borderColor: string;
+      color: string;
+    };
+  }
 > = {
   pending: {
     label: "Pending",
     tagColor: "gold",
-    badgeClass: "bg-amber-50 text-amber-700 ring-amber-200",
+    badgeClass: "ring-amber-300",
+    badgeStyle: {
+      backgroundColor: "#f59e0b",
+      borderColor: "#fbbf24",
+      color: "#ffffff",
+    },
   },
   approval: {
-    label: "Approval",
+    label: "Available",
     tagColor: "green",
-    badgeClass: "bg-emerald-50 text-emerald-700 ring-emerald-200",
+    badgeClass: "ring-emerald-300",
+    badgeStyle: {
+      backgroundColor: "#059669",
+      borderColor: "#34d399",
+      color: "#ffffff",
+    },
   },
   reserve: {
     label: "Reserve",
     tagColor: "orange",
-    badgeClass: "bg-orange-50 text-orange-700 ring-orange-200",
+    badgeClass: "ring-orange-300",
+    badgeStyle: {
+      backgroundColor: "#ea580c",
+      borderColor: "#fb923c",
+      color: "#ffffff",
+    },
   },
   under_negotiations: {
     label: "Under Negotiations",
     tagColor: "blue",
-    badgeClass: "bg-sky-50 text-sky-700 ring-sky-200",
+    badgeClass: "ring-sky-300",
+    badgeStyle: {
+      backgroundColor: "#0284c7",
+      borderColor: "#38bdf8",
+      color: "#ffffff",
+    },
   },
   sold: {
     label: "Sold",
     tagColor: "red",
-    badgeClass: "bg-red-50 text-red-700 ring-red-200",
+    badgeClass: "ring-red-300",
+    badgeStyle: {
+      backgroundColor: "#dc2626",
+      borderColor: "#f87171",
+      color: "#ffffff",
+    },
   },
 };
 

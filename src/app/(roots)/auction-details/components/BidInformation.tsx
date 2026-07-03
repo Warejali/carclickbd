@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Input, message } from "antd";
+import { Button, Input, message as antMessage } from "antd";
 import { WhatsAppOutlined } from "@ant-design/icons";
 import { Phone, UserRound } from "lucide-react";
 import { useState } from "react";
@@ -14,6 +14,7 @@ const formatBDT = (value: number | string) => {
 export default function BidInformation({ product }: { product: any }) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [messageText, setMessageText] = useState("");
   const price = formatBDT(product?.mainPrice || product?.highestBid || product?.minBid || 0);
   const whatsappNumber = "8801576611703";
   const whatsappMessage = encodeURIComponent(
@@ -23,13 +24,14 @@ export default function BidInformation({ product }: { product: any }) {
 
   const handleInquiry = () => {
     if (!name.trim() || !phone.trim()) {
-      message.error("Please enter your name and phone number.");
+      antMessage.error("Please enter your name and phone number.");
       return;
     }
 
-    message.success("Inquiry saved. Our team will respond within 24 hours.");
+    antMessage.success("Inquiry saved. Our team will respond within 24 hours.");
     setName("");
     setPhone("");
+    setMessageText("");
   };
 
   return (
@@ -58,6 +60,13 @@ export default function BidInformation({ product }: { product: any }) {
           placeholder="Phone number"
           prefix={<Phone size={16} className="text-slate-400" />}
           className="!rounded-md !py-3"
+        />
+        <Input.TextArea
+          value={messageText}
+          onChange={(e) => setMessageText(e.target.value)}
+          placeholder="Write a message to the seller"
+          rows={4}
+          className="!rounded-md"
         />
         <Button
           type="primary"
