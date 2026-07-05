@@ -120,6 +120,12 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({ productId }) => {
       const actual = file?.originFileObj || file?.file || null;
       if (actual instanceof File) {
         formData.append("others", actual);
+        formData.append("interior", actual);
+        formData.append("interiorPhoto", actual);
+        formData.append("interiorPhotos", actual);
+        formData.append("exterior", actual);
+        formData.append("exteriorPhoto", actual);
+        formData.append("exteriorPhotos", actual);
       }
     });
   };
