@@ -61,14 +61,6 @@ const BasicInfoSection = () => (
           </Select>
         </Form.Item>
       </Col>
-      <Col xs={24} md={8}>
-        <Form.Item name="language" label="Language">
-          <Select placeholder="Select language" allowClear>
-            <Option value="English">English</Option>
-            <Option value="বাংলা">বাংলা</Option>
-          </Select>
-        </Form.Item>
-      </Col>
     </Row>
   </Card>
 );

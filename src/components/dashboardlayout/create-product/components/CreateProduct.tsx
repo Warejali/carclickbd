@@ -187,19 +187,6 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({ productId }) => {
             <VehicleDetailsSection />
             <LocationSection />
             <FeatureTagsSection />
-            {!isSeller && (
-              <div className="mb-4 rounded border border-slate-200 bg-slate-50 p-4">
-                <Form.Item name="status" label="Listing Status">
-                  <select className="h-10 w-full rounded border border-slate-300 bg-white px-3">
-                    <option value="pending">Pending</option>
-                    <option value="approval">Approval</option>
-                    <option value="reserve">Reserve</option>
-                    <option value="under_negotiations">Under Negotiations</option>
-                    <option value="sold">Sold</option>
-                  </select>
-                </Form.Item>
-              </div>
-            )}
           </Col>
 
           <Col xs={24} lg={8}>
