@@ -20,11 +20,8 @@ const ProductDetailsModal: React.FC<ProductDetailsModalProps> = ({
   if (!product) return null;
 
   const allImages = [
-    ...(product.photos?.others || []),
     ...(product.photos?.mainPhoto ? [product.photos.mainPhoto] : []),
-    ...(product.photos?.docs || []),
-    ...(product.photos.exterior || []),
-    ...(product.photos.interior || []),
+    ...(product.photos?.others || []),
   ];
 
   return (

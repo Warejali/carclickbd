@@ -14,11 +14,7 @@ interface GalleryProps {
     title: string;
     photos: {
       mainPhoto: string;
-      exterior?: string[];
-      interior?: string[];
       others?: string[];
-      mechanical?: string[];
-      docs?: string[];
     };
     status?: any;
     isDraft?: boolean;
@@ -30,10 +26,7 @@ export default function Gallery({ product }: GalleryProps) {
   const isMobile = useMediaQuery("(max-width: 640px)");
   const allPhotos: string[] = [
     product.photos?.mainPhoto,
-    ...(product.photos?.exterior || []),
-    ...(product.photos?.interior || []),
     ...(product.photos?.others || []),
-    ...(product.photos?.mechanical || []),
   ].filter(Boolean);
 
   if (!allPhotos.length) return null;

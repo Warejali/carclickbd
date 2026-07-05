@@ -22,9 +22,6 @@ export type IProduct = {
   photos: {
     mainPhoto: string;
     others: string[];
-    docs: string[];
-    exterior: string[];
-    interior: string[];
   };
   mainPrice: number;
   isAuction: boolean;
