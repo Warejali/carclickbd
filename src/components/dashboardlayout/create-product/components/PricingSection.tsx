@@ -30,6 +30,7 @@ const PricingSection = () => (
           name="mileage"
           label="Mileage"
           rules={[
+            { required: true, message: "Please enter mileage" },
             {
               validator: (_, value) => {
                 if (!value || /^\d+$/.test(value)) return Promise.resolve();

@@ -130,8 +130,40 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({ productId }) => {
     });
   };
 
+  const requiredFields = [
+    ["mainPrice", "Price"],
+    ["mileage", "Mileage"],
+    ["engine", "Engine Size"],
+    ["fuelType", "Fuel Type"],
+    ["transmission", "Transmission"],
+    ["drivetrain", "Drive Type"],
+    ["bodyStyle", "Body Type"],
+    ["color", "Color"],
+    ["condition", "Condition"],
+  ];
+
+  const hasMissingRequiredFields = (values: any) => {
+    const missing = requiredFields.filter(([field]) => {
+      const value = values[field];
+      return value === undefined || value === null || value === "";
+    });
+
+    if (missing.length) {
+      const [field, label] = missing[0];
+      message.error(`${label} is required.`);
+      form.scrollToField(field, { behavior: "smooth", block: "center" });
+      return true;
+    }
+
+    return false;
+  };
+
   const onFinish = async (values: any) => {
     try {
+      if (hasMissingRequiredFields(values)) {
+        return;
+      }
+
       if (!mainPhotoFile) {
         message.error("Main photo is required!");
         return;

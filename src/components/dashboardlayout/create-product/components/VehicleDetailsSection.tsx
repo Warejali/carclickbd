@@ -8,12 +8,20 @@ const VehicleDetailsSection = () => (
   <Card title="Vehicle Details" className="shadow-md mb-4">
     <Row gutter={[16, 16]}>
       <Col xs={24} md={8}>
-        <Form.Item name="engine" label="Engine Size">
+        <Form.Item
+          name="engine"
+          label="Engine Size"
+          rules={[{ required: true, message: "Please enter engine size" }]}
+        >
           <Input placeholder="e.g. 2000cc" />
         </Form.Item>
       </Col>
       <Col xs={24} md={8}>
-        <Form.Item name="fuelType" label="Fuel Type">
+        <Form.Item
+          name="fuelType"
+          label="Fuel Type"
+          rules={[{ required: true, message: "Please select fuel type" }]}
+        >
           <Select placeholder="Select" allowClear>
             <Option value="Petrol">Petrol</Option>
             <Option value="Diesel">Diesel</Option>
@@ -27,7 +35,11 @@ const VehicleDetailsSection = () => (
         </Form.Item>
       </Col>
       <Col xs={24} md={8}>
-        <Form.Item name="transmission" label="Transmission">
+        <Form.Item
+          name="transmission"
+          label="Transmission"
+          rules={[{ required: true, message: "Please select transmission" }]}
+        >
           <Select placeholder="Select" allowClear>
             <Option value="Automatic">Automatic</Option>
             <Option value="Manual">Manual</Option>
@@ -38,7 +50,11 @@ const VehicleDetailsSection = () => (
 
     <Row gutter={[16, 16]}>
       <Col xs={24} md={8}>
-        <Form.Item name="drivetrain" label="Drive Type">
+        <Form.Item
+          name="drivetrain"
+          label="Drive Type"
+          rules={[{ required: true, message: "Please select drive type" }]}
+        >
           <Select placeholder="Select" allowClear>
             <Option value="4WD">4WD</Option>
             <Option value="2WD">2WD</Option>
@@ -46,7 +62,11 @@ const VehicleDetailsSection = () => (
         </Form.Item>
       </Col>
       <Col xs={24} md={8}>
-        <Form.Item name="bodyStyle" label="Body Type">
+        <Form.Item
+          name="bodyStyle"
+          label="Body Type"
+          rules={[{ required: true, message: "Please select body type" }]}
+        >
           <Select placeholder="Select" allowClear>
             <Option value="Sedan">Sedan</Option>
             <Option value="SUV">SUV</Option>
@@ -61,7 +81,11 @@ const VehicleDetailsSection = () => (
         </Form.Item>
       </Col>
       <Col xs={24} md={8}>
-        <Form.Item name="color" label="Color">
+        <Form.Item
+          name="color"
+          label="Color"
+          rules={[{ required: true, message: "Please enter color" }]}
+        >
           <Input placeholder="e.g. Pearl White" />
         </Form.Item>
       </Col>
@@ -79,7 +103,11 @@ const VehicleDetailsSection = () => (
         </Form.Item>
       </Col>
       <Col xs={24} md={8}>
-        <Form.Item name="condition" label="Condition">
+        <Form.Item
+          name="condition"
+          label="Condition"
+          rules={[{ required: true, message: "Please select condition" }]}
+        >
           <Select placeholder="Select" allowClear>
             <Option value="New">New</Option>
             <Option value="Reconditioned">Reconditioned</Option>
