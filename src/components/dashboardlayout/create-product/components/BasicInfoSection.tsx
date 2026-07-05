@@ -51,13 +51,32 @@ const BasicInfoSection = () => (
         </Form.Item>
       </Col>
       <Col xs={24} md={8}>
-        <Form.Item name="registrationYear" label="Production Year">
+        <Form.Item name="registrationYear" label="Registration Year">
+          <Select showSearch placeholder="Select registration year" allowClear>
+            {years.map((year) => (
+              <Option key={year} value={year}>
+                {year}
+              </Option>
+            ))}
+          </Select>
+        </Form.Item>
+      </Col>
+      <Col xs={24} md={8}>
+        <Form.Item name="productionYear" label="Production Year (Optional)">
           <Select showSearch placeholder="Select production year" allowClear>
             {years.map((year) => (
               <Option key={year} value={year}>
                 {year}
               </Option>
             ))}
+          </Select>
+        </Form.Item>
+      </Col>
+      <Col xs={24} md={8}>
+        <Form.Item name="language" label="Language">
+          <Select placeholder="Select language" allowClear>
+            <Option value="English">English</Option>
+            <Option value="বাংলা">বাংলা</Option>
           </Select>
         </Form.Item>
       </Col>

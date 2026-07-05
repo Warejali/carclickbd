@@ -29,12 +29,9 @@ const AuctionProducts = ({
             <p className="text-xs font-bold uppercase tracking-[0.18em] text-sky-600">
               Featured Inventory
             </p>
-            <h2 className="mt-1 text-3xl font-extrabold text-slate-950 md:text-4xl">
-              Fresh cars worth a closer look
-            </h2>
-            <p className="mt-2 max-w-2xl text-sm font-medium leading-6 text-slate-500">
-              A cleaner preview of verified listings with photos, specs, price,
-              and direct detail pages.
+            <p className="mt-2 max-w-xl text-xs font-semibold uppercase tracking-[0.08em] text-slate-500">
+              Verified listings with clear photos, specs, prices, and direct
+              detail pages.
             </p>
           </div>
           <Link

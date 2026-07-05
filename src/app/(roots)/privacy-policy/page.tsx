@@ -2,6 +2,7 @@
 "use client";
 import React from 'react';
 import { Typography } from 'antd';
+import { siteAddress, siteContact } from '@/constants/siteContact';
 
 const { Title, Paragraph, Text, Link } = Typography;
 
@@ -137,7 +138,8 @@ const PrivacyPolicyPage = () => {
 
       <Title level={2} className="text-2xl font-semibold">10. Contact Us</Title>
       <Paragraph>
-        If you have any questions about this Privacy Policy, please contact us at support@carclickbd.com.
+        If you have any questions about this Privacy Policy, please contact {siteContact.company} at {siteContact.email},
+        WhatsApp {siteContact.whatsapp}, or {siteAddress}.
       </Paragraph>
     </div>
   );

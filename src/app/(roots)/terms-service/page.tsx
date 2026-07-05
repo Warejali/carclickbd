@@ -2,6 +2,7 @@
 "use client";
 import React from 'react';
 import { Typography } from 'antd';
+import { siteAddress, siteContact } from '@/constants/siteContact';
 
 const { Title, Paragraph, Text, Link } = Typography;
 
@@ -140,7 +141,8 @@ const TermsOfServicePage = () => {
 
       <Title level={2} className="text-2xl font-semibold">14. Contact Us</Title>
       <Paragraph>
-        If you have any questions about these Terms, please contact us at support@carclickbd.com.
+        If you have any questions about these Terms, please contact {siteContact.company} at {siteContact.email},
+        WhatsApp {siteContact.whatsapp}, or {siteAddress}.
       </Paragraph>
     </div>
   );

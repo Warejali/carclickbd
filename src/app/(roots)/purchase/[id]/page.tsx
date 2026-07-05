@@ -22,6 +22,7 @@ import ProductSkeletonContainer from "../../../../components/product/skeleton/Pr
 import { IProduct } from "@/Interface/product";
 import BuyerOrderInfo from "./components/BuyerOrderInfo";
 import PurchaseProcess from "./components/PurchaseProcess";
+import { getWhatsAppUrl } from "@/constants/siteContact";
 import { useCreateOrderMutation } from "@/Redux/api/orderApi";
 import { useRouter } from "next/navigation";
 
@@ -183,7 +184,7 @@ export default function PurchasePage({ params }: { params: { id: string } }) {
               Our carclickbd team is here to assist you with your purchase.
             </Paragraph>
             <a
-              href="https://wa.me/12565779901?text=Hello!%20I%20have%20a%20question%20about%20carclickbd"
+              href={getWhatsAppUrl("Hello! I have a question about CarClickBD purchase support")}
               target="_blank"
               rel="noopener noreferrer"
               className="text-green-600 hover:underline"

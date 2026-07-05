@@ -1,3 +1,5 @@
+import { siteAddress, siteContact } from "@/constants/siteContact";
+
 const CookiePolicyPage = () => {
   return (
     <main className="mx-auto max-w-4xl px-4 py-14 md:px-8">
@@ -18,7 +20,8 @@ const CookiePolicyPage = () => {
           cookies may affect login, saved preferences, or certain site features.
         </p>
         <p>
-          For privacy questions, contact us at support@carclickbd.com.
+          For privacy questions, contact {siteContact.company} at {siteContact.email},
+          WhatsApp {siteContact.whatsapp}, or {siteAddress}.
         </p>
       </div>
     </main>

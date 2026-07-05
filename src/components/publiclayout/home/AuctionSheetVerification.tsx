@@ -3,48 +3,29 @@
 import {
   ArrowRight,
   FileSearch,
-  Gauge,
   Languages,
-  SearchCheck,
   ShieldCheck,
 } from "lucide-react";
 import Link from "next/link";
 
 const services = [
   {
-    title: "Auction Grade Check",
+    title: "Production Year Check",
     description:
-      "Verify the Japanese inspection grade, exterior notes, interior grade, and condition remarks before you make a buying decision.",
+      "Verify production year, Japanese inspection grade, exterior notes, interior grade, and condition remarks before you make a buying decision.",
     icon: ShieldCheck,
     cta: "Verify Sheet",
-    href: "/contact",
+    href: "https://www.jp.center/month",
+    external: true,
     accent: "from-[#003399] to-[#f0b90b]",
   },
   {
-    title: "Actual Mileage",
-    description:
-      "Cross-check mileage records from the Japanese auction sheet so dealers and private sellers cannot misrepresent the vehicle.",
-    icon: Gauge,
-    cta: "Check Mileage",
-    href: "/contact",
-    accent: "from-blue-500 to-cyan-600",
-  },
-  {
-    title: "Scam & Forgery Review",
-    description:
-      "Spot edited sheets, fake grades, missing damage notes, and suspicious import documents with a manual expert review.",
-    icon: SearchCheck,
-    cta: "Request Review",
-    href: "/contact",
-    accent: "from-emerald-500 to-teal-600",
-  },
-  {
-    title: "Sheet Translation",
+    title: "Auction Sheet Translation",
     description:
       "Get Japanese auction sheet notes translated into clear buyer-friendly language, including scratches, dents, rust, and repairs.",
     icon: Languages,
     cta: "Translate Sheet",
-    href: "/contact",
+    href: "/verify-auction-sheet",
     accent: "from-amber-500 to-orange-600",
   },
 ];
@@ -72,24 +53,9 @@ const AuctionSheetVerification = () => {
               reconditioned vehicles. Get a clearer view before paying for a car.
             </p>
 
-            <div className="mt-7 grid gap-3 sm:grid-cols-3">
-              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4">
-                <div className="text-2xl font-bold text-gray-950">24h</div>
-                <div className="text-sm text-gray-600">Support response</div>
-              </div>
-              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4">
-                <div className="text-2xl font-bold text-gray-950">4+</div>
-                <div className="text-sm text-gray-600">Report checks</div>
-              </div>
-              <div className="rounded-lg border border-gray-200 bg-gray-50 p-4">
-                <div className="text-2xl font-bold text-gray-950">BD</div>
-                <div className="text-sm text-gray-600">Buyer focused</div>
-              </div>
-            </div>
-
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
-                href="/contact"
+                href="/verify-auction-sheet"
                 className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#003399] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#00266f]"
               >
                 Verify Auction Sheet <ArrowRight size={17} />
@@ -108,9 +74,11 @@ const AuctionSheetVerification = () => {
               const Icon = service.icon;
 
               return (
-                <Link
+                <a
                   key={service.title}
                   href={service.href}
+                  target={service.external ? "_blank" : undefined}
+                  rel={service.external ? "noreferrer" : undefined}
                   className="group flex min-h-[260px] flex-col rounded-lg border border-gray-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-gray-300 hover:shadow-xl"
                 >
                   <div
@@ -133,7 +101,7 @@ const AuctionSheetVerification = () => {
                       className="transition group-hover:translate-x-1"
                     />
                   </div>
-                </Link>
+                </a>
               );
             })}
           </div>

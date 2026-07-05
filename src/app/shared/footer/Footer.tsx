@@ -10,6 +10,7 @@ import {
 } from "@ant-design/icons";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { SiTiktok } from "react-icons/si";
+import { siteAddress, siteContact } from "@/constants/siteContact";
 
 const footerColumns = [
   {
@@ -80,15 +81,15 @@ const Footer = () => {
             <div className="mt-6 space-y-3 text-sm">
               <p className="flex items-center gap-3">
                 <Phone size={16} className="text-[#f0b90b]" />
-                <span>+880 1576 611703</span>
+                <span>{siteContact.whatsapp}</span>
               </p>
               <p className="flex items-center gap-3">
                 <Mail size={16} className="text-[#f0b90b]" />
-                <span>support@carclickbd.com</span>
+                <span>{siteContact.email}</span>
               </p>
-              <p className="flex items-center gap-3">
+              <p className="flex items-start gap-3">
                 <MapPin size={16} className="text-[#f0b90b]" />
-                <span>Dhaka, Bangladesh</span>
+                <span>{siteAddress}</span>
               </p>
             </div>
 

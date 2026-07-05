@@ -4,6 +4,7 @@ import { Button, Card } from 'antd';
 import { Typography } from 'antd';
 import { Input } from 'antd';
 import { CarOutlined, CheckCircleOutlined, PhoneOutlined, MailOutlined } from '@ant-design/icons';
+import { siteContact } from '@/constants/siteContact';
 
 const { Title, Paragraph, Text } = Typography;
 const { Meta } = Card;
@@ -73,7 +74,7 @@ const ShippingPage = () => {
         <Title level={3} className="mb-4 text-gray-700 dark:text-gray-300">Easy solutions, and expert support!</Title>
         <Paragraph className="text-gray-600 dark:text-gray-400 leading-relaxed">
           Do you need to import your new car? Have a tight schedule? Need to meet somewhere outside of your
-          neighborhood? Our support team can help you review available shipping options. Email us at <Text strong><MailOutlined className="mr-1" />shipping@carclickbd.com</Text> for more information.
+          neighborhood? Our support team can help you review available shipping options. Email us at <Text strong><MailOutlined className="mr-1" />{siteContact.email}</Text> for more information.
         </Paragraph>
       </section>
 
@@ -94,7 +95,7 @@ const ShippingPage = () => {
           <li>
             <Text strong>Friendly and knowledgeable service:</Text> Our team will reach out to you immediately after your shipment
             is booked to confirm any specific details of your shipment. You&apos;ll then hear from us periodically, updating you
-            on your shipment&apos;s progress. If you have any questions, email shipping@carclickbd.com.
+            on your shipment&apos;s progress. If you have any questions, email {siteContact.email} or WhatsApp {siteContact.whatsapp}.
           </li>
           <li>
             <Text strong>Fully insured and modern fleet:</Text> Whether you choose an open or enclosed carrier, you can rest assured that

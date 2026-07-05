@@ -3,6 +3,7 @@ import React from 'react';
 import { Button } from 'antd';
 import { Card } from 'antd';
 import { Typography } from 'antd';
+import { siteAddress, siteContact } from "@/constants/siteContact";
 
 const { Title, Paragraph, Text } = Typography;
 const { Meta: CardMeta } = Card; // Corrected import
@@ -127,7 +128,13 @@ const PhotoguidePage = () => {
           If you have any questions or need further assistance, please contact us at:
         </Paragraph>
         <Text className="text-blue-600 dark:text-blue-400">
-          Email: support@carclickbd.com
+          Company: {siteContact.company}
+          <br />
+          Email: {siteContact.email}
+          <br />
+          WhatsApp: {siteContact.whatsapp}
+          <br />
+          Address: {siteAddress}
         </Text>
       </section>
     </div>

@@ -17,8 +17,7 @@ import NotificationDropdown from "@/components/notifications/NavNotification";
 const languageMenu = (
   <Menu>
     <Menu.Item key="en">English</Menu.Item>
-    <Menu.Item key="es">Spanish</Menu.Item>
-    <Menu.Item key="fr">French</Menu.Item>
+    <Menu.Item key="bn">বাংলা</Menu.Item>
   </Menu>
 );
 

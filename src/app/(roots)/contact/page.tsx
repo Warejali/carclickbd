@@ -9,6 +9,7 @@ import {
 import { Input, Button, Form, Modal } from "antd";
 import { useSendMessageMutation } from "@/Redux/api/contactApi";
 import { WhatsAppOutlined } from "@ant-design/icons";
+import { getWhatsAppUrl, siteAddress, siteContact } from "@/constants/siteContact";
 
 export default function ContactUsPage() {
   const [form] = Form.useForm();
@@ -44,7 +45,13 @@ export default function ContactUsPage() {
             <EnvironmentOutlined className="text-2xl text-blue-500" />
             <div>
               <p className="text-lg font-semibold text-gray-700">Address</p>
-              <p className="text-gray-600">Rogersville, AL 35652</p>
+              <p className="text-gray-600">
+                {siteContact.company}
+                <br />
+                {siteContact.addressLines[0]}
+                <br />
+                {siteContact.addressLines[1]}
+              </p>
             </div>
           </div>
 
@@ -52,7 +59,7 @@ export default function ContactUsPage() {
             <PhoneOutlined className="text-2xl text-green-500" />
             <div>
               <p className="text-lg font-semibold text-gray-700">Phone</p>
-              <p className="text-gray-600">(256) 577-9901</p>
+              <p className="text-gray-600">{siteContact.whatsapp}</p>
             </div>
           </div>
           <div className="flex items-start gap-4">
@@ -60,12 +67,12 @@ export default function ContactUsPage() {
             <div>
               <p className="text-lg font-semibold text-gray-700">WhatsApp</p>
               <a
-                href="https://wa.me/12565779901?text=Hello!%20I%20have%20a%20question%20about%20carclickbd"
+                href={getWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-green-600 hover:underline"
               >
-                Chat with us on WhatsApp
+                Chat with us on WhatsApp: {siteContact.whatsapp}
               </a>
             </div>
           </div>
@@ -73,14 +80,16 @@ export default function ContactUsPage() {
             <MailOutlined className="text-2xl text-[#003399]" />
             <div>
               <p className="text-lg font-semibold text-gray-700">Email</p>
-              <p className="text-gray-600">evalles35645@gmail.com</p>
+              <a href={`mailto:${siteContact.email}`} className="text-gray-600 hover:text-[#003399]">
+                {siteContact.email}
+              </a>
             </div>
           </div>
 
           {/* Optional Google Map */}
           <iframe
             className="rounded-lg w-full h-64 border"
-            src="https://maps.google.com/maps?q=Rogersville,%20AL%2035652&t=&z=13&ie=UTF8&iwloc=&output=embed"
+            src={`https://maps.google.com/maps?q=${encodeURIComponent(siteAddress)}&t=&z=15&ie=UTF8&iwloc=&output=embed`}
             loading="lazy"
           ></iframe>
         </div>

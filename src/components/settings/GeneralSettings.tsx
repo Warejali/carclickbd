@@ -50,9 +50,7 @@ const GeneralSettings = () => {
 
   const languageOptions = [
     { value: 'en', label: 'English' },
-    { value: 'bn', label: 'Bengali' },
-    { value: 'es', label: 'Spanish' },
-    // Add more language options
+    { value: 'bn', label: 'বাংলা' },
   ];
 
   const timeZoneOptions = [

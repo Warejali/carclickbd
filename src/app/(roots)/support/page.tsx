@@ -14,6 +14,7 @@ import {
   InstagramFilled,
   TwitterOutlined
 } from '@ant-design/icons';
+import { getWhatsAppUrl, siteContact } from '@/constants/siteContact';
 
 const { Title, Paragraph, Text } = Typography;
 const { Meta } = Card;
@@ -52,9 +53,9 @@ const SupportPage = () => {
               title={<Title level={4} className="text-lg font-semibold text-gray-800 dark:text-gray-200">Email</Title>}
               description={
                 <Paragraph className="text-gray-600 dark:text-gray-400">
-                  For general inquiries: <a href="mailto:support@carclickbd.com" className="text-blue-600 dark:text-blue-400">support@carclickbd.com</a>
+                  For general inquiries: <a href={`mailto:${siteContact.email}`} className="text-blue-600 dark:text-blue-400">{siteContact.email}</a>
                   <br />
-                  For shipping questions: <a href="mailto:shipping@carclickbd.com" className="text-blue-600 dark:text-blue-400">shipping@carclickbd.com</a>
+                  For shipping questions: <a href={`mailto:${siteContact.email}`} className="text-blue-600 dark:text-blue-400">{siteContact.email}</a>
                 </Paragraph>
               }
             />
@@ -66,9 +67,9 @@ const SupportPage = () => {
               title={<Title level={4} className="text-lg font-semibold text-gray-800 dark:text-gray-200">Phone</Title>}
               description={
                 <Paragraph className="text-gray-600 dark:text-gray-400">
-                  Contact our support team through the help center.
+                  Contact our support team on WhatsApp: {siteContact.whatsapp}.
                   <br />
-                  Monday - Friday, 9am - 5pm EST
+                  Dhaka office support hours apply.
                 </Paragraph>
               }
             />
@@ -80,9 +81,9 @@ const SupportPage = () => {
               title={<Title level={4} className="text-lg font-semibold text-gray-800 dark:text-gray-200">Live Chat</Title>}
               description={
                 <Paragraph className="text-gray-600 dark:text-gray-400">
-                  Chat with a support agent instantly.
+                  Chat with a support agent instantly on WhatsApp.
                   <br />
-                  Available during business hours.
+                  <a href={getWhatsAppUrl()} className="text-blue-600 dark:text-blue-400">Start WhatsApp chat</a>
                 </Paragraph>
               }
             />
@@ -114,9 +115,15 @@ const SupportPage = () => {
       <section>
         <Title level={2} className="mb-4 text-gray-700 dark:text-gray-300">Mailing Address</Title>
         <Paragraph className="text-gray-600 dark:text-gray-400">
-          carclickbd
+          {siteContact.company}
           <br />
-          Online vehicle auction support
+          {siteContact.addressLines[0]}
+          <br />
+          {siteContact.addressLines[1]}
+          <br />
+          Email: {siteContact.email}
+          <br />
+          WhatsApp: {siteContact.whatsapp}
         </Paragraph>
       </section>
     </div>

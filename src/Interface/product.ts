@@ -67,6 +67,9 @@ export type IProduct = {
     | "van/minivam"
     | "wagon";
   launchingYear: number;
+  registrationYear?: number;
+  productionYear?: number;
+  language?: "English" | "বাংলা" | string;
   exteriorColor: string;
   interiorColor: string;
   sellerType?: string;

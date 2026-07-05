@@ -4,6 +4,7 @@ import { Button, Input, message as antMessage } from "antd";
 import { WhatsAppOutlined } from "@ant-design/icons";
 import { Phone, UserRound } from "lucide-react";
 import { useState } from "react";
+import { getWhatsAppUrl, siteContact } from "@/constants/siteContact";
 
 const formatBDT = (value: number | string) => {
   const numericValue = Number(value || 0);
@@ -16,11 +17,9 @@ export default function BidInformation({ product }: { product: any }) {
   const [phone, setPhone] = useState("");
   const [messageText, setMessageText] = useState("");
   const price = formatBDT(product?.mainPrice || product?.highestBid || product?.minBid || 0);
-  const whatsappNumber = "8801576611703";
-  const whatsappMessage = encodeURIComponent(
+  const whatsappUrl = getWhatsAppUrl(
     `Hello CarClickBD, I am interested in ${product?.title || "this car"} (${product?._id || ""}).`
   );
-  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
 
   const handleInquiry = () => {
     if (!name.trim() || !phone.trim()) {
@@ -83,7 +82,7 @@ export default function BidInformation({ product }: { product: any }) {
       </div>
 
       <p className="mt-4 rounded-md bg-slate-50 p-3 text-xs font-medium leading-5 text-slate-500">
-        WhatsApp: +8801576611703. Dealer information is verified before buyer
+        WhatsApp: {siteContact.whatsapp}. Dealer information is verified before buyer
         handoff.
       </p>
     </section>

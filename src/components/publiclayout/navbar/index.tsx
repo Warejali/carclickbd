@@ -31,41 +31,28 @@ const Header: React.FC = () => {
 
   const languageMenu: MenuProps["items"] = [
     {
-      key: "usa-en",
+      key: "en",
       label: (
         <div className="flex items-center gap-2">
           <img
-            src="https://flagcdn.com/us.svg"
+            src="https://flagcdn.com/gb.svg"
             alt="English"
             className="h-3 w-5 rounded-sm border border-gray-200"
           />
-          <span>USA | English</span>
+          <span>English</span>
         </div>
       ),
     },
     {
-      key: "usa-es",
+      key: "bn",
       label: (
         <div className="flex items-center gap-2">
           <img
-            src="https://flagcdn.com/es.svg"
-            alt="Spanish"
+            src="https://flagcdn.com/bd.svg"
+            alt="Bangla"
             className="h-3 w-5 rounded-sm border border-gray-200"
           />
-          <span>USA | Spanish</span>
-        </div>
-      ),
-    },
-    {
-      key: "fr",
-      label: (
-        <div className="flex items-center gap-2">
-          <img
-            src="https://flagcdn.com/fr.svg"
-            alt="French"
-            className="h-3 w-5 rounded-sm border border-gray-200"
-          />
-          <span>France | French</span>
+          <span>বাংলা</span>
         </div>
       ),
     },
