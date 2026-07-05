@@ -38,20 +38,9 @@ const BasicInfoSection = () => (
       <Col xs={24} md={8}>
         <Form.Item
           name="launchingYear"
-          label="Year"
-          rules={[{ required: true, message: "Please select year" }]}
+          label="Registration Year"
+          rules={[{ required: true, message: "Please select registration year" }]}
         >
-          <Select showSearch placeholder="Select year" allowClear>
-            {years.map((year) => (
-              <Option key={year} value={year}>
-                {year}
-              </Option>
-            ))}
-          </Select>
-        </Form.Item>
-      </Col>
-      <Col xs={24} md={8}>
-        <Form.Item name="registrationYear" label="Registration Year">
           <Select showSearch placeholder="Select registration year" allowClear>
             {years.map((year) => (
               <Option key={year} value={year}>

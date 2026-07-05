@@ -92,6 +92,7 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({ productId }) => {
       title: generatedTitle,
       maker: values.make,
       year: values.launchingYear,
+      registrationYear: values.registrationYear || values.launchingYear,
       engineSize: values.engine,
       driveType: values.drivetrain,
       bodyType: values.bodyStyle,

@@ -1,5 +1,7 @@
 "use client";
 import React from "react";
+import Link from "next/link";
+import { ArrowRight, ShieldCheck } from "lucide-react";
 
 const RegisterBanner = () => {
   return (
@@ -42,15 +44,33 @@ const RegisterBanner = () => {
           </p>
         </div>
 
-        {/* Button */}
-        <button
-          className="bg-[#F0B90B] text-black font-semibold text-base px-10 py-3 rounded-full 
-                     hover:bg-[#dba808] transition-all duration-300 
-                     shadow-lg hover:shadow-[0_0_25px_rgba(240,185,11,0.6)] 
-                     transform hover:-translate-y-1"
-        >
-          REGISTER NOW
-        </button>
+        <div className="w-full max-w-sm rounded-lg border border-white/15 bg-white/10 p-4 text-left shadow-[0_20px_60px_rgba(0,0,0,0.18)] backdrop-blur md:w-auto">
+          <div className="mb-4 flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-md bg-[#F0B90B] text-slate-950">
+              <ShieldCheck size={20} />
+            </div>
+            <div>
+              <p className="text-sm font-black text-white">Verified marketplace</p>
+              <p className="text-xs font-medium text-white/70">Browse, compare, inquire.</p>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-3 sm:flex-row md:flex-col xl:flex-row">
+            <Link
+              href="/cars"
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-white px-5 text-sm font-black text-[#003399] transition hover:bg-[#F0B90B] hover:text-slate-950"
+            >
+              Browse Verified Cars
+              <ArrowRight size={16} />
+            </Link>
+            <Link
+              href="/seller-signup"
+              className="inline-flex h-11 items-center justify-center rounded-md border border-white/25 px-5 text-sm font-bold text-white transition hover:border-white hover:bg-white/10"
+            >
+              Seller Signup
+            </Link>
+          </div>
+        </div>
       </div>
     </section>
   );

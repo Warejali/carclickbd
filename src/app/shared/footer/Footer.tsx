@@ -8,48 +8,40 @@ import {
   LinkedinOutlined,
   YoutubeOutlined,
 } from "@ant-design/icons";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin } from "lucide-react";
 import { SiTiktok } from "react-icons/si";
+import { FaWhatsapp } from "react-icons/fa";
 import { siteAddress, siteContact } from "@/constants/siteContact";
 
 const footerColumns = [
   {
+    title: "Verify",
+    links: [
+      { label: "Verify Auction Sheet", href: "/verify-auction-sheet" },
+      {
+        label: "Production Year Check",
+        href: "https://www.jp.center/month",
+        external: true,
+      },
+    ],
+  },
+  {
     title: "Buy",
     links: [
-      { label: "Browse Cars", href: "/cars" },
-      { label: "Featured Auctions", href: "/featured-auctions" },
-      { label: "Past Auctions", href: "/past-auctions" },
-      { label: "Duty Calculator", href: "/duty-calculator" },
-      { label: "Verify Auction Sheet", href: "/verify-auction-sheet" },
+      { label: "Buy your car", href: "/cars" },
     ],
   },
   {
     title: "Sell",
     links: [
-      { label: "Sell a Vehicle", href: "/sell-item" },
-      { label: "Seller Signup", href: "/seller-signup" },
-      { label: "Photo Guide", href: "/photoguide" },
-      { label: "How It Works", href: "/how-it-works" },
-    ],
-  },
-  {
-    title: "Support",
-    links: [
-      { label: "Help Center", href: "/help" },
-      { label: "Support", href: "/support" },
-      { label: "Shipping", href: "/shipping" },
-      { label: "SafePay", href: "/safepay" },
-      { label: "Contact", href: "/contact" },
+      { label: "Sell your car", href: "/sell-item" },
     ],
   },
   {
     title: "Company",
     links: [
       { label: "About", href: "/about" },
-      { label: "Blog", href: "/blog" },
-      { label: "Community", href: "/community" },
-      { label: "Gallery", href: "/gallery" },
-      { label: "Sitemap", href: "/sitemap" },
+      { label: "Contact", href: "/contact" },
     ],
   },
 ];
@@ -79,10 +71,15 @@ const Footer = () => {
             </p>
 
             <div className="mt-6 space-y-3 text-sm">
-              <p className="flex items-center gap-3">
-                <Phone size={16} className="text-[#f0b90b]" />
+              <a
+                href={`https://wa.me/${siteContact.whatsappDigits}`}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-3 transition hover:text-white"
+              >
+                <FaWhatsapp size={17} className="text-[#f0b90b]" />
                 <span>{siteContact.whatsapp}</span>
-              </p>
+              </a>
               <p className="flex items-center gap-3">
                 <Mail size={16} className="text-[#f0b90b]" />
                 <span>{siteContact.email}</span>
@@ -121,12 +118,23 @@ const Footer = () => {
                 <ul className="mt-4 space-y-3 text-sm">
                   {column.links.map((link) => (
                     <li key={link.href}>
-                      <Link
-                        href={link.href}
-                        className="font-medium text-slate-400 transition hover:text-white"
-                      >
-                        {link.label}
-                      </Link>
+                      {link.external ? (
+                        <a
+                          href={link.href}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="font-medium text-slate-400 transition hover:text-white"
+                        >
+                          {link.label}
+                        </a>
+                      ) : (
+                        <Link
+                          href={link.href}
+                          className="font-medium text-slate-400 transition hover:text-white"
+                        >
+                          {link.label}
+                        </Link>
+                      )}
                     </li>
                   ))}
                 </ul>
