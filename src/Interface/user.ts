@@ -6,9 +6,9 @@ export type IUser = {
   password: string;
   address: string;
   photo: string;
-  role?: "customer" | "admin" | "super_admin" | "seller";
+  role?: "customer" | "admin" | "super-admin" | "seller";
   accountType?: "personal" | "dealer";
-  isDisabled?: "disable" | "enable";
+  isDisabled?: boolean | "disable" | "enable";
   documents?: string[];
   membership?: "free" | "faid";
   contactNo?: string;

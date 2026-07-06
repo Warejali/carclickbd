@@ -16,6 +16,7 @@ import {
 } from "antd";
 import {
   UserOutlined,
+  LoginOutlined,
   ExclamationCircleOutlined,
   WarningOutlined,
 } from "@ant-design/icons";
@@ -30,6 +31,9 @@ import {
   useDeleteUserMutation,
   useToggleUserStatusMutation,
 } from "@/Redux/api/userApi";
+import { useImpersonateUserMutation } from "@/Redux/api/authApi";
+import { setIsLoggedIn, setProfileInfo } from "@/Redux/Slices/authSlice";
+import { useAppDispatch, useAppSelector } from "@/Redux/hooks";
 import StatsCard from "./StatsCard";
 import { TeamOutlined } from "@ant-design/icons";
 import { MdVerifiedUser } from "react-icons/md";
@@ -61,10 +65,65 @@ const OrderTable: React.FC<UserTableProps> = ({
 }) => {
   const [searchText, setSearchText] = useState("");
   const router = useRouter();
+  const dispatch = useAppDispatch();
+  const currentUser = useAppSelector((state) => state.authReducer.profile);
   const [selectedUser, setSelectedUser] = useState<IUser | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [deleteUser] = useDeleteUserMutation();
   const [toggleUserStatus] = useToggleUserStatusMutation();
+  const [impersonateUser, { isLoading: isImpersonating }] =
+    useImpersonateUserMutation();
+
+  const getDashboardPath = (role?: IUser["role"]) => {
+    if (role === "admin" || role === "super-admin") return "/admin";
+    if (role === "seller") return "/seller";
+    return "/customer";
+  };
+
+  const handleLoginAsUser = async (user: IUser) => {
+    if (!user._id) {
+      message.error("Invalid user ID");
+      return;
+    }
+
+    try {
+      const response = await impersonateUser(user._id).unwrap();
+      const accessToken = response?.data?.accessToken;
+      const profile = response?.data?.user;
+
+      if (!accessToken || !profile) {
+        message.error("Unable to start user session");
+        return;
+      }
+
+      dispatch(setIsLoggedIn(accessToken));
+      dispatch(setProfileInfo(profile));
+      message.success(`Logged in as ${profile.name || profile.email}`);
+      router.push(getDashboardPath(profile.role));
+    } catch (error: any) {
+      message.error(error?.data?.message || "Failed to login as this user");
+    }
+  };
+
+  const getImpersonationBlockReason = (user: IUser) => {
+    if (user.isDisabled === true || user.isDisabled === "disable") {
+      return "Disabled users cannot be impersonated";
+    }
+
+    if (
+      currentUser?.role === "admin" &&
+      (user.role === "admin" || user.role === "super-admin")
+    ) {
+      return "Only super admin can login as admin accounts";
+    }
+
+    if (currentUser?.role !== "admin" && currentUser?.role !== "super-admin") {
+      return "Only admin and super admin can use this action";
+    }
+
+    return null;
+  };
+
   const handleToggleStatus = async (user: IUser) => {
     if (!user._id) {
       message.error("Invalid user ID");
@@ -200,8 +259,32 @@ const OrderTable: React.FC<UserTableProps> = ({
     {
       title: "Actions",
       key: "actions",
-      render: (_, record) => (
-        <div className="flex gap-2">
+      render: (_, record) => {
+        const impersonationBlockReason = getImpersonationBlockReason(record);
+
+        return (
+          <div className="flex gap-2">
+            <Tooltip title={impersonationBlockReason || "Login as this user"}>
+              <span>
+                <Popconfirm
+                  title={`Login as ${record.name || record.email}?`}
+                  description="Your current admin session will switch to this user account."
+                  onConfirm={() => handleLoginAsUser(record)}
+                  okText="Login"
+                  cancelText="Cancel"
+                  disabled={Boolean(impersonationBlockReason)}
+                >
+                  <Button
+                    size="small"
+                    icon={<LoginOutlined />}
+                    loading={isImpersonating}
+                    disabled={Boolean(impersonationBlockReason)}
+                  >
+                    Login
+                  </Button>
+                </Popconfirm>
+              </span>
+            </Tooltip>
           <Popconfirm
             title={`Are you sure you want to ${record.isDisabled ? "enable" : "disable"} this user?`}
             onConfirm={() => handleToggleStatus(record)}
@@ -238,7 +321,8 @@ const OrderTable: React.FC<UserTableProps> = ({
             </Popconfirm>
           </Button>
         </div>
-      ),
+        );
+      },
     },
   ];
 

@@ -30,6 +30,13 @@ const authApi = baseApi.injectEndpoints({
         data: signinData,
       }),
     }),
+    impersonateUser: build.mutation({
+      query: (userId: string) => ({
+        url: `/auth/impersonate/${userId}`,
+        method: "POST",
+      }),
+      invalidatesTags: ["profile", "auth"],
+    }),
     isUserExist: build.mutation({
       query: (data) => ({
         url: "/auth/is-exist",
@@ -85,6 +92,7 @@ const authApi = baseApi.injectEndpoints({
 
 export const {
   useSigninMutation,
+  useImpersonateUserMutation,
   useSignupMutation,
   useIsUserExistMutation,
   useForgotPasswordMutation,
