@@ -34,10 +34,7 @@ const DNavProfile = () => {
         className=" mx-2 flex items-center justify-center gap-2  md:px-5 md:py-2    bg-slate-100 hover:bg-gray-300  "
       >
         <Avatar
-          src={
-            user?.profilePhoto ||
-            "https://cdn-icons-png.flaticon.com/512/3607/3607444.png"
-          }
+          src={user?.profilePhoto}
         />
         <div className="hidden md:block">
           <h2 className="font-semibold text-xs  ">{user?.name}</h2>

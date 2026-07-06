@@ -7,6 +7,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import Link from "next/link";
+import { getWhatsAppUrl } from "@/constants/siteContact";
 
 const services = [
   {
@@ -20,12 +21,13 @@ const services = [
     accent: "from-[#003399] to-[#f0b90b]",
   },
   {
-    title: "Auction Sheet Translation",
+    title: "Auction Sheet Translation Service",
     description:
       "Get Japanese auction sheet notes translated into clear buyer-friendly language, including scratches, dents, rust, and repairs.",
     icon: Languages,
-    cta: "Translate Sheet",
-    href: "/verify-auction-sheet",
+    cta: "Contact on WhatsApp",
+    href: getWhatsAppUrl("Hello CarClickBD, I need Japanese auction sheet translation service."),
+    external: true,
     accent: "from-amber-500 to-orange-600",
   },
 ];

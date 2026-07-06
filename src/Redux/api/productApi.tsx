@@ -104,6 +104,15 @@ const productApi: any = baseApi.injectEndpoints({
       invalidatesTags: ["product"],
     }),
 
+    updateProductStatus: build.mutation({
+      query: ({ id, status }: { id: string; status: string }) => ({
+        url: `/product/status/${id}`,
+        method: "PATCH",
+        data: { status },
+      }),
+      invalidatesTags: ["product"],
+    }),
+
     toggleProductFeatured: build.mutation({
       query: ({ id }: any) => ({
         url: `/product/toggle-featured/${id}`,
@@ -139,6 +148,7 @@ export const {
   useGetProductByIdQuery,
   useDeleteProductMutation,
   useUpdateProductMutation,
+  useUpdateProductStatusMutation,
   useToggleProductFeaturedMutation,
   useToggleProducrtStatusMutation,
   useSearchResultQuery,

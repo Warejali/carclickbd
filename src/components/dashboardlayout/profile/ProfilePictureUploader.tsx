@@ -71,10 +71,7 @@ const ProfilePictureUploader: React.FC<{
               <Image
                 width={128}
                 height={128}
-                src={
-                  user?.profilePhoto ||
-                  "https://cdn-icons-png.flaticon.com/512/3607/3607444.png"
-                }
+                src={user.profilePhoto as string}
                 alt="Default Profile"
                 className="w-full h-full rounded-full object-cover"
               />

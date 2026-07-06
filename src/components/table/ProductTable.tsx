@@ -38,7 +38,7 @@ import {
   useDeleteProductMutation,
   useToggleProducrtStatusMutation,
   useToggleProductFeaturedMutation,
-  useUpdateProductMutation,
+  useUpdateProductStatusMutation,
 } from "@/Redux/api/productApi";
 import { IProduct, ProductListingStatus } from "@/Interface/product";
 import {
@@ -93,7 +93,7 @@ const ProductTable: React.FC<ProductTableProps> = ({
   const [deleteProduct] = useDeleteProductMutation();
   const [toggleProductStatus] = useToggleProducrtStatusMutation();
   const [toggleProductFeatured] = useToggleProductFeaturedMutation();
-  const [updateProduct] = useUpdateProductMutation();
+  const [updateProductStatus] = useUpdateProductStatusMutation();
 
   const filteredProducts = useMemo(() => {
     const query = searchText.trim().toLowerCase();
@@ -110,6 +110,8 @@ const ProductTable: React.FC<ProductTableProps> = ({
         product.transmission,
         product.bodyStyle,
         product.engine,
+        product.stockNumber,
+        product.referenceNumber,
         getLocation(product),
       ]
         .filter(Boolean)
@@ -151,13 +153,9 @@ const ProductTable: React.FC<ProductTableProps> = ({
     status: ProductListingStatus
   ) => {
     try {
-      await updateProduct({
+      await updateProductStatus({
         id: product._id,
-        data: {
-          status,
-          isDraft: status === "pending",
-          isSoldOut: status === "sold" || status === "reserve",
-        } as any,
+        status,
       }).unwrap();
       message.success(`Product status updated to ${productStatusMeta[status].label}`);
     } catch (error) {
@@ -255,19 +253,23 @@ const ProductTable: React.FC<ProductTableProps> = ({
             <p className="mt-0.5 text-xs text-slate-500">
               {[record.make, record.model].filter(Boolean).join(" ") || "Maker N/A"}
             </p>
+            <p className="mt-0.5 text-[11px] font-semibold text-blue-600">
+              Ref: {record.stockNumber || record.referenceNumber || record._id?.slice(-8)?.toUpperCase()}
+            </p>
           </div>
         </Space>
       ),
       sorter: (a, b) => (a.title || "").localeCompare(b.title || ""),
     },
     {
-      title: "Year",
-      dataIndex: "launchingYear",
-      key: "launchingYear",
+      title: "Production Year",
+      key: "productionYear",
       width: 90,
       responsive: ["sm"],
-      render: (year) => year || "N/A",
-      sorter: (a, b) => Number(a.launchingYear || 0) - Number(b.launchingYear || 0),
+      render: (_, record) => record.productionYear || record.launchingYear || "N/A",
+      sorter: (a, b) =>
+        Number(a.productionYear || a.launchingYear || 0) -
+        Number(b.productionYear || b.launchingYear || 0),
     },
     {
       title: "Price",

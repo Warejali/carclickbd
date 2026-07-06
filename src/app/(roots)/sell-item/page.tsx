@@ -2,39 +2,12 @@
 import React from "react";
 import { Collapse, Button, Card } from "antd";
 import { CheckCircleOutlined, CarOutlined } from "@ant-design/icons";
-import { Row, Col, Rate } from "antd";
 import { useRouter } from "next/navigation";
 import ProductsResult from "@/components/publiclayout/home/AcutionProducts/ProductsResult";
 import Breadcrumbs from "@/components/shared/Breadcrumbs";
 
 
 const { Panel } = Collapse;
-const reviews = [
-  {
-    rating: 5,
-    text: "Some of the most helpful and kind people to work with! Will for sure sell with them again.",
-    author: "Cary R.",
-    date: "Sept 2024",
-  },
-  {
-    rating: 5,
-    text: "Best and only place you should consider when selling your cool car! Perhaps the best free service available on the internet.",
-    author: "Jay C.",
-    date: "July 2024",
-  },
-  {
-    rating: 5,
-    text: "carclickbd is by far the greatest place to sell your car online. I've sold 3 cars with them now and am never going back to anywhere else!",
-    author: "Andrew C.",
-    date: "June 2024",
-  },
-  {
-    rating: 5,
-    text: "Great selling experience! Smooth transaction, highly recommend!",
-    author: "Geoff M.",
-    date: "May 2024",
-  },
-];
 
 const SellCarPage = () => { 
 const router = useRouter()
@@ -90,21 +63,6 @@ const router = useRouter()
           ))}
         </div>
       </div>
-
-      <div className="py-12 px-6">
-      <h2 className="text-3xl font-bold text-center mb-8">What Sellers Are Saying</h2>
-      <Row gutter={[16, 16]}>
-        {reviews.map((review, index) => (
-          <Col key={index} xs={24} sm={12} md={6}>
-            <Card className="shadow-lg p-4 rounded-lg border">
-              <Rate disabled defaultValue={review.rating} className="mb-2" />
-              <p className="text-gray-700 italic">{review.text}</p>
-              <p className="text-sm font-semibold text-gray-600 mt-2">- {review.author}, {review.date}</p>
-            </Card>
-          </Col>
-        ))}
-      </Row>
-    </div>
 
       {/* FAQs */}
       <div>

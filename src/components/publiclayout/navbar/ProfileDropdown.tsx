@@ -54,7 +54,8 @@ const ProfileDropdown: React.FC = () => {
     <Dropdown menu={{ items: menuItems }} trigger={["click"]} placement="bottomRight">
       <div className="cursor-pointer transition-transform duration-200 hover:scale-110">
         <Avatar
-          src={user?.profilePhoto || "https://cdn-icons-png.flaticon.com/512/3607/3607444.png"}
+          src={user?.profilePhoto}
+          icon={!user?.profilePhoto ? <AiOutlineUser /> : undefined}
           className="border-2 border-blue-500 w-10 h-10 min-w-[27px] min-h-[27px] max-w-[35px] max-h-[35px]"
         />
       </div>

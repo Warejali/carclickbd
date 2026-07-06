@@ -37,10 +37,21 @@ const BasicInfoSection = () => (
       </Col>
       <Col xs={24} md={8}>
         <Form.Item
-          name="launchingYear"
-          label="Registration Year"
-          rules={[{ required: true, message: "Please select registration year" }]}
+          name="productionYear"
+          label="Production Year"
+          rules={[{ required: true, message: "Please select production year" }]}
         >
+          <Select showSearch placeholder="Select production year" allowClear>
+            {years.map((year) => (
+              <Option key={year} value={year}>
+                {year}
+              </Option>
+            ))}
+          </Select>
+        </Form.Item>
+      </Col>
+      <Col xs={24} md={8}>
+        <Form.Item name="registrationYear" label="Registration Year (Optional)">
           <Select showSearch placeholder="Select registration year" allowClear>
             {years.map((year) => (
               <Option key={year} value={year}>
@@ -51,14 +62,8 @@ const BasicInfoSection = () => (
         </Form.Item>
       </Col>
       <Col xs={24} md={8}>
-        <Form.Item name="productionYear" label="Production Year (Optional)">
-          <Select showSearch placeholder="Select production year" allowClear>
-            {years.map((year) => (
-              <Option key={year} value={year}>
-                {year}
-              </Option>
-            ))}
-          </Select>
+        <Form.Item name="stockNumber" label="Reference / Stock Number">
+          <Input placeholder="Seller reference or auto stock number" />
         </Form.Item>
       </Col>
     </Row>

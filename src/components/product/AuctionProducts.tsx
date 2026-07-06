@@ -26,10 +26,10 @@ const AuctionProducts = ({
       {isHomePreview ? (
         <div className="mx-auto mb-8 flex max-w-7xl flex-col gap-4 px-4 md:px-8 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.18em] text-sky-600">
+            <p className="text-xl font-black uppercase tracking-[0.16em] text-slate-950 md:text-2xl">
               Featured Inventory
             </p>
-            <p className="mt-2 max-w-xl text-xs font-semibold uppercase tracking-[0.08em] text-slate-500">
+            <p className="mt-2 max-w-xl text-sm font-medium leading-6 text-slate-500">
               Verified listings with clear photos, specs, prices, and direct
               detail pages.
             </p>

@@ -32,11 +32,13 @@ const ProductCard = ({ product }: { product: IProduct }) => {
   const location = [product?.location?.city, product?.location?.zipCode]
     .filter(Boolean)
     .join(", ");
+  const referenceNumber =
+    product.stockNumber || product.referenceNumber || product._id?.slice(-8)?.toUpperCase();
 
   const specs = [
     {
       icon: CalendarDays,
-      label: product.launchingYear || "Year N/A",
+      label: product.productionYear || product.launchingYear || "Year N/A",
     },
     {
       icon: Settings,
@@ -88,11 +90,18 @@ const ProductCard = ({ product }: { product: IProduct }) => {
           </div>
 
           <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-            <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-sky-100">
-              {product.make || "Premium Selection"}
-            </p>
+            <div className="flex items-center justify-between gap-3">
+              <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-sky-100">
+                {product.make || product.maker || "Premium Selection"}
+              </p>
+              {referenceNumber && (
+                <span className="rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-slate-900">
+                  Ref {referenceNumber}
+                </span>
+              )}
+            </div>
             <h3 className="mt-1 line-clamp-1 text-lg font-semibold leading-snug tracking-normal">
-              {product.title || [product.launchingYear, product.make, product.model].filter(Boolean).join(" ")}
+              {product.title || [product.productionYear, product.launchingYear, product.make, product.model].filter(Boolean).join(" ")}
             </h3>
           </div>
         </div>

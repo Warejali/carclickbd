@@ -12,10 +12,12 @@ const formatBDT = (value: number | string) => {
 export default function SaleInformation({ product }: { product: any }) {
   const price = product?.mainPrice || product?.highestBid || product?.minBid || 0;
   const statusMeta = getProductStatusMeta(product);
+  const referenceNumber =
+    product?.stockNumber || product?.referenceNumber || product?._id?.slice(-8)?.toUpperCase();
   const rows = [
     ["Listing status", statusMeta.label],
     ["Seller type", product?.sellerType || "Verified dealer"],
-    ["Stock ID", product?._id?.slice(-8)?.toUpperCase()],
+    ["Reference No", referenceNumber],
   ].filter(([, value]) => value);
 
   return (

@@ -52,7 +52,7 @@ export const productStatusMeta: Record<
     },
   },
   under_negotiations: {
-    label: "Under Negotiations",
+    label: "Under Negotiation",
     tagColor: "blue",
     badgeClass: "ring-sky-300",
     badgeStyle: {
@@ -76,8 +76,14 @@ export const productStatusMeta: Record<
 export const normalizeProductStatus = (
   product?: Partial<IProduct>
 ): ProductListingStatus => {
-  if (product?.status && productStatuses.includes(product.status)) {
-    return product.status;
+  const rawStatus = String(product?.status || "").trim().toLowerCase();
+  const normalizedStatus =
+    rawStatus === "under negotiations" || rawStatus === "under negotiation"
+      ? "under_negotiations"
+      : rawStatus;
+
+  if (productStatuses.includes(normalizedStatus as ProductListingStatus)) {
+    return normalizedStatus as ProductListingStatus;
   }
   if (product?.isDraft) return "pending";
   if (product?.isSoldOut) return "reserve";

@@ -29,6 +29,9 @@ export type IProduct = {
   status?: ProductListingStatus;
   isWinner: boolean;
   title: string;
+  stockNumber?: string;
+  referenceNumber?: string;
+  maker?: string;
   make: string;
   model: string;
   mileage: string;
@@ -65,7 +68,7 @@ export type IProduct = {
     | "wagon";
   launchingYear: number;
   registrationYear?: number;
-  productionYear?: number;
+  productionYear: number;
   language?: "English" | "বাংলা" | string;
   exteriorColor: string;
   interiorColor: string;

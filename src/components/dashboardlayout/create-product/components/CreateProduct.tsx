@@ -27,12 +27,21 @@ const toUploadFile = (url: string, index: number, prefix: string) => ({
   url,
 });
 
+const createStockNumber = (values: any) => {
+  const maker = String(values.make || "CAR").replace(/[^a-z0-9]/gi, "").slice(0, 3).toUpperCase();
+  const model = String(values.model || "BD").replace(/[^a-z0-9]/gi, "").slice(0, 3).toUpperCase();
+  const suffix = Date.now().toString().slice(-6);
+
+  return `CCBD-${maker}${model}-${suffix}`;
+};
+
 const ProductCreateForm: React.FC<ProductCreateFormProps> = ({ productId }) => {
   const [form] = Form.useForm();
   const router = useRouter();
   const user = getTokenInfo();
   const isEditMode = Boolean(productId);
   const isSeller = user?.role === "seller";
+  const [autoStockNumber] = useState(() => createStockNumber({}));
   const [previewImage, setPreviewImage] = useState("");
   const [previewVisible, setPreviewVisible] = useState(false);
   const [mainPhotoFile, setMainPhotoFile] = useState<any>(null);
@@ -49,6 +58,10 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({ productId }) => {
 
     form.setFieldsValue({
       ...product,
+      make: product.make || product.maker,
+      productionYear: product.productionYear || product.year || product.launchingYear,
+      registrationYear: product.registrationYear,
+      stockNumber: product.stockNumber || product.referenceNumber,
       color: product.color || product.exteriorColor,
       vin: product.vin || product.vinChassisNumber,
       featuresAndOptions:
@@ -76,8 +89,14 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({ productId }) => {
   };
 
   const buildProductData = (values: any) => {
+    const productionYear = values.productionYear || values.year;
+    const referenceNumber =
+      values.stockNumber ||
+      values.referenceNumber ||
+      autoStockNumber ||
+      createStockNumber(values);
     const generatedTitle = [
-      values.launchingYear,
+      productionYear,
       values.make,
       values.model,
       values.grade,
@@ -91,8 +110,12 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({ productId }) => {
       ...values,
       title: generatedTitle,
       maker: values.make,
-      year: values.launchingYear,
-      registrationYear: values.registrationYear || values.launchingYear,
+      year: productionYear,
+      launchingYear: productionYear,
+      productionYear,
+      registrationYear: values.registrationYear,
+      stockNumber: referenceNumber,
+      referenceNumber,
       engineSize: values.engine,
       driveType: values.drivetrain,
       bodyType: values.bodyStyle,
@@ -120,17 +143,12 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({ productId }) => {
       const actual = file?.originFileObj || file?.file || null;
       if (actual instanceof File) {
         formData.append("others", actual);
-        formData.append("interior", actual);
-        formData.append("interiorPhoto", actual);
-        formData.append("interiorPhotos", actual);
-        formData.append("exterior", actual);
-        formData.append("exteriorPhoto", actual);
-        formData.append("exteriorPhotos", actual);
       }
     });
   };
 
   const requiredFields = [
+    ["productionYear", "Production Year"],
     ["mainPrice", "Price"],
     ["mileage", "Mileage"],
     ["engine", "Engine Size"],
@@ -216,7 +234,7 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({ productId }) => {
         form={form}
         onFinish={onFinish}
         className="rounded bg-white p-6"
-        initialValues={{ status: "pending" }}
+        initialValues={{ status: "pending", stockNumber: autoStockNumber }}
       >
         <Row gutter={[24, 24]}>
           <Col xs={24} lg={16}>
