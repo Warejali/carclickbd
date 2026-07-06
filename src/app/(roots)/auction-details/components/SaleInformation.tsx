@@ -3,14 +3,7 @@
 import { BadgeCheck, Clock3, ShieldCheck } from "lucide-react";
 import { getProductStatusMeta } from "@/utils/productStatus";
 
-const formatBDT = (value: number | string) => {
-  const numericValue = Number(value || 0);
-  if (!numericValue) return "Contact for price";
-  return `BDT ${numericValue.toLocaleString("en-US")}/-`;
-};
-
 export default function SaleInformation({ product }: { product: any }) {
-  const price = product?.mainPrice || product?.highestBid || product?.minBid || 0;
   const statusMeta = getProductStatusMeta(product);
   const referenceNumber =
     product?.stockNumber || product?.referenceNumber || product?._id?.slice(-8)?.toUpperCase();
@@ -25,9 +18,6 @@ export default function SaleInformation({ product }: { product: any }) {
       <p className="text-xs font-bold uppercase tracking-[0.18em] text-sky-600">
         Purchase overview
       </p>
-      <h2 className="mt-2 text-3xl font-extrabold text-slate-950">
-        {formatBDT(price)}
-      </h2>
 
       <div className="mt-5 space-y-3">
         {rows.map(([label, value]) => (

@@ -11,7 +11,7 @@ import {
 import { Mail, MapPin } from "lucide-react";
 import { SiTiktok } from "react-icons/si";
 import { FaWhatsapp } from "react-icons/fa";
-import { siteAddress, siteContact } from "@/constants/siteContact";
+import { siteContact } from "@/constants/siteContact";
 
 const footerColumns = [
   {
@@ -26,14 +26,9 @@ const footerColumns = [
     ],
   },
   {
-    title: "Buy",
+    title: "Buy & Sell",
     links: [
       { label: "Buy your car", href: "/cars" },
-    ],
-  },
-  {
-    title: "Sell",
-    links: [
       { label: "Sell your car", href: "/sell-item" },
     ],
   },
@@ -42,6 +37,9 @@ const footerColumns = [
     links: [
       { label: "About", href: "/about" },
       { label: "Contact", href: "/contact" },
+      { label: "Terms", href: "/terms-service" },
+      { label: "Privacy", href: "/privacy-policy" },
+      { label: "Cookie Policy", href: "/cookie-policy" },
     ],
   },
 ];
@@ -86,7 +84,16 @@ const Footer = () => {
               </p>
               <p className="flex items-start gap-3">
                 <MapPin size={16} className="text-[#f0b90b]" />
-                <span>{siteAddress}</span>
+                <span>
+                  <span className="block font-bold text-slate-200">
+                    {siteContact.company}
+                  </span>
+                  {siteContact.addressLines.map((line) => (
+                    <span key={line} className="block">
+                      {line}
+                    </span>
+                  ))}
+                </span>
               </p>
             </div>
 
@@ -109,7 +116,7 @@ const Footer = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-7 md:grid-cols-4">
+          <div className="grid grid-cols-2 gap-7 md:grid-cols-3">
             {footerColumns.map((column) => (
               <div key={column.title}>
                 <h4 className="text-sm font-extrabold uppercase tracking-[0.16em] text-[#f0b90b]">
@@ -143,21 +150,10 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-4 border-t border-white/10 pt-6 text-sm md:flex-row md:items-center md:justify-between">
+        <div className="mt-12 border-t border-white/10 pt-6 text-center text-sm">
           <p className="text-slate-500">
             Copyright © 2026 CarClickBD. All rights reserved.
           </p>
-          <div className="flex flex-wrap gap-4 text-xs font-semibold text-slate-400">
-            <Link href="/terms-service" className="hover:text-white">
-              Terms
-            </Link>
-            <Link href="/privacy-policy" className="hover:text-white">
-              Privacy
-            </Link>
-            <Link href="/cookie-policy" className="hover:text-white">
-              Cookie Policy
-            </Link>
-          </div>
         </div>
       </div>
     </footer>

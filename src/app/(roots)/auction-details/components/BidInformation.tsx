@@ -2,21 +2,14 @@
 
 import { Button, Input, message as antMessage } from "antd";
 import { WhatsAppOutlined } from "@ant-design/icons";
-import { Phone, UserRound } from "lucide-react";
+import { UserRound } from "lucide-react";
 import { useState } from "react";
 import { getWhatsAppUrl, siteContact } from "@/constants/siteContact";
-
-const formatBDT = (value: number | string) => {
-  const numericValue = Number(value || 0);
-  if (!numericValue) return "Contact for price";
-  return `BDT ${numericValue.toLocaleString("en-US")}/-`;
-};
 
 export default function BidInformation({ product }: { product: any }) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [messageText, setMessageText] = useState("");
-  const price = formatBDT(product?.mainPrice || product?.highestBid || product?.minBid || 0);
   const whatsappUrl = getWhatsAppUrl(
     `Hello CarClickBD, I am interested in ${product?.title || "this car"} (${product?._id || ""}).`
   );
@@ -39,7 +32,9 @@ export default function BidInformation({ product }: { product: any }) {
         <p className="text-xs font-bold uppercase tracking-[0.18em] text-sky-600">
           Seller contact
         </p>
-        <h2 className="mt-2 text-3xl font-extrabold text-slate-950">{price}</h2>
+        <h2 className="mt-2 text-2xl font-extrabold text-slate-950">
+          Contact final availability
+        </h2>
         <p className="mt-1 text-sm font-medium text-slate-500">
           Share your contact details and our team will help you verify availability.
         </p>
@@ -56,8 +51,8 @@ export default function BidInformation({ product }: { product: any }) {
         <Input
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
-          placeholder="Phone number"
-          prefix={<Phone size={16} className="text-slate-400" />}
+          placeholder="WhatsApp number"
+          prefix={<WhatsAppOutlined className="text-slate-400" />}
           className="!rounded-md !py-3"
         />
         <Input.TextArea
