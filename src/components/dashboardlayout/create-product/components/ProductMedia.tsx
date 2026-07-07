@@ -115,7 +115,7 @@ const ProductMedia: React.FC = () => {
         <Card>
           <Form.Item
             name="mainPhoto"
-            label="Main Photo"
+            label="Main photo (only one)"
             rules={[
               { required: true, message: "Please upload the main photo!" },
             ]}
@@ -137,7 +137,7 @@ const ProductMedia: React.FC = () => {
           <div className="md:grid grid-cols-2 gap-4">            
             <Form.Item
               name="otherPhotos"
-              label="Other Photos"
+              label="Others Photos (up to 10)"
               rules={[
                 {
                   required: true,

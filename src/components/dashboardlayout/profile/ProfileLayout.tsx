@@ -39,6 +39,7 @@ const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
         <div className="bg-[#1B324C] text-center text-white py-6 shadow-md">
           <ProfilePictureUploader user={profileInfo as IUser} />
           <h3 className="font-bold text-lg mt-3">{profileInfo?.name}</h3>
+          <p className="text-sm text-gray-200">{profileInfo?.email}</p>
           <p className="text-sm text-gray-300">{profileInfo?.role}</p>
         </div>
 

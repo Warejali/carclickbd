@@ -19,7 +19,7 @@ import { getProductStatusMeta } from "@/utils/productStatus";
 
 const formatPrice = (value: number | string) => {
   const numericValue = Number(value || 0);
-  if (!numericValue) return "Contact for price";
+  if (!numericValue) return "Contact for final price & Availability";
 
   return `BDT ${numericValue.toLocaleString("en-US")}/-`;
 };
@@ -28,6 +28,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const price = product.mainPrice || product.highestBid || product.minBid || 0;
+  const hasPrice = Boolean(Number(price || 0));
   const statusMeta = getProductStatusMeta(product);
   const location = [product?.location?.city, product?.location?.zipCode]
     .filter(Boolean)
@@ -111,7 +112,11 @@ const ProductCard = ({ product }: { product: IProduct }) => {
               <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">
                 Price
               </p>
-              <p className="mt-0.5 text-lg font-semibold leading-snug text-slate-950">
+              <p
+                className={`mt-0.5 font-semibold leading-snug text-slate-950 ${
+                  hasPrice ? "text-lg" : "text-[13px]"
+                }`}
+              >
                 {formatPrice(price)}
               </p>
             </div>

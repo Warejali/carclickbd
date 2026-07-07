@@ -15,6 +15,7 @@ const ProfileInfo: React.FC<{ user: IUser }> = ({ user }) => {
       <div className="space-y-5">
         {[
           { label: "Name", value: user?.name, Component: UpdateName },
+          { label: "Email", value: user?.email || "N/A" },
           { label: "Address", value: user?.address || "N/A", Component: UpdateAddress },
           { label: "Contact", value: user?.contactNo, Component: UpdateContactNo },
           { label: "Role", value: user?.role },

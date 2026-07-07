@@ -53,7 +53,7 @@ const MediaSection: React.FC<MediaSectionProps> = ({
       {/* Main Photo */}
       <Form.Item
         name="mainPhoto"
-        label="Main Photo"
+        label="Main photo (only one)"
         rules={[{ required: true, message: "Please upload the main photo" }]}
       >
         <Upload
@@ -70,7 +70,7 @@ const MediaSection: React.FC<MediaSectionProps> = ({
       {/* Other Photos */}
       <Form.Item
         name="otherPhotos"
-        label="Other Photos"
+        label="Others Photos (up to 10)"
         rules={[{ required: true, message: "Please upload at least one other photo" }]}
       >
         <Upload
