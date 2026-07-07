@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 import { useAppSelector } from "@/Redux/hooks";
 import { IUser } from "@/Interface/user";
 import PageLoader from "@/components/shared/spinners/PageLoader";
-import EmailVerificationAlert from "@/components/dashboardlayout/profile/EmailVerificationAlert";
 import ProfilePictureUploader from "@/components/dashboardlayout/profile/ProfilePictureUploader";
 import { Card, Button } from "antd";
 import { UserOutlined, LockOutlined, HistoryOutlined, PictureOutlined } from "@ant-design/icons";
@@ -30,7 +29,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className="bg-gray-50 min-h-screen">
-      {!profileInfo?.isEmailVerified && <EmailVerificationAlert />}
       <div className="container mx-auto py-6 px-4">
         <div className="bg-[#1B324C] text-center text-white py-6 shadow-md">
           <ProfilePictureUploader user={profileInfo as IUser} />

@@ -60,42 +60,6 @@ export const useUserColumns = (
       ),
     },
     {
-      title: "Verification",
-      key: "verification",
-      render: (record) => (
-        <Space>
-          <Tag color={record.isEmailVerified ? "green" : "red"}>
-            {record.isEmailVerified ? "Email Verified" : "Email Unverified"}
-          </Tag>
-          {record.isVerified !== undefined && (
-            <Tag color={record.isVerified ? "green" : "red"}>
-              {record.isVerified ? "Verified" : "Unverified"}
-            </Tag>
-          )}
-        </Space>
-      ),
-      filters: [
-        { text: "Email Verified", value: "emailVerified" },
-        { text: "Email Unverified", value: "emailUnverified" },
-        { text: "Account Verified", value: "verified" },
-        { text: "Account Unverified", value: "unverified" },
-      ],
-      onFilter: (value, record) => {
-        switch (value) {
-          case "emailVerified":
-            return !!record.isEmailVerified;
-          case "emailUnverified":
-            return !record.isEmailVerified;
-          case "verified":
-            return !!record.isVerified;
-          case "unverified":
-            return record.isVerified === false;
-          default:
-            return false;
-        }
-      },
-    },
-    {
       title: "Actions",
       key: "actions",
       render: (_, record) => (

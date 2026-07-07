@@ -10,8 +10,10 @@ const { Title, Text } = Typography;
 
 const ProfileInfo: React.FC<{ user: IUser }> = ({ user }) => {
   return (
-    <Card className="w-full shadow-lg p-6 bg-gradient-to-r from-blue-50 to-blue-100 rounded-2xl border border-blue-200">
-      <Title level={3} className="text-center text-blue-700 mb-6">Profile Information</Title>
+    <Card className="w-full rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+      <Title level={3} className="!mb-6 !text-slate-950">
+        Profile Information
+      </Title>
       <div className="space-y-5">
         {[
           { label: "Name", value: user?.name, Component: UpdateName },
@@ -23,11 +25,15 @@ const ProfileInfo: React.FC<{ user: IUser }> = ({ user }) => {
         ].map(({ label, value, Component }, index) => (
           <div
             key={index}
-            className="flex items-center justify-between p-4 rounded-lg bg-white shadow-md border border-gray-200"
+            className="flex flex-col gap-2 rounded-lg border border-slate-200 bg-slate-50 p-4 sm:flex-row sm:items-center sm:justify-between"
           >
-            <Text className="font-semibold text-gray-600 text-md">{label}:</Text>
+            <Text className="text-sm font-bold uppercase tracking-wide text-slate-400">
+              {label}
+            </Text>
             <div className="flex items-center gap-3">
-              <Text className="text-gray-800 font-medium text-md">{value}</Text>
+              <Text className="break-words text-sm font-bold text-slate-900">
+                {value}
+              </Text>
               {Component && <Component />}
             </div>
           </div>

@@ -12,14 +12,15 @@ import { setProfileInfo } from "@/Redux/Slices/authSlice";
 const ProfilePictureUploader: React.FC<{
   user: IUser;
   triggerButtonTitle?: string;
-}> = ({ user, triggerButtonTitle }) => {
+  compact?: boolean;
+}> = ({ user, triggerButtonTitle, compact }) => {
   const [imgFile, setImgFile] = useState<File | null>(null);
   const [defaultImgUrl, setDefaultUrl] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (user?.profilePhoto) {
-      setDefaultUrl(user.profilePhoto);<div className=""></div>
+      setDefaultUrl(user.profilePhoto);
     }
   }, [user?.profilePhoto]);
 
@@ -60,23 +61,28 @@ const ProfilePictureUploader: React.FC<{
         </Button>
       ) : (
         <button
+          type="button"
           onClick={handleOpenModal}
-          className="flex items-center justify-center w-full"
+          className="group flex w-full items-center justify-center"
         >
-          <div className="w-32 h-32 border-2 border-gray-300 bg-gray-50 rounded-full mb-4 flex items-center justify-center text-gray-500 cursor-pointer relative">
-            <button className="absolute bottom-2 right-2 z-10 h-6 w-6 rounded-full bg-white flex items-center justify-center text-md">
+          <div
+            className={`relative flex items-center justify-center rounded-full border-4 border-white bg-slate-100 text-slate-500 shadow-xl ring-1 ring-slate-200 transition group-hover:ring-sky-300 ${
+              compact ? "h-24 w-24" : "mb-4 h-32 w-32"
+            }`}
+          >
+            <span className="absolute bottom-1 right-1 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-[#f0b90b] text-sm text-slate-950 shadow-md">
               <FaCamera />
-            </button>
+            </span>
             {defaultImgUrl ? (
               <Image
                 width={128}
                 height={128}
                 src={user.profilePhoto as string}
                 alt="Default Profile"
-                className="w-full h-full rounded-full object-cover"
+                className="h-full w-full rounded-full object-cover"
               />
             ) : (
-              <div className="text-center text-sm p-3 text-gray-500">
+              <div className="px-3 text-center text-xs font-semibold text-slate-500">
                 Upload profile picture
               </div>
             )}

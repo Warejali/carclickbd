@@ -18,11 +18,9 @@ import {
   UserOutlined,
   LoginOutlined,
   ExclamationCircleOutlined,
-  WarningOutlined,
 } from "@ant-design/icons";
 import type { ColumnsType } from "antd/es/table";
 import { IUser } from "@/Interface/user";
-import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import CustomAvatar from "@/components/shared/avatar";
 import { IoEye } from "react-icons/io5";
 import { MdOutlineDelete } from "react-icons/md";
@@ -36,7 +34,6 @@ import { setIsLoggedIn, setProfileInfo } from "@/Redux/Slices/authSlice";
 import { useAppDispatch, useAppSelector } from "@/Redux/hooks";
 import StatsCard from "./StatsCard";
 import { TeamOutlined } from "@ant-design/icons";
-import { MdVerifiedUser } from "react-icons/md";
 import { FaUserCheck } from "react-icons/fa";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -234,29 +231,6 @@ const OrderTable: React.FC<UserTableProps> = ({
     },
 
     {
-      title: "Email Verified",
-      dataIndex: "isEmailVerified",
-      key: "isEmailVerified",
-      render: (verified: boolean) => (
-        <Tag color={verified ? "green" : "red"}>
-          {verified ? (
-            <>
-              <CheckCircleOutlined className="mr-1" /> Verified
-            </>
-          ) : (
-            <>
-              <CloseCircleOutlined className="mr-1" /> Not Verified
-            </>
-          )}
-        </Tag>
-      ),
-      filters: [
-        { text: "Verified", value: true },
-        { text: "Not Verified", value: false },
-      ],
-      onFilter: (value, record) => record.isEmailVerified === value,
-    },
-    {
       title: "Actions",
       key: "actions",
       render: (_, record) => {
@@ -326,14 +300,6 @@ const OrderTable: React.FC<UserTableProps> = ({
     },
   ];
 
-  const unverifiedUsersCount = users?.filter(
-    (user: IUser) => !user?.isEmailVerified
-  ).length;
-
-  const verifiedUsersCount = users?.filter(
-    (user: IUser) => user?.isEmailVerified
-  ).length;
-
   return (
     <div className="space-y-4">
       <Card className="shadow-md rounded-2xl">
@@ -365,24 +331,6 @@ const OrderTable: React.FC<UserTableProps> = ({
             icon={<FaUserCheck />}
             bgColor="bg-white"
             textColor="text-blue-500"
-          />
-        </Col>
-        <Col span={6} xs={12} md={8} lg={6}>
-          <StatsCard
-            title="Total Verified"
-            value={verifiedUsersCount}
-            icon={<MdVerifiedUser />}
-            bgColor="bg-white"
-            textColor="text-green-500"
-          />
-        </Col>
-        <Col span={6} xs={12} md={8} lg={6}>
-          <StatsCard
-            title="Total Unverified"
-            value={unverifiedUsersCount}
-            icon={<WarningOutlined />}
-            bgColor="bg-white"
-            textColor="text-red-500"
           />
         </Col>
       </Row>
