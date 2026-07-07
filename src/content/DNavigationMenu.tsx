@@ -20,9 +20,9 @@ export const getMenuContent = (tokenInfo: any, dispatch: any) => {
     case "seller":
       return sellerRoutes;
     case "customer":
+    case "buyer":
       return customerRoutes;
     default:
-      dispatch(setLogOut());
       return [];
   }
 };

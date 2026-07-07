@@ -15,6 +15,15 @@ import { siteContact } from "@/constants/siteContact";
 
 const footerColumns = [
   {
+    title: "Browse",
+    links: [
+      { label: "Duty Calculator", href: "/duty-calculator" },
+      { label: "Find Cars", href: "/cars" },
+      { label: "Year of Manufacture", href: "/year-of-manufacture" },
+      { label: "Blog", href: "/blog" },
+    ],
+  },
+  {
     title: "Verify",
     links: [
       { label: "Verify Auction Sheet", href: "/verify-auction-sheet" },
@@ -116,7 +125,7 @@ const Footer = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-7 md:grid-cols-3">
+          <div className="grid grid-cols-2 gap-7 md:grid-cols-4">
             {footerColumns.map((column) => (
               <div key={column.title}>
                 <h4 className="text-sm font-extrabold uppercase tracking-[0.16em] text-[#f0b90b]">

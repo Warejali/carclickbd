@@ -1,209 +1,229 @@
 "use client";
-import React from 'react';
+
+import Link from "next/link";
+import { useEffect, useState } from "react";
 import {
-  Layout,
-  Typography,
-  Row,
-  Col,
-  Card,
-  Statistic,
-  List,
-  Avatar,
-  Tabs,
-  Divider,
-} from 'antd';
-import {
-  UserOutlined,
-  ClockCircleOutlined,
+  ArrowRightOutlined,
+  CarOutlined,
   CheckCircleOutlined,
-  MessageOutlined,
-  BellOutlined,
-} from '@ant-design/icons';
-import GetUserInfo from '@/service/profile.service';
-import useUser from '@/hooks/useUser';
+  CommentOutlined,
+  HeartOutlined,
+  ShoppingCartOutlined,
+} from "@ant-design/icons";
+import { Spin } from "antd";
+import { useAppSelector } from "@/Redux/hooks";
+import { useGetMyOrdersQuery } from "@/Redux/api/orderApi";
+import { useGetMyCommentsQuery } from "@/Redux/features/comment/commentApi";
+import { useGetAllMyBidsQuery } from "@/Redux/features/bids/myBidApi";
+import { useGetUserWatchListQuery } from "@/Redux/features/watch-list/watchlistApi";
 
-const { Title, Text } = Typography;
-const { Content } = Layout;
-const { TabPane } = Tabs;
+const getList = (response: any) => {
+  const data = response?.data ?? response?.orders ?? response;
+  if (Array.isArray(data)) return data;
+  if (Array.isArray(data?.data)) return data.data;
+  if (Array.isArray(data?.orders?.data)) return data.orders.data;
+  if (Array.isArray(data?.orders)) return data.orders;
+  if (Array.isArray(data?.watchlist)) return data.watchlist;
+  if (Array.isArray(data?.result)) return data.result;
+  return [];
+};
 
-const UserDashboard: React.FC = () => {
-  // Mock data for demonstration
-  const user = useUser();
-  console.log('userName', user);
-  
+const getDate = (item: any) =>
+  new Date(item?.createdAt || item?.updatedAt || 0).getTime();
+
+const UserDashboard = () => {
+  const profile = useAppSelector((state) => state.authReducer.profile);
+  const [cartCount, setCartCount] = useState(0);
+
+  const { data: orderResponse, isLoading: ordersLoading } = useGetMyOrdersQuery({});
+  const { data: commentResponse, isLoading: commentsLoading } = useGetMyCommentsQuery({});
+  const { data: bidResponse, isLoading: bidsLoading } = useGetAllMyBidsQuery([]);
+  const { data: watchlistResponse, isLoading: watchlistLoading } =
+    useGetUserWatchListQuery([]);
+
+  const orders = getList(orderResponse);
+  const comments = getList(commentResponse);
+  const bids = getList(bidResponse);
+  const savedCars = getList(watchlistResponse);
+  const isLoading = ordersLoading || commentsLoading || bidsLoading || watchlistLoading;
+
+  const wonItems = bids.filter((bid: any) => bid?.isWinner || bid?.status === "won");
+  const recentActivity = [...comments, ...orders, ...savedCars]
+    .sort((a, b) => getDate(b) - getDate(a))
+    .slice(0, 4);
+
   const stats = [
     {
-      title: 'Total Logins',
-      value: 120,
-      icon: <UserOutlined />,
+      title: "Saved Cars",
+      value: savedCars.length,
+      icon: HeartOutlined,
+      href: "/customer/cart",
     },
     {
-      title: 'Total Bids',
-      value: 69,
-      icon: <CheckCircleOutlined />,
+      title: "Inquiries",
+      value: comments.length,
+      icon: CommentOutlined,
+      href: "/customer/bids",
     },
     {
-      title: 'Total Wins',
-      value: 75,
-      icon: <CheckCircleOutlined />,
+      title: "Orders",
+      value: orders.length,
+      icon: ShoppingCartOutlined,
+      href: "/customer/order",
     },
     {
-      title: 'Messages',
-      value: 15,
-      icon: <MessageOutlined />,
+      title: "Active Bids",
+      value: bids.length,
+      icon: CarOutlined,
+      href: "/customer/win-auction",
     },
     {
-      title: 'Notifications',
-      value: 105,
-      icon: <BellOutlined />,
+      title: "Wins",
+      value: wonItems.length,
+      icon: CheckCircleOutlined,
+      href: "/customer/win-auction",
+    },
+    {
+      title: "Cart",
+      value: cartCount,
+      icon: ShoppingCartOutlined,
+      href: "/customer/cart",
     },
   ];
 
-  const recentActivities = [
-    {
-      title: 'Logged in',
-      description: 'You logged into your account.',
-      time: '2 hours ago',
-    },
-    {
-      title: 'Placed a Bid',
-      description: 'You placed a bid on "Vintage Clock".',
-      time: '1 day ago',
-    },
-    {
-      title: 'Won an Auction',
-      description: 'You won the auction for "Antique Vase".',
-      time: '3 days ago',
-    },
-  ];
+  useEffect(() => {
+    const savedCart = localStorage.getItem("addToCart");
+    if (!savedCart) return;
+    try {
+      const parsedCart = JSON.parse(savedCart);
+      setCartCount(Array.isArray(parsedCart) ? parsedCart.length : 0);
+    } catch {
+      setCartCount(0);
+    }
+  }, []);
 
-  const messages = [
-    {
-      sender: 'Admin',
-      content: 'Your account has been verified.',
-      time: '2 hours ago',
-    },
-    {
-      sender: 'Support',
-      content: 'Your ticket #1234 has been resolved.',
-      time: '1 day ago',
-    },
-    {
-      sender: 'Jane Smith',
-      content: 'Thank you for your purchase!',
-      time: '3 days ago',
-    },
-  ];
-
-  const notifications = [
-    {
-      content: 'New auction "Vintage Car" is live now.',
-      time: '1 hour ago',
-    },
-    {
-      content: 'Your bid on "Classic Painting" was outbid.',
-      time: '5 hours ago',
-    },
-    {
-      content: 'Auction "Antique Watch" ends in 2 hours.',
-      time: '1 day ago',
-    },
-  ];
+  if (isLoading) {
+    return (
+      <div className="grid min-h-[360px] place-items-center bg-slate-50 p-6">
+        <Spin size="large" />
+      </div>
+    );
+  }
 
   return (
-    <Layout style={{ padding: '24px' }}>
-      <Content>
-        <Title level={2}>Welcome back, {user?.currentUser?.name}!</Title>
-        <Row gutter={[16, 16]} style={{ marginTop: '24px' }}>
-          {stats.map((stat, index) => (
-            <Col xs={24} sm={12} md={8} lg={4} key={index}>
-              <Card>
-                <Statistic
-                  title={stat.title}
-                  value={stat.value}
-                  prefix={stat.icon}
-                />
-              </Card>
-            </Col>
-          ))}
-        </Row>
-        <Divider />
-        <Tabs defaultActiveKey="1">
-          <TabPane tab="Recent Activities" key="1">
-            <List
-              itemLayout="horizontal"
-              dataSource={recentActivities}
-              renderItem={(item) => (
-                <List.Item>
-                  <List.Item.Meta
-                    avatar={
-                      <Avatar
-                        icon={<ClockCircleOutlined />}
-                        style={{ backgroundColor: '#1890ff' }}
-                      />
-                    }
-                    title={item.title}
-                    description={
-                      <>
-                        <Text>{item.description}</Text>
-                        <br />
-                        <Text type="secondary">{item.time}</Text>
-                      </>
-                    }
-                  />
-                </List.Item>
-              )}
-            />
-          </TabPane>
-          <TabPane tab="Messages" key="2">
-            <List
-              itemLayout="horizontal"
-              dataSource={messages}
-              renderItem={(item) => (
-                <List.Item>
-                  <List.Item.Meta
-                    avatar={
-                      <Avatar
-                        icon={<MessageOutlined />}
-                        style={{ backgroundColor: '#52c41a' }}
-                      />
-                    }
-                    title={item.sender}
-                    description={
-                      <>
-                        <Text>{item.content}</Text>
-                        <br />
-                        <Text type="secondary">{item.time}</Text>
-                      </>
-                    }
-                  />
-                </List.Item>
-              )}
-            />
-          </TabPane>
-          <TabPane tab="Notifications" key="3">
-            <List
-              itemLayout="horizontal"
-              dataSource={notifications}
-              renderItem={(item) => (
-                <List.Item>
-                  <List.Item.Meta
-                    avatar={
-                      <Avatar
-                        icon={<BellOutlined />}
-                        style={{ backgroundColor: '#faad14' }}
-                      />
-                    }
-                    title={item.content}
-                    description={<Text type="secondary">{item.time}</Text>}
-                  />
-                </List.Item>
-              )}
-            />
-          </TabPane>
-        </Tabs>
-      </Content>
-    </Layout>
+    <main className="min-h-screen bg-slate-50 p-5 md:p-8">
+      <section className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+        <p className="text-xs font-black uppercase tracking-[0.18em] text-[#003399]">
+          Buyer Dashboard
+        </p>
+        <div className="mt-2 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+          <div>
+            <h1 className="text-2xl font-black text-slate-950 md:text-3xl">
+              Welcome back, {profile?.name || profile?.email || "Buyer"}
+            </h1>
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">
+              Track your saved cars, inquiries, orders, and buying activity from
+              one simple panel. Empty data is shown as 0.
+            </p>
+          </div>
+          <Link
+            href="/cars"
+            className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-[#f0b90b] px-5 text-sm font-black text-slate-950 transition hover:bg-[#d9a609]"
+          >
+            Browse Cars <ArrowRightOutlined />
+          </Link>
+        </div>
+      </section>
+
+      <section className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        {stats.map((item) => {
+          const Icon = item.icon;
+          return (
+            <Link
+              key={item.title}
+              href={item.href}
+              className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:border-sky-200 hover:shadow-lg"
+            >
+              <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-md bg-sky-50 text-lg text-[#003399] ring-1 ring-sky-100">
+                <Icon />
+              </div>
+              <p className="text-sm font-bold text-slate-500">{item.title}</p>
+              <p className="mt-1 text-3xl font-black text-slate-950">
+                {item.value}
+              </p>
+            </Link>
+          );
+        })}
+      </section>
+
+      <section className="mt-5 grid gap-5 xl:grid-cols-[1fr_360px]">
+        <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="mb-4 flex items-center justify-between">
+            <div>
+              <h2 className="text-lg font-black text-slate-950">
+                Recent Activity
+              </h2>
+              <p className="text-sm text-slate-500">
+                Latest real account activity.
+              </p>
+            </div>
+          </div>
+
+          {recentActivity.length ? (
+            <div className="divide-y divide-slate-100">
+              {recentActivity.map((item: any, index: number) => (
+                <div key={item?._id || index} className="py-4">
+                  <p className="font-bold text-slate-900">
+                    {item?.product?.title ||
+                      item?.product?.model ||
+                      item?.title ||
+                      item?.orderNumber ||
+                      "Account activity"}
+                  </p>
+                  <p className="mt-1 text-sm text-slate-500">
+                    {item?.comment ||
+                      item?.message ||
+                      item?.status ||
+                      item?.createdAt ||
+                      "Updated recently"}
+                  </p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="rounded-lg border border-dashed border-slate-300 bg-slate-50 p-8 text-center">
+              <p className="text-lg font-black text-slate-950">
+                0 recent activities
+              </p>
+              <p className="mt-2 text-sm text-slate-500">
+                Save a car or send an inquiry to see activity here.
+              </p>
+            </div>
+          )}
+        </div>
+
+        <aside className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+          <h2 className="text-lg font-black text-slate-950">Quick Actions</h2>
+          <div className="mt-4 space-y-3">
+            {[
+              ["Find a car", "/cars"],
+              ["View saved cars", "/customer/cart"],
+              ["My inquiries", "/customer/bids"],
+              ["My orders", "/customer/order"],
+            ].map(([label, href]) => (
+              <Link
+                key={label}
+                href={href}
+                className="flex items-center justify-between rounded-md border border-slate-200 px-4 py-3 text-sm font-bold text-slate-700 transition hover:border-sky-200 hover:bg-sky-50 hover:text-[#003399]"
+              >
+                {label}
+                <ArrowRightOutlined />
+              </Link>
+            ))}
+          </div>
+        </aside>
+      </section>
+    </main>
   );
 };
 

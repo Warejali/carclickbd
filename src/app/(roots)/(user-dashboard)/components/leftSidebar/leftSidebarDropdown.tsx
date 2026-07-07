@@ -44,7 +44,7 @@ const LeftSidebarDropdown: React.FC<IMenuItem> = ({
       {/* Toggle Button */}
       <button
         onClick={onToggle}
-        className="flex w-full items-center justify-between rounded-md px-3 py-2.5 text-slate-200 transition-colors duration-300 hover:bg-white/10 hover:text-white"
+        className="flex w-full items-center justify-between rounded-md px-3 py-2.5 text-slate-700 transition-colors duration-300 hover:bg-slate-100 hover:text-[#003399]"
       >
         <div className="flex items-center gap-2">
           {icon && (
@@ -68,11 +68,11 @@ const LeftSidebarDropdown: React.FC<IMenuItem> = ({
         style={{ maxHeight: `${height}px` }}
       >
         {isSidebarOpen && (
-          <div className="ml-4 mt-2 space-y-1 border-l border-white/10 pl-2">
+          <div className="ml-4 mt-2 space-y-1 border-l border-slate-200 pl-2">
             {children.map((menu, index) => (
               <Link
                 key={index}
-                className="flex items-center text-nowrap text-xs gap-3 rounded-md px-3 py-2 text-slate-300 transition-colors duration-300 hover:bg-white/10 hover:text-white"
+                className="flex items-center text-nowrap text-xs gap-3 rounded-md px-3 py-2 text-slate-500 transition-colors duration-300 hover:bg-slate-100 hover:text-[#003399]"
                 href={menu.route}
                 onClick={() => {
                   if (onItemClick) {

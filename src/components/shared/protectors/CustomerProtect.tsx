@@ -26,7 +26,7 @@ const CustomerProtect = ({ children }: PrivateRouteProps) => {
       return;
     }
 
-    if (!(tokenInfo?.role === "customer")) {
+    if (!(tokenInfo?.role === "customer" || tokenInfo?.role === "buyer")) {
       dispatch(setLogOut()); 
       router.push("/"); 
     }

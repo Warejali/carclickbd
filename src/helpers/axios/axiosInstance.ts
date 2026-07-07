@@ -4,6 +4,11 @@ import { removeFromLocalStorage } from "@/utils/local-storage";
 
 import axios from "axios";
 
+const getCleanToken = (token?: string | null) => {
+  if (!token || token === "undefined" || token === "null") return "";
+  return token.startsWith("Bearer ") ? token.split(" ")[1] : token;
+};
+
 const instance = axios.create();
 instance.defaults.headers.post["Content-Type"] = "application/json";
 instance.defaults.headers["Accept"] = "application/json";
@@ -13,9 +18,9 @@ instance.defaults.timeout = 60000;
 instance.interceptors.request.use(
   function (config) {
     // Do something before request is sent
-    const bearerToken = localStorage.getItem(authKey);
-    if (bearerToken) {
-      config.headers.Authorization = bearerToken.split(" ")[1];
+    const accessToken = getCleanToken(localStorage.getItem(authKey));
+    if (accessToken) {
+      config.headers.Authorization = accessToken;
     }
 
     return config;
@@ -39,11 +44,13 @@ instance.interceptors.response.use(
 
     if (error?.response?.status === 403 && !config?.sent) {
       config.sent = true;
-      const response = await getNewAccessToken();
-      // console.log(response);
-      const accessToken = response?.data?.accessToken;
+      const accessToken = getCleanToken(await getNewAccessToken());
+      if (!accessToken) {
+        removeFromLocalStorage(authKey);
+        return Promise.reject(error);
+      }
       config.headers["Authorization"] = accessToken;
-      storeToken({ accessToken: accessToken });
+      storeToken({ accessToken });
       return instance(config);
     } else {
       // console.log(error);

@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import ProductFilterOptions from "@/components/publiclayout/home/AcutionProducts/ProductFilterOptions";
+import CarFilters from "@/components/publiclayout/home/AcutionProducts/CarFilters";
 import ProductsResult from "@/components/publiclayout/home/AcutionProducts/ProductsResult";
 import { AuctionProductsProps } from "@/types/products.types";
 
@@ -41,10 +41,9 @@ const AuctionProducts = ({
             View All Cars
           </Link>
         </div>
-      ) : (
-        <ProductFilterOptions baseUrl="/" />
-      )}
+      ) : null}
       <div className={isHomePreview ? "mx-auto max-w-7xl px-4 md:px-8" : ""}>
+        {!isHomePreview && <CarFilters />}
         <ProductsResult
           className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
           isPaginate={isPaginate}

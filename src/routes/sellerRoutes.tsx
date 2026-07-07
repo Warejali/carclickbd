@@ -1,11 +1,7 @@
 import { IDNavMenuItem } from "@/Interface/content";
 import {
-  BarChartOutlined,
-  BellOutlined,
-  CommentOutlined,
   DashboardOutlined,
   FileTextOutlined,
-  MailOutlined,
   ShopOutlined,
   StarOutlined,
   UserOutlined,
@@ -25,7 +21,6 @@ const sellerRoutes: IDNavMenuItem[] = [
     ],
   },
   { icon: <StarOutlined />, label: "Featured Requests", route: "/seller/featured-requests" },
-  { icon: <CommentOutlined />, label: "Buyer Inquiries", route: "/seller/comment-history" },
   { icon: <BiPurchaseTag />, label: "Orders", route: "/seller/order" },
   {
     icon: <FileTextOutlined />,
@@ -35,9 +30,6 @@ const sellerRoutes: IDNavMenuItem[] = [
       { label: "Earning Report", route: "/seller/report/earning" },
     ],
   },
-  { icon: <BellOutlined />, label: "Notifications", route: "/seller/notification" },
-  { icon: <MailOutlined />, label: "Mailbox", route: "/seller/mailbox" },
-  { icon: <BarChartOutlined />, label: "Support", route: "/seller/support" },
 ];
 
 export { sellerRoutes };

@@ -1,32 +1,17 @@
 "use client";
+
 import { useRouter, useSearchParams } from "next/navigation";
 
-interface CarFiltersProps {
-  isWinner: boolean;
-}
+const filters = [
+  { label: "Newly listed", value: "listed" },
+  { label: "Lowest mileage", value: "lowestMileage" },
+  { label: "Highest mileage", value: "highestMileage" },
+];
 
-export default function CarFilters({ isWinner }: CarFiltersProps) {
+export default function CarFilters(_props: { isWinner?: boolean }) {
   const router = useRouter();
   const searchParams = useSearchParams();
-
-  const allFilters = {
-    winnerFilters: [
-      { label: "Recent ended", value: "RecentEnded" },
-      { label: "Lowest mileage", value: "lowestMileage" },
-      { label: "Highest mileage", value: "highestMileage" },
-      { label: "Lowest price", value: "LowestPrice" },
-      { label: "Highest price", value: "HighestPrice" },
-    ],
-    nonWinnerFilters: [
-      { label: "Ending soon", value: "ending" },
-      { label: "Newly listed", value: "listed" },
-      { label: "Lowest mileage", value: "lowestMileage" },
-      { label: "Highest mileage", value: "highestMileage" },
-    ],
-  };
-
-  // Select filters based on isWinner condition
-  const filters = isWinner ? allFilters.winnerFilters : allFilters.nonWinnerFilters;
+  const activeSort = searchParams.get("sort") || "";
 
   const handleSortChange = (value: string) => {
     const newSearchParams = new URLSearchParams(searchParams.toString());
@@ -35,22 +20,30 @@ export default function CarFilters({ isWinner }: CarFiltersProps) {
   };
 
   return (
-    <div>
-      <div className="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center gap-2 lg:gap-6 w-full">
-        <div className="flex flex-wrap gap-2 lg:gap-4 items-center"></div>
+    <div className="mx-auto mb-6 flex w-full max-w-7xl flex-col gap-3 rounded-lg border border-slate-200 bg-white px-4 py-4 shadow-sm md:flex-row md:items-center md:justify-between md:px-6">
+      <div>
+        <p className="text-xs font-bold uppercase tracking-[0.16em] text-sky-600">
+          Sort listings
+        </p>
+        <p className="mt-1 text-sm text-slate-500">
+          Choose how cars should appear on this page.
+        </p>
       </div>
 
-      <div className="w-full flex flex-wrap gap-3 md:justify-end pl-2">
+      <div className="flex w-full flex-wrap gap-2 md:w-auto md:justify-end">
         {filters.map((filter) => (
-          <div
+          <button
+            type="button"
             key={filter.value}
             onClick={() => handleSortChange(filter.value)}
-            className="cursor-pointer"
+            className={`h-10 rounded-md border px-4 text-sm font-bold transition ${
+              activeSort === filter.value
+                ? "border-[#f0b90b] bg-[#f0b90b] text-slate-950"
+                : "border-slate-200 bg-slate-50 text-slate-600 hover:border-slate-300 hover:bg-white"
+            }`}
           >
-            <p className="pb-2 text-sm transition-colors hover:text-primary text-gray-500 w-full">
-              {filter.label}
-            </p>
-          </div>
+            {filter.label}
+          </button>
         ))}
       </div>
     </div>

@@ -28,7 +28,7 @@ const CarsSearchSection = () => {
   const [model, setModel] = useState(searchParams.get("model") || "all");
   const [year, setYear] = useState(searchParams.get("startYear") || "all");
   const [status, setStatus] = useState(searchParams.get("condition") || "all");
-  const [cmId, setCmId] = useState(searchParams.get("searchTerm") || "");
+  const [referenceId, setReferenceId] = useState(searchParams.get("searchTerm") || "");
 
   const modelOptions = useMemo(() => {
     if (maker === "all") {
@@ -66,8 +66,8 @@ const CarsSearchSection = () => {
     if (status === "all") params.delete("condition");
     else params.set("condition", status);
 
-    const trimmedCmId = cmId.trim();
-    if (trimmedCmId) params.set("searchTerm", trimmedCmId);
+    const trimmedReferenceId = referenceId.trim();
+    if (trimmedReferenceId) params.set("searchTerm", trimmedReferenceId);
     else params.delete("searchTerm");
 
     router.push(`/cars?${params.toString()}`);
@@ -132,12 +132,12 @@ const CarsSearchSection = () => {
 
             <label className="grid gap-2">
               <span className="text-xs font-bold uppercase text-slate-700">
-                CM ID
+                Reference ID
               </span>
               <input
-                value={cmId}
-                onChange={(event) => setCmId(event.target.value)}
-                placeholder="e.g. CM00373"
+                value={referenceId}
+                onChange={(event) => setReferenceId(event.target.value)}
+                placeholder="e.g. CCBD-TOYPRI-123456"
                 className="h-12 rounded-md border border-slate-200 bg-white px-4 text-sm outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
               />
             </label>

@@ -63,17 +63,15 @@ const Header: React.FC = () => {
     { label: "Duty Calculator", href: "/duty-calculator" },
     { label: "Find Cars", href: "/cars" },
     { label: "Year of Manufacture", href: "/year-of-manufacture" },
-    { label: "Gallery", href: "/gallery" },
     { label: "Blog", href: "/blog" },
   ];
 
   const sellMenu: MenuProps["items"] = [
-    { key: "dealer", label: <Link href="/sell-item?seller=dealer">Dealer</Link> },
+    { key: "dealer", label: <Link href="/dealer-rules">Dealer</Link> },
     {
       key: "individual",
-      label: <Link href="/sell-item?seller=individual">Individual</Link>,
+      label: <Link href="/individual-seller-rules">Individual</Link>,
     },
-    { key: "broker", label: <Link href="/sell-item?seller=broker">Broker</Link> },
   ];
 
   const buyMenu: MenuProps["items"] = [

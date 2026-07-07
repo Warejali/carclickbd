@@ -24,8 +24,8 @@ const servicesMenu: MenuProps["items"] = [
 ];
 
 const sellMenu: MenuProps["items"] = [
-  { key: "1", label: <Link href="/sell-item">Sell a Car</Link> },
-  { key: "2", label: <Link href="/seller-signup">Seller Signup</Link> },
+  { key: "dealer", label: <Link href="/dealer-rules">Dealer</Link> },
+  { key: "individual", label: <Link href="/individual-seller-rules">Individual</Link> },
 ];
 
 const SecondaryNav: React.FC = () => {
