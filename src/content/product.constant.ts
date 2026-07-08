@@ -46,13 +46,25 @@ export const homeFilterMakers = [
   { value: "TOYOTA", label: "TOYOTA" },
   { value: "NISSAN", label: "NISSAN" },
   { value: "HONDA", label: "HONDA" },
+  { value: "HUNDAI", label: "HUNDAI" },
+  { value: "KIA", label: "KIA" },
+  { value: "LAND ROVER", label: "LAND ROVER" },
+  { value: "LEXUS", label: "LEXUS" },
+  { value: "MERCEDES-BENZ", label: "Mercedes-Benz" },
+  { value: "MG", label: "MG" },
+  { value: "PROTON", label: "PROTON" },
+  { value: "TATA", label: "TATA" },
+  { value: "TVS", label: "TVS" },
+  { value: "VOLVO", label: "VOLVO" },
   { value: "MITSUBISHI", label: "MITSUBISHI" },
   { value: "MAZDA", label: "MAZDA" },
-  { value: "LEXUS", label: "LEXUS" },
   { value: "DAIHATSU", label: "DAIHATSU" },
   { value: "SUZUKI", label: "SUZUKI" },
   { value: "SUBARU", label: "SUBARU" },
+  { value: "OTHERS", label: "OTHERS" },
 ];
+
+const othersModelOption = { value: "OTHERS", label: "OTHERS" };
 
 export const homeFilterModelsByMaker: Record<string, { value: string; label: string }[]> = {
   TOYOTA: [
@@ -66,6 +78,7 @@ export const homeFilterModelsByMaker: Record<string, { value: string; label: str
     { value: "RAV4", label: "RAV4" },
     { value: "NOAH", label: "NOAH" },
     { value: "VOXY", label: "VOXY" },
+    othersModelOption,
   ],
   NISSAN: [
     { value: "X-TRAIL", label: "X-TRAIL" },
@@ -73,6 +86,7 @@ export const homeFilterModelsByMaker: Record<string, { value: string; label: str
     { value: "LEAF", label: "LEAF" },
     { value: "SERENA", label: "SERENA" },
     { value: "JUKE", label: "JUKE" },
+    othersModelOption,
   ],
   HONDA: [
     { value: "FIT", label: "FIT" },
@@ -80,36 +94,61 @@ export const homeFilterModelsByMaker: Record<string, { value: string; label: str
     { value: "CR-V", label: "CR-V" },
     { value: "GRACE", label: "GRACE" },
     { value: "FREED", label: "FREED" },
+    othersModelOption,
+  ],
+  HUNDAI: [
+    { value: "Hundai Sonata", label: "Hundai Sonata" },
+    { value: "Hundai Tucson", label: "Hundai Tucson" },
+    { value: "Santa Fe", label: "Santa Fe" },
+    { value: "Xcent", label: "Xcent" },
+    othersModelOption,
+  ],
+  KIA: [othersModelOption],
+  "LAND ROVER": [othersModelOption],
+  "MERCEDES-BENZ": [othersModelOption],
+  MG: [othersModelOption],
+  PROTON: [othersModelOption],
+  TATA: [othersModelOption],
+  TVS: [othersModelOption],
+  VOLVO: [othersModelOption],
+  OTHERS: [
+    othersModelOption,
   ],
   MITSUBISHI: [
     { value: "OUTLANDER", label: "OUTLANDER" },
     { value: "ECLIPSE CROSS", label: "ECLIPSE CROSS" },
     { value: "DELICA", label: "DELICA" },
+    othersModelOption,
   ],
   MAZDA: [
     { value: "AXELA", label: "AXELA" },
     { value: "CX-3", label: "CX-3" },
     { value: "CX-5", label: "CX-5" },
+    othersModelOption,
   ],
   LEXUS: [
     { value: "NX", label: "NX" },
     { value: "RX", label: "RX" },
     { value: "CT", label: "CT" },
+    othersModelOption,
   ],
   DAIHATSU: [
     { value: "MIRA", label: "MIRA" },
     { value: "MOVE", label: "MOVE" },
     { value: "TANTO", label: "TANTO" },
+    othersModelOption,
   ],
   SUZUKI: [
     { value: "SWIFT", label: "SWIFT" },
     { value: "SOLIO", label: "SOLIO" },
     { value: "WAGON R", label: "WAGON R" },
+    othersModelOption,
   ],
   SUBARU: [
     { value: "FORESTER", label: "FORESTER" },
     { value: "IMPREZA", label: "IMPREZA" },
     { value: "LEVORG", label: "LEVORG" },
+    othersModelOption,
   ],
 };
 
@@ -125,4 +164,3 @@ export const productDrivetrain = [
   { value: "awd", label: "All-Wheel Drive (AWD)" },
   { value: "4wd", label: "Four-Wheel Drive (4WD)" },
 ];
-

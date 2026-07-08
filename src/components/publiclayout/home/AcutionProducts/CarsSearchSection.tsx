@@ -33,13 +33,13 @@ const CarsSearchSection = () => {
   const modelOptions = useMemo(() => {
     if (maker === "all") {
       return [
-        { value: "all", label: "All Models" },
+        { value: "all", label: "All Car Names" },
         ...Object.values(homeFilterModelsByMaker).flat(),
       ];
     }
 
     return [
-      { value: "all", label: "All Models" },
+      { value: "all", label: "All Car Names" },
       ...(homeFilterModelsByMaker[maker] || []),
     ];
   }, [maker]);
@@ -109,7 +109,7 @@ const CarsSearchSection = () => {
               }}
             />
             <FilterSelect
-              label="Model"
+              label="Car Name"
               value={model}
               options={modelOptions}
               onChange={setModel}

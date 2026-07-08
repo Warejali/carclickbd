@@ -90,6 +90,10 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({ productId }) => {
 
   const buildProductData = (values: any) => {
     const productionYear = values.productionYear || values.year;
+    const resolvedMake =
+      values.make === "OTHERS" ? values.otherMake?.trim() : values.make;
+    const resolvedModel =
+      values.model === "OTHERS" ? values.otherModel?.trim() : values.model;
     const referenceNumber =
       values.stockNumber ||
       values.referenceNumber ||
@@ -97,8 +101,8 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({ productId }) => {
       createStockNumber(values);
     const generatedTitle = [
       productionYear,
-      values.make,
-      values.model,
+      resolvedMake,
+      resolvedModel,
       values.grade,
     ]
       .filter(Boolean)
@@ -108,8 +112,10 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({ productId }) => {
 
     return {
       ...values,
+      make: resolvedMake,
+      model: resolvedModel,
       title: generatedTitle,
-      maker: values.make,
+      maker: resolvedMake,
       year: productionYear,
       launchingYear: productionYear,
       productionYear,

@@ -1,6 +1,10 @@
 "use client";
-import React from "react";
+import React, { useMemo } from "react";
 import { Card, Form, Input, Row, Col, Select } from "antd";
+import {
+  homeFilterMakers,
+  homeFilterModelsByMaker,
+} from "@/content/product.constant";
 
 const { Option } = Select;
 
@@ -9,27 +13,83 @@ const years = Array.from(
   (_, i) => 1950 + i
 ).reverse();
 
-const BasicInfoSection = () => (
+const makerOptions = homeFilterMakers.filter((item) => item.value !== "all");
+
+const BasicInfoSection = () => {
+  const form = Form.useFormInstance();
+  const selectedMaker = Form.useWatch("make", form);
+  const selectedModel = Form.useWatch("model", form);
+
+  const modelOptions = useMemo(() => {
+    return homeFilterModelsByMaker[selectedMaker] || [
+      { value: "OTHERS", label: "OTHERS" },
+    ];
+  }, [selectedMaker]);
+
+  return (
   <Card title="Basic Information" className="shadow-md mb-4">
     <Row gutter={[16, 16]}>
       <Col xs={24} md={12}>
         <Form.Item
           name="make"
           label="Maker"
-          rules={[{ required: true, message: "Please enter maker" }]}
+          rules={[{ required: true, message: "Please select maker" }]}
         >
-          <Input placeholder="e.g. Toyota" />
+          <Select
+            showSearch
+            allowClear
+            placeholder="Select maker"
+            options={makerOptions}
+            optionFilterProp="label"
+            onChange={() => {
+              form.setFieldsValue({
+                model: undefined,
+                otherMake: undefined,
+                otherModel: undefined,
+              });
+            }}
+          />
         </Form.Item>
       </Col>
       <Col xs={24} md={12}>
         <Form.Item
           name="model"
-          label="Model"
-          rules={[{ required: true, message: "Please enter model" }]}
+          label="Car Name"
+          rules={[{ required: true, message: "Please select car name" }]}
         >
-          <Input placeholder="e.g. Harrier" />
+          <Select
+            showSearch
+            allowClear
+            disabled={!selectedMaker}
+            placeholder="Select car name"
+            options={modelOptions}
+            optionFilterProp="label"
+            onChange={() => form.setFieldsValue({ otherModel: undefined })}
+          />
         </Form.Item>
       </Col>
+      {selectedMaker === "OTHERS" && (
+        <Col xs={24} md={12}>
+          <Form.Item
+            name="otherMake"
+            label="Other Maker"
+            rules={[{ required: true, message: "Please write maker name" }]}
+          >
+            <Input placeholder="Write maker name" />
+          </Form.Item>
+        </Col>
+      )}
+      {selectedModel === "OTHERS" && (
+        <Col xs={24} md={12}>
+          <Form.Item
+            name="otherModel"
+            label="Other Car Name"
+            rules={[{ required: true, message: "Please write car name" }]}
+          >
+            <Input placeholder="Write car name" />
+          </Form.Item>
+        </Col>
+      )}
       <Col xs={24} md={8}>
         <Form.Item name="grade" label="Grade">
           <Input placeholder="e.g. Z Leather Package" />
@@ -68,6 +128,7 @@ const BasicInfoSection = () => (
       </Col>
     </Row>
   </Card>
-);
+  );
+};
 
 export default BasicInfoSection;
