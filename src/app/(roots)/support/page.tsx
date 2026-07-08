@@ -34,7 +34,7 @@ const SupportPage = () => {
         <Paragraph className="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
           Check out our FAQs for quick answers to common questions:
         </Paragraph>
-        <Button type="primary" size="large">
+        <Button type="primary" size="large" href="/faq">
           <QuestionCircleOutlined className="mr-2" />
           Visit the FAQ
         </Button>
