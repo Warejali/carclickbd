@@ -29,6 +29,15 @@ const BasicInfoSection = () => {
   return (
   <Card title="Basic Information" className="shadow-md mb-4">
     <Row gutter={[16, 16]}>
+      <Col xs={24}>
+        <Form.Item
+          name="title"
+          label="Title"
+          rules={[{ required: true, message: "Please enter title" }]}
+        >
+          <Input placeholder="e.g. 2023 Toyota Harrier Z Leather Package" />
+        </Form.Item>
+      </Col>
       <Col xs={24} md={12}>
         <Form.Item
           name="make"

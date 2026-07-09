@@ -6,14 +6,16 @@ const getValue = (...values: any[]) =>
 
 export default function VehicleDetails({ product }: { product: any }) {
   const specs = [
+    ["Title", product?.title],
     ["Maker", getValue(product?.maker, product?.make)],
     ["Model", product?.model],
+    ["Model Code", product?.modelCode],
     ["Grade", product?.grade],
     ["Production Year", getValue(product?.productionYear, product?.year, product?.launchingYear)],
     ["Registration Year", product?.registrationYear],
     ["Reference Number", getValue(product?.stockNumber, product?.referenceNumber)],
     ["Mileage", product?.mileage ? `${product.mileage} km` : undefined],
-    ["Engine Size", getValue(product?.engineSize, product?.engine)],
+    ["Engine CC", getValue(product?.engineCc, product?.engineCC, product?.engineSize, product?.engine)],
     ["Fuel Type", getValue(product?.fuelType, product?.fuel)],
     ["Transmission", product?.transmission],
     ["Drive Type", getValue(product?.driveType, product?.drivetrain, product?.drive)],

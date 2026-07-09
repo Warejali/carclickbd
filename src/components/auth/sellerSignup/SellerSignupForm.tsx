@@ -8,7 +8,7 @@ import { useAppDispatch } from "@/Redux/hooks";
 import { setIsLoggedIn, setProfileInfo } from "@/Redux/Slices/authSlice";
 
 type SellerSignupFormProps = {
-  sellerType: "dealer" | "individual";
+  sellerType: "dealer" | "personal";
 };
 
 const sellerCopy = {
@@ -19,8 +19,8 @@ const sellerCopy = {
     namePlaceholder: "e.g. Nexus Motors",
     addressLabel: "Showroom / Office Address",
   },
-  individual: {
-    title: "Create Individual Seller Account",
+  personal: {
+    title: "Create Personal Seller Account",
     subtitle: "Create a private seller profile to list your own vehicle.",
     nameLabel: "Full Name",
     namePlaceholder: "e.g. Rahim Ahmed",
@@ -41,6 +41,8 @@ const SellerSignupForm = ({ sellerType }: SellerSignupFormProps) => {
         ...values,
         sellerType,
         accountType: sellerType,
+        contactNo: values.whatsappNumber,
+        address: values.showroomOfficeAddress,
       }).unwrap();
       const { accessToken, user } = response.data;
 
@@ -74,9 +76,12 @@ const SellerSignupForm = ({ sellerType }: SellerSignupFormProps) => {
             <Form.Item
               label={copy.nameLabel}
               name="name"
-              rules={[{ required: true, message: "Please enter name" }]}
             >
               <Input prefix={<UserOutlined />} placeholder={copy.namePlaceholder} />
+            </Form.Item>
+
+            <Form.Item label="Business Name" name="businessName">
+              <Input prefix={<ShopOutlined />} placeholder="Business name (optional)" />
             </Form.Item>
 
             <Form.Item
@@ -90,11 +95,11 @@ const SellerSignupForm = ({ sellerType }: SellerSignupFormProps) => {
               <Input prefix={<MailOutlined />} placeholder="name@example.com" />
             </Form.Item>
 
-            <Form.Item label="WhatsApp Number" name="contactNo">
+            <Form.Item label="WhatsApp Number" name="whatsappNumber">
               <Input prefix={<PhoneOutlined />} placeholder="+880..." />
             </Form.Item>
 
-            <Form.Item label={copy.addressLabel} name="address">
+            <Form.Item label={copy.addressLabel} name="showroomOfficeAddress">
               <Input prefix={<ShopOutlined />} placeholder="Dhaka, Bangladesh" />
             </Form.Item>
 

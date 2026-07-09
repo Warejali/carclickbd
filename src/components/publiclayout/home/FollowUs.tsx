@@ -11,7 +11,7 @@ import { motion } from "framer-motion";
 
 const FollowUs = () => {
   const socials = [
-    { icon: <FacebookFilled />, href: "https://facebook.com" },
+    { icon: <FacebookFilled />, href: "https://facebook.com/CarClickBD" },
     { icon: <InstagramOutlined />, href: "https://instagram.com" },
     { icon: <SiTiktok />, href: "https://tiktok.com" },
     { icon: <LinkedinOutlined />, href: "https://linkedin.com" },

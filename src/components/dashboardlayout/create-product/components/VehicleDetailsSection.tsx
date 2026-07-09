@@ -10,10 +10,15 @@ const VehicleDetailsSection = () => (
       <Col xs={24} md={8}>
         <Form.Item
           name="engine"
-          label="Engine Size"
-          rules={[{ required: true, message: "Please enter engine size" }]}
+          label="Engine CC"
+          rules={[{ required: true, message: "Please enter engine CC" }]}
         >
           <Input placeholder="e.g. 2000cc" />
+        </Form.Item>
+      </Col>
+      <Col xs={24} md={8}>
+        <Form.Item name="modelCode" label="Model Code">
+          <Input placeholder="e.g. ZVW50" />
         </Form.Item>
       </Col>
       <Col xs={24} md={8}>

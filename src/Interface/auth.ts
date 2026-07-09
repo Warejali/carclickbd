@@ -4,10 +4,17 @@ export interface ISigninData {
 }
 
 export interface ISignUpData {
-  name: string;
+  name?: string;
+  businessName?: string;
   email: string;
   password: string;
   confirmPassword: string;
+  contactNo?: string;
+  whatsappNumber?: string;
+  address?: string;
+  showroomOfficeAddress?: string;
+  sellerType?: "dealer" | "personal";
+  accountType?: "dealer" | "personal";
 }
 
 export interface IValidationResponse {

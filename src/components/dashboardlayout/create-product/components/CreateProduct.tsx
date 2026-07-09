@@ -62,6 +62,7 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({ productId }) => {
       productionYear: product.productionYear || product.year || product.launchingYear,
       registrationYear: product.registrationYear,
       stockNumber: product.stockNumber || product.referenceNumber,
+      modelCode: product.modelCode,
       color: product.color || product.exteriorColor,
       vin: product.vin || product.vinChassisNumber,
       featuresAndOptions:
@@ -107,6 +108,7 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({ productId }) => {
     ]
       .filter(Boolean)
       .join(" ");
+    const title = values.title?.trim() || generatedTitle;
 
     const status = !isEditMode || isSeller ? "pending" : values.status || "pending";
 
@@ -114,7 +116,7 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({ productId }) => {
       ...values,
       make: resolvedMake,
       model: resolvedModel,
-      title: generatedTitle,
+      title,
       maker: resolvedMake,
       year: productionYear,
       launchingYear: productionYear,
@@ -123,6 +125,9 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({ productId }) => {
       stockNumber: referenceNumber,
       referenceNumber,
       engineSize: values.engine,
+      engineCc: values.engine,
+      engineCC: values.engine,
+      modelCode: values.modelCode,
       driveType: values.drivetrain,
       bodyType: values.bodyStyle,
       exteriorColor: values.color,
@@ -157,7 +162,7 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({ productId }) => {
     ["productionYear", "Production Year"],
     ["mainPrice", "Price"],
     ["mileage", "Mileage"],
-    ["engine", "Engine Size"],
+    ["engine", "Engine CC"],
     ["fuelType", "Fuel Type"],
     ["transmission", "Transmission"],
     ["drivetrain", "Drive Type"],

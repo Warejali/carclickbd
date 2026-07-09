@@ -74,11 +74,6 @@ const SellerBoardHome = () => {
   const pendingListings = products.filter(
     (product) => product.isDraft || getStatus(product) === "pending",
   ).length;
-  const needsPhotoUpdates = products.length - fullPhotoListings;
-  const featuredRecommendations = products.filter(
-    (product) => !product.isFeatured && !product.isDraft,
-  ).length;
-
   const stats = [
     {
       title: "Active Listings",
@@ -110,12 +105,6 @@ const SellerBoardHome = () => {
     },
   ];
 
-  const focusItems = [
-    ["Reply to new inquiries", `${buyerInquiries} total`],
-    ["Complete listing quality", `${needsPhotoUpdates} need updates`],
-    ["Feature best vehicles", `${featuredRecommendations} recommended`],
-  ];
-
   const listingHealth = [
     ["Listings with full photos", `${fullPhotoPercent}%`, `${fullPhotoListings} of ${products.length}`],
     ["Listings missing chassis", String(missingChassis), missingChassis ? "Fix" : "Good"],
@@ -144,8 +133,8 @@ const SellerBoardHome = () => {
       <section className="overflow-hidden rounded-lg bg-gradient-to-r from-slate-950 via-[#08245d] to-[#003399] text-white shadow-[0_24px_70px_rgba(15,23,42,0.18)]">
         <div className="relative p-6 md:p-8">
           <div className="absolute inset-0 opacity-20 [background-image:radial-gradient(circle,white_1px,transparent_1px)] [background-size:18px_18px]" />
-          <div className="relative grid gap-6 lg:grid-cols-[1fr_360px] lg:items-center">
-            <div>
+          <div className="relative">
+            <div className="max-w-4xl">
               <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-[0.16em] text-[#f0b90b]">
                 <CheckCircleOutlined />
                 Verified Seller Workspace
@@ -171,23 +160,6 @@ const SellerBoardHome = () => {
                 >
                   View My Listings <ArrowRightOutlined />
                 </Link>
-              </div>
-            </div>
-
-            <div className="rounded-lg border border-white/15 bg-white/10 p-5 backdrop-blur">
-              <p className="text-sm font-bold text-slate-200">Today&apos;s focus</p>
-              <div className="mt-4 space-y-3">
-                {focusItems.map(([label, value]) => (
-                  <div
-                    key={label}
-                    className="flex items-center justify-between rounded-md bg-white/10 px-4 py-3"
-                  >
-                    <span className="text-sm font-semibold">{label}</span>
-                    <span className="text-xs font-black text-[#f0b90b]">
-                      {value}
-                    </span>
-                  </div>
-                ))}
               </div>
             </div>
           </div>

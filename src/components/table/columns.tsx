@@ -23,7 +23,7 @@ export const useUserColumns = (
           </div>
         </Space>
       ),
-      sorter: (a, b) => a.name.localeCompare(b.name),
+      sorter: (a, b) => (a.name || "").localeCompare(b.name || ""),
     },
     {
       title: "Contact",
@@ -37,11 +37,11 @@ export const useUserColumns = (
       key: "accountType",
       filters: [
         { text: "Personal", value: "personal" },
-        { text: "Business", value: "business" },
+        { text: "Dealer", value: "dealer" },
       ],
       render: (type) => (
-        <Tag color={type === "business" ? "blue" : "green"}>
-          {type.toUpperCase()}
+        <Tag color={type === "dealer" ? "blue" : "green"}>
+          {(type || "personal").toUpperCase()}
         </Tag>
       ),
     },

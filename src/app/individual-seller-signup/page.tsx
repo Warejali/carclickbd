@@ -1,7 +1,12 @@
 import SellerSignupForm from "@/components/auth/sellerSignup/SellerSignupForm";
+import LoggedInRedirect from "@/components/auth/LoggedInRedirect";
 
 const IndividualSellerSignupPage = () => {
-  return <SellerSignupForm sellerType="individual" />;
+  return (
+    <LoggedInRedirect>
+      <SellerSignupForm sellerType="personal" />
+    </LoggedInRedirect>
+  );
 };
 
 export default IndividualSellerSignupPage;

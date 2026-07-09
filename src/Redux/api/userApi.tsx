@@ -62,6 +62,14 @@ const userApi = baseApi.injectEndpoints({
       invalidatesTags: ["user"],
     }),
 
+    convertToSeller: build.mutation<any, void>({
+      query: () => ({
+        url: `/user/convert-to-seller`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["user", "profile"],
+    }),
+
     getAllUser: build.query<any, {isDisabled?: boolean ;shortBy?: string; sortOrder?: string; searchTerm?: string; page?: number;limit?: number;role?: string | string[];}>({
       query: ({
         shortBy = "updatedAt",
@@ -193,5 +201,6 @@ export const {
   useGetAllCustomerQuery,
   useGetAllSellerQuery,
   useBasicMembershipMutation,
-  useCreateSellerMutation
+  useCreateSellerMutation,
+  useConvertToSellerMutation
 } = userApi;

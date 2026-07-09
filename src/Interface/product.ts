@@ -34,6 +34,7 @@ export type IProduct = {
   maker?: string;
   make: string;
   model: string;
+  modelCode?: string;
   mileage: string;
   bidInfo: BidInfo;
   vin: string;
@@ -55,6 +56,7 @@ export type IProduct = {
   };
   seller: ICommonProfile | string;
   engine: string;
+  engineCc?: string;
   drivetrain: string;
   transmission: "automatic" | "manual";
   bodyStyle:

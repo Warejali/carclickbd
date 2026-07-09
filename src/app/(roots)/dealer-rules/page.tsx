@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CheckCircle, ShieldCheck, Store } from "lucide-react";
+import AuthAwareSignupLink from "@/components/auth/AuthAwareSignupLink";
 
 const rules = [
   "Use a verified business name, contact number, and showroom or office address.",
@@ -60,12 +61,12 @@ const DealerRulesPage = () => {
           </div>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link
+            <AuthAwareSignupLink
               href="/dealer-signup"
               className="inline-flex h-12 items-center justify-center rounded-lg bg-[#f0b90b] px-6 text-sm font-extrabold text-slate-950 transition hover:bg-[#d9a406]"
             >
               Create Dealer Account
-            </Link>
+            </AuthAwareSignupLink>
             <Link
               href="/contact"
               className="inline-flex h-12 items-center justify-center rounded-lg border border-slate-300 px-6 text-sm font-bold text-slate-700 transition hover:border-slate-950 hover:text-slate-950"

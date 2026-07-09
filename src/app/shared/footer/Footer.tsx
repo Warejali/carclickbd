@@ -55,7 +55,7 @@ const footerColumns = [
 ];
 
 const socialLinks = [
-  { label: "Facebook", href: "https://facebook.com", icon: FacebookOutlined },
+  { label: "Facebook", href: "https://facebook.com/CarClickBD", icon: FacebookOutlined },
   { label: "Instagram", href: "https://instagram.com", icon: InstagramOutlined },
   { label: "TikTok", href: "https://tiktok.com", icon: SiTiktok },
   { label: "LinkedIn", href: "https://linkedin.com", icon: LinkedinOutlined },

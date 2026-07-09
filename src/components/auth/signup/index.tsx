@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import React, { SetStateAction, useState } from "react";
 import { Form, Input, Button, message } from "antd";
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { LockOutlined, PhoneOutlined, ShopOutlined, UserOutlined } from "@ant-design/icons";
 import { ISignUpData } from "@/Interface/auth";
 import { useSignupMutation } from "@/Redux/api/authApi";
 import AuthWithThirdPerty from "../authWithThirdPerty";
@@ -24,12 +24,17 @@ const SignUpPage: React.FC<{
   const handleSignUp = async (values: {
     password: string;
     confirmPassword: string;
-    name: string;
+    name?: string;
+    businessName?: string;
+    whatsappNumber?: string;
+    showroomOfficeAddress?: string;
   }) => {
     try {
       const response = await signup({
         ...values,
         email: email,
+        contactNo: values.whatsappNumber,
+        address: values.showroomOfficeAddress,
       } as ISignUpData).unwrap();
       const { accessToken, user } = response.data;
 
@@ -67,7 +72,14 @@ const SignUpPage: React.FC<{
           layout="vertical"
           onFinish={handleSignUp}
           className="mt-5"
-          initialValues={{ password: "", confirmPassword: "", name: "" }}
+          initialValues={{
+            password: "",
+            confirmPassword: "",
+            name: "",
+            businessName: "",
+            whatsappNumber: "",
+            showroomOfficeAddress: "",
+          }}
         >
           {/* Password Input */}
           <Form.Item
@@ -110,22 +122,23 @@ const SignUpPage: React.FC<{
             />
           </Form.Item>
 
-          {/* Name Input */}
           <Form.Item
-            label="Username"
+            label="Name"
             name="name"
-            rules={[
-              { required: true, message: "Please enter a username!" },
-              {
-                min: 3,
-                message: "Username must be at least 3 characters long!",
-              },
-            ]}
           >
-            <Input
-              placeholder="Create a username..."
-              prefix={<UserOutlined />}
-            />
+            <Input placeholder="Your name (optional)" prefix={<UserOutlined />} />
+          </Form.Item>
+
+          <Form.Item label="Business Name" name="businessName">
+            <Input placeholder="Business name (optional)" prefix={<ShopOutlined />} />
+          </Form.Item>
+
+          <Form.Item label="WhatsApp Number" name="whatsappNumber">
+            <Input placeholder="+880..." prefix={<PhoneOutlined />} />
+          </Form.Item>
+
+          <Form.Item label="Showroom / Office Address" name="showroomOfficeAddress">
+            <Input placeholder="Address (optional)" prefix={<ShopOutlined />} />
           </Form.Item>
 
           {/* Submit Button */}

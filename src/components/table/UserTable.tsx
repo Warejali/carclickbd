@@ -182,7 +182,7 @@ const OrderTable: React.FC<UserTableProps> = ({
       ),
       filterMode: "tree",
       filterSearch: true,
-      sorter: (a, b) => a.name.localeCompare(b.name),
+      sorter: (a, b) => (a.name || "").localeCompare(b.name || ""),
     },
     {
       title: "Email",

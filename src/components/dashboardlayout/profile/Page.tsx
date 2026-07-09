@@ -2,14 +2,21 @@
 
 import { useEffect, useState } from "react";
 import { MailOutlined, PhoneOutlined, ShopOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, Modal, message } from "antd";
 import { IUser } from "@/Interface/user";
-import { useAppSelector } from "@/Redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/Redux/hooks";
+import { useConvertToSellerMutation } from "@/Redux/api/userApi";
+import { setIsLoggedIn, setProfileInfo } from "@/Redux/Slices/authSlice";
+import { useRouter } from "next/navigation";
 import ProfileInfo from "./ProfileInfo";
 import ProfilePictureUploader from "./ProfilePictureUploader";
 
 const ProfileComponentPage = () => {
   const profileInfo = useAppSelector((state) => state.authReducer.profile);
+  const dispatch = useAppDispatch();
+  const router = useRouter();
   const [isClient, setIsClient] = useState(false);
+  const [convertToSeller, { isLoading: isConverting }] = useConvertToSellerMutation();
 
   useEffect(() => {
     setIsClient(true);
@@ -27,7 +34,7 @@ const ProfileComponentPage = () => {
     },
     {
       label: "Contact",
-      value: profileInfo.contactNo || "N/A",
+      value: profileInfo.whatsappNumber || profileInfo.contactNo || "N/A",
       icon: PhoneOutlined,
     },
     {
@@ -36,6 +43,34 @@ const ProfileComponentPage = () => {
       icon: ShopOutlined,
     },
   ];
+
+  const handleConvertToPersonalSeller = () => {
+    Modal.confirm({
+      title: "Convert to personal seller?",
+      content: "Your customer account will become a personal seller account.",
+      okText: "Convert",
+      cancelText: "Cancel",
+      onOk: async () => {
+        try {
+          const response = await convertToSeller().unwrap();
+          const accessToken = response?.data?.accessToken;
+          const user = response?.data?.user;
+
+          if (!accessToken || !user) {
+            message.error("Unable to convert account.");
+            return;
+          }
+
+          dispatch(setIsLoggedIn(accessToken));
+          dispatch(setProfileInfo(user));
+          message.success(response?.message || "Account converted successfully.");
+          router.push("/seller");
+        } catch (error: any) {
+          message.error(error?.data?.message || error?.message || "Failed to convert account.");
+        }
+      },
+    });
+  };
 
   return (
     <div className="min-h-screen bg-slate-50 p-4 md:p-6">
@@ -47,10 +82,10 @@ const ProfileComponentPage = () => {
               <ProfilePictureUploader user={profileInfo as IUser} compact />
               <div>
                 <p className="text-xs font-black uppercase tracking-[0.18em] text-[#f0b90b]">
-                  Seller Profile
+                  {profileInfo.role === "customer" ? "Customer Profile" : "Seller Profile"}
                 </p>
                 <h1 className="mt-2 text-2xl font-black md:text-3xl">
-                  {profileInfo.name || "Seller"}
+                  {profileInfo.name || profileInfo.businessName || "User"}
                 </h1>
                 <p className="mt-1 text-sm font-medium text-slate-200">
                   {profileInfo.email || "No email available"}
@@ -96,9 +131,19 @@ const ProfileComponentPage = () => {
           </div>
           <h2 className="text-lg font-black text-slate-950">Account Care</h2>
           <p className="mt-2 text-sm leading-6 text-slate-600">
-            Keep your seller profile updated so buyers and admins can identify
+            Keep your profile updated so buyers and admins can identify
             your account quickly.
           </p>
+          {profileInfo.role === "customer" && (
+            <Button
+              type="primary"
+              loading={isConverting}
+              onClick={handleConvertToPersonalSeller}
+              className="mt-4 !w-full !rounded-lg !border-[#f0b90b] !bg-[#f0b90b] !font-bold !text-slate-950 hover:!bg-[#d9a406]"
+            >
+              Convert to Personal Seller
+            </Button>
+          )}
           <div className="mt-4">
             <ProfilePictureUploader
               user={profileInfo as IUser}

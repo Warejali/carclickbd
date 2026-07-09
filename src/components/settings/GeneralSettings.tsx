@@ -85,7 +85,7 @@ const GeneralSettings = () => {
       metaDescription: 'A platform to connect with people and share your thoughts.',
       enableSearchEngineIndexing: true,
       // Social Media
-      facebookPage: 'https://www.facebook.com/myplatform',
+      facebookPage: 'https://facebook.com/CarClickBD',
       twitterHandle: '@myplatform',
       instagramHandle: 'myplatform',
       // Site Maintenance
@@ -106,7 +106,7 @@ const GeneralSettings = () => {
       metaDescription: 'A platform to connect with people and share your thoughts.',
       enableSearchEngineIndexing: true,
       // Social Media
-      facebookPage: 'https://www.facebook.com/myplatform',
+      facebookPage: 'https://facebook.com/CarClickBD',
       twitterHandle: '@myplatform',
       instagramHandle: 'myplatform',
       // Site Maintenance
