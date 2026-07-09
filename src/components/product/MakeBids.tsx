@@ -20,31 +20,31 @@ const MakeBids: React.FC<MakeBidsProps> = ({ productId, bidInfo, setOpen }) => {
   const requiredBidAmount = (bidInfo?.highestBid ?? 0) > 0 ? bidInfo.highestBid! : bidInfo?.minBid ?? 0;
   const handleMakeBid = async () => {
     if (!bidAmount || bidAmount <= requiredBidAmount) {
-      message.error(`Your bid must be more than $${requiredBidAmount}`);
+      message.error(`Your offer must be more than $${requiredBidAmount}`);
       return;
     }
 
     try {
       const res = await createBid({ product: productId, bidAmount }).unwrap();
       if (res.success) {
-        message.success("Bid created successfully!");
+        message.success("Offer submitted successfully!");
         setBidAmount(null);
         setOpen(false);
       }
     } catch (error: any) {
-      message.error(error?.message || "Failed to place bid.");
+      message.error(error?.message || "Failed to submit offer.");
       setBidAmount(null);
     }
   };
 
   return (
     <section className="py-4">
-      <h2 className="mb-4 text-xl italic text-[#000] font-bold">Make a Bid</h2>
+      <h2 className="mb-4 text-xl italic text-[#000] font-bold">Submit an Offer</h2>
       <Input
         type="number"
         value={bidAmount ?? ""}
         onChange={(e) => setBidAmount(Number(e.target.value) || null)}
-        placeholder={`Minimum bid: $${requiredBidAmount}`}
+        placeholder={`Minimum offer: $${requiredBidAmount}`}
         disabled={isLoading}
         className="mb-4 !py-3 placeholder:text-md text-lg font-bold placeholder:font-normal"
       />
@@ -56,7 +56,7 @@ const MakeBids: React.FC<MakeBidsProps> = ({ productId, bidInfo, setOpen }) => {
           loading={isLoading}
           disabled={isLoading || !bidAmount || bidAmount <= requiredBidAmount}
         >
-          {isLoading ? "" : "Make Bid"}
+          {isLoading ? "" : "Submit Offer"}
         </Button>
       </div>
     </section>

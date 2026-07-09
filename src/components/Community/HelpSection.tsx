@@ -15,18 +15,18 @@ const HelpSection: React.FC = () => {
   const faqData: FAQItem[] = [
     {
       key: '1',
-      title: 'How do I place a bid?',
-      content: 'To place a bid, you need to create an account and verify your payment method. Once logged in, navigate to the auction page of the car you are interested in and enter your bid amount in the designated field.',
+      title: 'How do I contact a seller?',
+      content: 'Open the car listing you are interested in and use the contact or inquiry option. CarClickBD helps keep buyer and seller communication clear before you decide to inspect or purchase.',
     },
     {
       key: '2',
-      title: 'What are the fees for buying and selling?',
-      content: 'Buyer fees are a percentage of the final sale price. Seller fees may apply depending on the auction type and your membership level. Please refer to our Fees page for detailed information.',
+      title: 'What should I check before buying?',
+      content: 'Review the listing photos, specifications, mileage, chassis information, ownership documents, and vehicle condition. Always inspect the car before making a payment.',
     },
     {
       key: '3',
-      title: 'What happens after I win an auction?',
-      content: 'Once you win an auction, you will receive an email with instructions on how to complete the payment and arrange for vehicle pickup or shipping.',
+      title: 'How do I sell my car?',
+      content: 'Create a seller account, add accurate vehicle details, upload clear photos, and submit the listing. New listings are reviewed before they go live.',
     },
     // ... more FAQ items
   ];

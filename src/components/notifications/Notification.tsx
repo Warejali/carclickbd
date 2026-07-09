@@ -88,11 +88,11 @@ const Notifications = () => {
             ? (
                 <span className="message-text">
                   {" "}
-                  You&apos;ve been outbid! A new bid of{" "}
+                  A new offer of{" "}
                   <span className="text-green-700 font-bold">
                     ${record.overBid}
                   </span>{" "}
-                  has been placed on{" "}
+                  has been submitted for{" "}
                   <a
                     href={`/auction-details/${record.product}`}
                     className="text-blue-500 hover:underline"

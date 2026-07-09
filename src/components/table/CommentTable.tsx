@@ -160,7 +160,7 @@ const BidsTable: React.FC<BidsTableProps> = ({
     const commentData: Comment[] = commentsData?.data || [];
 
     const bidColumns: ColumnsType<Comment> = [
-      { title: "Bidder", dataIndex: ["user", "email"], key: "email" },
+      { title: "Buyer", dataIndex: ["user", "email"], key: "email" },
       {
         title: "Comment",
         dataIndex: "comment",
@@ -282,7 +282,7 @@ const BidsTable: React.FC<BidsTableProps> = ({
       sorter: (a, b) => (a.totalComment || 0) - (b.totalComment || 0),
     },
     {
-      title: "Auction Ends",
+      title: "Listing Date",
       key: "endBid",
       render: (_, record) => {
         const endBid = record?.endBid;

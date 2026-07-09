@@ -100,7 +100,7 @@ const NewsletterSection = () => {
           <div className="space-y-4">
             <div className="flex items-center gap-4">
               <span className="text-xl font-semibold text-green-600">24,500+</span>
-              <span className="text-gray-500">Auctions completed</span>
+              <span className="text-gray-500">Listings published</span>
             </div>
             <div className="flex items-center gap-4">
               <span className="text-xl font-semibold text-green-600">$550M+</span>
@@ -174,4 +174,3 @@ const NewsletterSection = () => {
 };
 
 export default NewsletterSection;
-

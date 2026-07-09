@@ -16,7 +16,7 @@ const AnnouncementSection: React.FC = () => {
     {
       id: 1,
       title: 'New Feature: Watchlist!',
-      content: 'You can now add cars to your watchlist and receive notifications for upcoming auctions.',
+      content: 'You can now save cars to your watchlist and return to your favorite listings faster.',
       date: 'April 26, 2025',
     },
     {

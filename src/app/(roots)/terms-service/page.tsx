@@ -25,9 +25,8 @@ const TermsOfServicePage = () => {
 
       <Title level={2} className="text-2xl font-semibold">2. Description of Services</Title>
       <Paragraph>
-        CarClickBD provides an online platform for car auctions, listings, and related information. Users can browse,
-        buy, and sell vehicles. We also offer features like daily email subscriptions, community forums, and other
-        related services.
+        CarClickBD provides an online car marketplace for vehicle listings and related information. Users can browse,
+        inquire about, buy, and sell vehicles. We also offer listing management, seller dashboards, contact support, and other related services.
       </Paragraph>
 
       <Title level={2} className="text-2xl font-semibold">3. User Accounts</Title>
@@ -87,7 +86,7 @@ const TermsOfServicePage = () => {
       <Paragraph>
         <ol>
           <li>
-            <strong>Bidding and Sales:</strong> Our platform provides a venue for auctions and sales.  As a buyer or seller, you are responsible for understanding and complying with the terms of any transaction.
+            <strong>Listings and Sales:</strong> Our platform provides a venue for vehicle listings and buyer-seller communication. As a buyer or seller, you are responsible for understanding and complying with the terms of any transaction.
           </li>
           <li>
           <strong>Fees:</strong> We may charge fees for certain transactions.  You agree to pay all applicable fees.

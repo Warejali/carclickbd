@@ -59,7 +59,7 @@ const AuthModal = () => {
               className="w-16 h-16"
               width={64}
               height={64}
-              alt="Bid Logo"
+              alt="CarClickBD Logo"
             />
           </div>
         }

@@ -53,7 +53,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ productId }) => {
             </div>
           </div>
           <div className="hidden lg:block w-1/3 min-h-screen">
-            <h2 className="text-2xl font-bold">Auction ending soon</h2>
+            <h2 className="text-2xl font-bold">Similar vehicles</h2>
             <ProductsResult
               className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-6"
               isPaginate={false}

@@ -98,7 +98,7 @@ const PaymentCalculator = () => {
             </div>
             {/* Aucation Location  */}
             <div className="flex md:items-center justify-between md:flex-row flex-col">
-              <h3 className="text-nowrap mb-2  md:mb-0 ">Auction Location</h3>
+              <h3 className="text-nowrap mb-2  md:mb-0 ">Vehicle Location</h3>
 
               <select
                 disabled
@@ -193,7 +193,7 @@ const PaymentCalculator = () => {
                         }}
                         placement="bottom"
                         title={
-                          "Total Loss Coverage means that we will cover the fair market value of your vehicle as of the day of the loss, attributable to: fire or explosion, vessel stranded/capsized, overturning or derailment. Reimbursement is provided as credit on AutoBidMaster account and can be used toward the next purchases or services. Not applicable for moisture/weather condition damage. "
+                          "Total Loss Coverage means that we will cover the fair market value of your vehicle as of the day of the loss, attributable to: fire or explosion, vessel stranded/capsized, overturning or derailment. Reimbursement is provided as CarClickBD credit and can be used toward the next purchase or service. Not applicable for moisture/weather condition damage. "
                         }
                         arrow={true}
                       >
@@ -283,7 +283,7 @@ const PaymentCalculator = () => {
                               the loss, attributable to: fire or explosion,
                               vessel stranded/capsized, overturning or
                               derailment. Reimbursement is provided as credit on
-                              AutoBidMaster account and can be used toward the
+                              CarClickBD account and can be used toward the
                               next purchases or services. Not applicable for
                               moisture/weather condition damage.
                             </span>
@@ -323,7 +323,7 @@ const PaymentCalculator = () => {
                           }}
                           placement="bottom"
                           title={
-                            "Full Coverage means that we will provide you with reimbursement for mechanical damage. Deductible is $500. Reimbursement is provided as credit on AutoBidMaster account and can be used toward the next purchases or services. Not applicable for moisture/weather condition damage. "
+                            "Full Coverage means that we will provide you with reimbursement for mechanical damage. Deductible is $500. Reimbursement is provided as CarClickBD credit and can be used toward the next purchase or service. Not applicable for moisture/weather condition damage. "
                           }
                           arrow={true}
                         >

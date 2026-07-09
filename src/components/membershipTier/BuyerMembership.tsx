@@ -63,8 +63,8 @@ const BuyerMembership = () => {
       description: "For those who plan to buy only one vehicle per year.",
       features: [
         "Basic Access",
-        "View an auction",
-        "Limited Bids",
+        "View vehicle listings",
+        "Limited inquiries",
         "Add vehicles to your Watchlist",
         "Create vehicle alerts",
       ],
@@ -74,9 +74,9 @@ const BuyerMembership = () => {
       price: 19,
       description: "For those who plan to buy only a few vehicles per year.",
       features: [
-        "View multiple online auctions",
-        "Bid up to $2,000 USD without making a deposit",
-        "Bid on up to five cars at a time with a deposit",
+        "Compare multiple saved vehicles",
+        "Send inquiries to verified sellers",
+        "Shortlist up to five cars at a time",
         "Priority Support",
         "Save your favorite searches",
       ],
@@ -87,8 +87,8 @@ const BuyerMembership = () => {
       description: "For those who plan to buy multiple vehicles on a regular basis.",
       features: [
         "Everything included in Standard",
-        "Bid on multiple vehicles at the same time up to $100k USD daily",
-        "Unlimited Bids",
+        "Manage multiple shortlisted vehicles",
+        "Unlimited inquiries",
         "Get priority in-location assistance",
         "Receive priority customer service",
         "Receive phone support",
@@ -102,10 +102,10 @@ const BuyerMembership = () => {
         <div className="max-w-4xl mx-auto text-center mb-10">
           <Title level={2}>Choose Membership Options</Title>
           <Text type="secondary">
-            As a CarEmax Member, you&#39;ll be able to search our massive inventory
+            As a CarClickBD Member, you&#39;ll be able to search our massive inventory
             for wholesale, used and repairable cars, trucks and SUVs. Unlock
-            additional features by upgrading to a Standard or Premier Membership —
-            you&#39;ll be able to jump right into the auction and start bidding!
+            additional features by upgrading to a Standard or Premier Membership
+            and manage your saved cars, inquiries, and shortlisted vehicles more easily.
           </Text>
         </div>
 

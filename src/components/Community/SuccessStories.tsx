@@ -22,7 +22,7 @@ const SuccessStories: React.FC = () => {
     {
       id: 2,
       user: 'SellerY',
-      testimonial: 'Sold my truck quickly and at a great price. The auction format generated a lot of interest.',
+      testimonial: 'Sold my truck quickly and at a great price. The clear listing format brought serious buyer inquiries.',
       car: '2018 Toyota Tacoma',
     },
   ];

@@ -106,26 +106,26 @@ const SupportPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
               <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">
-                How do I place a bid?
+                How do I contact a seller?
               </h3>
               <p className="text-gray-600 dark:text-gray-400">
-                To place a bid, first, find the product you'd like to bid on.  Enter your bid amount in the bid input box, and click the "Place Bid" button.  You'll need to be logged in to place a bid.
+                Open the vehicle listing and use the inquiry or chat option. Our team helps route the message so you can discuss availability, inspection, and next steps.
               </p>
             </div>
             <div>
               <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">
-                What happens if I'm outbid?
+                Is it safe to pay before inspection?
               </h3>
               <p className="text-gray-600 dark:text-gray-400">
-                If you are outbid, you will be notified via email.  You can then choose to place a higher bid if you wish.
+                No. Inspect the vehicle, verify documents, and agree on all terms before sending any payment.
               </p>
             </div>
             <div>
               <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">
-                How do I win an auction?
+                How do I complete a purchase?
               </h3>
               <p className="text-gray-600 dark:text-gray-400">
-                The highest bidder at the end of the auction wins.  The auction's end time is listed on the product page.
+                Contact the seller, inspect the vehicle, verify ownership documents, and complete payment only after both parties agree.
               </p>
             </div>
             <div>

@@ -36,7 +36,7 @@ const LiveAuctionProduct = () => {
           </div>
 
           {/* <Text className="block ">
-            Current Highest Bid:{" "}
+            Current Offer:{" "}
             <span className="text-primary font-bold !text-[20px]">
               ${getHighestOrMinimumBid(product?.bidInfo)}
             </span>

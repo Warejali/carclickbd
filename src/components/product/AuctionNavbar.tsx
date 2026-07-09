@@ -141,12 +141,12 @@ export default function AuctionNavBar({ product, className }: AuctionNavBarProps
               <ArrowUpOutlined className="text-green-300" />
               <span className="font-medium">
                 {parsedHighestBid > 0
-                  ? `High Bid: $${parsedHighestBid.toLocaleString()}`
-                  : `Min Bid: $${parsedMinBid.toLocaleString()}`}
+                  ? `Latest Offer: $${parsedHighestBid.toLocaleString()}`
+                  : `Minimum Offer: $${parsedMinBid.toLocaleString()}`}
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="font-medium">Total Bids:</span>
+              <span className="font-medium">Total Inquiries:</span>
               <span className="font-semibold">{totalBids}</span>
             </div>
             <div className="flex items-center gap-2">
@@ -158,7 +158,7 @@ export default function AuctionNavBar({ product, className }: AuctionNavBarProps
           {/* Actions (using CustomButton) */}
           <div className="flex gap-3">
             <CustomButton
-              label="Place Bid"
+              label="Send Inquiry"
               variant="primary"
               onClick={handlePlaceBidClick}
             />

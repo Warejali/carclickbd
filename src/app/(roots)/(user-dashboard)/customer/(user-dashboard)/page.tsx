@@ -72,13 +72,13 @@ const UserDashboard = () => {
       href: "/customer/order",
     },
     {
-      title: "Active Bids",
+      title: "Vehicle Inquiries",
       value: bids.length,
       icon: CarOutlined,
       href: "/customer/win-auction",
     },
     {
-      title: "Wins",
+      title: "Shortlisted Deals",
       value: wonItems.length,
       icon: CheckCircleOutlined,
       href: "/customer/win-auction",

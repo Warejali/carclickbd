@@ -18,7 +18,7 @@ const GalleryPage = () => {
           CarClickBD gallery
         </h1>
         <p className="mt-3 max-w-2xl text-gray-600">
-          Explore featured vehicle visuals, auction highlights, and browsing
+          Explore featured vehicle visuals, listing highlights, and browsing
           moments from the platform.
         </p>
       </div>

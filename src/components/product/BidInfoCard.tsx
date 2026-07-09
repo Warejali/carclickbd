@@ -31,7 +31,7 @@ export default function BidInfoCard({
         <div className="grid lg:grid-cols-2 gap-4">
           <div className="space-y-4">
             <div>
-              <div className="text-sm text-muted-foreground">Current Bid</div>
+              <div className="text-sm text-muted-foreground">Current Offer</div>
               <div className="text-4xl md:text-4xl flex flex-wrap lg:text-6xl font-bold">
                 $
                 {currentBid > 999999
@@ -49,12 +49,12 @@ export default function BidInfoCard({
             </div>
 
             <div>
-              <div className="text-sm text-muted-foreground">Ending</div>
+              <div className="text-sm text-muted-foreground">Listing Date</div>
               <div className="font-medium">{endingTime}</div>
             </div>
             <div className="flex gap-6">
               <div>
-                <div className="text-sm text-muted-foreground">Bids</div>
+                <div className="text-sm text-muted-foreground">Inquiries</div>
                 <div className="font-medium text-xl">{highestBid}</div>
               </div>
             </div>
@@ -62,7 +62,7 @@ export default function BidInfoCard({
         </div>
       </div>
       
-      {/* _________Bid Modal_____________ */}
+      {/* _________Offer Modal_____________ */}
       <ModalWrapper isOpen={isModalOpen} setIsOpen={setIsModalOpen}>
         <MakeBids
           {...{ productId }}

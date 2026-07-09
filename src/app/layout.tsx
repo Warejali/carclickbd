@@ -9,9 +9,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "CarClickBD",
   description:
-    "CarClickBD is a full-stack car auction platform designed for high performance, ease of use, and flexibility. It enables users to browse, bid, and win vehicles in real-time, while also giving sellers a powerful dashboard to manage listings, memberships, and sales. Whether you want to build a dealer-based car auction business or a multi-vendor marketplace, CarClickBD is a scalable and customizable solution.",
+    "CarClickBD is a car marketplace for browsing verified vehicle listings, comparing details, contacting sellers, and managing dealer or private seller listings from one simple platform.",
   keywords:
-    "car auction, car auction platform, full-stack car auction, real-time bidding, vehicle listings, seller dashboard, membership management, multi-vendor marketplace, scalable solution, customizable solution",
+    "car marketplace, used cars Bangladesh, reconditioned cars, vehicle listings, dealer dashboard, seller dashboard, buy car, sell car, CarClickBD",
   authors: [
     {
       name: "CarClickBD",
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "CarClickBD",
     description:
-      "CarClickBD is a full-stack car auction platform designed for high performance, ease of use, and flexibility. It enables users to browse, bid, and win vehicles in real-time, while also giving sellers a powerful dashboard to manage listings, memberships, and sales. Whether you want to build a dealer-based car auction business or a multi-vendor marketplace, CarClickBD is a scalable and customizable solution.",
+      "CarClickBD is a car marketplace for browsing verified vehicle listings, comparing details, contacting sellers, and managing dealer or private seller listings.",
     url: "https://carclickbd.com",
     siteName: "CarClickBD",
     images: [

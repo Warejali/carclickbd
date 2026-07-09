@@ -9,9 +9,9 @@ const MembershipHome = () => {
     {
       name: "Guest",
       price: "Free",
-      desc: "For those who want to look at auctions, but don't want to bid.",
+      desc: "For buyers who want to browse verified vehicle listings.",
       features: [
-        "View an auction",
+        "View vehicle listings",
         "Add vehicles to your Watchlist",
         "Create vehicle alerts",
       ],
@@ -23,9 +23,9 @@ const MembershipHome = () => {
       unit: "USD",
       desc: "For those who plan to buy only a few vehicles per year.",
       features: [
-        "View multiple online auctions",
-        "Bid up to $2,000 USD without making a deposit",
-        "Bid on up to five cars at a time with a deposit",
+        "Compare multiple saved vehicles",
+        "Send inquiries to verified sellers",
+        "Access buyer support for shortlisted cars",
         "Save your favorite searches",
       ],
       highlight: false,
@@ -37,7 +37,7 @@ const MembershipHome = () => {
       desc: "For those who plan to buy multiple vehicles on a regular basis.",
       features: [
         "Everything included in Basic",
-        "Bid on multiple vehicles at the same time up to $100k USD daily",
+        "Manage multiple shortlisted vehicles",
         "Get priority in-location assistance",
         "Receive priority customer service",
         "Receive phone support",
@@ -87,9 +87,9 @@ const MembershipHome = () => {
             As a <span className="font-semibold text-[#0052FF]">CarClickBD</span>{" "}
             Member, you&apos;ll be able to search our massive inventory for
             wholesale, used and repairable cars, trucks and SUVs. Unlock
-            additional features by upgrading to a Basic or Premier
-            Membership—you&apos;ll be able to jump right into the auction and
-            start bidding in our live auctions!
+            additional buyer tools by upgrading to a Basic or Premier
+            Membership and manage your saved searches, inquiries, and
+            shortlisted vehicles more efficiently.
           </p>
 
           {/* Bullet Info */}

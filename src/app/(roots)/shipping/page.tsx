@@ -21,17 +21,17 @@ const ShippingPage = () => {
 
       <section className="mb-8">
         <Paragraph className="text-gray-600 dark:text-gray-400 leading-relaxed">
-          carclickbd is already the ultimate online auction marketplace for enthusiast cars, and we&apos;re excited to offer the
+          CarClickBD is a vehicle marketplace for buyers and sellers, and we&apos;re excited to offer the
           best way to ship your new car directly to you! Whether you&apos;re shipping across town, from the other side of the
           country, or internationally, we&apos;re here to provide you with the smoothest shipping experience possible.
         </Paragraph>
       </section>
 
       <section className="mb-8">
-        <Title level={3} className="mb-4 text-gray-700 dark:text-gray-300">Get an instant quote directly from your auction!</Title>
+        <Title level={3} className="mb-4 text-gray-700 dark:text-gray-300">Get an instant quote for your vehicle delivery!</Title>
         <Paragraph className="text-gray-600 dark:text-gray-400 leading-relaxed">
           Simply enter your zip code and receive an instant quote for shipping your dream car directly to your door. There
-          are no hidden fees, no hassles, and no surprises. Once you&apos;ve won the auction, just choose between open or
+          are no hidden fees, no hassles, and no surprises. Once you have finalized the purchase, choose between open or
           fully enclosed shipping options and finalize the order - and then relax!
         </Paragraph>
         <div className="flex flex-col sm:flex-row gap-4 mt-4 items-center">
@@ -50,7 +50,7 @@ const ShippingPage = () => {
             <Meta
               avatar={<CarOutlined className="text-blue-500 text-3xl mb-2" />}
               title={<Title level={4} className="text-lg font-semibold text-gray-800 dark:text-gray-200">Get an instant quote</Title>}
-              description={<Paragraph className="text-gray-600 dark:text-gray-400">while the auction is live</Paragraph>}
+              description={<Paragraph className="text-gray-600 dark:text-gray-400">before you finalize the purchase</Paragraph>}
             />
           </Card>
           <Card className="shadow-md">

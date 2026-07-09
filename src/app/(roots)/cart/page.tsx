@@ -193,14 +193,14 @@ const ProductsPage = () => {
     setSearchTerm("");
   };
 
-  const deleteSelectedBids = async () => {
+  const deleteSelectedInquiries = async () => {
 
     message.loading("Deleting.....");
     try {
       const res = await deleteProduct({ ids: selectedRowKeys });
 
       if (res) {
-        message.success("bid Deleted successfully");
+        message.success("Selected inquiries deleted successfully");
       }
     } catch (err: any) {
       message.error(err.message);
@@ -216,10 +216,10 @@ const ProductsPage = () => {
           <Button
             type="primary"
             danger
-            onClick={deleteSelectedBids}
+            onClick={deleteSelectedInquiries}
           >
             <DeleteOutlined />
-            Delete Selected Bids
+            Delete Selected Inquiries
           </Button> : ""
         }
         <Input

@@ -7,7 +7,7 @@ const stats = [
   {
     icon: <Trophy className="text-blue-600 w-8 h-8" />,
     value: "24,500+",
-    label: "Auctions Completed",
+    label: "Listings Published",
   },
   {
     icon: <DollarSign className="text-green-600 w-8 h-8" />,
@@ -35,9 +35,9 @@ const features = [
   },
   {
     icon: <Clock className="text-green-600 w-8 h-8" />,
-    title: "Real-Time Auctions",
+    title: "Fast Buyer Inquiries",
     description:
-      "Bid live and track auction progress in real-time with our lightning-fast auction engine.",
+      "Shortlist cars, compare details, and contact sellers through a clear marketplace flow.",
   },
   {
     icon: <Shield className="text-yellow-600 w-8 h-8" />,

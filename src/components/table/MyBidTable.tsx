@@ -25,7 +25,7 @@ interface MyBidTableProps {
 const MyBidTable: React.FC<MyBidTableProps> = ({ bids = [] }) => {
   const [searchQuery, setSearchQuery] = useState<string>("");
 
-  const AuctionEndCell: React.FC<{ endBid?: string }> = ({ endBid }) => {
+  const ListingDateCell: React.FC<{ endBid?: string }> = ({ endBid }) => {
     const { timeRemaining, isCritical, daysLeft } = useBiddingTimer(
       endBid || ""
     );
@@ -61,7 +61,7 @@ const MyBidTable: React.FC<MyBidTableProps> = ({ bids = [] }) => {
 
   const columns: ColumnsType<Bid> = [
     {
-      title: "Auction Item",
+      title: "Vehicle",
       dataIndex: ["product", "title"],
       key: "productTitle",
       sorter: (a, b) =>
@@ -69,18 +69,18 @@ const MyBidTable: React.FC<MyBidTableProps> = ({ bids = [] }) => {
       render: (_, record) => record?.product?.title || "Unknown Product",
     },
     {
-      title: "Amount",
+      title: "Inquiry Amount",
       dataIndex: "bidAmount",
       key: "bidAmount",
       sorter: (a, b) => a.bidAmount - b.bidAmount,
       render: (amount: number) => `$${amount?.toLocaleString()}`,
     },
     {
-      title: "Auction End",
+      title: "Listing Date",
       key: "endBid",
       responsive: ["md", "lg", "xl"],
       render: (_, record) => (
-        <AuctionEndCell endBid={record?.product?.endBid} />
+        <ListingDateCell endBid={record?.product?.endBid} />
       ),
       sorter: (a, b) => {
         const endBidA = a?.product?.endBid;
@@ -96,12 +96,12 @@ const MyBidTable: React.FC<MyBidTableProps> = ({ bids = [] }) => {
       render: (_, record) => (
         <Badge
           status={record.isWinner ? "error" : "success"}
-          text={record.isWinner ? "Ending" : "Running"}
+          text={record.isWinner ? "Selected" : "Submitted"}
         />
       ),
       filters: [
-        { text: "Running", value: false },
-        { text: "Ending", value: true },
+        { text: "Submitted", value: false },
+        { text: "Selected", value: true },
       ],
       onFilter: (value, record) => record.isWinner === value,
     },
@@ -122,9 +122,9 @@ const MyBidTable: React.FC<MyBidTableProps> = ({ bids = [] }) => {
             color="primary"
             variant="filled"
             icon={<EyeOutlined />}
-            href={`/auction/${record.product?._id}`}
+            href={`/car-details/${record.product?._id}`}
           >
-            View Auction
+            View Car
           </Button>
         </div>
       ),
@@ -135,10 +135,10 @@ const MyBidTable: React.FC<MyBidTableProps> = ({ bids = [] }) => {
     <div>
       <Card >
         <div className="lg:flex justify-between items-center">
-          <h1 className="text-2xl font-bold mb-4">My Bids</h1>
+          <h1 className="text-2xl font-bold mb-4">My Inquiries</h1>
           <div className="mb-4">
             <Input.Search
-              placeholder="Search by Auction Item"
+              placeholder="Search by vehicle"
               onSearch={handleSearch}
               style={{ width: 300 }}
               allowClear

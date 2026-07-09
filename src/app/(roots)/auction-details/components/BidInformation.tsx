@@ -2,17 +2,53 @@
 
 import { Button, Input, message as antMessage } from "antd";
 import { WhatsAppOutlined } from "@ant-design/icons";
-import { UserRound } from "lucide-react";
-import { useState } from "react";
+import { Calculator, CalendarClock, Percent, UserRound } from "lucide-react";
+import { useMemo, useState } from "react";
 import { getWhatsAppUrl, siteContact } from "@/constants/siteContact";
 
+const getNumericPrice = (product: any) => {
+  const value =
+    product?.mainPrice ||
+    product?.price ||
+    product?.fixedPrice ||
+    product?.highestBid ||
+    product?.minBid ||
+    0;
+  const numeric = Number(String(value).replace(/[^\d.]/g, ""));
+  return Number.isFinite(numeric) ? numeric : 0;
+};
+
+const formatBdt = (value: number) =>
+  `BDT ${Math.max(0, Math.round(value)).toLocaleString("en-US")}`;
+
 export default function BidInformation({ product }: { product: any }) {
+  const vehiclePrice = getNumericPrice(product);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [messageText, setMessageText] = useState("");
+  const [loanAmount, setLoanAmount] = useState(vehiclePrice);
+  const [downPayment, setDownPayment] = useState(vehiclePrice ? Math.round(vehiclePrice * 0.2) : 0);
+  const [interestRate, setInterestRate] = useState(10.5);
+  const [loanTerm, setLoanTerm] = useState(60);
   const whatsappUrl = getWhatsAppUrl(
     `Hello CarClickBD, I am interested in ${product?.title || "this car"} (${product?._id || ""}).`
   );
+  const loanSummary = useMemo(() => {
+    const principal = Math.max(0, loanAmount - downPayment);
+    const monthlyRate = interestRate / 100 / 12;
+    const monthlyPayment =
+      principal > 0 && loanTerm > 0
+        ? monthlyRate > 0
+          ? (principal * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -loanTerm))
+          : principal / loanTerm
+        : 0;
+
+    return {
+      principal,
+      monthlyPayment,
+      totalPayable: monthlyPayment * loanTerm + downPayment,
+    };
+  }, [downPayment, interestRate, loanAmount, loanTerm]);
 
   const handleInquiry = () => {
     if (!name.trim() || !phone.trim()) {
@@ -69,6 +105,87 @@ export default function BidInformation({ product }: { product: any }) {
         >
           Send inquiry
         </Button>
+        <div className="rounded-lg border border-sky-100 bg-gradient-to-br from-slate-950 via-[#073b82] to-[#0057c2] p-4 text-white shadow-[0_18px_40px_rgba(2,6,23,0.18)]">
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <p className="text-[11px] font-black uppercase tracking-[0.18em] text-sky-200">
+                Loan calculator
+              </p>
+              <h3 className="mt-1 text-lg font-black">Estimate monthly payment</h3>
+            </div>
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-[#f0b90b] text-slate-950">
+              <Calculator size={20} />
+            </div>
+          </div>
+
+          <div className="mt-4 grid gap-3">
+            <label className="space-y-1">
+              <span className="text-xs font-bold text-sky-100">Vehicle price</span>
+              <Input
+                type="number"
+                min={0}
+                value={loanAmount}
+                onChange={(e) => setLoanAmount(Number(e.target.value) || 0)}
+                className="!h-10 !rounded-md !border-white/20 !bg-white/95 !font-bold !text-slate-950"
+              />
+            </label>
+
+            <div className="grid grid-cols-2 gap-3">
+              <label className="space-y-1">
+                <span className="text-xs font-bold text-sky-100">Down payment</span>
+                <Input
+                  type="number"
+                  min={0}
+                  value={downPayment}
+                  onChange={(e) => setDownPayment(Number(e.target.value) || 0)}
+                  className="!h-10 !rounded-md !border-white/20 !bg-white/95 !font-bold !text-slate-950"
+                />
+              </label>
+              <label className="space-y-1">
+                <span className="text-xs font-bold text-sky-100">Term</span>
+                <Input
+                  type="number"
+                  min={1}
+                  value={loanTerm}
+                  suffix={<CalendarClock size={14} />}
+                  onChange={(e) => setLoanTerm(Number(e.target.value) || 1)}
+                  className="!h-10 !rounded-md !border-white/20 !bg-white/95 !font-bold !text-slate-950"
+                />
+              </label>
+            </div>
+
+            <label className="space-y-1">
+              <span className="text-xs font-bold text-sky-100">Interest rate</span>
+              <Input
+                type="number"
+                min={0}
+                step="0.1"
+                value={interestRate}
+                suffix={<Percent size={14} />}
+                onChange={(e) => setInterestRate(Number(e.target.value) || 0)}
+                className="!h-10 !rounded-md !border-white/20 !bg-white/95 !font-bold !text-slate-950"
+              />
+            </label>
+          </div>
+
+          <div className="mt-4 rounded-md bg-white/10 p-3 ring-1 ring-white/15">
+            <div className="flex items-end justify-between gap-3">
+              <div>
+                <p className="text-[11px] font-bold uppercase tracking-wide text-sky-100">
+                  Estimated EMI
+                </p>
+                <p className="mt-1 text-2xl font-black text-white">
+                  {formatBdt(loanSummary.monthlyPayment)}
+                </p>
+              </div>
+              <p className="text-right text-xs font-semibold leading-5 text-sky-100">
+                Loan: {formatBdt(loanSummary.principal)}
+                <br />
+                Total: {formatBdt(loanSummary.totalPayable)}
+              </p>
+            </div>
+          </div>
+        </div>
         <a href={whatsappUrl} target="_blank" rel="noreferrer" className="block">
           <Button className="!h-12 !w-full !rounded-md !font-bold" icon={<WhatsAppOutlined />}>
             Chat on WhatsApp

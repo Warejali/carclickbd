@@ -59,7 +59,7 @@ const ProductBids: React.FC = () => {
       <Row gutter={16}>
         <Col span={6} xs={12} md={8} lg={6} className="mb-4">
           <StatsCard
-            title="Total Bid"
+            title="Total Inquiries"
             value={bidData.length || 0}
             icon={<RiAuctionFill  />}
             bgColor="bg-white"
@@ -68,7 +68,7 @@ const ProductBids: React.FC = () => {
         </Col>
         <Col span={6} xs={12} md={8} lg={6} className="mb-4">
           <StatsCard
-            title="Highest Bid"
+            title="Latest Amount"
             value={bidData[0]?.bidAmount || 0}
             icon={<FaDollarSign  />}
             bgColor="bg-white"
@@ -77,7 +77,7 @@ const ProductBids: React.FC = () => {
         </Col>
         <Col span={6} xs={24} md={8} lg={6} className="mb-4">
           <StatsCard
-            title="Auction Ends"
+            title="Listing Date"
             value={
               product?.endBid
                 ? dayjs(product.bidInfo.biddingDuration.endBid).format(

@@ -1,53 +1,53 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 
 const steps = [
   {
     id: 1,
-    title: "1. Browse & Find Your Dream Vehicle",
-    desc: "Explore thousands of verified listings from trusted sellers and dealers. Use filters to find exactly what fits your budget, condition, and location.",
-    icon: "🚗",
+    title: "1. Browse Verified Cars",
+    desc: "Explore listings from dealers and private sellers. Filter by maker, car name, year, mileage, price, status, and location.",
+    icon: "01",
   },
   {
     id: 2,
-    title: "2. Register & Get Verified",
-    desc: "Create your free account to unlock bidding access. Verified members can bid, buy now, and track their favorite vehicles in one dashboard.",
-    icon: "✅",
+    title: "2. Review Details",
+    desc: "Check photos, specifications, chassis number, production year, registration year, condition, and seller information.",
+    icon: "02",
   },
   {
     id: 3,
-    title: "3. Place Your Bid or Buy Instantly",
-    desc: "Bid in real-time with complete transparency or use the Buy Now option for instant purchase. Every bid is secure, fast, and fair.",
-    icon: "⚡",
+    title: "3. Send an Inquiry",
+    desc: "Use the listing contact form or WhatsApp option. CarClickBD helps connect you with the seller safely.",
+    icon: "03",
   },
   {
     id: 4,
-    title: "4. Complete Payment Securely",
-    desc: "Once you win, complete your payment through our trusted payment partners. We support both local and international transactions.",
-    icon: "💳",
+    title: "4. Inspect & Verify",
+    desc: "Meet in a safe location, inspect the car in daylight, verify documents, and take a test drive when possible.",
+    icon: "04",
   },
   {
     id: 5,
-    title: "5. Schedule Pickup or Delivery",
-    desc: "We’ll help coordinate pickup or door-to-door delivery. Our logistics team ensures your vehicle arrives safely and on time.",
-    icon: "🚚",
+    title: "5. Complete the Purchase",
+    desc: "Finalize payment only after both parties agree and you are satisfied with the vehicle and documents.",
+    icon: "05",
   },
 ];
 
 export default function HowItWorksPage() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-slate-50 to-white text-slate-800">
-      {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-blue-600 to-indigo-700 text-white">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(255,255,255,0.1),_transparent)]" />
-        <div className="max-w-6xl mx-auto px-6 py-20 text-center">
+        <div className="mx-auto max-w-6xl px-6 py-20 text-center">
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            className="text-4xl md:text-5xl font-bold mb-4"
+            className="mb-4 text-4xl font-bold md:text-5xl"
           >
             How It Works
           </motion.h1>
@@ -55,28 +55,29 @@ export default function HowItWorksPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="max-w-2xl mx-auto text-lg text-blue-100"
+            className="mx-auto max-w-2xl text-lg text-blue-100"
           >
-            From registration to delivery — discover how our transparent and
-            secure auction process puts you in control every step of the way.
+            From browsing to inquiry, inspection, and final purchase,
+            CarClickBD keeps the car buying process simple and transparent.
           </motion.p>
         </div>
       </section>
 
-      {/* Steps Section */}
-      <section className="max-w-6xl mx-auto px-6 py-16">
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <section className="mx-auto max-w-6xl px-6 py-16">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {steps.map((step, i) => (
             <motion.div
               key={step.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.15 }}
-              className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300"
+              className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
             >
-              <div className="text-4xl mb-4">{step.icon}</div>
-              <h3 className="text-lg font-semibold mb-2">{step.title}</h3>
-              <p className="text-sm text-slate-600 leading-relaxed">
+              <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-[#f0b90b] text-sm font-black text-slate-950">
+                {step.icon}
+              </div>
+              <h3 className="mb-2 text-lg font-semibold">{step.title}</h3>
+              <p className="text-sm leading-relaxed text-slate-600">
                 {step.desc}
               </p>
             </motion.div>
@@ -84,23 +85,28 @@ export default function HowItWorksPage() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="bg-blue-600 text-white py-16">
-        <div className="max-w-4xl mx-auto text-center px-6">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Ready to Start Your Journey?
+      <section className="bg-blue-600 py-16 text-white">
+        <div className="mx-auto max-w-4xl px-6 text-center">
+          <h2 className="mb-4 text-3xl font-bold md:text-4xl">
+            Ready to Find Your Next Car?
           </h2>
-          <p className="text-blue-100 mb-8">
-            Join thousands of members who trust our platform for transparent,
-            secure, and rewarding vehicle auctions.
+          <p className="mb-8 text-blue-100">
+            Browse verified listings, compare details, and contact sellers with
+            confidence.
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <button className="px-6 py-3 bg-white text-blue-700 font-semibold rounded-lg hover:bg-blue-50 transition">
-              Create Free Account
-            </button>
-            <button className="px-6 py-3 bg-yellow-400 text-black font-semibold rounded-lg hover:bg-yellow-300 transition">
-              Explore Live Auctions
-            </button>
+          <div className="flex flex-col justify-center gap-3 sm:flex-row">
+            <Link
+              href="/cars"
+              className="rounded-lg bg-white px-6 py-3 font-semibold text-blue-700 transition hover:bg-blue-50"
+            >
+              Browse Cars
+            </Link>
+            <Link
+              href="/sell-item"
+              className="rounded-lg bg-yellow-400 px-6 py-3 font-semibold text-black transition hover:bg-yellow-300"
+            >
+              Sell Your Car
+            </Link>
           </div>
         </div>
       </section>

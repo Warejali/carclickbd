@@ -26,7 +26,7 @@ const DiscussionForum: React.FC = () => {
     {
       id: 1,
       author: 'CarLover123',
-      content: 'What are your thoughts on classic muscle cars going up for auction next week?',
+      content: 'What should buyers check first when comparing classic muscle car listings?',
       replies: [
         { author: 'GearHead', content: 'I\'m particularly interested in the Mustang!', date: 'Yesterday' },
       ],

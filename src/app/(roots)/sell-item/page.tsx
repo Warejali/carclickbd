@@ -1,81 +1,83 @@
-"use client"
+"use client";
+
 import React from "react";
 import { Collapse, Button, Card } from "antd";
-import { CheckCircleOutlined, CarOutlined } from "@ant-design/icons";
+import { CheckCircleOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
 import ProductsResult from "@/components/publiclayout/home/AcutionProducts/ProductsResult";
 import Breadcrumbs from "@/components/shared/Breadcrumbs";
 
-
 const { Panel } = Collapse;
 
-const SellCarPage = () => { 
-const router = useRouter()
-  const goToSignup = ()=> {
-    router.push("/seller-signup")
-    
-  }
+const SellCarPage = () => {
+  const router = useRouter();
+
   return (
-    <div className="container mx-auto p-6 space-y-10">
+    <div className="container mx-auto space-y-10 p-6">
       <Breadcrumbs />
-      {/* Hero Section */}
-      <div className="text-center space-y-4">
-        <h1 className="text-4xl font-bold">Get the best price for your car</h1>
-        <p className="text-lg text-gray-600">More buyers, more bids, more profit</p>
-        <Button onClick={goToSignup} type="primary" size="large">Sell now — it’s free!</Button>
-      </div>
 
-      {/* Recent Sales */}
-      <div>
-        <h2 className="text-2xl font-bold mb-4">Recent Sales</h2>
-        <div >
-        <ProductsResult
-                  className="grid grid-cols-1 lg:grid-cols-4 xl:grid-cols-6 gap-6"
-                  isPaginate={false}
-                  isShowAll={false}
-                  isWinner={true}
-                />
-        </div>
-      </div>
-
-      {/* Why Sell Here? */}
-      <div className="text-center space-y-4">
-        <h2 className="text-2xl font-bold">Why sell on Our Platform?</h2>
+      <div className="space-y-4 text-center">
+        <h1 className="text-4xl font-bold">Get the best exposure for your car</h1>
         <p className="text-lg text-gray-600">
-          We bring more eyes to your car than any other auction platform.
+          Reach verified buyers and manage inquiries with confidence.
+        </p>
+        <Button onClick={() => router.push("/seller-signup")} type="primary" size="large">
+          Sell now - it&apos;s free!
+        </Button>
+      </div>
+
+      <div>
+        <h2 className="mb-4 text-2xl font-bold">Recent Listings</h2>
+        <ProductsResult
+          className="grid grid-cols-1 gap-6 lg:grid-cols-4 xl:grid-cols-6"
+          isPaginate={false}
+          isShowAll={false}
+          isWinner={false}
+        />
+      </div>
+
+      <div className="space-y-4 text-center">
+        <h2 className="text-2xl font-bold">Why sell on CarClickBD?</h2>
+        <p className="text-lg text-gray-600">
+          We help your car reach serious buyers with clear photos, specs, price,
+          and direct inquiry options.
         </p>
       </div>
 
-      {/* How It Works */}
       <div>
-        <h2 className="text-2xl font-bold mb-4">How it Works</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <h2 className="mb-4 text-2xl font-bold">How it Works</h2>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
           {[
             "Submit your car in minutes",
-            "We craft your listing",
-            "It's auction time",
-            "Get paid",
+            "Add clear photos and details",
+            "Admin reviews and publishes",
+            "Connect with buyers",
           ].map((text, index) => (
             <Card key={index} className="p-4 text-center shadow-md">
-              <CheckCircleOutlined className="text-3xl text-green-500 mb-2" />
+              <CheckCircleOutlined className="mb-2 text-3xl text-green-500" />
               <p className="font-semibold">{text}</p>
             </Card>
           ))}
         </div>
       </div>
 
-      {/* FAQs */}
       <div>
-        <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
+        <h2 className="mb-4 text-2xl font-bold">Frequently Asked Questions</h2>
         <Collapse>
           <Panel header="How much does it cost to sell a car?" key="1">
-            <p>It’s completely free to list your car for sale.</p>
+            <p>It&apos;s completely free to list your car for sale.</p>
           </Panel>
-          <Panel header="How do you choose which cars you're looking for?" key="2">
-            <p>We accept high-quality, enthusiast cars that appeal to our buyers.</p>
+          <Panel header="What information should I provide?" key="2">
+            <p>
+              Add accurate photos, price, location, mileage, chassis number,
+              condition, and important vehicle specifications.
+            </p>
           </Panel>
-          <Panel header="How do I submit my car for sale?" key="3">
-            <p>You can fill out our online form with photos and details.</p>
+          <Panel header="How do buyers contact me?" key="3">
+            <p>
+              Buyers can send inquiries through the listing. CarClickBD helps
+              connect buyers and sellers through a safer communication flow.
+            </p>
           </Panel>
         </Collapse>
       </div>

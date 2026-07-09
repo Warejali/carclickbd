@@ -42,10 +42,16 @@ export default function ProductDetailsPage() {
 
   return (
     <main className="bg-slate-50">
-      <section className="mx-auto max-w-7xl px-4 py-6 lg:py-8">
-        <div className="mb-5 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+      <section className="mx-auto max-w-7xl px-4 py-3 lg:py-4">
+        <div className="mb-3 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <div className="mb-2 flex flex-wrap items-center gap-2">
+            <h1 className="text-2xl font-extrabold tracking-normal text-slate-950 lg:text-3xl">
+              {title}
+            </h1>
+          </div>
+
+          <div className="flex flex-col items-start gap-2 lg:items-end">
+            <div className="flex flex-wrap items-center gap-2 lg:justify-end">
               <span
                 className={`rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wide ring-1 ${statusMeta.badgeClass}`}
                 style={statusMeta.badgeStyle}
@@ -58,11 +64,8 @@ export default function ProductDetailsPage() {
                 </span>
               )}
             </div>
-            <h1 className="text-3xl font-extrabold tracking-normal text-slate-950 lg:text-4xl">
-              {title}
-            </h1>
             {location && (
-              <p className="mt-2 text-sm font-medium text-slate-500">
+              <p className="text-sm font-medium text-slate-500">
                 Located in {location}
               </p>
             )}

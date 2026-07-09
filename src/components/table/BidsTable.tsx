@@ -99,7 +99,7 @@ const BidsTable: React.FC<BidsTableProps> = ({
     const totalBids = bidData.length;
 
     const bidColumns: ColumnsType<any> = [
-      { title: "Bidder", dataIndex: ["user", "email"], key: "email" },
+      { title: "Buyer", dataIndex: ["user", "email"], key: "email" },
       { title: "Amount", dataIndex: "bidAmount", key: "bidAmount" },
       {
         title: "Time",
@@ -147,21 +147,21 @@ const BidsTable: React.FC<BidsTableProps> = ({
       sorter: (a, b) => (a.title || "").localeCompare(b.title || ""),
     },
     {
-      title: "Highest Bid",
+      title: "Latest Offer",
       dataIndex: "highestBid",
       key: "highestBid",
       sorter: (a, b) => (a.highestBid || 0) - (b.highestBid || 0),
     },
     {
-      title: "Total Bids",
+      title: "Total Inquiries",
       key: "totalBids",
       render: (_, record) => (
-        <span className="font-medium">{record?.totalBids ?? "No Bids"}</span>
+        <span className="font-medium">{record?.totalBids ?? "No Inquiries"}</span>
       ),
       sorter: (a, b) => (a.totalBids || 0) - (b.totalBids || 0),
     },
     {
-      title: "Auction Ends",
+      title: "Listing Date",
       key: "endBid",
       render: (_, record) => {
         const endBid = record?.endBid;

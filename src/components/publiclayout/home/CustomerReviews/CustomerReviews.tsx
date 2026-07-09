@@ -18,7 +18,7 @@ const testimonials = [
     name: "Sarah L.",
     avatar: "/avatars/sarah.jpg",
     date: "April 12, 2025",
-    comment: "The auction process was smooth and fast. Highly recommended!",
+    comment: "The listing and inquiry process was smooth and fast. Highly recommended!",
     rating: 4,
   },
   {

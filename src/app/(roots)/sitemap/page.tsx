@@ -5,9 +5,8 @@ const sitemapSections = [
     title: "Inventory",
     links: [
       ["Browse Cars", "/cars"],
-      ["Featured Auctions", "/featured-auctions"],
-      ["Past Auctions", "/past-auctions"],
-      ["Gallery", "/gallery"],
+      ["Featured Cars", "/cars"],
+      ["Sold Cars", "/cars?status=sold"],
     ],
   },
   {

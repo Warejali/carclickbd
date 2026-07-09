@@ -71,8 +71,7 @@ export default function ContactUsPage() {
           <div className="mt-4 grid gap-8 lg:grid-cols-[1fr_420px] lg:items-end">
             <div>
               <h1 className="max-w-3xl text-4xl font-black leading-tight md:text-5xl">
-                Talk to our team about verified cars, sellers, and auction
-                sheet support.
+                Talk to our team about verified cars, sellers, and auction sheet support.
               </h1>
               <p className="mt-5 max-w-2xl text-base leading-8 text-slate-300">
                 Send an inquiry or start a WhatsApp conversation. We will help

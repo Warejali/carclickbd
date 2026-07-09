@@ -45,7 +45,7 @@ const PrivacyPolicyPage = () => {
         We use your information for various purposes, including:
         <ol>
           <li>To provide and maintain our Services.</li>
-          <li>To process transactions and facilitate auctions.</li>
+          <li>To support vehicle inquiries, listings, and buyer-seller communication.</li>
           <li>To communicate with you, including sending you updates, newsletters, and marketing communications.</li>
           <li>To personalize your experience and provide tailored content.</li>
           <li>To analyze how our Services are used and improve them.</li>
@@ -64,7 +64,7 @@ const PrivacyPolicyPage = () => {
           </li>
           <li>
             <strong>Other Users:</strong> Information you share in public areas of our Services, such as community forums or
-            auction listings, may be visible to other users.
+            vehicle listings, may be visible to other users.
           </li>
            <li>
             <strong>Business Partners:</strong> We may share information with business partners to offer you products or services.

@@ -10,7 +10,7 @@ const posts = [
       "A practical checklist for documents, photos, inspection notes, and estimated ownership cost.",
   },
   {
-    title: "Tips for comparing auction vehicles online",
+    title: "Tips for comparing vehicles online",
     summary:
       "Compare year, mileage, condition, interior grade, and total estimated cost with more confidence.",
   },
@@ -28,7 +28,7 @@ const BlogPage = () => {
         </h1>
         <p className="mt-3 max-w-2xl text-gray-600">
           Helpful articles for buyers, sellers, and anyone comparing cars
-          through online auction listings.
+          through online vehicle listings.
         </p>
       </div>
 

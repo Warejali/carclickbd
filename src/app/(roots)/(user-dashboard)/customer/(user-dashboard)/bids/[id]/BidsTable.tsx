@@ -37,12 +37,12 @@ const BidsTable: React.FC<ProductTableProps> = ({
 
   const columns: ColumnsType<IBid> = [
     {
-      title: "Bidder Email",
+      title: "Buyer Email",
       dataIndex: ["buyer", "email"],
       key: "email",
     },
     {
-      title: "Bid Amount",
+      title: "Inquiry Amount",
       dataIndex: "bidAmount",
       key: "bidAmount",
     },

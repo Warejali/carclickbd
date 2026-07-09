@@ -67,14 +67,14 @@ const ProductDetailPage = ({ params }: any) => {
                                 <div className=" flex gap-3 items-center font-semibold border-dashed border-slate-100 px-8">
                                     <TrophyOutlined className="opacity-50 p-2 text-xl text-white bg-green-700 rounded-full" />
                                     <p className=" flex flex-col items-center">
-                                        <span>Highest Bid:</span>
+                                        <span>Latest Offer:</span>
                                         <span>$420.90</span>
                                     </p>
                                 </div>
                                 <div className=" flex gap-3 items-center font-semibold border-dashed border-slate-100 px-8">
                                     <MergeCellsOutlined className="opacity-50 p-2 text-xl text-white bg-green-700 rounded-full" />
                                     <p className=" flex flex-col items-center">
-                                        <span>Total Bid:</span>
+                                        <span>Total Inquiries:</span>
                                         <span>120</span>
                                     </p>
                                 </div>

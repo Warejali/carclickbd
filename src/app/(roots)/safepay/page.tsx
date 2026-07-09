@@ -24,10 +24,10 @@ const SafePayPage = () => {
           buyers and sellers complete vehicle transactions with clearer steps, payment tracking, and document support.
         </Paragraph>
         <Paragraph className="text-gray-600 dark:text-gray-400 leading-relaxed mt-4">
-          Get started after your auction ends.
+          Get started after you agree on a vehicle purchase.
         </Paragraph>
         <Paragraph className="text-gray-600 dark:text-gray-400 leading-relaxed">
-          Simply tap the SafePay button on your winner&apos;s or seller&apos;s page to get the transaction started. If you don&apos;t see a
+          Simply tap the SafePay button on your buyer or seller page to get the transaction started. If you don&apos;t see a
           SafePay option, contact support before sending funds or documents.
         </Paragraph>
       </section>

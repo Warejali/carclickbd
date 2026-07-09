@@ -1,90 +1,139 @@
-import { Layout, Typography, Steps, Button, Card, Row, Col, Divider } from "antd";
-import { CheckOutlined, InfoCircleOutlined } from "@ant-design/icons";
+import { Button, Card, Col, Divider, Layout, Row, Steps, Typography } from "antd";
+import { CheckOutlined, InfoCircleOutlined, SafetyOutlined } from "@ant-design/icons";
 
-const { Title, Text } = Typography;
+const { Title, Text, Paragraph } = Typography;
 const { Step } = Steps;
 
 const steps = [
   {
-    title: "Register to Bid",
+    title: "Search & Browse",
     description:
-      "Sign up for an account and ensure your payment method is set. This allows you to place bids on any vehicle of your choice.",
-    icon: <CheckOutlined />,
-  },
-  {
-    title: "Browse & Review Listings",
-    description:
-      "Explore car listings with detailed photos, descriptions, and vehicle history. Don’t forget to check out any inspection reports.",
+      "Use CarClickBD search filters to find vehicles that match your budget and requirements. Compare prices, features, mileage, and location before shortlisting.",
     icon: <InfoCircleOutlined />,
   },
   {
-    title: "Set Your Budget",
+    title: "Verify Details",
     description:
-      "Calculate your maximum bid, including any additional fees, taxes, and shipping costs. Ensure your bid aligns with your budget.",
+      "Check registration year, production year, mileage, grade, history, and condition. Ask CarClickBD for seller contact details and availability.",
     icon: <CheckOutlined />,
   },
   {
-    title: "Place a Bid",
+    title: "Inspect the Vehicle",
     description:
-      "Make a bid on the car you're interested in, ensuring you meet the minimum bid increment and understand the buyer's fees.",
-    icon: <CheckOutlined />,
+      "Arrange a meeting in a safe, public, and well-lit location such as an office, showroom, or shopping mall. Inspect the vehicle in daylight when possible.",
+    icon: <SafetyOutlined />,
   },
   {
-    title: "Win the Auction",
+    title: "Negotiate & Pay",
     description:
-      "If you're the highest bidder, congratulations! Complete the payment and arrange for delivery or pickup of your car.",
+      "Negotiate based on market rate and condition. Use bank transfers or cashier's checks, and avoid large cash payments to unknown individuals.",
     icon: <CheckOutlined />,
   },
 ];
 
+const documents = [
+  "Registration Book",
+  "Insurance Certificate",
+  "Service History",
+  "Tax Clearance",
+  "Transfer Form",
+];
+
+const vehicleChecks = [
+  "Engine Sound & Performance",
+  "Mileage & Odometer",
+  "Exterior & Paint",
+  "Interior & Upholstery",
+  "Brakes & Suspension",
+];
+
+const proTips = [
+  "Get a pre-purchase inspection report from an authorized mechanic.",
+  "Meet the seller at their home or workplace to verify ownership.",
+  "Verify the chassis number with the seller.",
+  "Check for outstanding loans or mortgages on vehicles sold by individual sellers.",
+];
+
+const Checklist = ({ title, items }: { title: string; items: string[] }) => (
+  <Card
+    title={title}
+    bordered={false}
+    className="h-full rounded-lg border border-slate-200 shadow-sm"
+  >
+    <div className="space-y-3">
+      {items.map((item) => (
+        <div key={item} className="flex items-start gap-3">
+          <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-50 text-xs font-black text-emerald-600">
+            <CheckOutlined />
+          </span>
+          <Text className="text-slate-700">{item}</Text>
+        </div>
+      ))}
+    </div>
+  </Card>
+);
+
 const BuyingCarSection = () => {
   return (
-    <Layout className="bg-gray-100">
-      <div className="p-6">
-        <Title level={1}>How to Buy a Car on carclickbd</Title>
-        <Divider className="w-24 bg-yellow-400 mb-8" />
-        <Steps current={4} direction="vertical" size="default">
-          {steps.map((step, index) => (
-            <Step
-              key={index}
-              title={step.title}
-              description={step.description}
-              icon={step.icon}
-            />
-          ))}
-        </Steps>
+    <Layout className="bg-slate-50">
+      <div className="p-6 md:p-8">
+        <div className="mb-8">
+          <p className="text-xs font-black uppercase tracking-[0.2em] text-sky-600">
+            Vehicle Buying Guide
+          </p>
+          <Title level={1} className="!mb-3 !text-slate-950">
+            Buy your next vehicle with confidence
+          </Title>
+          <Paragraph className="max-w-3xl !text-base !leading-7 !text-slate-600">
+            A step-by-step guide to help you search, verify, inspect, negotiate,
+            and complete your purchase safely through CarClickBD.
+          </Paragraph>
+          <Divider className="!my-5 !w-24 !min-w-0 !border-t-4 !border-[#f0b90b]" />
+        </div>
+
+        <Card bordered={false} className="rounded-lg border border-slate-200 shadow-sm">
+          <Steps current={3} direction="vertical" size="default">
+            {steps.map((step) => (
+              <Step
+                key={step.title}
+                title={step.title}
+                description={step.description}
+                icon={step.icon}
+              />
+            ))}
+          </Steps>
+        </Card>
 
         <Divider />
+        <Title level={3} className="!mb-5 !text-slate-950">
+          What to check before buying
+        </Title>
         <Row gutter={[16, 16]}>
-          <Col span={12}>
-            <Card title="Key Tips for Buying" bordered={false}>
-              <Text strong>1. Set your budget early.</Text>
-              <br />
-              <Text>
-                Make sure you&apos;re aware of all additional costs (buyer’s fee, shipping, taxes) before you bid.
-              </Text>
-              <br />
-              <Text strong>2. Understand the car’s history.</Text>
-              <br />
-              <Text>
-                Always review the inspection reports and carfax details for peace of mind.
-              </Text>
-            </Card>
+          <Col xs={24} md={12}>
+            <Checklist title="Documents" items={documents} />
           </Col>
-          <Col span={12}>
-            <Card title="Financing and Payment" bordered={false}>
-              <Text strong>Explore Financing Options</Text>
-              <br />
-              <Text>
-                Consider financing options to ensure you&apos;re ready when your bid wins. Have a payment plan in place.
-              </Text>
-            </Card>
+          <Col xs={24} md={12}>
+            <Checklist title="Vehicle Condition" items={vehicleChecks} />
           </Col>
         </Row>
 
+        <Card
+          bordered={false}
+          className="mt-5 rounded-lg border border-sky-100 bg-gradient-to-br from-white to-sky-50 shadow-sm"
+          title="Pro Tips"
+        >
+          <div className="grid gap-3 md:grid-cols-2">
+            {proTips.map((tip) => (
+              <div key={tip} className="rounded-md bg-white p-4 text-sm font-medium leading-6 text-slate-600 ring-1 ring-slate-200">
+                {tip}
+              </div>
+            ))}
+          </div>
+        </Card>
+
         <Divider />
-        <Button type="primary" size="large" block>
-          Start Bidding Now!
+        <Button type="primary" size="large" block href="/cars">
+          Browse Cars Now
         </Button>
       </div>
     </Layout>

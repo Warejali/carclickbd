@@ -15,7 +15,7 @@ import {
 import type { ColumnsType } from "antd/es/table";
 import dayjs from "dayjs";
 
-interface AuctionEvent {
+interface ListingEvent {
   key: string;
   eventName: string;
   startDate: string;
@@ -23,50 +23,50 @@ interface AuctionEvent {
   status: "Active" | "Inactive";
 }
 
-const initialEvents: AuctionEvent[] = [
+const initialEvents: ListingEvent[] = [
   {
     key: "1",
-    eventName: "Vintage Car Auction",
+    eventName: "Vintage Car Listing Week",
     startDate: "2024-03-01",
     endDate: "2024-03-05",
     status: "Active",
   },
   {
     key: "2",
-    eventName: "Luxury Watches Auction",
+    eventName: "Premium Vehicle Showcase",
     startDate: "2024-04-10",
     endDate: "2024-04-15",
     status: "Inactive",
   },
   {
     key: "3",
-    eventName: "Luxury Watches Auction",
+    eventName: "Dealer Listing Campaign",
     startDate: "2024-04-10",
     endDate: "2024-04-15",
     status: "Inactive",
   },
   {
     key: "4",
-    eventName: "Luxury Watches Auction",
+    eventName: "Private Seller Promotion",
     startDate: "2024-04-10",
     endDate: "2024-04-15",
     status: "Inactive",
   },
 ];
 
-const AuctionEventPage: React.FC = () => {
+const ListingEventPage: React.FC = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [auctionEvents, setAuctionEvents] =
-    useState<AuctionEvent[]>(initialEvents);
+    useState<ListingEvent[]>(initialEvents);
   const [searchText, setSearchText] = useState("");
-  const [editingEvent, setEditingEvent] = useState<AuctionEvent | null>(null);
+  const [editingEvent, setEditingEvent] = useState<ListingEvent | null>(null);
 
   const showModal = () => {
     setIsModalVisible(true);
   };
 
-  const showEditModal = (record: AuctionEvent) => {
+  const showEditModal = (record: ListingEvent) => {
     setEditingEvent({
       ...record,
       startDate: dayjs(record.startDate).toISOString(),
@@ -76,7 +76,7 @@ const AuctionEventPage: React.FC = () => {
   };
 
   const handleOk = (values: any) => {
-    const newEvent: AuctionEvent = {
+    const newEvent: ListingEvent = {
       key: (auctionEvents.length + 1).toString(),
       eventName: values.eventName,
       startDate: dayjs(values.startDate).format("YYYY-MM-DD"),
@@ -131,7 +131,7 @@ const AuctionEventPage: React.FC = () => {
     event.eventName.toLowerCase().includes(searchText.toLowerCase())
   );
 
-  const columns: ColumnsType<AuctionEvent> = [
+  const columns: ColumnsType<ListingEvent> = [
     {
       title: "Event Name",
       dataIndex: "eventName",
@@ -168,7 +168,7 @@ const AuctionEventPage: React.FC = () => {
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6">Auction Event Management</h1>
+      <h1 className="text-3xl font-bold mb-6">Listing Event Management</h1>
       <div className="flex justify-between items-center mb-4">
         <div>
           <Input
@@ -188,7 +188,7 @@ const AuctionEventPage: React.FC = () => {
       />
 
       <Modal
-        title="Create Auction Event"
+        title="Create Listing Event"
         open={isModalVisible}
         onCancel={handleCancel}
         footer={null}
@@ -228,7 +228,7 @@ const AuctionEventPage: React.FC = () => {
       </Modal>
 
       <Modal
-        title="Edit Auction Event"
+        title="Edit Listing Event"
         open={isEditModalVisible}
         onCancel={handleCancel}
         footer={null}
@@ -282,4 +282,4 @@ const AuctionEventPage: React.FC = () => {
   );
 };
 
-export default AuctionEventPage;
+export default ListingEventPage;
