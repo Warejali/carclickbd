@@ -38,14 +38,23 @@ const footerColumns = [
     title: "Buy & Sell",
     links: [
       { label: "Buy your car", href: "/cars" },
-      { label: "Sell your car", href: "/sell-item" },
+      { label: "Dealer", href: "/dealer-rules" },
+      { label: "Individual", href: "/individual-seller-rules" },
+    ],
+  },
+  {
+    title: "Help",
+    links: [
+      { label: "How it Works", href: "/help?tab=how-it-works" },
+      { label: "Buying a Car", href: "/help?tab=buying-car" },
+      { label: "Selling Car", href: "/help?tab=selling-car" },
+      { label: "FAQ", href: "/help?tab=faq" },
     ],
   },
   {
     title: "Company",
     links: [
       { label: "About", href: "/about" },
-      { label: "FAQ", href: "/faq" },
       { label: "Contact", href: "/contact" },
       { label: "Terms", href: "/terms-service" },
       { label: "Privacy", href: "/privacy-policy" },
@@ -126,7 +135,7 @@ const Footer = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-7 md:grid-cols-4">
+          <div className="grid grid-cols-2 gap-7 md:grid-cols-5">
             {footerColumns.map((column) => (
               <div key={column.title}>
                 <h4 className="text-sm font-extrabold uppercase tracking-[0.16em] text-[#f0b90b]">

@@ -1,10 +1,6 @@
 "use client";
-import React, { useMemo } from "react";
+import React from "react";
 import { Card, Form, Input, Row, Col, Select } from "antd";
-import {
-  homeFilterMakers,
-  homeFilterModelsByMaker,
-} from "@/content/product.constant";
 
 const { Option } = Select;
 
@@ -13,130 +9,73 @@ const years = Array.from(
   (_, i) => 1950 + i
 ).reverse();
 
-const makerOptions = homeFilterMakers.filter((item) => item.value !== "all");
-
 const BasicInfoSection = () => {
-  const form = Form.useFormInstance();
-  const selectedMaker = Form.useWatch("make", form);
-  const selectedModel = Form.useWatch("model", form);
-
-  const modelOptions = useMemo(() => {
-    return homeFilterModelsByMaker[selectedMaker] || [
-      { value: "OTHERS", label: "OTHERS" },
-    ];
-  }, [selectedMaker]);
-
   return (
-  <Card title="Basic Information" className="shadow-md mb-4">
-    <Row gutter={[16, 16]}>
-      <Col xs={24}>
-        <Form.Item
-          name="title"
-          label="Title"
-          rules={[{ required: true, message: "Please enter title" }]}
-        >
-          <Input placeholder="e.g. 2023 Toyota Harrier Z Leather Package" />
-        </Form.Item>
-      </Col>
-      <Col xs={24} md={12}>
-        <Form.Item
-          name="make"
-          label="Maker"
-          rules={[{ required: true, message: "Please select maker" }]}
-        >
-          <Select
-            showSearch
-            allowClear
-            placeholder="Select maker"
-            options={makerOptions}
-            optionFilterProp="label"
-            onChange={() => {
-              form.setFieldsValue({
-                model: undefined,
-                otherMake: undefined,
-                otherModel: undefined,
-              });
-            }}
-          />
-        </Form.Item>
-      </Col>
-      <Col xs={24} md={12}>
-        <Form.Item
-          name="model"
-          label="Car Name"
-          rules={[{ required: true, message: "Please select car name" }]}
-        >
-          <Select
-            showSearch
-            allowClear
-            disabled={!selectedMaker}
-            placeholder="Select car name"
-            options={modelOptions}
-            optionFilterProp="label"
-            onChange={() => form.setFieldsValue({ otherModel: undefined })}
-          />
-        </Form.Item>
-      </Col>
-      {selectedMaker === "OTHERS" && (
-        <Col xs={24} md={12}>
+    <Card title="Basic Information" className="shadow-md mb-4">
+      <Row gutter={[16, 16]}>
+        <Col xs={24}>
           <Form.Item
-            name="otherMake"
-            label="Other Maker"
-            rules={[{ required: true, message: "Please write maker name" }]}
+            name="title"
+            label="Title"
+            rules={[{ required: true, message: "Please enter title" }]}
           >
-            <Input placeholder="Write maker name" />
+            <Input placeholder="e.g. 2023 Toyota Harrier Z Leather Package" />
           </Form.Item>
         </Col>
-      )}
-      {selectedModel === "OTHERS" && (
+
         <Col xs={24} md={12}>
           <Form.Item
-            name="otherModel"
-            label="Other Car Name"
-            rules={[{ required: true, message: "Please write car name" }]}
+            name="make"
+            label="Maker"
+            rules={[{ required: true, message: "Please enter maker" }]}
           >
-            <Input placeholder="Write car name" />
+            <Input placeholder="e.g. Toyota, Honda, Lexus" />
           </Form.Item>
         </Col>
-      )}
-      <Col xs={24} md={8}>
-        <Form.Item name="grade" label="Grade">
-          <Input placeholder="e.g. Z Leather Package" />
-        </Form.Item>
-      </Col>
-      <Col xs={24} md={8}>
-        <Form.Item
-          name="productionYear"
-          label="Production Year"
-          rules={[{ required: true, message: "Please select production year" }]}
-        >
-          <Select showSearch placeholder="Select production year" allowClear>
-            {years.map((year) => (
-              <Option key={year} value={year}>
-                {year}
-              </Option>
-            ))}
-          </Select>
-        </Form.Item>
-      </Col>
-      <Col xs={24} md={8}>
-        <Form.Item name="registrationYear" label="Registration Year (Optional)">
-          <Select showSearch placeholder="Select registration year" allowClear>
-            {years.map((year) => (
-              <Option key={year} value={year}>
-                {year}
-              </Option>
-            ))}
-          </Select>
-        </Form.Item>
-      </Col>
-      <Col xs={24} md={8}>
-        <Form.Item name="stockNumber" label="Reference / Stock Number">
-          <Input placeholder="Seller reference or auto stock number" />
-        </Form.Item>
-      </Col>
-    </Row>
-  </Card>
+
+        <Col xs={24} md={12}>
+          <Form.Item
+            name="model"
+            label="Car Name"
+            rules={[{ required: true, message: "Please enter car name" }]}
+          >
+            <Input placeholder="e.g. Harrier, Corolla Cross, LX" />
+          </Form.Item>
+        </Col>
+
+        <Col xs={24} md={8}>
+          <Form.Item name="grade" label="Grade">
+            <Input placeholder="e.g. Z Leather Package" />
+          </Form.Item>
+        </Col>
+        <Col xs={24} md={8}>
+          <Form.Item
+            name="productionYear"
+            label="Production Year"
+            rules={[{ required: true, message: "Please select production year" }]}
+          >
+            <Select showSearch placeholder="Select production year" allowClear>
+              {years.map((year) => (
+                <Option key={year} value={year}>
+                  {year}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
+        </Col>
+        <Col xs={24} md={8}>
+          <Form.Item name="registrationYear" label="Registration Year (Optional)">
+            <Select showSearch placeholder="Select registration year" allowClear>
+              {years.map((year) => (
+                <Option key={year} value={year}>
+                  {year}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
+        </Col>
+      </Row>
+    </Card>
   );
 };
 

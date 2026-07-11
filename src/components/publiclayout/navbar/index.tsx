@@ -66,6 +66,22 @@ const Header: React.FC = () => {
     { label: "Blog", href: "/blog" },
   ];
 
+  const helpMenu: MenuProps["items"] = [
+    {
+      key: "how-it-works",
+      label: <Link href="/help?tab=how-it-works">How it Works</Link>,
+    },
+    {
+      key: "buying-car",
+      label: <Link href="/help?tab=buying-car">Buying a Car</Link>,
+    },
+    {
+      key: "selling-car",
+      label: <Link href="/help?tab=selling-car">Selling Car</Link>,
+    },
+    { key: "faq", label: <Link href="/help?tab=faq">FAQ</Link> },
+  ];
+
   const sellMenu: MenuProps["items"] = [
     { key: "dealer", label: <Link href="/dealer-rules">Dealer</Link> },
     {
@@ -102,6 +118,11 @@ const Header: React.FC = () => {
               {item.label}
             </Link>
           ))}
+          <Dropdown menu={{ items: helpMenu }} trigger={["hover"]}>
+            <button className={`${navLinkClass} flex items-center gap-1`}>
+              Help <DownOutlined className="text-[10px]" />
+            </button>
+          </Dropdown>
         </nav>
 
         <div className="hidden shrink-0 items-center gap-3 md:flex">
@@ -216,6 +237,17 @@ const Header: React.FC = () => {
                 {item.label}
               </Link>
             ))}
+            <div className="mt-2 border-t border-white/10 pt-3">
+              <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-yellow-400">
+                Help
+              </p>
+              <div className="flex flex-col gap-3">
+                <Link href="/help?tab=how-it-works">How it Works</Link>
+                <Link href="/help?tab=buying-car">Buying a Car</Link>
+                <Link href="/help?tab=selling-car">Selling Car</Link>
+                <Link href="/help?tab=faq">FAQ</Link>
+              </div>
+            </div>
           </div>
         </div>
 

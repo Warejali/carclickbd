@@ -7,7 +7,7 @@ const { Option } = Select;
 const VehicleDetailsSection = () => (
   <Card title="Vehicle Details" className="shadow-md mb-4">
     <Row gutter={[16, 16]}>
-      <Col xs={24} md={8}>
+      <Col xs={24} md={6}>
         <Form.Item
           name="engine"
           label="Engine CC"
@@ -16,12 +16,12 @@ const VehicleDetailsSection = () => (
           <Input placeholder="e.g. 2000cc" />
         </Form.Item>
       </Col>
-      <Col xs={24} md={8}>
+      <Col xs={24} md={6}>
         <Form.Item name="modelCode" label="Model Code">
           <Input placeholder="e.g. ZVW50" />
         </Form.Item>
       </Col>
-      <Col xs={24} md={8}>
+      <Col xs={24} md={6}>
         <Form.Item
           name="fuelType"
           label="Fuel Type"
@@ -39,7 +39,7 @@ const VehicleDetailsSection = () => (
           </Select>
         </Form.Item>
       </Col>
-      <Col xs={24} md={8}>
+      <Col xs={24} md={6}>
         <Form.Item
           name="transmission"
           label="Transmission"
@@ -67,6 +67,23 @@ const VehicleDetailsSection = () => (
         </Form.Item>
       </Col>
       <Col xs={24} md={8}>
+        <Form.Item name="steering" label="Steering">
+          <Select placeholder="Select" allowClear>
+            <Option value="LEFT">LEFT</Option>
+            <Option value="RIGHT">RIGHT</Option>
+            <Option value="OTHER">OTHER</Option>
+          </Select>
+        </Form.Item>
+      </Col>
+      <Col xs={24} md={8}>
+        <Form.Item name="seats" label="Seats">
+          <Input type="number" min={1} placeholder="e.g. 5" />
+        </Form.Item>
+      </Col>
+    </Row>
+
+    <Row gutter={[16, 16]}>
+      <Col xs={24} md={6}>
         <Form.Item
           name="bodyStyle"
           label="Body Type"
@@ -85,7 +102,7 @@ const VehicleDetailsSection = () => (
           </Select>
         </Form.Item>
       </Col>
-      <Col xs={24} md={8}>
+      <Col xs={24} md={6}>
         <Form.Item
           name="color"
           label="Color"

@@ -10,7 +10,9 @@ import {
 } from "@/Redux/api/productApi";
 import { getTokenInfo } from "@/service/auth.service";
 import BasicInfoSection from "./BasicInfoSection";
+import AccessoriesSection from "./AccessoriesSection";
 import FeatureTagsSection from "./FeatureTagsSection";
+import InternalNoteSection from "./InternalNoteSection";
 import LocationSection from "./LocationSection";
 import MediaSection from "./MediaSection";
 import PricingSection from "./PricingSection";
@@ -67,6 +69,9 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({ productId }) => {
       vin: product.vin || product.vinChassisNumber,
       featuresAndOptions:
         product.featuresAndOptions || product.equipment || product.highlights,
+      accessories: product.accessories || product.optionsList,
+      optionsText: product.optionsText || product.options || product.additionalOptions,
+      internalNote: product.internalNote || product.adminNote,
       videoLinks: product.videos || [],
       status: product.status || (product.isDraft ? "pending" : "approval"),
     });
@@ -91,10 +96,8 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({ productId }) => {
 
   const buildProductData = (values: any) => {
     const productionYear = values.productionYear || values.year;
-    const resolvedMake =
-      values.make === "OTHERS" ? values.otherMake?.trim() : values.make;
-    const resolvedModel =
-      values.model === "OTHERS" ? values.otherModel?.trim() : values.model;
+    const resolvedMake = values.make?.trim();
+    const resolvedModel = values.model?.trim();
     const referenceNumber =
       values.stockNumber ||
       values.referenceNumber ||
@@ -129,11 +132,22 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({ productId }) => {
       engineCC: values.engine,
       modelCode: values.modelCode,
       driveType: values.drivetrain,
+      steering: values.steering,
+      steeringType: values.steering,
+      seats: values.seats,
+      seatCount: values.seats,
       bodyType: values.bodyStyle,
       exteriorColor: values.color,
       vinChassisNumber: values.vin,
       price: values.mainPrice,
       featuresOptions: values.featuresAndOptions,
+      accessories: values.accessories,
+      optionsList: values.accessories,
+      optionsText: values.optionsText,
+      options: values.optionsText,
+      additionalOptions: values.optionsText,
+      internalNote: values.internalNote,
+      adminNote: values.internalNote,
       equipment: values.featuresAndOptions,
       highlights: values.featuresAndOptions,
       videos: videoLinks,
@@ -266,6 +280,8 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({ productId }) => {
               videoLinks={videoLinks}
               setVideoLinks={setVideoLinks}
             />
+            <AccessoriesSection />
+            {!isSeller && <InternalNoteSection />}
           </Col>
         </Row>
 

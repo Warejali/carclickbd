@@ -105,6 +105,20 @@ export default function BidInformation({ product }: { product: any }) {
         >
           Send inquiry
         </Button>
+        <div className="space-y-3">
+          <a href={whatsappUrl} target="_blank" rel="noreferrer" className="block">
+            <Button
+              className="!h-12 !w-full !rounded-md !font-bold"
+              icon={<WhatsAppOutlined />}
+            >
+              Chat on WhatsApp
+            </Button>
+          </a>
+          <p className="rounded-md bg-slate-50 p-3 text-xs font-medium leading-5 text-slate-500">
+            WhatsApp: {siteContact.whatsapp}. Dealer information is verified before buyer
+            handoff.
+          </p>
+        </div>
         <div className="rounded-lg border border-sky-100 bg-gradient-to-br from-slate-950 via-[#073b82] to-[#0057c2] p-4 text-white shadow-[0_18px_40px_rgba(2,6,23,0.18)]">
           <div className="flex items-start justify-between gap-3">
             <div>
@@ -186,17 +200,7 @@ export default function BidInformation({ product }: { product: any }) {
             </div>
           </div>
         </div>
-        <a href={whatsappUrl} target="_blank" rel="noreferrer" className="block">
-          <Button className="!h-12 !w-full !rounded-md !font-bold" icon={<WhatsAppOutlined />}>
-            Chat on WhatsApp
-          </Button>
-        </a>
       </div>
-
-      <p className="mt-4 rounded-md bg-slate-50 p-3 text-xs font-medium leading-5 text-slate-500">
-        WhatsApp: {siteContact.whatsapp}. Dealer information is verified before buyer
-        handoff.
-      </p>
     </section>
   );
 }
