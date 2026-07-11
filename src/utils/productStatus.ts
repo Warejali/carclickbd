@@ -2,6 +2,7 @@ import { IProduct, ProductListingStatus } from "@/Interface/product";
 
 export const productStatuses: ProductListingStatus[] = [
   "pending",
+  "upcoming",
   "approval",
   "reserve",
   "under_negotiations",
@@ -28,6 +29,16 @@ export const productStatusMeta: Record<
     badgeStyle: {
       backgroundColor: "#f59e0b",
       borderColor: "#fbbf24",
+      color: "#ffffff",
+    },
+  },
+  upcoming: {
+    label: "Upcoming",
+    tagColor: "purple",
+    badgeClass: "ring-violet-300",
+    badgeStyle: {
+      backgroundColor: "#7c3aed",
+      borderColor: "#a78bfa",
       color: "#ffffff",
     },
   },

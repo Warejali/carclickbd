@@ -12,6 +12,7 @@ export interface BidInfo {
 
 export type ProductListingStatus =
   | "pending"
+  | "upcoming"
   | "approval"
   | "reserve"
   | "under_negotiations"

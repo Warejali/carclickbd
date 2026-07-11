@@ -100,6 +100,10 @@ const Header: React.FC = () => {
       key: "local-used",
       label: <Link href="/cars?condition=local-used">Local Used</Link>,
     },
+    {
+      key: "upcoming",
+      label: <Link href="/cars?status=upcoming">Upcoming</Link>,
+    },
   ];
 
   const navLinkClass =
