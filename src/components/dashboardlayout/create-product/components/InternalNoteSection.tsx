@@ -6,7 +6,7 @@ const InternalNoteSection = () => (
   <Card
     title={
       <div className="flex items-center justify-between gap-3">
-        <span>Internal Note (Admin)</span>
+        <span>Internal Note for Admin</span>
         <span className="h-2 w-2 rounded-full bg-rose-500" />
       </div>
     }
@@ -15,7 +15,7 @@ const InternalNoteSection = () => (
     <Form.Item name="internalNote" className="!mb-0">
       <Input.TextArea
         rows={5}
-        placeholder="Write private admin note for this listing"
+        placeholder="Write a private message for admin about this listing"
       />
     </Form.Item>
   </Card>

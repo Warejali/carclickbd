@@ -32,6 +32,8 @@ export type IProduct = {
   title: string;
   stockNumber?: string;
   referenceNumber?: string;
+  internalNote?: string;
+  adminNote?: string;
   maker?: string;
   make: string;
   model: string;

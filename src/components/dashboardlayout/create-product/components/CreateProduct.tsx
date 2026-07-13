@@ -281,7 +281,7 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({ productId }) => {
               setVideoLinks={setVideoLinks}
             />
             <AccessoriesSection />
-            {!isSeller && <InternalNoteSection />}
+            <InternalNoteSection />
           </Col>
         </Row>
 

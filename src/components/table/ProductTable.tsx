@@ -94,6 +94,7 @@ const ProductTable: React.FC<ProductTableProps> = ({
   const [toggleProductStatus] = useToggleProducrtStatusMutation();
   const [toggleProductFeatured] = useToggleProductFeaturedMutation();
   const [updateProductStatus] = useUpdateProductStatusMutation();
+  const isAdminProductTable = pathname.startsWith("/admin");
 
   const filteredProducts = useMemo(() => {
     const query = searchText.trim().toLowerCase();
@@ -312,6 +313,28 @@ const ProductTable: React.FC<ProductTableProps> = ({
       responsive: ["lg"],
       render: (_, record) => getLocation(record) || "N/A",
     },
+    ...(isAdminProductTable
+      ? [
+          {
+            title: "Admin Note",
+            key: "adminNote",
+            width: 220,
+            responsive: ["xl"] as ColumnsType<IProduct>[number]["responsive"],
+            render: (_: unknown, record: IProduct) => {
+              const note = record.internalNote || record.adminNote;
+              if (!note) return <span className="text-slate-400">N/A</span>;
+
+              return (
+                <Tooltip title={note}>
+                  <p className="line-clamp-2 max-w-[210px] text-xs font-medium leading-5 text-slate-600">
+                    {note}
+                  </p>
+                </Tooltip>
+              );
+            },
+          },
+        ]
+      : []),
     {
       title: "Badges",
       key: "badges",
@@ -426,14 +449,16 @@ const ProductTable: React.FC<ProductTableProps> = ({
             >
               Comments
             </Menu.Item>
-            <Menu.Item
-              key="delete"
-              icon={<DeleteOutlined />}
-              danger
-              onClick={() => deleteProductHandler(record)}
-            >
-              Delete
-            </Menu.Item>
+            {isAdminProductTable && (
+              <Menu.Item
+                key="delete"
+                icon={<DeleteOutlined />}
+                danger
+                onClick={() => deleteProductHandler(record)}
+              >
+                Delete
+              </Menu.Item>
+            )}
           </Menu>
         );
 
