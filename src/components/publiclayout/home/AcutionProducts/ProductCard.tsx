@@ -132,13 +132,13 @@ const ProductCard = ({ product }: { product: IProduct }) => {
             onClick={handleWishlistClick}
             disabled={isWishlistLoading}
             aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
-            className={`absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full border backdrop-blur transition ${
+            className={`absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full border shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 ${
               isWishlisted
-                ? "border-rose-200 bg-rose-500 text-white shadow-lg shadow-rose-950/20"
-                : "border-white/70 bg-white/90 text-slate-700 hover:bg-rose-500 hover:text-white"
+                ? "border-rose-200/80 bg-rose-500 text-white shadow-rose-950/20"
+                : "border-white/70 bg-white/85 text-slate-700 hover:border-rose-200 hover:bg-white hover:text-rose-500"
             }`}
           >
-            <Heart size={18} fill={isWishlisted ? "currentColor" : "none"} />
+            <Heart size={15} strokeWidth={2.4} fill={isWishlisted ? "currentColor" : "none"} />
           </button>
 
         </div>
