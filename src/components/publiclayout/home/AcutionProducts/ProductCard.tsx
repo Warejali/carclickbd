@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Card, Skeleton, message } from "antd";
+import { Card, Skeleton, Tooltip, message } from "antd";
 import {
   ArrowUpRight,
   BadgeCheck,
@@ -98,7 +98,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
       hoverable
       onClick={handleClick}
       bodyStyle={{ padding: 0 }}
-      className="group overflow-hidden rounded-lg border border-slate-200/80 bg-white shadow-[0_14px_40px_rgba(15,23,42,0.10)] transition-all duration-300 hover:-translate-y-1 hover:border-sky-200 hover:shadow-[0_22px_55px_rgba(15,23,42,0.16)]"
+      className="group overflow-hidden rounded-lg border border-slate-200/80 bg-white shadow-[0_14px_40px_rgba(15,23,42,0.10)] transition-all duration-500 ease-out hover:-translate-y-1.5 hover:border-sky-200 hover:shadow-[0_24px_60px_rgba(15,23,42,0.18)] active:scale-[0.985]"
       cover={
         <div className="relative h-[230px] overflow-hidden bg-slate-100">
           <Image
@@ -127,19 +127,21 @@ const ProductCard = ({ product }: { product: IProduct }) => {
             )}
           </div>
 
-          <button
-            type="button"
-            onClick={handleWishlistClick}
-            disabled={isWishlistLoading}
-            aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
-            className={`absolute right-3 top-3 flex h-7 w-7 items-center justify-center rounded-full border shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 ${
-              isWishlisted
-                ? "border-rose-200/80 bg-rose-500 text-white shadow-rose-950/20"
-                : "border-white/70 bg-white/85 text-slate-700 hover:border-rose-200 hover:bg-white hover:text-rose-500"
-            }`}
-          >
-            <Heart size={13} strokeWidth={2.5} fill={isWishlisted ? "currentColor" : "none"} />
-          </button>
+          <Tooltip title="Wishlist" placement="left">
+            <button
+              type="button"
+              onClick={handleWishlistClick}
+              disabled={isWishlistLoading}
+              aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
+              className={`absolute right-3 top-3 flex h-7 w-7 items-center justify-center rounded-full border shadow-sm backdrop-blur-md transition duration-300 hover:-translate-y-0.5 hover:shadow-md ${
+                isWishlisted
+                  ? "border-rose-200/80 bg-rose-500 text-white shadow-rose-950/20"
+                  : "border-white/70 bg-white/85 text-slate-700 hover:border-rose-200 hover:bg-white hover:text-rose-500"
+              }`}
+            >
+              <Heart size={13} strokeWidth={2.5} fill={isWishlisted ? "currentColor" : "none"} />
+            </button>
+          </Tooltip>
 
         </div>
       }
