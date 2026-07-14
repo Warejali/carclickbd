@@ -98,7 +98,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
       hoverable
       onClick={handleClick}
       bodyStyle={{ padding: 0 }}
-      className="group overflow-hidden rounded-lg border border-slate-200/80 bg-white shadow-[0_14px_40px_rgba(15,23,42,0.10)] transition-all duration-500 ease-out hover:-translate-y-1.5 hover:border-sky-200 hover:shadow-[0_24px_60px_rgba(15,23,42,0.18)] active:scale-[0.985]"
+      className="group overflow-hidden rounded-lg border border-slate-200/80 bg-white shadow-[0_14px_40px_rgba(15,23,42,0.10)] transition-[border-color,box-shadow,transform] duration-500 ease-out hover:-translate-y-0.5 hover:border-sky-200 hover:shadow-[0_20px_50px_rgba(15,23,42,0.16)]"
       cover={
         <div className="relative h-[230px] overflow-hidden bg-slate-100">
           <Image
