@@ -2,13 +2,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
-import { Card, Skeleton } from "antd";
+import { useEffect, useState } from "react";
+import { Card, Skeleton, message } from "antd";
 import {
   ArrowUpRight,
   BadgeCheck,
   CalendarDays,
   Gauge,
+  Heart,
   MapPin,
   Settings,
   ShieldCheck,
@@ -16,6 +17,9 @@ import {
 import { setSelectedProduct } from "@/Redux/Slices/productSlice";
 import { IProduct } from "@/Interface/product";
 import { getProductStatusMeta } from "@/utils/productStatus";
+import { useAppDispatch, useAppSelector } from "@/Redux/hooks";
+import { toggleAuthModal } from "@/Redux/Slices/authSlice";
+import { useAddToWatchListMutation } from "@/Redux/features/watch-list/watchlistApi";
 
 const formatPrice = (value: number | string) => {
   const numericValue = Number(value || 0);
@@ -25,8 +29,14 @@ const formatPrice = (value: number | string) => {
 };
 
 const ProductCard = ({ product }: { product: IProduct }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const router = useRouter();
+  const isLoggedIn = useAppSelector((state) => state.authReducer.isLoggedIn);
+  const [addToWatchList, { isLoading: isWishlistLoading }] =
+    useAddToWatchListMutation();
+  const [isWishlisted, setIsWishlisted] = useState(
+    Boolean((product as any).isWatchlisted || (product as any).isWishlisted)
+  );
   const price = product.mainPrice || product.highestBid || product.minBid || 0;
   const hasPrice = Boolean(Number(price || 0));
   const statusMeta = getProductStatusMeta(product);
@@ -52,6 +62,35 @@ const ProductCard = ({ product }: { product: IProduct }) => {
   const handleClick = () => {
     dispatch(setSelectedProduct(product));
     router.push(`/car-details/${product._id}`);
+  };
+
+  useEffect(() => {
+    setIsWishlisted(
+      Boolean((product as any).isWatchlisted || (product as any).isWishlisted)
+    );
+  }, [product]);
+
+  const handleWishlistClick = async (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (!isLoggedIn) {
+      dispatch(toggleAuthModal());
+      return;
+    }
+
+    const nextState = !isWishlisted;
+    setIsWishlisted(nextState);
+
+    try {
+      await addToWatchList({ product: product._id }).unwrap();
+      message.success(nextState ? "Added to wishlist" : "Removed from wishlist");
+    } catch (error) {
+      setIsWishlisted(!nextState);
+      message.error("Failed to update wishlist");
+    }
   };
 
   return (
@@ -87,6 +126,20 @@ const ProductCard = ({ product }: { product: IProduct }) => {
               </span>
             )}
           </div>
+
+          <button
+            type="button"
+            onClick={handleWishlistClick}
+            disabled={isWishlistLoading}
+            aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
+            className={`absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full border backdrop-blur transition ${
+              isWishlisted
+                ? "border-rose-200 bg-rose-500 text-white shadow-lg shadow-rose-950/20"
+                : "border-white/70 bg-white/90 text-slate-700 hover:bg-rose-500 hover:text-white"
+            }`}
+          >
+            <Heart size={18} fill={isWishlisted ? "currentColor" : "none"} />
+          </button>
 
         </div>
       }

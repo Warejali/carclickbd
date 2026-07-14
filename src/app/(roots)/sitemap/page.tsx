@@ -14,7 +14,7 @@ const sitemapSections = [
     links: [
       ["Duty Calculator", "/duty-calculator"],
       ["Verify Auction Sheet", "/verify-auction-sheet"],
-      ["Year of Manufacture", "/year-of-manufacture"],
+      ["Production Year Check", "https://www.jp.center/month"],
     ],
   },
   {
@@ -51,9 +51,20 @@ const SitemapPage = () => {
             <ul className="mt-4 space-y-3 text-sm">
               {section.links.map(([label, href]) => (
                 <li key={href}>
-                  <Link href={href} className="font-medium text-slate-600 hover:text-sky-600">
-                    {label}
-                  </Link>
+                  {href.startsWith("http") ? (
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="font-medium text-slate-600 hover:text-sky-600"
+                    >
+                      {label}
+                    </a>
+                  ) : (
+                    <Link href={href} className="font-medium text-slate-600 hover:text-sky-600">
+                      {label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>

@@ -19,7 +19,6 @@ const footerColumns = [
     links: [
       { label: "Duty Calculator", href: "/duty-calculator" },
       { label: "Find Cars", href: "/cars" },
-      { label: "Year of Manufacture", href: "/year-of-manufacture" },
       { label: "Blog", href: "/blog" },
     ],
   },

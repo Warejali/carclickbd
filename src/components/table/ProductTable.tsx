@@ -73,6 +73,11 @@ const formatMileage = (value?: number | string) => {
   return mileage ? `${mileage.toLocaleString()} km` : "N/A";
 };
 
+const formatViews = (value?: number | string) => {
+  const views = Number(value || 0);
+  return Number.isFinite(views) ? views.toLocaleString("en-US") : "0";
+};
+
 const getLocation = (product: IProduct) =>
   [product.location?.city, product.location?.zipCode].filter(Boolean).join(", ");
 
@@ -290,6 +295,17 @@ const ProductTable: React.FC<ProductTableProps> = ({
       responsive: ["md"],
       render: (mileage) => formatMileage(mileage),
       sorter: (a, b) => Number(a.mileage || 0) - Number(b.mileage || 0),
+    },
+    {
+      title: "Views",
+      dataIndex: "views",
+      key: "views",
+      width: 100,
+      responsive: ["md"],
+      render: (views) => (
+        <span className="font-semibold text-slate-900">{formatViews(views)}</span>
+      ),
+      sorter: (a, b) => Number(a.views || 0) - Number(b.views || 0),
     },
     {
       title: "Specs",

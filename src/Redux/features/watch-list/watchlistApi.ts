@@ -25,7 +25,7 @@ export const watchlistApi: any = baseApi.injectEndpoints({
           params: params,
         };
       },
-      providedTags: ["watchlist"],
+      providesTags: ["watchlist"],
     }),
   }),
   overrideExisting: false,

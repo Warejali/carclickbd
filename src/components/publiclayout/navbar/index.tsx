@@ -62,7 +62,11 @@ const Header: React.FC = () => {
     { label: "Home", href: "/" },
     { label: "Duty Calculator", href: "/duty-calculator" },
     { label: "Find Cars", href: "/cars" },
-    { label: "Year of Manufacture", href: "/year-of-manufacture" },
+    {
+      label: "Production Year Check",
+      href: "https://www.jp.center/month",
+      external: true,
+    },
     { label: "Blog", href: "/blog" },
   ];
 
@@ -117,11 +121,23 @@ const Header: React.FC = () => {
         </Link>
 
         <nav className="hidden flex-1 items-center justify-center gap-4 2xl:flex">
-          {navItems.map((item) => (
-            <Link key={item.href} href={item.href} className={navLinkClass}>
-              {item.label}
-            </Link>
-          ))}
+          {navItems.map((item) =>
+            item.external ? (
+              <a
+                key={item.href}
+                href={item.href}
+                target="_blank"
+                rel="noreferrer"
+                className={navLinkClass}
+              >
+                {item.label}
+              </a>
+            ) : (
+              <Link key={item.href} href={item.href} className={navLinkClass}>
+                {item.label}
+              </Link>
+            )
+          )}
           <Dropdown menu={{ items: helpMenu }} trigger={["hover"]}>
             <button className={`${navLinkClass} flex items-center gap-1`}>
               Help <DownOutlined className="text-[10px]" />
@@ -236,11 +252,22 @@ const Header: React.FC = () => {
           </Link>
 
           <div className="flex flex-col gap-3 text-base text-gray-200">
-            {navItems.map((item) => (
-              <Link key={item.href} href={item.href}>
-                {item.label}
-              </Link>
-            ))}
+            {navItems.map((item) =>
+              item.external ? (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <Link key={item.href} href={item.href}>
+                  {item.label}
+                </Link>
+              )
+            )}
             <div className="mt-2 border-t border-white/10 pt-3">
               <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-yellow-400">
                 Help
