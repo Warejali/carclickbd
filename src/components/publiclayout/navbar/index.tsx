@@ -27,7 +27,7 @@ const Header: React.FC = () => {
   const btnGold =
     "rounded-full border border-yellow-200/40 bg-gradient-to-r from-[#f0b90b] to-[#ffd54f] px-4 py-2 text-xs font-bold text-slate-950 shadow-sm shadow-yellow-950/20 transition-all duration-300 hover:-translate-y-0.5 hover:from-[#d8a90b] hover:to-[#f0c000] hover:shadow-md hover:shadow-yellow-500/30";
   const btnOutline =
-    "rounded-full border border-[#f0b90b]/70 bg-white/10 px-4 py-2 text-xs font-bold text-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#f0b90b] hover:text-slate-950 hover:shadow-md hover:shadow-yellow-500/25";
+    "relative overflow-hidden rounded-full border border-transparent bg-[linear-gradient(#020617,#020617)_padding-box,linear-gradient(90deg,#f0b90b,#38bdf8,#f0b90b)_border-box] bg-[length:100%_100%,220%_100%] px-4 py-2 text-xs font-bold text-white shadow-[0_0_18px_rgba(240,185,11,0.28)] transition-all duration-300 before:absolute before:inset-y-0 before:-left-10 before:w-8 before:skew-x-[-18deg] before:bg-white/60 before:blur-sm before:content-[''] before:animate-[verify-shine_2.8s_ease-in-out_infinite] after:absolute after:inset-[-1px] after:rounded-full after:border after:border-[#f0b90b]/70 after:shadow-[0_0_18px_rgba(240,185,11,0.7),inset_0_0_12px_rgba(56,189,248,0.22)] after:content-[''] after:animate-[verify-neon-border_2.8s_linear_infinite] hover:-translate-y-0.5 hover:text-[#f0b90b] hover:shadow-[0_0_26px_rgba(240,185,11,0.45)]";
 
   const languageMenu: MenuProps["items"] = [
     {
@@ -148,7 +148,7 @@ const Header: React.FC = () => {
         <div className="hidden shrink-0 items-center gap-3 md:flex">
           <Link href="/verify-auction-sheet" className="hidden lg:block">
             <button className={btnOutline}>
-              Verify Auction Sheet
+              <span className="relative z-10">Verify Auction Sheet</span>
             </button>
           </Link>
 
