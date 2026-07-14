@@ -12,6 +12,7 @@ import { Mail, MapPin } from "lucide-react";
 import { SiTiktok } from "react-icons/si";
 import { FaWhatsapp } from "react-icons/fa";
 import { siteContact } from "@/constants/siteContact";
+import CarClickBDLogo from "@/components/shared/CarClickBDLogo";
 
 const footerColumns = [
   {
@@ -77,9 +78,7 @@ const Footer = () => {
         <div className="grid gap-10 lg:grid-cols-[1.1fr_1.6fr]">
           <div>
             <Link href="/" className="inline-flex items-center">
-              <span className="text-3xl font-black italic tracking-tight text-white">
-                Car<span className="text-sky-400">ClickBD</span>
-              </span>
+              <CarClickBDLogo className="h-[68px] w-[220px]" />
             </Link>
             <p className="mt-4 max-w-md text-sm font-medium leading-7 text-slate-400">
               A cleaner way to browse verified cars, compare details, verify

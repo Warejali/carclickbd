@@ -1,10 +1,14 @@
 "use client";
 
 import Image from "next/image";
+import type { StaticImageData } from "next/image";
 import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { ArrowRight, BadgeCheck, FileSearch, Search, ShieldCheck } from "lucide-react";
+import banner01 from "@/assets/banner/banner-01.png";
+import banner02 from "@/assets/banner/banner-02.png";
+import banner03 from "@/assets/banner/banner-03.png";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -13,7 +17,7 @@ type Slide = {
   eyebrow: string;
   title: string;
   description: string;
-  image: string;
+  image: StaticImageData;
   imageAlt: string;
   primaryLabel: string;
   primaryHref: string;
@@ -27,8 +31,8 @@ const slides: Slide[] = [
     title: "Dealer & Private Seller Cars",
     description:
       "Browse new, reconditioned, and local used cars with clear photos, specs, pricing, and direct inquiry support.",
-    image: "https://cdn.pixabay.com/photo/2015/10/01/17/17/car-967387_1280.png",
-    imageAlt: "Yellow sports car",
+    image: banner01,
+    imageAlt: "CarClickBD featured car banner",
     primaryLabel: "Browse Cars",
     primaryHref: "/cars",
     secondaryLabel: "Learn More",
@@ -39,8 +43,8 @@ const slides: Slide[] = [
     title: "Auction Sheet Verification",
     description:
       "Check chassis details, mileage records, grade, and condition notes before making a buying decision.",
-    image: "https://www.pngmart.com/files/23/Luxury-Car-PNG-Picture.png",
-    imageAlt: "Luxury car",
+    image: banner02,
+    imageAlt: "CarClickBD verification banner",
     primaryLabel: "Verify Sheet",
     primaryHref: "/verify-auction-sheet",
     secondaryLabel: "Browse Reconditioned",
@@ -51,9 +55,8 @@ const slides: Slide[] = [
     title: "Shortlist Better Cars Faster",
     description:
       "Use smart filters, compare key details, and contact sellers directly when you find the right car.",
-    image:
-      "https://www.pngall.com/wp-content/uploads/2016/07/Car-PNG-Clipart.png",
-    imageAlt: "Premium cars",
+    image: banner03,
+    imageAlt: "CarClickBD premium buying support banner",
     primaryLabel: "Find Cars",
     primaryHref: "/cars",
     secondaryLabel: "Contact Support",
@@ -63,7 +66,7 @@ const slides: Slide[] = [
 
 export default function HeroSlider() {
   return (
-    <section className="relative h-auto overflow-hidden bg-slate-950 lg:h-[430px]">
+    <section className="relative h-auto w-full overflow-hidden bg-slate-950 lg:h-[480px]">
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         navigation
@@ -74,11 +77,11 @@ export default function HeroSlider() {
       >
         {slides.map((slide) => (
           <SwiperSlide key={slide.title}>
-            <div className="relative min-h-[430px] overflow-hidden bg-gradient-to-br from-[#001b46] via-[#003399] to-[#00142f] text-white lg:h-[430px]">
+            <div className="relative min-h-[480px] overflow-hidden bg-gradient-to-br from-[#001b46] via-[#003399] to-[#00142f] text-white lg:h-[480px]">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_74%_48%,rgba(255,255,255,0.18),transparent_30%),linear-gradient(90deg,rgba(0,0,0,0.22),transparent)]" />
               <div className="absolute inset-0 opacity-20 [background-image:linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px)] [background-size:48px_48px]" />
 
-              <div className="relative mx-auto grid min-h-[430px] max-w-7xl grid-cols-1 items-center gap-6 px-4 py-8 md:px-8 lg:grid-cols-[0.92fr_1.08fr] lg:py-0">
+              <div className="relative grid min-h-[480px] w-full grid-cols-1 items-center gap-6 px-5 py-8 md:px-10 lg:grid-cols-[0.72fr_1.28fr] lg:px-16 lg:py-0">
                 <div className="z-20">
                   <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3.5 py-1.5 text-xs font-bold backdrop-blur">
                     {slide.primaryHref.includes("verify") ? (
@@ -137,16 +140,16 @@ export default function HeroSlider() {
                   </div>
                 </div>
 
-                <div className="relative z-10 flex min-h-[230px] items-center justify-center lg:min-h-[350px]">
-                  <div className="relative h-[230px] w-full sm:h-[280px] lg:h-[350px]">
-                    <div className="absolute inset-x-8 bottom-10 h-16 rounded-full bg-black/30 blur-3xl" />
+                <div className="relative z-10 flex min-h-[280px] items-center justify-center lg:min-h-[450px]">
+                  <div className="relative h-[280px] w-full sm:h-[340px] lg:h-[450px]">
+                    <div className="absolute inset-x-6 bottom-8 h-20 rounded-full bg-black/30 blur-3xl" />
                     <Image
                       src={slide.image}
                       alt={slide.imageAlt}
                       fill
                       priority
                       sizes="(max-width: 1024px) 90vw, 760px"
-                      className="object-contain object-center drop-shadow-[0_24px_45px_rgba(0,0,0,0.55)]"
+                      className="object-contain object-center drop-shadow-[0_28px_55px_rgba(0,0,0,0.58)]"
                     />
                   </div>
                 </div>

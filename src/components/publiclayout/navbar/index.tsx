@@ -114,10 +114,10 @@ const Header: React.FC = () => {
     "relative text-sm font-semibold text-gray-200 transition-all duration-300 hover:text-yellow-400 after:absolute after:left-0 after:bottom-[-5px] after:h-[2px] after:w-0 after:bg-yellow-400 after:transition-all after:duration-300 hover:after:w-full";
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-gradient-to-r from-[#001230] via-[#001f4f] to-[#003ea8] shadow-lg backdrop-blur-sm">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-black shadow-lg backdrop-blur-sm">
       <div className="flex min-h-[84px] items-center justify-between gap-5 px-4 py-3 md:px-8">
         <Link href="/" className="flex shrink-0 items-center">
-          <CarClickBDLogo />
+          <CarClickBDLogo className="h-[82px] w-[260px]" priority />
         </Link>
 
         <nav className="hidden flex-1 items-center justify-center gap-4 2xl:flex">
