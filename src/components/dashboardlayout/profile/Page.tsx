@@ -139,7 +139,7 @@ const ProfileComponentPage = () => {
               type="primary"
               loading={isConverting}
               onClick={handleConvertToPersonalSeller}
-              className="mt-4 !w-full !rounded-lg !border-[#f0b90b] !bg-[#f0b90b] !font-bold !text-slate-950 hover:!bg-[#d9a406]"
+              className="mt-4 !w-full !rounded-lg !border-[#e50914] !bg-[#e50914] !font-bold !text-white hover:!bg-[#b80f17]"
             >
               Convert to Personal Seller
             </Button>

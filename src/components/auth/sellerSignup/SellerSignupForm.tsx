@@ -137,7 +137,7 @@ const SellerSignupForm = ({ sellerType }: SellerSignupFormProps) => {
               type="primary"
               htmlType="submit"
               loading={isLoading}
-              className="!h-12 !w-full !rounded-lg !border-[#f0b90b] !bg-[#f0b90b] !font-extrabold !text-slate-950 hover:!bg-[#d9a406]"
+              className="!h-12 !w-full !rounded-lg !border-[#e50914] !bg-[#e50914] !font-extrabold !text-white hover:!bg-[#b80f17]"
             >
               {isLoading ? "Creating Account..." : copy.title}
             </Button>

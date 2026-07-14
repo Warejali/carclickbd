@@ -128,7 +128,7 @@ const UserDashboard = () => {
           </div>
           <Link
             href="/cars"
-            className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-[#f0b90b] px-5 text-sm font-black text-slate-950 transition hover:bg-[#d9a609]"
+            className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-[#e50914] px-5 text-sm font-black text-white transition hover:bg-[#b80f17]"
           >
             Browse Cars <ArrowRightOutlined />
           </Link>

@@ -86,7 +86,7 @@ const SecondaryNav: React.FC = () => {
           </Link>
 
           <Dropdown menu={{ items: sellMenu }} trigger={["hover"]}>
-            <button className="bg-gradient-to-r from-yellow-500 to-yellow-400 text-black font-semibold px-5 py-2 rounded-full hover:from-yellow-400 hover:to-yellow-300 hover:shadow-[0_0_15px_rgba(240,185,11,0.6)] transition-all duration-300 flex items-center gap-1">
+            <button className="bg-gradient-to-r from-[#d5101b] to-[#ff2a35] text-white font-semibold px-5 py-2 rounded-full hover:from-[#b80f17] hover:to-[#e50914] hover:shadow-[0_0_15px_rgba(229,9,20,0.55)] transition-all duration-300 flex items-center gap-1">
               Sell your car <DownOutlined className="text-xs" />
             </button>
           </Dropdown>

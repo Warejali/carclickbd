@@ -43,7 +43,7 @@ const AboutPage = () => {
             </p>
             <Link
               href="/cars"
-              className="mt-8 inline-flex rounded-md bg-[#f0b90b] px-6 py-3 text-sm font-black text-slate-950 transition hover:bg-[#d9a609]"
+              className="mt-8 inline-flex rounded-md bg-[#e50914] px-6 py-3 text-sm font-black text-white transition hover:bg-[#b80f17]"
             >
               Browse Cars
             </Link>

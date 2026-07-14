@@ -1,14 +1,17 @@
 "use client";
 
+import { FormEvent, useState } from "react";
 import Image from "next/image";
 import type { StaticImageData } from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { ArrowRight, BadgeCheck, FileSearch, Search, ShieldCheck } from "lucide-react";
 import banner01 from "@/assets/banner/banner-01.png";
 import banner02 from "@/assets/banner/banner-02.png";
 import banner03 from "@/assets/banner/banner-03.png";
+import banner04 from "@/assets/banner/banner-04.png";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -23,6 +26,7 @@ type Slide = {
   primaryHref: string;
   secondaryLabel: string;
   secondaryHref: string;
+  showChassisForm?: boolean;
 };
 
 const slides: Slide[] = [
@@ -51,6 +55,19 @@ const slides: Slide[] = [
     secondaryHref: "/cars?condition=reconditioned",
   },
   {
+    eyebrow: "Japanese auction sheet check",
+    title: "Verify Auction Sheet Before You Buy",
+    description:
+      "Submit the chassis number and request available auction sheet details, production year, mileage, grade, and condition notes.",
+    image: banner04,
+    imageAlt: "Verify Japanese auction sheet with CarClickBD",
+    primaryLabel: "Verify Auction Sheet",
+    primaryHref: "/verify-auction-sheet",
+    secondaryLabel: "Contact Support",
+    secondaryHref: "/contact",
+    showChassisForm: true,
+  },
+  {
     eyebrow: "Premium buying support",
     title: "Shortlist Better Cars Faster",
     description:
@@ -65,6 +82,19 @@ const slides: Slide[] = [
 ];
 
 export default function HeroSlider() {
+  const router = useRouter();
+  const [chassisNumber, setChassisNumber] = useState("");
+
+  const handleChassisSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const chassis = chassisNumber.trim();
+    router.push(
+      chassis
+        ? `/verify-auction-sheet?chassis=${encodeURIComponent(chassis)}`
+        : "/verify-auction-sheet"
+    );
+  };
+
   return (
     <section className="relative h-auto w-full overflow-hidden bg-slate-950 lg:h-[480px]">
       <Swiper
@@ -99,21 +129,56 @@ export default function HeroSlider() {
                     {slide.description}
                   </p>
 
-                  <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-                    <Link
-                      href={slide.primaryHref}
-                      className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-[#f0b90b] px-5 text-sm font-extrabold text-slate-950 shadow-lg transition hover:bg-[#d9a609]"
+                  {slide.showChassisForm ? (
+                    <form
+                      onSubmit={handleChassisSubmit}
+                      className="mt-5 max-w-xl rounded-xl border border-white/20 bg-white/95 p-2 shadow-[0_20px_55px_rgba(0,0,0,0.32)] backdrop-blur"
                     >
-                      {slide.primaryLabel}
-                      <ArrowRight size={17} />
-                    </Link>
-                    <Link
-                      href={slide.secondaryHref}
-                      className="inline-flex h-10 items-center justify-center rounded-md border border-white/30 bg-white/10 px-5 text-sm font-bold text-white backdrop-blur transition hover:bg-white hover:text-slate-950"
-                    >
-                      {slide.secondaryLabel}
-                    </Link>
-                  </div>
+                      <div className="flex flex-col gap-2 sm:flex-row">
+                        <label className="relative flex-1">
+                          <FileSearch
+                            size={18}
+                            className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[#003399]"
+                          />
+                          <input
+                            value={chassisNumber}
+                            onChange={(event) =>
+                              setChassisNumber(event.target.value)
+                            }
+                            placeholder="Enter chassis number e.g. NKE165-7245648"
+                            className="h-12 w-full rounded-lg border border-slate-200 bg-white pl-12 pr-4 text-sm font-bold uppercase tracking-wide text-slate-900 outline-none transition placeholder:normal-case placeholder:font-semibold placeholder:tracking-normal placeholder:text-slate-400 focus:border-[#e50914] focus:ring-2 focus:ring-red-100"
+                          />
+                        </label>
+                        <button
+                          type="submit"
+                          className="inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-[#e50914] px-6 text-sm font-black uppercase text-white shadow-[0_12px_24px_rgba(229,9,20,0.26)] transition hover:bg-[#b80f17]"
+                        >
+                          <Search size={17} />
+                          Search
+                        </button>
+                      </div>
+                      <p className="mt-2 px-1 text-xs font-semibold leading-5 text-slate-600">
+                        Enter the full chassis number exactly as shown on the
+                        vehicle documents.
+                      </p>
+                    </form>
+                  ) : (
+                    <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+                      <Link
+                        href={slide.primaryHref}
+                        className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-[#e50914] px-5 text-sm font-extrabold text-white shadow-lg shadow-red-950/20 transition hover:bg-[#b80f17]"
+                      >
+                        {slide.primaryLabel}
+                        <ArrowRight size={17} />
+                      </Link>
+                      <Link
+                        href={slide.secondaryHref}
+                        className="inline-flex h-10 items-center justify-center rounded-md border border-white/30 bg-white/10 px-5 text-sm font-bold text-white backdrop-blur transition hover:bg-white hover:text-slate-950"
+                      >
+                        {slide.secondaryLabel}
+                      </Link>
+                    </div>
+                  )}
 
                   <div className="mt-5 hidden max-w-xl grid-cols-3 gap-2 sm:grid">
                     {[

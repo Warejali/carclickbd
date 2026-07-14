@@ -74,7 +74,7 @@ const VerifyAuctionSheetPage = () => {
 
                   <button
                     type="submit"
-                    className="inline-flex h-14 items-center justify-center gap-2 rounded-xl bg-[#f0b90b] px-8 text-sm font-extrabold uppercase text-slate-950 shadow-[0_14px_30px_rgba(240,185,11,0.28)] transition hover:-translate-y-0.5 hover:bg-[#d9a609]"
+                    className="inline-flex h-14 items-center justify-center gap-2 rounded-xl bg-[#e50914] px-8 text-sm font-extrabold uppercase text-white shadow-[0_14px_30px_rgba(229,9,20,0.28)] transition hover:-translate-y-0.5 hover:bg-[#b80f17]"
                   >
                     <Search size={17} />
                     Search

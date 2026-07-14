@@ -38,7 +38,7 @@ export default function CarFilters(_props: { isWinner?: boolean }) {
             onClick={() => handleSortChange(filter.value)}
             className={`h-10 rounded-md border px-4 text-sm font-bold transition ${
               activeSort === filter.value
-                ? "border-[#f0b90b] bg-[#f0b90b] text-slate-950"
+                ? "border-[#e50914] bg-[#e50914] text-white"
                 : "border-slate-200 bg-slate-50 text-slate-600 hover:border-slate-300 hover:bg-white"
             }`}
           >

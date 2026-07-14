@@ -103,7 +103,7 @@ export default function HowItWorksPage() {
             </Link>
             <Link
               href="/sell-item"
-              className="rounded-lg bg-yellow-400 px-6 py-3 font-semibold text-black transition hover:bg-yellow-300"
+              className="rounded-lg bg-[#e50914] px-6 py-3 font-semibold text-white transition hover:bg-[#b80f17]"
             >
               Sell Your Car
             </Link>

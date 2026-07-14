@@ -36,7 +36,7 @@ const AuctionProducts = ({
           </div>
           <Link
             href="/cars"
-            className="inline-flex h-11 items-center justify-center rounded-md border border-[#f0b90b] bg-[#f0b90b] px-5 text-sm font-bold text-slate-950 shadow-sm transition hover:border-[#d9a406] hover:bg-[#d9a406]"
+            className="inline-flex h-11 items-center justify-center rounded-md border border-[#e50914] bg-[#e50914] px-5 text-sm font-bold text-white shadow-sm transition hover:border-[#b80f17] hover:bg-[#b80f17]"
           >
             View All Cars
           </Link>

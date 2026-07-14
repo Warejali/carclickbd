@@ -36,9 +36,9 @@ const Button: React.FC<ButtonProps> = ({
   const variantStyles =
     variant === "primary"
       ? // 🔵 Primary Button — Copart Blue
-        "bg-[#0052FF] text-white hover:bg-[#003ad6] focus:ring-[#0052FF]"
+        "bg-[#111111] text-white hover:bg-[#e50914] focus:ring-[#e50914]"
       : // 🟡 Secondary Button — Copart Yellow
-        "bg-[#F0B90B] text-black hover:bg-[#d9a800] focus:ring-[#F0B90B]";
+        "bg-[#e50914] text-white hover:bg-[#b80f17] focus:ring-[#e50914]";
 
   return (
     <button

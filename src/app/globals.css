@@ -92,11 +92,11 @@
 @keyframes verify-pulse {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(240, 185, 11, 0);
+    box-shadow: 0 0 0 0 rgba(229, 9, 20, 0);
     opacity: 0.9;
   }
   45% {
-    box-shadow: 0 0 0 5px rgba(240, 185, 11, 0.16);
+    box-shadow: 0 0 0 5px rgba(229, 9, 20, 0.18);
     opacity: 1;
   }
 }
@@ -118,6 +118,38 @@
   }
 }
 
+@keyframes verify-text-flicker {
+  0%,
+  100% {
+    opacity: 1;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.45);
+  }
+  45% {
+    opacity: 0.82;
+    text-shadow: 0 0 14px rgba(255, 255, 255, 0.9);
+  }
+  58% {
+    opacity: 1;
+  }
+  68% {
+    opacity: 0.9;
+  }
+}
+
+@keyframes redGlowPulse {
+  0% {
+    box-shadow: 0 0 0px rgba(255, 0, 0, 0);
+  }
+  50% {
+    box-shadow:
+      0 0 12px rgba(255, 0, 0, 0.7),
+      0 0 24px rgba(255, 0, 0, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 0px rgba(255, 0, 0, 0);
+  }
+}
+
 /* Drawer glass effect */
 .glass-drawer .ant-drawer-content {
   background: rgba(2, 2, 2, 0.8) !important;
@@ -126,8 +158,5 @@
 .glass-drawer .ant-drawer-body {
   background: transparent !important;
 }
-
-
-
 
 

@@ -199,7 +199,7 @@ export default function ContactUsPage() {
                 type="primary"
                 htmlType="submit"
                 loading={isLoading}
-                className="!h-12 !w-full !rounded-md !bg-[#003399] !font-black hover:!bg-slate-950"
+                className="!h-12 !w-full !rounded-md !bg-[#e50914] !font-black hover:!bg-[#111111]"
               >
                 Send Message
               </Button>

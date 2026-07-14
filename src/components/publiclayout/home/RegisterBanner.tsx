@@ -58,7 +58,7 @@ const RegisterBanner = () => {
           <div className="flex flex-col gap-3 sm:flex-row md:flex-col xl:flex-row">
             <Link
               href="/cars"
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-white px-5 text-sm font-black text-[#003399] transition hover:bg-[#F0B90B] hover:text-slate-950"
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-white px-5 text-sm font-black text-[#111111] transition hover:bg-[#e50914] hover:text-white"
             >
               Browse Verified Cars
               <ArrowRight size={16} />

@@ -190,7 +190,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
 
           <Link
             href={`/car-details/${product._id}`}
-            className="mt-4 inline-flex h-11 w-full items-center justify-center gap-2 rounded-md bg-slate-950 px-4 text-sm font-bold text-white shadow-lg shadow-slate-950/20 transition-colors hover:bg-sky-600"
+            className="mt-4 inline-flex h-11 w-full items-center justify-center gap-2 rounded-md bg-[#111111] px-4 text-sm font-bold text-white shadow-lg shadow-slate-950/20 transition-colors hover:bg-[#e50914]"
             aria-label={`View details for ${product.title}`}
             onClick={(event) => event.stopPropagation()}
           >

@@ -23,11 +23,11 @@ const Header: React.FC = () => {
   if (isLoggedIn === undefined) return null;
 
   const btnBlue =
-    "rounded-full border border-white/10 bg-gradient-to-r from-[#0052ff] to-[#007bff] px-4 py-2 text-xs font-bold text-white shadow-sm shadow-blue-950/20 transition-all duration-300 hover:-translate-y-0.5 hover:from-[#0041cc] hover:to-[#0066cc] hover:shadow-md hover:shadow-blue-500/30";
+    "rounded-full border border-white/10 bg-gradient-to-r from-[#b80f17] to-[#f11b24] px-4 py-2 text-xs font-bold text-white shadow-sm shadow-red-950/20 transition-all duration-300 hover:-translate-y-0.5 hover:from-[#9f0d14] hover:to-[#d91620] hover:shadow-md hover:shadow-red-500/30";
   const btnGold =
-    "rounded-full border border-yellow-200/40 bg-gradient-to-r from-[#f0b90b] to-[#ffd54f] px-4 py-2 text-xs font-bold text-slate-950 shadow-sm shadow-yellow-950/20 transition-all duration-300 hover:-translate-y-0.5 hover:from-[#d8a90b] hover:to-[#f0c000] hover:shadow-md hover:shadow-yellow-500/30";
+    "rounded-none border border-white/15 bg-gradient-to-r from-[#4b5563] to-[#6b7280] px-4 py-2 text-xs font-bold text-white shadow-sm shadow-slate-950/20 transition-all duration-300 hover:-translate-y-0.5 hover:from-[#374151] hover:to-[#4b5563] hover:shadow-md hover:shadow-slate-500/25";
   const btnOutline =
-    "relative overflow-hidden rounded-full border border-transparent bg-[linear-gradient(#020617,#020617)_padding-box,linear-gradient(90deg,#f0b90b,#38bdf8,#f0b90b)_border-box] bg-[length:100%_100%,220%_100%] px-4 py-2 text-xs font-bold text-white shadow-[0_0_18px_rgba(240,185,11,0.28)] transition-all duration-300 before:absolute before:inset-y-0 before:-left-10 before:w-8 before:skew-x-[-18deg] before:bg-white/60 before:blur-sm before:content-[''] before:animate-[verify-shine_2.8s_ease-in-out_infinite] after:absolute after:inset-[-1px] after:rounded-full after:border after:border-[#f0b90b]/70 after:shadow-[0_0_18px_rgba(240,185,11,0.7),inset_0_0_12px_rgba(56,189,248,0.22)] after:content-[''] after:animate-[verify-neon-border_2.8s_linear_infinite] hover:-translate-y-0.5 hover:text-[#f0b90b] hover:shadow-[0_0_26px_rgba(240,185,11,0.45)]";
+    "relative overflow-hidden rounded-none border border-transparent bg-[linear-gradient(90deg,#9f0d14,#e50914,#ff2a35)_padding-box,linear-gradient(90deg,#e50914,#ffffff,#e50914)_border-box] bg-[length:100%_100%,220%_100%] px-4 py-2 text-xs font-black text-white transition-all duration-300 animate-[redGlowPulse_1.7s_ease-in-out_infinite] before:absolute before:inset-y-0 before:-left-10 before:w-8 before:skew-x-[-18deg] before:bg-white/75 before:blur-sm before:content-[''] before:animate-[verify-shine_2.8s_ease-in-out_infinite] after:absolute after:inset-[-1px] after:rounded-none after:border after:border-white/55 after:shadow-[0_0_18px_rgba(229,9,20,0.82),inset_0_0_12px_rgba(255,255,255,0.2)] after:content-[''] after:animate-[verify-neon-border_2.8s_linear_infinite] hover:-translate-y-0.5";
 
   const languageMenu: MenuProps["items"] = [
     {
@@ -111,7 +111,7 @@ const Header: React.FC = () => {
   ];
 
   const navLinkClass =
-    "relative text-sm font-semibold text-gray-200 transition-all duration-300 hover:text-yellow-400 after:absolute after:left-0 after:bottom-[-5px] after:h-[2px] after:w-0 after:bg-yellow-400 after:transition-all after:duration-300 hover:after:w-full";
+    "relative text-sm font-semibold text-gray-200 transition-all duration-300 hover:text-[#ff2a35] after:absolute after:left-0 after:bottom-[-5px] after:h-[2px] after:w-0 after:bg-[#e50914] after:transition-all after:duration-300 hover:after:w-full";
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-black shadow-lg backdrop-blur-sm">
@@ -148,7 +148,9 @@ const Header: React.FC = () => {
         <div className="hidden shrink-0 items-center gap-3 md:flex">
           <Link href="/verify-auction-sheet" className="hidden lg:block">
             <button className={btnOutline}>
-              <span className="relative z-10">Verify Auction Sheet</span>
+              <span className="relative z-10 animate-[verify-text-flicker_1.55s_ease-in-out_infinite]">
+                Verify Auction Sheet
+              </span>
             </button>
           </Link>
 
@@ -166,7 +168,7 @@ const Header: React.FC = () => {
 
           <Dropdown menu={{ items: languageMenu }} placement="bottomRight">
             <button
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/10 text-lg text-white transition hover:border-[#F0B90B]/60 hover:bg-white/15 hover:text-[#F0B90B]"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/10 text-lg text-white transition hover:border-[#e50914]/60 hover:bg-white/15 hover:text-[#ff2a35]"
               aria-label="Change language"
             >
               <GlobalOutlined />
@@ -194,7 +196,7 @@ const Header: React.FC = () => {
         <div className="flex items-center gap-3 md:hidden">
           <Dropdown menu={{ items: languageMenu }}>
             <button
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/10 text-white hover:text-[#F0B90B]"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/10 text-white hover:text-[#ff2a35]"
               aria-label="Change language"
             >
               <GlobalOutlined />
@@ -269,7 +271,7 @@ const Header: React.FC = () => {
               )
             )}
             <div className="mt-2 border-t border-white/10 pt-3">
-              <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-yellow-400">
+              <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-[#ff2a35]">
                 Help
               </p>
               <div className="flex flex-col gap-3">

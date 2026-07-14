@@ -98,7 +98,7 @@ const ProductsResult = ({
         <div className="mt-8 flex justify-center">
           <Button
             size="large"
-            className="!h-12 !rounded-md !border-[#f0b90b] !bg-[#f0b90b] !px-8 !font-bold !text-slate-950 !shadow-sm hover:!border-[#d9a406] hover:!bg-[#d9a406] hover:!text-slate-950"
+            className="!h-12 !rounded-md !border-[#e50914] !bg-[#e50914] !px-8 !font-bold !text-white !shadow-sm hover:!border-[#b80f17] hover:!bg-[#b80f17] hover:!text-white"
             onClick={() => router.push("/cars")}
           >
             Load More Cars

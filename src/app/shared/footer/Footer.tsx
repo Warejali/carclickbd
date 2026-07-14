@@ -124,7 +124,7 @@ const Footer = () => {
                     target="_blank"
                     rel="noreferrer"
                     aria-label={social.label}
-                    className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-lg text-white transition hover:border-[#f0b90b] hover:bg-[#f0b90b] hover:text-slate-950"
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-lg text-white transition hover:border-[#e50914] hover:bg-[#e50914] hover:text-white"
                   >
                     <Icon />
                   </a>

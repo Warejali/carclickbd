@@ -16,7 +16,7 @@ const IndividualSellerRulesPage = () => {
       <section className="mx-auto max-w-5xl px-4 md:px-8">
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xl shadow-slate-200/60 md:p-10">
           <div className="mb-8 flex items-center gap-4">
-            <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-[#f0b90b] text-slate-950">
+            <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-[#e50914] text-white">
               <UserRound size={28} />
             </div>
             <div>
@@ -62,7 +62,7 @@ const IndividualSellerRulesPage = () => {
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <AuthAwareSignupLink
               href="/individual-seller-signup"
-              className="inline-flex h-12 items-center justify-center rounded-lg bg-[#f0b90b] px-6 text-sm font-extrabold text-slate-950 transition hover:bg-[#d9a406]"
+              className="inline-flex h-12 items-center justify-center rounded-lg bg-[#e50914] px-6 text-sm font-extrabold text-white transition hover:bg-[#b80f17]"
             >
               Create Individual Seller Account
             </AuthAwareSignupLink>
