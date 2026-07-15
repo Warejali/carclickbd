@@ -101,22 +101,7 @@
   }
 }
 
-@keyframes verify-neon-border {
-  0% {
-    opacity: 0.65;
-    filter: hue-rotate(0deg);
-    transform: rotate(0deg);
-  }
-  50% {
-    opacity: 1;
-    filter: hue-rotate(18deg);
-  }
-  100% {
-    opacity: 0.65;
-    filter: hue-rotate(0deg);
-    transform: rotate(360deg);
-  }
-}
+
 
 @keyframes verify-text-flicker {
   0%,
@@ -138,15 +123,23 @@
 
 @keyframes redGlowPulse {
   0% {
-    box-shadow: 0 0 0px rgba(255, 0, 0, 0);
+    box-shadow:
+      0 0 0 rgba(255, 0, 0, 0),
+      0 0 0 rgba(255, 0, 0, 0),
+      0 0 0 rgba(255, 0, 0, 0);
   }
   50% {
     box-shadow:
-      0 0 12px rgba(255, 0, 0, 0.7),
-      0 0 24px rgba(255, 0, 0, 0.4);
+      0 0 14px rgba(255, 0, 0, 0.95),
+      0 0 32px rgba(255, 0, 0, 0.72),
+      0 0 58px rgba(255, 0, 0, 0.52),
+      0 0 88px rgba(255, 0, 0, 0.34);
   }
   100% {
-    box-shadow: 0 0 0px rgba(255, 0, 0, 0);
+    box-shadow:
+      0 0 0 rgba(255, 0, 0, 0),
+      0 0 0 rgba(255, 0, 0, 0),
+      0 0 0 rgba(255, 0, 0, 0);
   }
 }
 
@@ -158,5 +151,4 @@
 .glass-drawer .ant-drawer-body {
   background: transparent !important;
 }
-
 

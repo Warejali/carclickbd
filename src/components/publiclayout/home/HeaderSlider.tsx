@@ -166,7 +166,11 @@ export default function HeroSlider() {
                     <div className="mt-5 flex flex-col gap-3 sm:flex-row">
                       <Link
                         href={slide.primaryHref}
-                        className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-[#e50914] px-5 text-sm font-extrabold text-white shadow-lg shadow-red-950/20 transition hover:bg-[#b80f17]"
+                        className={`inline-flex h-10 items-center justify-center gap-2 rounded-md bg-[#e50914] px-5 text-sm font-extrabold text-white shadow-lg shadow-red-950/20 transition hover:bg-[#b80f17] ${
+                          slide.primaryHref.includes("verify")
+                            ? "animate-[redGlowPulse_1.7s_ease-in-out_infinite]"
+                            : ""
+                        }`}
                       >
                         {slide.primaryLabel}
                         <ArrowRight size={17} />

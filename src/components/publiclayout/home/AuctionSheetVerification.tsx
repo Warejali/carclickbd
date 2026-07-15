@@ -58,7 +58,7 @@ const AuctionSheetVerification = () => {
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
                 href="/verify-auction-sheet"
-                className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#003399] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#00266f]"
+                className="inline-flex animate-[redGlowPulse_1.7s_ease-in-out_infinite] items-center justify-center gap-2 rounded-lg bg-[#003399] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#00266f]"
               >
                 Verify Auction Sheet <ArrowRight size={17} />
               </Link>
