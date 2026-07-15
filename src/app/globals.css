@@ -2,6 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+img,
+video,
+canvas,
+svg {
+  max-width: 100%;
+}
+
 @layer utilities {
   /* Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
@@ -31,9 +48,24 @@
 
 .table-container {
   overflow-x: auto; /* Allows horizontal scrolling if needed */
+  max-width: 100%;
+  -webkit-overflow-scrolling: touch;
 }
 
 @media (max-width: 768px) {
+  .ant-layout,
+  .ant-card,
+  .ant-form,
+  .ant-table-wrapper,
+  .ant-table-container {
+    max-width: 100%;
+  }
+
+  .ant-table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
   .ant-table {
     font-size: 12px; /* Adjust font size for smaller screens */
   }
@@ -41,7 +73,40 @@
   .ant-table td {
     padding: 8px; /* Adjust padding for smaller screens */
   }
-  
+
+  .ant-card-body,
+  .ant-card-head {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+
+  .ant-form-item {
+    margin-bottom: 14px;
+  }
+
+  .ant-modal {
+    max-width: calc(100vw - 24px);
+  }
+
+  .ant-modal-content {
+    padding: 16px !important;
+  }
+
+  .ant-tooltip {
+    max-width: calc(100vw - 24px) !important;
+  }
+
+  .ant-tooltip-inner {
+    max-width: calc(100vw - 32px) !important;
+  }
+
+  .ant-picker,
+  .ant-select,
+  .ant-input,
+  .ant-input-number,
+  .ant-input-number-affix-wrapper {
+    width: 100% !important;
+  }
 }
 
 @keyframes flicker {
@@ -151,4 +216,3 @@
 .glass-drawer .ant-drawer-body {
   background: transparent !important;
 }
-

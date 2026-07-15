@@ -107,11 +107,11 @@ export default function HeroSlider() {
       >
         {slides.map((slide) => (
           <SwiperSlide key={slide.title}>
-            <div className="relative min-h-[480px] overflow-hidden bg-gradient-to-br from-[#001b46] via-[#003399] to-[#00142f] text-white lg:h-[480px]">
+            <div className="relative min-h-[620px] overflow-hidden bg-gradient-to-br from-[#001b46] via-[#003399] to-[#00142f] text-white sm:min-h-[560px] lg:h-[480px] lg:min-h-[480px]">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_74%_48%,rgba(255,255,255,0.18),transparent_30%),linear-gradient(90deg,rgba(0,0,0,0.22),transparent)]" />
               <div className="absolute inset-0 opacity-20 [background-image:linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px)] [background-size:48px_48px]" />
 
-              <div className="relative grid min-h-[480px] w-full grid-cols-1 items-center gap-6 px-5 py-8 md:px-10 lg:grid-cols-[0.72fr_1.28fr] lg:px-16 lg:py-0">
+              <div className="relative grid min-h-[620px] w-full grid-cols-1 items-center gap-4 px-4 py-6 sm:min-h-[560px] sm:px-5 md:px-10 lg:min-h-[480px] lg:grid-cols-[0.72fr_1.28fr] lg:gap-6 lg:px-16 lg:py-0">
                 <div className="z-20">
                   <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3.5 py-1.5 text-xs font-bold backdrop-blur">
                     {slide.primaryHref.includes("verify") ? (
@@ -122,7 +122,7 @@ export default function HeroSlider() {
                     {slide.eyebrow}
                   </div>
 
-                  <h1 className="max-w-2xl text-3xl font-black leading-tight tracking-normal md:text-4xl">
+                  <h1 className="max-w-2xl text-2xl font-black leading-tight tracking-normal sm:text-3xl md:text-4xl">
                     {slide.title}
                   </h1>
                   <p className="mt-3 max-w-xl text-sm font-medium leading-6 text-slate-200 md:text-base">
@@ -209,8 +209,8 @@ export default function HeroSlider() {
                   </div>
                 </div>
 
-                <div className="relative z-10 flex min-h-[280px] items-center justify-center lg:min-h-[450px]">
-                  <div className="relative h-[280px] w-full sm:h-[340px] lg:h-[450px]">
+                <div className="relative z-10 flex min-h-[230px] items-center justify-center sm:min-h-[300px] lg:min-h-[450px]">
+                  <div className="relative h-[230px] w-full sm:h-[300px] md:h-[340px] lg:h-[450px]">
                     <div className="absolute inset-x-6 bottom-8 h-20 rounded-full bg-black/30 blur-3xl" />
                     <Image
                       src={slide.image}

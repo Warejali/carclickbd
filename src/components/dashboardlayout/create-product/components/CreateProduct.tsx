@@ -258,7 +258,7 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({ productId }) => {
         layout="vertical"
         form={form}
         onFinish={onFinish}
-        className="rounded bg-white p-6"
+        className="rounded bg-white p-4 sm:p-6"
         initialValues={{ status: "pending", stockNumber: autoStockNumber }}
       >
         <Row gutter={[24, 24]}>
@@ -291,7 +291,7 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({ productId }) => {
             htmlType="submit"
             size="large"
             loading={isLoading || isUpdating}
-            className="h-12 px-8"
+            className="h-12 w-full px-8 sm:w-auto"
           >
             {isEditMode ? "Update Product" : "Create Product"}
           </Button>
@@ -302,12 +302,14 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({ productId }) => {
         open={previewVisible}
         footer={null}
         onCancel={() => setPreviewVisible(false)}
+        width="min(92vw, 720px)"
       >
         <Image
           src={previewImage || "/placeholder.png"}
           alt="Preview"
-          width={600}
+          width={680}
           height={400}
+          className="h-auto w-full"
         />
       </Modal>
     </>

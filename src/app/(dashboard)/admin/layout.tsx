@@ -23,18 +23,18 @@ const DashBoardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <RouteGuard>
-        <div className="flex h-screen  overflow-hidden relative">
+        <div className="relative flex h-screen min-w-0 overflow-hidden">
           <aside className={`${layoutState && "md:hidden"}`}>
             <LeftSidebar
               menuGroups={navigationRoutes as unknown as IDNavMenuItem[]}
             />
           </aside>
-          <section className="w-full h-full overflow-hidden light-darkmode">
+          <section className="h-full min-w-0 flex-1 overflow-hidden light-darkmode">
             <header>
               <DashBoardNav />
             </header>
 
-            <main className=" bg-gray-200 light-darkmode md:p-5    h-[calc(100vh-55px)] overflow-y-auto ">
+            <main className="h-[calc(100vh-55px)] min-w-0 overflow-x-auto overflow-y-auto bg-gray-200 p-3 light-darkmode md:p-5">
               <div className="  absolute bottom-10 right-10 bg-[#4396c7] h-12 w-12 rounded-full hidden md:flex items-center justify-center z-[999999999] ">
                 <button
                   onClick={() => dispatch(toggleLayoutSidebar(true))}

@@ -20,15 +20,15 @@ const SellerLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <RouteGuard>
-      <div className="relative flex h-screen overflow-hidden bg-slate-100">
+      <div className="relative flex h-screen min-w-0 overflow-hidden bg-slate-100">
         <aside className={`${layoutState && "md:hidden"}`}>
           <LeftSidebar menuGroups={navigationRoutes as unknown as IDNavMenuItem[]} />
         </aside>
-        <section className="h-full w-full overflow-hidden">
+        <section className="h-full min-w-0 flex-1 overflow-hidden">
           <header>
             <DashBoardNav />
           </header>
-          <main className="h-[calc(100vh-55px)] overflow-y-auto bg-slate-100 p-4 md:p-5">
+          <main className="h-[calc(100vh-55px)] min-w-0 overflow-x-auto overflow-y-auto bg-slate-100 p-3 md:p-5">
             <div className="absolute bottom-10 right-10 z-[999999999] hidden h-12 w-12 items-center justify-center rounded-full bg-[#003399] md:flex">
               <button
                 onClick={() => dispatch(toggleLayoutSidebar(true))}

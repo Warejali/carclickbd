@@ -36,8 +36,8 @@ const PaymentCalculator = () => {
   };
 
   return (
-    <div className="xl:mx-56">
-      <div className="py-10 container mx-auto  ">
+    <div className="px-4 xl:mx-56">
+      <div className="container mx-auto py-8 md:py-10">
         <div className="text-white text-center  ">
           <h2 className="  text-xl lg:text-3xl font-bold mb-2 mt-8">
             Payment Calculator
@@ -184,8 +184,8 @@ const PaymentCalculator = () => {
                 </h2>
                 {/* Shiiping INfo */}
                 <div>
-                  <div className=" w-full flex items-center justify-between text-sm md:text-md  xl:text-lg py-2  border-b-[0.5px] border-green-900">
-                    <p className=" flex items-center ">
+                  <div className="flex w-full flex-col gap-2 border-b-[0.5px] border-green-900 py-2 text-sm md:flex-row md:items-center md:justify-between md:text-md xl:text-lg">
+                    <p className="flex items-start md:items-center">
                       Shipping to New Jersey, Nj (1 -3 days){" "}
                       <Tooltip
                         overlayInnerStyle={{
@@ -208,8 +208,8 @@ const PaymentCalculator = () => {
                     </h3>
                   </div>
 
-                  <div className="w-full flex items-center justify-between text-sm md:text-md xl:text-lg py-2 border-b-[0.5px] border-green-900  ">
-                    <p className=" flex items-center">
+                  <div className="flex w-full flex-col gap-2 border-b-[0.5px] border-green-900 py-2 text-sm md:flex-row md:items-center md:justify-between md:text-md xl:text-lg">
+                    <p className="flex items-start md:items-center">
                       Shipping to Luanda, AO (16-22 days)
                       <Tooltip
                         overlayInnerStyle={{
@@ -232,8 +232,8 @@ const PaymentCalculator = () => {
                     </h3>
                   </div>
 
-                  <div className="w-full flex items-center justify-between py-2 text-sm md:text-md xl:text-lg border-b-[0.5px] border-green-900  ">
-                    <p className="flex items-center">
+                  <div className="flex w-full flex-col gap-2 border-b-[0.5px] border-green-900 py-2 text-sm md:flex-row md:items-center md:justify-between md:text-md xl:text-lg">
+                    <p className="flex items-start md:items-center">
                       Peak Season Surcharge
                       <Tooltip
                         overlayInnerStyle={{
@@ -260,7 +260,7 @@ const PaymentCalculator = () => {
                 {/* Coverage */}
                 <div className="space-y-5 md:space-y-0 pb- md:pb-0">
                   {/* Loss Coverage */}
-                  <div className="w-full flex lg:items-center  lg:justify-between md:flex-row flex-col gap-2 h-[3.5rem] py-2  md:border-b-[0.5px] border-green-900  ">
+                  <div className="flex w-full flex-col gap-2 border-green-900 py-2 md:min-h-[3.5rem] md:flex-row md:border-b-[0.5px] lg:items-center lg:justify-between">
                     <div className="flex items center gap-2 text-sm md:text-md xl:text-lg">
                       <input
                         type="checkbox"
@@ -306,7 +306,7 @@ const PaymentCalculator = () => {
                     )}
                   </div>
                   {/* Full Coverage */}
-                  <div className="w-full flex lg:items-center  lg:justify-between md:flex-row flex-col gap-2 h-[3.5rem] py-2  md:border-b-[0.5px] border-green-900  ">
+                  <div className="flex w-full flex-col gap-2 border-green-900 py-2 md:min-h-[3.5rem] md:flex-row md:border-b-[0.5px] lg:items-center lg:justify-between">
                     <div className="flex items center gap-2 text-sm md:text-md xl:text-lg">
                       <input
                         type="checkbox"
@@ -346,7 +346,7 @@ const PaymentCalculator = () => {
               </div>
             </section>
             {/* bottom section  */}
-            <section className="w-full p-5 h-[30%] bg-[#004979] text-white text-sm md:text-lg lg:text-xl">
+            <section className="w-full bg-[#004979] p-4 text-sm text-white md:p-5 md:text-lg lg:text-xl">
               <h2 className="flex items-center justify-between font-semibold ">
                 <span>Total Price</span>{" "}
                 <span className="font-bold text-xl lg:text-2xl">

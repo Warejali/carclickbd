@@ -115,9 +115,9 @@ const Header: React.FC = () => {
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-black shadow-lg backdrop-blur-sm">
-      <div className="flex min-h-[84px] items-center justify-between gap-5 px-4 py-3 md:px-8">
+      <div className="flex min-h-[72px] items-center justify-between gap-3 px-3 py-2 sm:px-4 md:min-h-[84px] md:gap-5 md:px-8 md:py-3">
         <Link href="/" className="flex shrink-0 items-center">
-          <CarClickBDLogo className="h-[82px] w-[260px]" priority />
+          <CarClickBDLogo className="h-[58px] w-[185px] sm:h-[68px] sm:w-[220px] md:h-[82px] md:w-[260px]" priority />
         </Link>
 
         <nav className="hidden flex-1 items-center justify-center gap-4 2xl:flex">
@@ -193,7 +193,7 @@ const Header: React.FC = () => {
           <MenuOutlined />
         </button>
 
-        <div className="flex items-center gap-3 md:hidden">
+        <div className="flex items-center gap-2 md:hidden">
           <Dropdown menu={{ items: languageMenu }}>
             <button
               className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/10 text-white hover:text-[#ff2a35]"
@@ -203,7 +203,7 @@ const Header: React.FC = () => {
             </button>
           </Dropdown>
           {isLoggedIn ? <ProfileDropdown /> : <NavAuth />}
-          <button onClick={() => setOpen(true)} className="text-xl text-white">
+          <button onClick={() => setOpen(true)} className="text-xl text-white" aria-label="Open navigation menu">
             <MenuOutlined />
           </button>
         </div>

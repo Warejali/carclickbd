@@ -20,14 +20,14 @@ const DashBoardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <RouteGuard>
       <Container>
-        <div className="flex h-screen  overflow-hidden relative">
+        <div className="relative flex h-screen min-w-0 overflow-hidden">
           <aside className={`${layoutState && "md:hidden"}`}>
             <LeftSidebar
               menuGroups={navigationRoutes as unknown as IDNavMenuItem[]}
             />
           </aside>
-          <section className="w-full h-full overflow-hidden">
-            <main className="h-[calc(100vh-55px)] overflow-y-auto ">
+          <section className="h-full min-w-0 flex-1 overflow-hidden">
+            <main className="h-[calc(100vh-55px)] min-w-0 overflow-x-auto overflow-y-auto">
               {children}
             </main>
           </section>

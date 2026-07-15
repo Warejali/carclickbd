@@ -20,9 +20,9 @@ export default function RootLayout({
   const shouldShowFooter = !hideFooterPaths.includes(pathname);
 
   return (
-    <main>
+    <main className="min-w-0 overflow-x-hidden">
       <Navbar />
-      <div>{children}</div>
+      <div className="min-w-0">{children}</div>
       {shouldShowFooter && <AppFooter />}
     </main>
   );

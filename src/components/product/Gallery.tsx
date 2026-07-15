@@ -66,7 +66,7 @@ function DesktopGallery({
 
   return (
     <section className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-[0_16px_45px_rgba(15,23,42,0.08)]">
-      <div className="relative h-[520px] w-full overflow-hidden bg-slate-100">
+      <div className="relative h-[340px] w-full overflow-hidden bg-slate-100 md:h-[440px] xl:h-[520px]">
         <Image
           src={activePhoto}
           alt={`${title} - photo ${activeIndex + 1}`}
@@ -88,14 +88,14 @@ function DesktopGallery({
           <>
             <button
               onClick={() => goToPhoto("prev")}
-              className="absolute left-4 top-1/2 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-slate-950 shadow-lg backdrop-blur transition hover:bg-white"
+              className="absolute left-3 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-slate-950 shadow-lg backdrop-blur transition hover:bg-white md:left-4 md:h-11 md:w-11"
               aria-label="Previous photo"
             >
               <ChevronLeft size={22} />
             </button>
             <button
               onClick={() => goToPhoto("next")}
-              className="absolute right-4 top-1/2 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-slate-950 shadow-lg backdrop-blur transition hover:bg-white"
+              className="absolute right-3 top-1/2 inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-slate-950 shadow-lg backdrop-blur transition hover:bg-white md:right-4 md:h-11 md:w-11"
               aria-label="Next photo"
             >
               <ChevronRight size={22} />
@@ -160,7 +160,7 @@ function MobileGallery({
     >
       {photos.map((photo, idx) => (
         <SwiperSlide key={`${photo}-${idx}`}>
-          <div className="relative h-80 w-full">
+          <div className="relative h-72 w-full sm:h-80">
             <Image
               src={photo}
               alt={`${title} - ${idx + 1}`}
