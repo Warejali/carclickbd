@@ -5,7 +5,9 @@ import {
   Upload,
   Select,
   Modal,
-  Card} from "antd";
+  Card,
+  message,
+} from "antd";
 
 import Image from "next/image";
 import ProductFormStep from "./ProductFormStep";
@@ -14,6 +16,14 @@ import { setProductFormStep } from "@/Redux/Slices/productSlice";
 import { ISecondStepStoreAbleData,  } from "../type/type";
 import {PlusOutlined} from "@ant-design/icons";
 import {productMedia} from "../action/store";
+
+const FILE_LIMITS = {
+  MAIN_PHOTO: 1,
+  OTHER_PHOTOS: 10,
+  MAX_IMAGE_SIZE_MB: 5,
+};
+
+const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
 const ProductMedia: React.FC = () => {
   const [form] = Form.useForm();
@@ -80,6 +90,25 @@ const ProductMedia: React.FC = () => {
     </button>
   );
 
+  const validateImageBeforeUpload = (file: File) => {
+    const isAllowedType = ALLOWED_IMAGE_TYPES.includes(file.type);
+    if (!isAllowedType) {
+      message.error("Only JPG, PNG, or WebP images are allowed.");
+      return Upload.LIST_IGNORE;
+    }
+
+    const isAllowedSize =
+      file.size / 1024 / 1024 <= FILE_LIMITS.MAX_IMAGE_SIZE_MB;
+    if (!isAllowedSize) {
+      message.error(
+        `${file.name} is too large. Maximum image size is ${FILE_LIMITS.MAX_IMAGE_SIZE_MB}MB.`
+      );
+      return Upload.LIST_IGNORE;
+    }
+
+    return false;
+  };
+
   const handleChangePhotos = ({
     fileList,
     setFileList,
@@ -125,7 +154,8 @@ const ProductMedia: React.FC = () => {
               fileList={mainPhotoFile ? [mainPhotoFile] : []}
               onPreview={handlePreview}
               onChange={handleMainPhotoChange}
-              maxCount={1}
+              beforeUpload={validateImageBeforeUpload}
+              maxCount={FILE_LIMITS.MAIN_PHOTO}
             >
               {!mainPhotoFile && uploadButton}
             </Upload>
@@ -149,6 +179,7 @@ const ProductMedia: React.FC = () => {
                 listType="picture-card"
                 fileList={otherPhotoFiles as any}
                 onPreview={handlePreview}
+                beforeUpload={validateImageBeforeUpload}
                 onChange={({ fileList }) =>
                   handleChangePhotos({
                     fileList,
@@ -156,6 +187,7 @@ const ProductMedia: React.FC = () => {
                   })
                 }
                 multiple
+                maxCount={FILE_LIMITS.OTHER_PHOTOS}
               >
                 {otherPhotoFiles.length < 10 && uploadButton}
               </Upload>

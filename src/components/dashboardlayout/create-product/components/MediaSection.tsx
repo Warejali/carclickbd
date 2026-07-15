@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Card, Form, Upload, Select } from "antd";
+import { Card, Form, Upload, Select, message } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 
 interface MediaSectionProps {
@@ -16,7 +16,10 @@ interface MediaSectionProps {
 const FILE_LIMITS = {
   MAIN_PHOTO: 1,
   OTHER_PHOTOS: 10,
+  MAX_IMAGE_SIZE_MB: 5,
 };
+
+const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
 const MediaSection: React.FC<MediaSectionProps> = ({
   onPreview,
@@ -36,6 +39,25 @@ const MediaSection: React.FC<MediaSectionProps> = ({
       <h3>Upload</h3>
     </button>
   );
+
+  const validateImageBeforeUpload = (file: File) => {
+    const isAllowedType = ALLOWED_IMAGE_TYPES.includes(file.type);
+    if (!isAllowedType) {
+      message.error("Only JPG, PNG, or WebP images are allowed.");
+      return Upload.LIST_IGNORE;
+    }
+
+    const isAllowedSize =
+      file.size / 1024 / 1024 <= FILE_LIMITS.MAX_IMAGE_SIZE_MB;
+    if (!isAllowedSize) {
+      message.error(
+        `${file.name} is too large. Maximum image size is ${FILE_LIMITS.MAX_IMAGE_SIZE_MB}MB.`
+      );
+      return Upload.LIST_IGNORE;
+    }
+
+    return false;
+  };
 
   const handleMainPhotoChange = ({ fileList }: { fileList: any[] }) => {
     const newMainPhoto = fileList[0] || null;
@@ -61,6 +83,7 @@ const MediaSection: React.FC<MediaSectionProps> = ({
           fileList={mainPhotoFile ? [mainPhotoFile] : []}
           onPreview={onPreview}
           onChange={handleMainPhotoChange}
+          beforeUpload={validateImageBeforeUpload}
           maxCount={1}
         >
           {!mainPhotoFile && uploadButton}
@@ -77,8 +100,10 @@ const MediaSection: React.FC<MediaSectionProps> = ({
           listType="picture-card"
           fileList={otherPhotoFiles}
           onPreview={onPreview}
+          beforeUpload={validateImageBeforeUpload}
           onChange={handleOtherPhotosChange}
           multiple
+          maxCount={FILE_LIMITS.OTHER_PHOTOS}
         >
           {otherPhotoFiles.length < FILE_LIMITS.OTHER_PHOTOS && uploadButton}
         </Upload>
