@@ -21,7 +21,7 @@ const RouteGuard = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const tokenInfo = getTokenInfo();
-    const userRole = tokenInfo?.role || profileRole;
+    const userRole = profileRole || tokenInfo?.role;
 
     if (!isLoggedIn && !tokenInfo) {
       setIsAuthorized(false);

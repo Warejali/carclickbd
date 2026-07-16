@@ -7,6 +7,8 @@ import { DownOutlined, GlobalOutlined, MenuOutlined } from "@ant-design/icons";
 import dynamic from "next/dynamic";
 import { useAppSelector } from "@/Redux/hooks";
 import CarClickBDLogo from "@/components/shared/CarClickBDLogo";
+import { Heart } from "lucide-react";
+import { useGetUserWatchListQuery } from "@/Redux/features/watch-list/watchlistApi";
 
 const NotificationDropdown = dynamic(
   () => import("../../notifications/NavNotification"),
@@ -16,6 +18,37 @@ const ProfileDropdown = dynamic(() => import("./ProfileDropdown"), {
   ssr: false,
 });
 const NavAuth = dynamic(() => import("./NavAuth"), { ssr: false });
+
+const WishlistNavIcon = ({ compact = false }: { compact?: boolean }) => {
+  const isLoggedIn = useAppSelector((state) => state.authReducer.isLoggedIn);
+  const { data } = useGetUserWatchListQuery([], { skip: !isLoggedIn });
+  const count = isLoggedIn ? Number(data?.data?.length || 0) : 0;
+  const hasItems = count > 0;
+
+  return (
+    <Link
+      href="/wishlist"
+      className={`relative flex h-9 w-9 items-center justify-center rounded-full border transition ${
+        hasItems
+          ? "border-rose-400/70 bg-rose-500/15 text-rose-500 shadow-[0_0_16px_rgba(244,63,94,0.28)]"
+          : "border-white/10 bg-white/10 text-white hover:border-rose-300/70 hover:bg-white/15 hover:text-rose-400"
+      }`}
+      aria-label="Wishlist"
+      title="Wishlist"
+    >
+      <Heart
+        size={compact ? 17 : 18}
+        strokeWidth={2.5}
+        fill={hasItems ? "currentColor" : "none"}
+      />
+      {hasItems && (
+        <span className="absolute -right-1.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-rose-600 px-1 text-[10px] font-black leading-none text-white ring-2 ring-black">
+          {count > 99 ? "99+" : count}
+        </span>
+      )}
+    </Link>
+  );
+};
 
 const Header: React.FC = () => {
   const [open, setOpen] = useState(false);
@@ -175,6 +208,8 @@ const Header: React.FC = () => {
             </button>
           </Dropdown>
 
+          <WishlistNavIcon />
+
           {isLoggedIn ? (
             <>
               <NotificationDropdown />
@@ -202,6 +237,7 @@ const Header: React.FC = () => {
               <GlobalOutlined />
             </button>
           </Dropdown>
+          <WishlistNavIcon compact />
           {isLoggedIn ? <ProfileDropdown /> : <NavAuth />}
           <button onClick={() => setOpen(true)} className="text-xl text-white" aria-label="Open navigation menu">
             <MenuOutlined />
@@ -281,6 +317,13 @@ const Header: React.FC = () => {
                 <Link href="/help?tab=faq">FAQ</Link>
               </div>
             </div>
+            <Link
+              href="/wishlist"
+              className="mt-2 inline-flex items-center gap-2 border-t border-white/10 pt-3 font-semibold text-white"
+            >
+              <Heart size={18} />
+              Wishlist
+            </Link>
           </div>
         </div>
 

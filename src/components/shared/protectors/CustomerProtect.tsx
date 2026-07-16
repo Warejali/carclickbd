@@ -14,23 +14,25 @@ const CustomerProtect = ({ children }: PrivateRouteProps) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector((state) => state.authReducer.isLoggedIn);
+  const profileRole = useAppSelector((state) => state.authReducer.profile?.role);
 
   const [hasHydrated, setHasHydrated] = useState(false);
   const tokenInfo = getTokenInfo();
 
   useEffect(() => {
     setHasHydrated(true);
+    const userRole = profileRole || tokenInfo?.role;
+
     if (!isLoggedIn) {
       dispatch(setLogOut());
       router.push("/");
       return;
     }
 
-    if (!(tokenInfo?.role === "customer" || tokenInfo?.role === "buyer")) {
-      dispatch(setLogOut()); 
-      router.push("/"); 
+    if (!(userRole === "customer" || userRole === "buyer")) {
+      router.push("/");
     }
-  }, [isLoggedIn, dispatch, router, tokenInfo?.role]);
+  }, [isLoggedIn, dispatch, router, profileRole, tokenInfo?.role]);
 
   if (!hasHydrated || !isLoggedIn) {
     return <PageLoader />;

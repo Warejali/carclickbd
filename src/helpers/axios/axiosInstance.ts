@@ -42,7 +42,7 @@ instance.interceptors.response.use(
   async function (error) {
     const config = error?.config;
 
-    if (error?.response?.status === 403 && !config?.sent) {
+    if (error?.response?.status === 401 && !config?.sent) {
       config.sent = true;
       const accessToken = getCleanToken(await getNewAccessToken());
       if (!accessToken) {
@@ -54,7 +54,7 @@ instance.interceptors.response.use(
       return instance(config);
     } else {
       // console.log(error);
-      if (error?.response?.status === 403 || error?.response?.status === 401) {
+      if (error?.response?.status === 401) {
         removeFromLocalStorage(authKey);
       }
       let responseObject: any = {
