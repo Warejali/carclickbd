@@ -47,7 +47,9 @@ const ProfileDropdown: React.FC = () => {
     },
     { key: "dashboard", icon: <AiOutlineShop />, label: isAdmin ? "Dashboard" : isSeller ? "Dealer Dashboard" : "My Dashboard", onClick: () => router.push(isAdmin ? "/admin" : isSeller ? "/seller" : "/customer") },
     { key: "settings", icon: <AiOutlineSetting />, label: "Settings", onClick: () => router.push(isAdmin ? "/admin/settings" : isSeller ? "/seller/settings" : "/profile/settings") },
-    ...(isCustomer ? [{ key: "watchlist", icon: <AiOutlineEye />, label: "Wishlist", onClick: () => router.push("/wishlist") }] : []),
+    ...(isCustomer || isSeller
+      ? [{ key: "watchlist", icon: <AiOutlineEye />, label: "Wishlist", onClick: () => router.push("/wishlist") }]
+      : []),
     { type: "divider" },
     { key: "signout", icon: <AiOutlineLogout />, label: "Sign Out", onClick: handleSignOut },
   ];

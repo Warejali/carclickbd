@@ -13,6 +13,8 @@ import Link from "next/link";
 import { getTokenInfo } from "@/service/auth.service";
 import { useMemo } from "react";
 import NotificationDropdown from "@/components/notifications/NavNotification";
+import { Heart } from "lucide-react";
+import { useGetUserWatchListQuery } from "@/Redux/features/watch-list/watchlistApi";
 
 const languageMenu = (
   <Menu>
@@ -28,6 +30,38 @@ const notificationMenu = (
     <Menu.Item key="3">Update available</Menu.Item>
   </Menu>
 );
+
+const DashboardWishlistIcon = () => {
+  const isLoggedIn = useAppSelector((state) => state.authReducer.isLoggedIn);
+  const { data } = useGetUserWatchListQuery([], { skip: !isLoggedIn });
+  const count = isLoggedIn ? Number(data?.data?.length || 0) : 0;
+  const hasItems = count > 0;
+
+  return (
+    <Tooltip title="Wishlist">
+      <Link
+        href="/wishlist"
+        className={`relative flex h-10 w-10 items-center justify-center rounded-full border transition ${
+          hasItems
+            ? "border-rose-300 bg-rose-50 text-rose-600 shadow-[0_0_16px_rgba(244,63,94,0.25)]"
+            : "border-slate-200 bg-white text-slate-600 hover:border-rose-200 hover:text-rose-500"
+        }`}
+        aria-label="Wishlist"
+      >
+        <Heart
+          size={18}
+          strokeWidth={2.5}
+          fill={hasItems ? "currentColor" : "none"}
+        />
+        {hasItems && (
+          <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-rose-600 px-1 text-[10px] font-black leading-none text-white ring-2 ring-blue-100">
+            {count > 99 ? "99+" : count}
+          </span>
+        )}
+      </Link>
+    </Tooltip>
+  );
+};
 
 const NavTopSection = () => {
   const dispatch = useAppDispatch();
@@ -112,7 +146,8 @@ const NavTopSection = () => {
           </Dropdown>
         )}
 
-<NotificationDropdown />
+        <DashboardWishlistIcon />
+        <NotificationDropdown />
 
         <Dropdown
           overlay={languageMenu}
