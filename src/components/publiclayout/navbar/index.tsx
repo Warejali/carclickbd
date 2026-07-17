@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Dropdown, Drawer, MenuProps } from "antd";
 import { DownOutlined, GlobalOutlined, MenuOutlined } from "@ant-design/icons";
@@ -9,6 +9,11 @@ import { useAppSelector } from "@/Redux/hooks";
 import CarClickBDLogo from "@/components/shared/CarClickBDLogo";
 import { Heart } from "lucide-react";
 import { useGetUserWatchListQuery } from "@/Redux/features/watch-list/watchlistApi";
+import {
+  getLocalWishlist,
+  getWishlistUserKey,
+  LOCAL_WISHLIST_UPDATED_EVENT,
+} from "@/utils/localWishlist";
 
 const NotificationDropdown = dynamic(
   () => import("../../notifications/NavNotification"),
@@ -21,9 +26,34 @@ const NavAuth = dynamic(() => import("./NavAuth"), { ssr: false });
 
 const WishlistNavIcon = ({ compact = false }: { compact?: boolean }) => {
   const isLoggedIn = useAppSelector((state) => state.authReducer.isLoggedIn);
-  const { data } = useGetUserWatchListQuery([], { skip: !isLoggedIn });
-  const count = isLoggedIn ? Number(data?.data?.length || 0) : 0;
+  const profile = useAppSelector((state) => state.authReducer.profile);
+  const wishlistUserKey = getWishlistUserKey(profile || undefined);
+  const [localCount, setLocalCount] = useState(0);
+  const { data } = useGetUserWatchListQuery([], {
+    skip: !isLoggedIn || profile?.role === "seller",
+  });
+  const apiProductIds = (data?.data || [])
+    .map((item: any) => item?.product?._id)
+    .filter(Boolean);
+  const count = isLoggedIn
+    ? new Set([...apiProductIds, ...getLocalWishlist(wishlistUserKey).map((item) => item._id)]).size || localCount
+    : 0;
   const hasItems = count > 0;
+
+  useEffect(() => {
+    const updateLocalCount = () => {
+      setLocalCount(getLocalWishlist(wishlistUserKey).length);
+    };
+
+    updateLocalCount();
+    window.addEventListener(LOCAL_WISHLIST_UPDATED_EVENT, updateLocalCount);
+    window.addEventListener("storage", updateLocalCount);
+
+    return () => {
+      window.removeEventListener(LOCAL_WISHLIST_UPDATED_EVENT, updateLocalCount);
+      window.removeEventListener("storage", updateLocalCount);
+    };
+  }, [wishlistUserKey]);
 
   return (
     <Link
@@ -100,7 +130,6 @@ const Header: React.FC = () => {
       href: "https://www.jp.center/month",
       external: true,
     },
-    { label: "Blog", href: "/blog" },
   ];
 
   const helpMenu: MenuProps["items"] = [

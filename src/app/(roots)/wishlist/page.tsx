@@ -3,22 +3,56 @@
 import Link from "next/link";
 import { Button } from "antd";
 import { Heart } from "lucide-react";
+import { useEffect, useState } from "react";
 import ProductCard from "@/components/publiclayout/home/AcutionProducts/ProductCard";
 import { IProduct } from "@/Interface/product";
 import { useAppSelector } from "@/Redux/hooks";
 import { useGetUserWatchListQuery } from "@/Redux/features/watch-list/watchlistApi";
 import CardSkeleton from "@/shared/skeleton/CardSkeleton";
 import NoDatafound from "@/shared/ui/NoDatafound";
+import {
+  getLocalWishlist,
+  getWishlistUserKey,
+  LOCAL_WISHLIST_UPDATED_EVENT,
+} from "@/utils/localWishlist";
 
 const WishlistPage = () => {
   const isLoggedIn = useAppSelector((state) => state.authReducer.isLoggedIn);
+  const profile = useAppSelector((state) => state.authReducer.profile);
+  const wishlistUserKey = getWishlistUserKey(profile || undefined);
+  const [localProducts, setLocalProducts] = useState<IProduct[]>([]);
   const { data, isLoading } = useGetUserWatchListQuery([], {
-    skip: !isLoggedIn,
+    skip: !isLoggedIn || profile?.role === "seller",
   });
 
-  const watchlistProducts: IProduct[] = (data?.data || [])
+  const apiProducts: IProduct[] = (data?.data || [])
     .map((item: any) => item?.product)
     .filter(Boolean);
+  const watchlistProducts: IProduct[] = [
+    ...apiProducts,
+    ...localProducts.filter(
+      (localProduct) =>
+        !apiProducts.some((apiProduct) => apiProduct._id === localProduct._id),
+    ),
+  ];
+
+  useEffect(() => {
+    const updateLocalProducts = () => {
+      setLocalProducts(getLocalWishlist(wishlistUserKey));
+    };
+
+    updateLocalProducts();
+    window.addEventListener(LOCAL_WISHLIST_UPDATED_EVENT, updateLocalProducts);
+    window.addEventListener("storage", updateLocalProducts);
+
+    return () => {
+      window.removeEventListener(
+        LOCAL_WISHLIST_UPDATED_EVENT,
+        updateLocalProducts,
+      );
+      window.removeEventListener("storage", updateLocalProducts);
+    };
+  }, [wishlistUserKey]);
 
   return (
     <main className="bg-slate-50">
@@ -65,7 +99,7 @@ const WishlistPage = () => {
               </Button>
             </Link>
           </div>
-        ) : isLoading ? (
+        ) : isLoading && !localProducts.length ? (
           <CardSkeleton />
         ) : watchlistProducts.length ? (
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

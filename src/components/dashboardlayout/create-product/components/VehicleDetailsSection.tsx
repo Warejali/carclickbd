@@ -29,6 +29,7 @@ const VehicleDetailsSection = () => (
         >
           <Select placeholder="Select" allowClear>
             <Option value="Petrol">Petrol</Option>
+            <Option value="Octane">Octane</Option>
             <Option value="Diesel">Diesel</Option>
             <Option value="Hybrid">Hybrid</Option>
             <Option value="Electric">Electric</Option>

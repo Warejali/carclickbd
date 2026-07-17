@@ -20,6 +20,11 @@ import { getProductStatusMeta } from "@/utils/productStatus";
 import { useAppDispatch, useAppSelector } from "@/Redux/hooks";
 import { toggleAuthModal } from "@/Redux/Slices/authSlice";
 import { useAddToWatchListMutation } from "@/Redux/features/watch-list/watchlistApi";
+import {
+  getWishlistUserKey,
+  isLocalWishlisted,
+  setLocalWishlistItem,
+} from "@/utils/localWishlist";
 
 const formatPrice = (value: number | string) => {
   const numericValue = Number(value || 0);
@@ -32,6 +37,8 @@ const ProductCard = ({ product }: { product: IProduct }) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const isLoggedIn = useAppSelector((state) => state.authReducer.isLoggedIn);
+  const profile = useAppSelector((state) => state.authReducer.profile);
+  const wishlistUserKey = getWishlistUserKey(profile || undefined);
   const [addToWatchList, { isLoading: isWishlistLoading }] =
     useAddToWatchListMutation();
   const [isWishlisted, setIsWishlisted] = useState(
@@ -66,9 +73,13 @@ const ProductCard = ({ product }: { product: IProduct }) => {
 
   useEffect(() => {
     setIsWishlisted(
-      Boolean((product as any).isWatchlisted || (product as any).isWishlisted)
+      Boolean(
+        (product as any).isWatchlisted ||
+          (product as any).isWishlisted ||
+          isLocalWishlisted(product._id, wishlistUserKey),
+      )
     );
-  }, [product]);
+  }, [product, wishlistUserKey]);
 
   const handleWishlistClick = async (
     event: React.MouseEvent<HTMLButtonElement>
@@ -83,6 +94,12 @@ const ProductCard = ({ product }: { product: IProduct }) => {
 
     const nextState = !isWishlisted;
     setIsWishlisted(nextState);
+
+    if (profile?.role === "seller") {
+      setLocalWishlistItem(product, nextState, wishlistUserKey);
+      message.success(nextState ? "Added to wishlist" : "Removed from wishlist");
+      return;
+    }
 
     try {
       await addToWatchList({ product: product._id }).unwrap();
