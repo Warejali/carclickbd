@@ -60,6 +60,7 @@ export type IProduct = {
   seller: ICommonProfile | string;
   engine: string;
   engineCc?: string;
+  fuelType?: string;
   drivetrain: string;
   transmission: "automatic" | "manual";
   bodyStyle:

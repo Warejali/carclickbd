@@ -8,10 +8,10 @@ import {
   ArrowUpRight,
   BadgeCheck,
   CalendarDays,
+  Fuel,
   Gauge,
   Heart,
   MapPin,
-  Settings,
   ShieldCheck,
 } from "lucide-react";
 import { setSelectedProduct } from "@/Redux/Slices/productSlice";
@@ -50,8 +50,8 @@ const ProductCard = ({ product }: { product: IProduct }) => {
       label: product.productionYear || product.launchingYear || "Year N/A",
     },
     {
-      icon: Settings,
-      label: product.engine || "Engine N/A",
+      icon: Fuel,
+      label: product.fuelType || "Fuel N/A",
     },
     {
       icon: Gauge,
