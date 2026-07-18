@@ -19,8 +19,7 @@ const alldata = [
       completedJob: 2,
       workerEarn: 6,
       showInterval: "1 min",
-      thumbnail:
-        "http://res.cloudinary.com/da7ujmmwz/image/upload/v1725020591/ncdx0h8sx8xyj5alaobu.jpg",
+      thumbnail: "/placeholder.png",
       proofType: [
         {
           title: "app install photo",
@@ -52,8 +51,7 @@ const alldata = [
           {
             title: "app install photo",
             type: "screenshot proof",
-            value:
-              "http://res.cloudinary.com/da7ujmmwz/image/upload/v1725276287/elp1dd5pgrvagomism3b.png",
+            value: "/placeholder.png",
             _id: "66d5a060771460b4d4424938",
             id: "66d5a060771460b4d4424938",
           },
@@ -75,8 +73,7 @@ const alldata = [
           {
             title: "app install photo",
             type: "screenshot proof",
-            value:
-              "http://res.cloudinary.com/da7ujmmwz/image/upload/v1725331780/m3ryk3voofksuhpyupvm.png",
+            value: "/placeholder.png",
             _id: "66d67944c870a2019dd8593b",
             id: "66d67944c870a2019dd8593b",
           },
