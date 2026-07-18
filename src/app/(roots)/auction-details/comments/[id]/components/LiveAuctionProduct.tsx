@@ -8,6 +8,7 @@ import { useParams, useRouter } from "next/navigation";
 import EndBidTimer from "@/components/product/EndBidTimer";
 import { useGetProductByIdQuery } from "@/Redux/api/productApi";
 import LiveProductSkeleton from "./LiveProductSkeleton";
+import { getMediaUrl } from "@/utils/media";
 // import { getHighestOrMinimumBid } from "@/utils/getHighestOrMinimumBid";
 
 const { Title, Text } = Typography;
@@ -26,7 +27,7 @@ const LiveAuctionProduct = () => {
           <Image
             width={200}
             height={200}
-            src={product?.photos?.mainPhoto}
+            src={getMediaUrl(product?.photos?.mainPhoto)}
             alt="Car"
             className="w-full h-full object-cover rounded-lg mb-4"
           />

@@ -4,7 +4,7 @@ const generateRandomId = (): string =>
 
 const createRandomProduct = (): any => ({
   photos: {
-    mainPhoto: `https://res.cloudinary.com/dmg3ltri6/image/upload/v1732550902/shakil_test%20blog.jpg`,
+    mainPhoto: `/placeholder.png`,
     others: Array.from(
       { length: Math.floor(Math.random() * 5) + 1 },
       () => `https://example.com/photos/others/${generateRandomId()}.jpg`,

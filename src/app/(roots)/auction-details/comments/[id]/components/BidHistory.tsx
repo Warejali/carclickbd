@@ -5,6 +5,7 @@ import { Card, List, Avatar, Typography, Tag } from "antd";
 import moment from "moment";
 import ProductCommentsSkeleton from "@/components/product/skeleton/ProductCommentSkeleton";
 import { useGetAllCommentsOnProductQuery } from "@/Redux/features/comment/commentApi";
+import { getMediaUrl } from "@/utils/media";
 
 const { Text } = Typography;
 
@@ -35,7 +36,7 @@ const CommentsHistory: React.FC<CommentsHistoryProps> = ({ productId }) => {
           renderItem={(comment: any) => (
             <List.Item>
               <List.Item.Meta
-                avatar={<Avatar src={comment?.user?.profilePhoto} />}
+                avatar={<Avatar src={getMediaUrl(comment?.user?.profilePhoto)} />}
                 title={
                   <div className="flex justify-between items-center">
                     <span>

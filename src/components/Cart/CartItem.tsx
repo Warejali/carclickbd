@@ -5,6 +5,7 @@ import { useAppDispatch } from '@/Redux/hooks';
 import { DeleteOutlined, MinusSquareOutlined, PlusSquareOutlined } from '@ant-design/icons';
 import { Card } from 'antd';
 import Image from 'next/image';
+import { getMediaUrl } from '@/utils/media';
 
 interface CartItemProps {
     item: IProduct
@@ -22,7 +23,7 @@ const CartItem = ({ item }: CartItemProps) => {
                     <div className='flex gap-3 items-center'>
                         <div>
                             <Image
-                                src={item?.photos.mainPhoto}
+                                src={getMediaUrl(item?.photos.mainPhoto)}
                                 alt=""
                                 width={50}
                                 height={50}

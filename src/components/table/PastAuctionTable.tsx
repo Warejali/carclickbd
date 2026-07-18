@@ -27,6 +27,7 @@ import {
   productStatusMeta,
   productStatuses,
 } from "@/utils/productStatus";
+import { getMediaUrl } from "@/utils/media";
 
 const { confirm } = Modal;
 
@@ -112,7 +113,7 @@ const PastAuctionTable: React.FC<ProductTableProps> = ({
           <Avatar
             shape="square"
             size={32}
-            src={record.photos?.mainPhoto || "/placeholder.png"}
+            src={getMediaUrl(record.photos?.mainPhoto)}
             alt={record.title}
           />
           <span>{record.title || "No name"}</span>

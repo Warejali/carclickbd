@@ -1,10 +1,20 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
+    unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**",
+      },
+      {
+        protocol: "http",
+        hostname: "**",
+      },
+    ],
     domains: [
       "img.freepik.com",
       "i.ibb.co",
-      "res.cloudinary.com",
       "media.carsandbids.com",
       "as1.ftcdn.net",
       "shop.roadster.com",

@@ -17,6 +17,7 @@ import LocationSection from "./LocationSection";
 import MediaSection from "./MediaSection";
 import PricingSection from "./PricingSection";
 import VehicleDetailsSection from "./VehicleDetailsSection";
+import { getMediaUrl } from "@/utils/media";
 
 type ProductCreateFormProps = {
   productId?: string;
@@ -26,7 +27,8 @@ const toUploadFile = (url: string, index: number, prefix: string) => ({
   uid: `${prefix}-${index}`,
   name: `${prefix}-${index + 1}`,
   status: "done",
-  url,
+  url: getMediaUrl(url),
+  responseUrl: url,
 });
 
 const createStockNumber = (values: any) => {
@@ -90,7 +92,7 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({ productId }) => {
   }, [form, productResponse]);
 
   const handlePreview = (file: any) => {
-    setPreviewImage(file.thumbUrl || file.url || "");
+    setPreviewImage(file.thumbUrl || getMediaUrl(file.url) || "");
     setPreviewVisible(true);
   };
 
@@ -151,6 +153,11 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({ productId }) => {
       equipment: values.featuresAndOptions,
       highlights: values.featuresAndOptions,
       videos: videoLinks,
+      existingMainPhoto: mainPhotoFile?.responseUrl,
+      existingOtherPhotos: otherPhotoFiles
+        .filter((file: any) => !(file?.originFileObj || file?.file))
+        .map((file: any) => file?.responseUrl || file?.url)
+        .filter(Boolean),
       status,
       isDraft: status === "pending",
       isSoldOut: status === "sold" || status === "reserve",

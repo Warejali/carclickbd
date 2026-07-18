@@ -8,6 +8,7 @@ import { IUser } from "@/Interface/user";
 import { useUpdateUserMutation } from "@/Redux/api/userApi";
 import { useAppDispatch } from "@/Redux/hooks";
 import { setProfileInfo } from "@/Redux/Slices/authSlice";
+import { getMediaUrl } from "@/utils/media";
 
 const ProfilePictureUploader: React.FC<{
   user: IUser;
@@ -20,7 +21,7 @@ const ProfilePictureUploader: React.FC<{
 
   useEffect(() => {
     if (user?.profilePhoto) {
-      setDefaultUrl(user.profilePhoto);
+      setDefaultUrl(getMediaUrl(user.profilePhoto));
     }
   }, [user?.profilePhoto]);
 
@@ -77,7 +78,7 @@ const ProfilePictureUploader: React.FC<{
               <Image
                 width={128}
                 height={128}
-                src={user.profilePhoto as string}
+                src={getMediaUrl(user.profilePhoto)}
                 alt="Default Profile"
                 className="h-full w-full rounded-full object-cover"
               />

@@ -3,6 +3,7 @@ import { IProduct } from "@/Interface/product";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { getMediaUrl } from "@/utils/media";
 
 const SlideContent: React.FC<{ product: IProduct }> = ({ product }) => {
   return (
@@ -12,7 +13,7 @@ const SlideContent: React.FC<{ product: IProduct }> = ({ product }) => {
         <div className="col-span-7 overflow-hidden h-full md:h-1/2 lg:h-full">
           <Image
             className="h-full w-full md:object-cover    object-center"
-            src={product.photos.mainPhoto}
+            src={getMediaUrl(product.photos.mainPhoto)}
             width={1000}
             height={500}
             alt={`Main photo of ${product.model}`}
@@ -29,7 +30,7 @@ const SlideContent: React.FC<{ product: IProduct }> = ({ product }) => {
             >
               <Image
                 className="h-full w-full object-cover object-center" // Ensure proper scaling with object-cover
-                src={photo}
+                src={getMediaUrl(photo)}
                 width={500}
                 height={500}
                 alt={`Detail image ${index + 1} of ${product.model}`}
@@ -48,7 +49,7 @@ const SlideContent: React.FC<{ product: IProduct }> = ({ product }) => {
             >
               <Image
                 className="h-full w-full object-cover object-center" // Consistent scaling with object-cover
-                src={photo}
+                src={getMediaUrl(photo)}
                 width={500}
                 height={500}
                 alt={`Detail image ${index + 1} of ${product.model}`}

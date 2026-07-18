@@ -4,6 +4,7 @@ import { Card, List, Avatar, Typography, Tag } from "antd";
 import moment from "moment";
 import { useGetSpecificProductBidsQuery } from "@/Redux/features/bids/bidsApi";
 import ProductCommentsSkeleton from "@/components/product/skeleton/ProductCommentSkeleton";
+import { getMediaUrl } from "@/utils/media";
 
 const { Text } = Typography;
 
@@ -34,7 +35,7 @@ const BidModal: React.FC<BidHistoryProps> = ({ productId }) => {
           renderItem={(bid, index) => (
             <List.Item>
               <List.Item.Meta
-                avatar={<Avatar src={bid?.buyer?.profilePhoto} />}
+                avatar={<Avatar src={getMediaUrl(bid?.buyer?.profilePhoto)} />}
                 title={
                   <div className="flex justify-between items-center">
                     <span>{bid?.buyer?.email}</span>

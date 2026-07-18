@@ -9,7 +9,7 @@ const FlashDealsPage: React.FC = () => {
     {
       key: "1",
       title: "Smartphone X",
-      banner: "http://res.cloudinary.com/da7ujmmwz/image/upload/v1725020591/ncdx0h8sx8xyj5alaobu.jpg",
+      banner: "/placeholder.png",
       startDate: "2023-10-01",
       endDate: "2023-10-31",
       status: "Active",
@@ -19,7 +19,7 @@ const FlashDealsPage: React.FC = () => {
     {
       key: "2",
       title: "Wireless Headphones",
-      banner: "http://res.cloudinary.com/da7ujmmwz/image/upload/v1725020591/ncdx0h8sx8xyj5alaobu.jpg",
+      banner: "/placeholder.png",
       startDate: "2023-10-05",
       endDate: "2023-10-20",
       status: "Active",
@@ -29,7 +29,7 @@ const FlashDealsPage: React.FC = () => {
     {
       key: "3",
       title: "Smart Watch Pro",
-      banner: "http://res.cloudinary.com/da7ujmmwz/image/upload/v1725020591/ncdx0h8sx8xyj5alaobu.jpg",
+      banner: "/placeholder.png",
       startDate: "2023-09-25",
       endDate: "2023-10-15",
       status: "Expired",
@@ -39,7 +39,7 @@ const FlashDealsPage: React.FC = () => {
     {
       key: "4",
       title: "4K Ultra HD TV",
-      banner: "http://res.cloudinary.com/da7ujmmwz/image/upload/v1725020591/ncdx0h8sx8xyj5alaobu.jpg",
+      banner: "/placeholder.png",
       startDate: "2023-10-10",
       endDate: "2023-10-30",
       status: "Active",
@@ -49,7 +49,7 @@ const FlashDealsPage: React.FC = () => {
     {
       key: "5",
       title: "Smartphone X",
-      banner: "http://res.cloudinary.com/da7ujmmwz/image/upload/v1725020591/ncdx0h8sx8xyj5alaobu.jpg",
+      banner: "/placeholder.png",
       startDate: "2023-10-01",
       endDate: "2023-10-31",
       status: "Active",
@@ -59,7 +59,7 @@ const FlashDealsPage: React.FC = () => {
     {
       key: "6",
       title: "Wireless Headphones",
-      banner: "http://res.cloudinary.com/da7ujmmwz/image/upload/v1725020591/ncdx0h8sx8xyj5alaobu.jpg",
+      banner: "/placeholder.png",
       startDate: "2023-10-05",
       endDate: "2023-10-20",
       status: "Active",
@@ -69,7 +69,7 @@ const FlashDealsPage: React.FC = () => {
     {
       key: "7",
       title: "Smart Watch Pro",
-      banner: "http://res.cloudinary.com/da7ujmmwz/image/upload/v1725020591/ncdx0h8sx8xyj5alaobu.jpg",
+      banner: "/placeholder.png",
       startDate: "2023-09-25",
       endDate: "2023-10-15",
       status: "Expired",
@@ -79,7 +79,7 @@ const FlashDealsPage: React.FC = () => {
     {
       key: "8",
       title: "4K Ultra HD TV",
-      banner: "http://res.cloudinary.com/da7ujmmwz/image/upload/v1725020591/ncdx0h8sx8xyj5alaobu.jpg",
+      banner: "/placeholder.png",
       startDate: "2023-10-10",
       endDate: "2023-10-30",
       status: "Active",
@@ -89,7 +89,7 @@ const FlashDealsPage: React.FC = () => {
     {
       key: "9",
       title: "Smartphone X",
-      banner: "http://res.cloudinary.com/da7ujmmwz/image/upload/v1725020591/ncdx0h8sx8xyj5alaobu.jpg",
+      banner: "/placeholder.png",
       startDate: "2023-10-01",
       endDate: "2023-10-31",
       status: "Active",
@@ -99,7 +99,7 @@ const FlashDealsPage: React.FC = () => {
     {
       key: "10",
       title: "Wireless Headphones",
-      banner: "http://res.cloudinary.com/da7ujmmwz/image/upload/v1725020591/ncdx0h8sx8xyj5alaobu.jpg",
+      banner: "/placeholder.png",
       startDate: "2023-10-05",
       endDate: "2023-10-20",
       status: "Active",
@@ -109,7 +109,7 @@ const FlashDealsPage: React.FC = () => {
     {
       key: "11",
       title: "Smart Watch Pro",
-      banner: "http://res.cloudinary.com/da7ujmmwz/image/upload/v1725020591/ncdx0h8sx8xyj5alaobu.jpg",
+      banner: "/placeholder.png",
       startDate: "2023-09-25",
       endDate: "2023-10-15",
       status: "Expired",
@@ -119,7 +119,7 @@ const FlashDealsPage: React.FC = () => {
     {
       key: "12",
       title: "4K Ultra HD TV",
-      banner: "http://res.cloudinary.com/da7ujmmwz/image/upload/v1725020591/ncdx0h8sx8xyj5alaobu.jpg",
+      banner: "/placeholder.png",
       startDate: "2023-10-10",
       endDate: "2023-10-30",
       status: "Active",

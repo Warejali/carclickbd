@@ -7,7 +7,6 @@ import { FaCamera } from "react-icons/fa";
 import { FaCloudArrowUp } from "react-icons/fa6";
 interface PictureUploaderProps {
   onFileChange?: (file: File | null) => void;
-  maxSizeInBytes?: number;
   setImageFile?: React.Dispatch<SetStateAction<File | any>>;
   defaultImgUrl?: string;
   isForProfile?: boolean;
@@ -17,7 +16,6 @@ interface PictureUploaderProps {
 
 const SingleImageUploader: React.FC<PictureUploaderProps> = ({
   onFileChange,
-  maxSizeInBytes = 2048576,
   setImageFile,
   defaultImgUrl,
   isForProfile = false,
@@ -30,10 +28,6 @@ const SingleImageUploader: React.FC<PictureUploaderProps> = ({
   const dropAreaRef = useRef<HTMLDivElement | null>(null);
 
   const validateFile = (file: File): boolean => {
-    if (file.size > maxSizeInBytes) {
-      toast.error("File size exceeds the maximum limit of 2MB");
-      return false;
-    }
     if (!file.type.startsWith("image/")) {
       toast.error("Invalid file type. Please select an image.");
       return false;

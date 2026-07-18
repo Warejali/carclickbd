@@ -9,6 +9,7 @@ import { getTokenInfo } from "@/service/auth.service";
 import { useRouter } from "next/navigation";
 import { FaUserCircle } from "react-icons/fa";
 import { TbLogout } from "react-icons/tb";
+import { getMediaUrl } from "@/utils/media";
 
 const DNavProfile = () => {
   const [isOpen, setOpen] = useState(false);
@@ -34,7 +35,7 @@ const DNavProfile = () => {
         className=" mx-2 flex items-center justify-center gap-2  md:px-5 md:py-2    bg-slate-100 hover:bg-gray-300  "
       >
         <Avatar
-          src={user?.profilePhoto}
+          src={getMediaUrl(user?.profilePhoto)}
         />
         <div className="hidden md:block">
           <h2 className="font-semibold text-xs  ">{user?.name}</h2>

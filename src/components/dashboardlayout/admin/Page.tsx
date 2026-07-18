@@ -6,6 +6,7 @@ import type { TableProps } from "antd";
 import { useDeleteUserMutation, useGetAllUserQuery } from "@/Redux/api/userApi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { IUser } from "@/Interface/user";
+import { getMediaUrl } from "@/utils/media";
 
 const AdminComponentPage = () => {
   const [currentPage, setCurrentPage] = React.useState(1);
@@ -35,7 +36,7 @@ const AdminComponentPage = () => {
       key: "profilePhoto",
       render: (profilePhoto) => (
         <Space size="middle">
-          <Avatar src={profilePhoto} />
+          <Avatar src={getMediaUrl(profilePhoto)} />
         </Space>
       ),
     },

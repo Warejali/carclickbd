@@ -11,7 +11,7 @@ export const products: any[] = [
           name: "John Doe",
           id: "user1",
           photo:
-            "http://res.cloudinary.com/da7ujmmwz/image/upload/v1725020591/ncdx0h8sx8xyj5alaobu.jpg",
+            "/placeholder.png",
         },
         product: "product1",
         likes: ["user2", "user3", "user4"],
@@ -24,7 +24,7 @@ export const products: any[] = [
               name: "Jane Smith",
               id: "user2",
               photo:
-                "http://res.cloudinary.com/da7ujmmwz/image/upload/v1725020591/ncdx0h8sx8xyj5alaobu.jpg",
+                "/placeholder.png",
             },
             reply:
               "I agree, the color is stunning. Have you seen it in person?",
@@ -36,7 +36,7 @@ export const products: any[] = [
               name: "Mike Johnson",
               id: "user3",
               photo:
-                "http://res.cloudinary.com/da7ujmmwz/image/upload/v1725020591/ncdx0h8sx8xyj5alaobu.jpg",
+                "/placeholder.png",
             },
             reply: "The M4 is a beast on the track!",
             _id: "reply2",
@@ -58,7 +58,7 @@ export const products: any[] = [
           name: "Mike Johnson",
           id: "user3",
           photo:
-            "http://res.cloudinary.com/da7ujmmwz/image/upload/v1725020591/ncdx0h8sx8xyj5alaobu.jpg",
+            "/placeholder.png",
         },
         product: "product2",
         likes: ["user1", "user4"],
@@ -70,7 +70,7 @@ export const products: any[] = [
               name: "Sarah Lee",
               id: "user4",
               photo:
-                "http://res.cloudinary.com/da7ujmmwz/image/upload/v1725020591/ncdx0h8sx8xyj5alaobu.jpg",
+                "/placeholder.png",
             },
             reply:
               "The sound of that flat-six engine is incredible. Pure music!",
@@ -93,7 +93,7 @@ export const products: any[] = [
           name: "Alex Chen",
           id: "user5",
           photo:
-            "http://res.cloudinary.com/da7ujmmwz/image/upload/v1725020591/ncdx0h8sx8xyj5alaobu.jpg",
+            "/placeholder.png",
         },
         product: "product3",
         likes: ["user2", "user3"],
@@ -106,7 +106,7 @@ export const products: any[] = [
               name: "John Doe",
               id: "user1",
               photo:
-                "http://res.cloudinary.com/da7ujmmwz/image/upload/v1725020591/ncdx0h8sx8xyj5alaobu.jpg",
+                "/placeholder.png",
             },
             reply: "I'm impressed by the acceleration. It's mind-blowing!",
             _id: "reply4",
@@ -128,7 +128,7 @@ export const products: any[] = [
           name: "Sarah Lee",
           id: "user4",
           photo:
-            "http://res.cloudinary.com/da7ujmmwz/image/upload/v1725020591/ncdx0h8sx8xyj5alaobu.jpg",
+            "/placeholder.png",
         },
         product: "product4",
         likes: ["user1", "user3", "user5"],
@@ -141,7 +141,7 @@ export const products: any[] = [
               name: "Alex Chen",
               id: "user5",
               photo:
-                "http://res.cloudinary.com/da7ujmmwz/image/upload/v1725020591/ncdx0h8sx8xyj5alaobu.jpg",
+                "/placeholder.png",
             },
             reply:
               "The restoration work on this Mustang is absolutely top-notch.",

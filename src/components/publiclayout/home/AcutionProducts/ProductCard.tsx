@@ -17,6 +17,7 @@ import {
 import { setSelectedProduct } from "@/Redux/Slices/productSlice";
 import { IProduct } from "@/Interface/product";
 import { getProductStatusMeta } from "@/utils/productStatus";
+import { getMediaUrl } from "@/utils/media";
 import { useAppDispatch, useAppSelector } from "@/Redux/hooks";
 import { toggleAuthModal } from "@/Redux/Slices/authSlice";
 import { useAddToWatchListMutation } from "@/Redux/features/watch-list/watchlistApi";
@@ -119,7 +120,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
       cover={
         <div className="relative h-[230px] overflow-hidden bg-slate-100">
           <Image
-            src={product.photos?.mainPhoto || "/placeholder.png"}
+            src={getMediaUrl(product.photos?.mainPhoto)}
             alt={product.title || "Vehicle"}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"

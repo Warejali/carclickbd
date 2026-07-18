@@ -5,6 +5,7 @@ import dayjs from "dayjs";
 import AuctionNavBar from "../product/AuctionNavbar";
 import VehicleDetailsTable from "../product/CarDetailsTable";
 import CommentsSection from "../product/CommentsSection";
+import { getMediaUrl } from "@/utils/media";
 
 interface ProductDetailsModalProps {
   visible: boolean;
@@ -40,7 +41,7 @@ const ProductDetailsModal: React.FC<ProductDetailsModalProps> = ({
                 {allImages.map((url, index) => (
                   <div key={index} className="overflow-hidden rounded-md shadow-sm">
                     <Image
-                      src={url}
+                      src={getMediaUrl(url)}
                       alt={`product-image-${index}`}
                       className="w-full h-64 object-cover cursor-pointer transition-transform duration-200 transform hover:scale-105"
                       preview={{ maskClassName: "bg-black/50" }}

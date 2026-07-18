@@ -1,6 +1,7 @@
 import { Modal, Avatar, Descriptions, Tag, Space, Divider, Typography } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { IUser } from "@/Interface/user";
+import { getMediaUrl } from "@/utils/media";
 
 const { Title, Text } = Typography;
 
@@ -44,7 +45,7 @@ const UserDetailsModal: React.FC<UserDetailsModalProps> = ({
           <div className="flex items-center gap-4 mb-4">
             <Avatar
               size={72}
-              src={user.profilePhoto}
+              src={user.profilePhoto ? getMediaUrl(user.profilePhoto) : undefined}
               icon={<UserOutlined />}
             />
             <div>

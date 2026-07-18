@@ -12,6 +12,7 @@ import {
 import { useAppDispatch, useAppSelector } from "@/Redux/hooks";
 import { setLogOut } from "@/Redux/Slices/authSlice";
 import HasAccess from "@/routes/RoleBasedRouteGenerator";
+import { getMediaUrl } from "@/utils/media";
 
 const ProfileDropdown: React.FC = () => {
   const [mounted, setMounted] = useState(false);
@@ -59,7 +60,7 @@ const ProfileDropdown: React.FC = () => {
       <Tooltip title={displayName} placement="bottom" mouseEnterDelay={0.2}>
         <div className="cursor-pointer transition-transform duration-200 hover:scale-110">
           <Avatar
-            src={user?.profilePhoto}
+            src={user?.profilePhoto ? getMediaUrl(user.profilePhoto) : undefined}
             icon={!user?.profilePhoto ? <AiOutlineUser /> : undefined}
             className="border-2 border-blue-500 w-10 h-10 min-w-[27px] min-h-[27px] max-w-[35px] max-h-[35px]"
           />

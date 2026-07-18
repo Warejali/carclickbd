@@ -8,6 +8,7 @@ import { ChevronLeft, ChevronRight, Images } from "lucide-react";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { getProductStatusMeta } from "@/utils/productStatus";
 import { IProduct } from "@/Interface/product";
+import { getMediaUrl } from "@/utils/media";
 
 interface GalleryProps {
   product: Partial<IProduct> & {
@@ -52,7 +53,7 @@ function DesktopGallery({
   product: GalleryProps["product"];
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const activePhoto = photos[activeIndex];
+  const activePhoto = getMediaUrl(photos[activeIndex]);
   const statusMeta = getProductStatusMeta(product);
 
   const goToPhoto = (direction: "prev" | "next") => {
@@ -125,7 +126,7 @@ function DesktopGallery({
                 aria-label={`Show photo ${index + 1}`}
               >
                 <Image
-                  src={photo}
+                  src={getMediaUrl(photo)}
                   alt={`${title} thumbnail ${index + 1}`}
                   fill
                   className="object-cover"
@@ -162,7 +163,7 @@ function MobileGallery({
         <SwiperSlide key={`${photo}-${idx}`}>
           <div className="relative h-72 w-full sm:h-80">
             <Image
-              src={photo}
+              src={getMediaUrl(photo)}
               alt={`${title} - ${idx + 1}`}
               fill
               className="object-cover"

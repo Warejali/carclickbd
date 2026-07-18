@@ -16,7 +16,6 @@ interface MediaSectionProps {
 const FILE_LIMITS = {
   MAIN_PHOTO: 1,
   OTHER_PHOTOS: 10,
-  MAX_IMAGE_SIZE_MB: 5,
 };
 
 const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
@@ -44,15 +43,6 @@ const MediaSection: React.FC<MediaSectionProps> = ({
     const isAllowedType = ALLOWED_IMAGE_TYPES.includes(file.type);
     if (!isAllowedType) {
       message.error("Only JPG, PNG, or WebP images are allowed.");
-      return Upload.LIST_IGNORE;
-    }
-
-    const isAllowedSize =
-      file.size / 1024 / 1024 <= FILE_LIMITS.MAX_IMAGE_SIZE_MB;
-    if (!isAllowedSize) {
-      message.error(
-        `${file.name} is too large. Maximum image size is ${FILE_LIMITS.MAX_IMAGE_SIZE_MB}MB.`
-      );
       return Upload.LIST_IGNORE;
     }
 

@@ -49,6 +49,7 @@ import {
 import StatsCard from "./StatsCard";
 import ProductDetailsModal from "../Modal/ProductDetailsModal";
 import ProductCommentModal from "../Modal/ProductCommentModal";
+import { getMediaUrl } from "@/utils/media";
 
 const { confirm } = Modal;
 
@@ -245,7 +246,7 @@ const ProductTable: React.FC<ProductTableProps> = ({
           <Avatar
             shape="square"
             size={48}
-            src={record.photos?.mainPhoto || "/placeholder.png"}
+            src={getMediaUrl(record.photos?.mainPhoto)}
             alt={record.title}
           />
           <div className="min-w-0">

@@ -3,6 +3,7 @@ import cn from "@/lib/cn";
 import Image from "next/image";
 import React from "react";
 import { FaUserCircle } from "react-icons/fa";
+import { getMediaUrl } from "@/utils/media";
 
 const Avatar: React.FC<{ src?: string; className?: string }> = ({
   src,
@@ -18,7 +19,7 @@ const Avatar: React.FC<{ src?: string; className?: string }> = ({
       {src ? (
         <Image
           className="w-full h-full rounded-full object-cover"
-          src={src}
+          src={getMediaUrl(src)}
           width={400}
           height={400}
           alt="user profile avatar"

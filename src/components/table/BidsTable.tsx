@@ -14,6 +14,7 @@ import {
 import type { ColumnsType } from "antd/es/table";
 import { useGetSpecificProductBidsQuery } from "@/Redux/features/bids/bidsApi";
 import dayjs from "dayjs";
+import { getMediaUrl } from "@/utils/media";
 
 interface BidsTableProps {
   statusLabel: string;
@@ -138,7 +139,7 @@ const BidsTable: React.FC<BidsTableProps> = ({
           <Avatar
             shape="square"
             size={32}
-            src={record.photos?.mainPhoto || "/placeholder.png"}
+            src={getMediaUrl(record.photos?.mainPhoto)}
             alt={record.title}
           />
           <span className="font-semibold">{record.title || "No name"}</span>

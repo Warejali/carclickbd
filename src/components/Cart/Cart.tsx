@@ -8,6 +8,7 @@ import { Card } from 'antd';
 import Image from 'next/image';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { getMediaUrl } from '@/utils/media';
 
 interface RootState {
     cart: {
@@ -42,7 +43,7 @@ export default function CartPage() {
                         <div className='flex gap-3 items-center'>
                             <div>
                                 <Image
-                                    src={item?.photos.mainPhoto}
+                                    src={getMediaUrl(item?.photos.mainPhoto)}
                                     alt=""
                                     width={50}
                                     height={50}
@@ -66,4 +67,3 @@ export default function CartPage() {
 
     );
 }
-
