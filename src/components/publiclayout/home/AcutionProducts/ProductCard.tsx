@@ -29,7 +29,7 @@ import {
 
 const formatPrice = (value: number | string) => {
   const numericValue = Number(value || 0);
-  if (!numericValue) return "Contact for final price & Availability";
+  if (!numericValue) return "Contact for price";
 
   return `BDT ${numericValue.toLocaleString("en-US")}/-`;
 };
@@ -51,6 +51,12 @@ const ProductCard = ({ product }: { product: IProduct }) => {
   const location = [product?.location?.city, product?.location?.zipCode]
     .filter(Boolean)
     .join(", ");
+  const title =
+    product.title ||
+    [product.productionYear || product.launchingYear, product.maker || product.make, product.model]
+      .filter(Boolean)
+      .join(" ") ||
+    "Vehicle listing";
 
   const specs = [
     {
@@ -177,6 +183,12 @@ const ProductCard = ({ product }: { product: IProduct }) => {
               </span>
             </div>
           ))}
+        </div>
+
+        <div className="border-t border-slate-100 pt-3">
+          <h3 className="truncate text-[14px] font-bold leading-snug text-slate-950 transition-colors duration-300 group-hover:text-[#e50914]">
+            {title}
+          </h3>
         </div>
 
         <div className="border-t border-slate-100 pt-4">

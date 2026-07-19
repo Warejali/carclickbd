@@ -15,7 +15,7 @@ interface MediaSectionProps {
 
 const FILE_LIMITS = {
   MAIN_PHOTO: 1,
-  OTHER_PHOTOS: 10,
+  OTHER_PHOTOS: 40,
 };
 
 const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
@@ -83,7 +83,7 @@ const MediaSection: React.FC<MediaSectionProps> = ({
       {/* Other Photos */}
       <Form.Item
         name="otherPhotos"
-        label="Others Photos (up to 10)"
+        label="Others Photos (up to 40)"
         rules={[{ required: true, message: "Please upload at least one other photo" }]}
       >
         <Upload

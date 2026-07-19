@@ -158,7 +158,7 @@ const ProductMedia: React.FC = () => {
           <div className="md:grid grid-cols-2 gap-4">            
             <Form.Item
               name="otherPhotos"
-              label="Others Photos (up to 10)"
+              label="Others Photos (up to 40)"
               rules={[
                 {
                   required: true,

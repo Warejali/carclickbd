@@ -7,6 +7,14 @@ import { IProduct } from "@/Interface/product";
 import { useGetAllProductQuery } from "@/Redux/api/productApi";
 import { AuctionProductsProps } from "@/types/products.types";
 
+const conditionQueryMap: Record<string, string> = {
+  new: "New",
+  reconditioned: "Reconditioned",
+  "local-used": "Local Used",
+  "pre-owned": "Pre Owned",
+  used: "Used",
+};
+
 const ProductsResult = ({
   isPaginate,
   isShowAll,
@@ -24,11 +32,17 @@ const ProductsResult = ({
     if (isDraft !== undefined) baseFilters.push({ name: "isDraft", value: isDraft });
     if (isFeatured !== undefined) baseFilters.push({ name: "isFeatured", value: isFeatured });
 
-    if (searchParams.get("make")) baseFilters.push({ name: "make", value: searchParams.get("make") });
+    if (searchParams.get("make")) baseFilters.push({ name: "maker", value: searchParams.get("make") });
     if (searchParams.get("model")) baseFilters.push({ name: "model", value: searchParams.get("model") });
     if (searchParams.get("transmission")) baseFilters.push({ name: "transmission", value: searchParams.get("transmission") });
-    if (searchParams.get("bodyStyle")) baseFilters.push({ name: "bodyStyle", value: searchParams.get("bodyStyle") });
-    if (searchParams.get("condition")) baseFilters.push({ name: "condition", value: searchParams.get("condition") });
+    if (searchParams.get("bodyStyle")) baseFilters.push({ name: "bodyType", value: searchParams.get("bodyStyle") });
+    if (searchParams.get("condition")) {
+      const condition = searchParams.get("condition") as string;
+      baseFilters.push({
+        name: "condition",
+        value: conditionQueryMap[condition] || condition,
+      });
+    }
     if (searchParams.get("searchTerm")) baseFilters.push({ name: "searchTerm", value: searchParams.get("searchTerm") });
     if (searchParams.get("startYear") && searchParams.get("endYear")) {
       baseFilters.push({ name: "startYear", value: parseInt(searchParams.get("startYear")!) });
