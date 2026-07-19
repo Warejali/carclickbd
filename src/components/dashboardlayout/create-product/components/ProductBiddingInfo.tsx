@@ -30,7 +30,7 @@ const { Option } = Select;
 // ---------- File Validation ----------
 const FILE_LIMITS = {
   MAIN_PHOTO: 1,
-  OTHER_PHOTOS: 10,
+  OTHER_PHOTOS: 40,
 };
 
 const validateFiles = (

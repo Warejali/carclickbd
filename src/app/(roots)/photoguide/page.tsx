@@ -34,7 +34,7 @@ const PhotoguidePage = () => {
               <ul className="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-400">
                 <li><strong>Resolution:</strong> Minimum 1024x768 pixels, recommended 1920x1080 pixels or higher.</li>
                 <li><strong>Format:</strong> JPEG or PNG.</li>
-                <li><strong>File Size:</strong> Maximum 5MB.</li>
+                <li><strong>File Size:</strong> No fixed upload size limit for product photos.</li>
                 <li><strong>Aspect Ratio:</strong>  Follow the specific aspect ratio requested (if any).  If no ratio is specified, 4:3 or 16:9 are generally preferred.</li>
                 <li><strong>Focus:</strong> Images should be sharp and in focus.</li>
                 <li><strong>Lighting:</strong>  Good lighting is essential.  Avoid overly dark, washed-out, or heavily shadowed images.</li>

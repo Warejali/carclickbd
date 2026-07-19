@@ -20,7 +20,7 @@ import { getMediaUrl } from "@/utils/media";
 
 const FILE_LIMITS = {
   MAIN_PHOTO: 1,
-  OTHER_PHOTOS: 10,
+  OTHER_PHOTOS: 40,
 };
 
 const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
@@ -107,7 +107,7 @@ const ProductMedia: React.FC = () => {
     fileList: any[];
     setFileList: React.Dispatch<React.SetStateAction<any[]>>;
   }) => {
-    if (fileList.length <= 10) {
+    if (fileList.length <= FILE_LIMITS.OTHER_PHOTOS) {
       setFileList(fileList);
     }
   };
@@ -180,7 +180,7 @@ const ProductMedia: React.FC = () => {
                 multiple
                 maxCount={FILE_LIMITS.OTHER_PHOTOS}
               >
-                {otherPhotoFiles.length < 10 && uploadButton}
+                {otherPhotoFiles.length < FILE_LIMITS.OTHER_PHOTOS && uploadButton}
               </Upload>
             </Form.Item>
 
