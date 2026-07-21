@@ -196,7 +196,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
                 Price
               </p>
               <p
-                className="mt-0.5 text-lg font-semibold leading-snug text-slate-950"
+                className="mt-0.5 text-sm font-semibold leading-snug text-slate-950"
               >
                 {formatPrice(price)}
               </p>
