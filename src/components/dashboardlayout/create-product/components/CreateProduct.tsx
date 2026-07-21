@@ -97,6 +97,10 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({ productId }) => {
   };
 
   const buildProductData = (values: any) => {
+    const productValues = { ...values };
+    delete productValues.mainPhoto;
+    delete productValues.otherPhotos;
+    delete productValues.videoLinks;
     const productionYear = values.productionYear || values.year;
     const resolvedMake = values.make?.trim();
     const resolvedModel = values.model?.trim();
@@ -118,7 +122,7 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({ productId }) => {
     const status = !isEditMode || isSeller ? "pending" : values.status || "pending";
 
     return {
-      ...values,
+      ...productValues,
       make: resolvedMake,
       model: resolvedModel,
       title,

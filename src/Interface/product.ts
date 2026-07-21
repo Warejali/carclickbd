@@ -81,6 +81,13 @@ export type IProduct = {
   sellerType?: string;
   highlights: string[];
   equipment: string[];
+  featuresAndOptions?: string[];
+  featuresOptions?: string[];
+  accessories?: string[];
+  optionsList?: string[];
+  optionsText?: string;
+  options?: string;
+  additionalOptions?: string;
   modification: string[];
   recentServiceHistory?: string[];
   otherItemsIncludedInSale?: string[];

@@ -3,14 +3,35 @@ import { DetailsProductItems } from "./DetailsProductItems";
 interface VehicleDetailsProps {
   highlights?: string[];
   equipment?: string[];
+  accessories?: string[] | string;
+  optionsList?: string[] | string;
+  optionsText?: string;
+  options?: string;
+  additionalOptions?: string;
   modification?: string[];
   recentServiceHistory?: string[];
   otherItemsIncludedInSale?: string[];
   sellerNotes?: string[];
   videos?: string[];
-  featuresAndOptions?: string[];
-  featuresOptions?: string[];
+  featuresAndOptions?: string[] | string;
+  featuresOptions?: string[] | string;
 }
+
+const normalizeItems = (...values: unknown[]) => {
+  const items = values.flatMap((value) => {
+    if (Array.isArray(value)) return value;
+    if (typeof value === "string") return value.split(/\r?\n|,/);
+    return [];
+  });
+
+  return Array.from(
+    new Set(
+      items
+        .map((item) => String(item).trim())
+        .filter(Boolean)
+    )
+  );
+};
 
 export function DetailProductItemParents({
   product,
@@ -19,10 +40,26 @@ export function DetailProductItemParents({
 }) {
   const sections = [
     {
-      title: "Features & Options",
-      items: product?.featuresAndOptions || product?.featuresOptions || product?.equipment,
+      title: "Features",
+      items: normalizeItems(
+        product?.featuresAndOptions,
+        product?.featuresOptions,
+        product?.equipment,
+        product?.highlights
+      ),
     },
-    { title: "Highlights", items: product?.highlights },
+    {
+      title: "Accessories",
+      items: normalizeItems(product?.accessories, product?.optionsList),
+    },
+    {
+      title: "Options",
+      items: normalizeItems(
+        product?.optionsText,
+        product?.options,
+        product?.additionalOptions
+      ),
+    },
     { title: "Modifications", items: product?.modification },
     { title: "Recent Service History", items: product?.recentServiceHistory },
     {
@@ -37,10 +74,10 @@ export function DetailProductItemParents({
   return (
     <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-[0_16px_45px_rgba(15,23,42,0.08)]">
       <p className="text-xs font-bold uppercase tracking-[0.18em] text-sky-600">
-        Equipment
+        Vehicle Equipment
       </p>
       <h2 className="mt-1 text-2xl font-extrabold text-slate-950">
-        Features & notes
+        Accessories, features & options
       </h2>
       <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-2">
         {sections.map((section) => (
