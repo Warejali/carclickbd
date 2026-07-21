@@ -29,7 +29,6 @@ import {
 
 const formatPrice = (value: number | string) => {
   const numericValue = Number(value || 0);
-  if (!numericValue) return "Contact for price";
 
   return `BDT ${numericValue.toLocaleString("en-US")}/-`;
 };
@@ -46,7 +45,6 @@ const ProductCard = ({ product }: { product: IProduct }) => {
     Boolean((product as any).isWatchlisted || (product as any).isWishlisted)
   );
   const price = product.mainPrice || product.highestBid || product.minBid || 0;
-  const hasPrice = Boolean(Number(price || 0));
   const statusMeta = getProductStatusMeta(product);
   const location = [product?.location?.city, product?.location?.zipCode]
     .filter(Boolean)
@@ -198,9 +196,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
                 Price
               </p>
               <p
-                className={`mt-0.5 font-semibold leading-snug text-slate-950 ${
-                  hasPrice ? "text-lg" : "text-[13px]"
-                }`}
+                className="mt-0.5 text-lg font-semibold leading-snug text-slate-950"
               >
                 {formatPrice(price)}
               </p>
