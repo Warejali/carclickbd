@@ -1,6 +1,5 @@
 "use client";
-import PayPal from "@/components/Cart/Paypal";
-import Stripe from "@/components/Cart/Stripe";
+import BDGate from "@/components/Cart/BDGate";
 import { useOrderQuery } from "@/Redux/api/orderApi";
 import { Card, Col, Row, Typography, Spin,} from "antd";
 import { useParams } from "next/navigation";
@@ -26,7 +25,7 @@ const Checkout = () => {
               Secure Checkout
             </Title>
             <Text type="secondary" className="text-gray-500">
-              Complete your payment using one of the methods below
+              Complete your payment securely with BDGate
             </Text>
           </div>
 
@@ -39,21 +38,13 @@ const Checkout = () => {
               <Col xs={24} md={10}>
                 <div className="bg-gray-50 rounded-md p-6 shadow-sm">
                   <Title level={4} className="text-gray-700 mb-4">
-                    Choose Payment Method
+                    Secure Payment Method
                   </Title>
                   <div className="flex flex-col gap-4">
-                    <div className="border rounded-md p-4 hover:shadow-md transition-shadow duration-300">
-                      <PayPal
-                        data={order}
-                        setPaymentStatus={setPaymentStatus}
-                      />
-                    </div>
-                    <div className="border rounded-md p-4 hover:shadow-md transition-shadow duration-300 flex justify-center">
-                      <Stripe
-                        data={order}
-                        setPaymentStatus={setPaymentStatus}
-                      />
-                    </div>
+                    <BDGate
+                      data={order}
+                      setPaymentStatus={setPaymentStatus}
+                    />
                   </div>
                 </div>
               </Col>
@@ -83,7 +74,7 @@ const Checkout = () => {
                   <h2 className="flex items-center justify-between font-semibold ">
                     <span>Total Price</span>{" "}
                     <span className="font-bold text-xl lg:text-2xl">
-                    ${order?.totalAmount} USD
+                    BDT {Number(order?.totalAmount || 0).toLocaleString("en-US")}
                     </span>
                   </h2>
                   <button className="py-3 text-sm md:text-md xl:text-lg text-center text-gray-800 font-bold mt-5 w-full rounded-full bg-orange-400 hover:bg-orange-300 transition-colors duration-300">

@@ -3,11 +3,28 @@
 import { BadgeCheck, Clock3, ShieldCheck } from "lucide-react";
 import { getProductStatusMeta } from "@/utils/productStatus";
 
+const getNumericPrice = (product: any) => {
+  const value =
+    product?.mainPrice ||
+    product?.price ||
+    product?.fixedPrice ||
+    product?.highestBid ||
+    product?.minBid ||
+    0;
+  const numeric = Number(String(value).replace(/[^\d.]/g, ""));
+  return Number.isFinite(numeric) ? numeric : 0;
+};
+
+const formatBdt = (value: number) =>
+  `BDT ${Math.max(0, Math.round(value)).toLocaleString("en-US")}/-`;
+
 export default function SaleInformation({ product }: { product: any }) {
   const statusMeta = getProductStatusMeta(product);
+  const price = getNumericPrice(product);
   const referenceNumber =
     product?.stockNumber || product?.referenceNumber || product?._id?.slice(-8)?.toUpperCase();
   const rows = [
+    ["Price", formatBdt(price)],
     ["Listing status", statusMeta.label],
     ["Seller type", product?.sellerType || "Verified dealer"],
     ["Reference No", referenceNumber],

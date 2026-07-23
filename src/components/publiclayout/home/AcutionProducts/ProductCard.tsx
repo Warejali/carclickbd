@@ -33,6 +33,22 @@ const formatPrice = (value: number | string) => {
   return `BDT ${numericValue.toLocaleString("en-US")}/-`;
 };
 
+const getProductPrice = (product: IProduct) => {
+  const value =
+    product.mainPrice ||
+    product.price ||
+    product.fixedPrice ||
+    product.highestBid ||
+    product.minBid ||
+    0;
+
+  if (typeof value === "string") {
+    return Number(value.replace(/[^\d.]/g, "")) || 0;
+  }
+
+  return Number(value || 0);
+};
+
 const ProductCard = ({ product }: { product: IProduct }) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -44,7 +60,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
   const [isWishlisted, setIsWishlisted] = useState(
     Boolean((product as any).isWatchlisted || (product as any).isWishlisted)
   );
-  const price = product.mainPrice || product.highestBid || product.minBid || 0;
+  const price = getProductPrice(product);
   const statusMeta = getProductStatusMeta(product);
   const location = [product?.location?.city, product?.location?.zipCode]
     .filter(Boolean)

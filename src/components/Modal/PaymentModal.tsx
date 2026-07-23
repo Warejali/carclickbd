@@ -3,8 +3,7 @@ import React from 'react';
 import { Modal, Typography, Button, Row, Col } from 'antd';
 import { LuPrinter } from 'react-icons/lu';
 import { FaRegCopy } from 'react-icons/fa';
-import PayPal from '@/components/Cart/Paypal';
-import Stripe from '@/components/Cart/Stripe';
+import BDGate from '@/components/Cart/BDGate';
 import { IOrder } from '@/Interface/order';
 
 const { Title, Text } = Typography;
@@ -40,29 +39,18 @@ const PaymentModal: React.FC<OrderSummaryModalProps> = ({
       className="order-summary-modal" // Optional custom class for styling
     >
       <Row gutter={[32, 24]}>
-        <Col xs={24} md={10}>
+        <Col xs={24} md={12}>
           <div className="bg-gray-50 rounded-md p-6 shadow-sm">
             <Title level={4} className="text-gray-700 mb-4">
-              Choose Payment Method
+              Secure Payment Method
             </Title>
             <div className="flex flex-col gap-4">
-              <div className="border rounded-md p-2 hover:shadow-md transition-shadow duration-300">
-                <PayPal
-                  data={order}
-                  setPaymentStatus={setPaymentStatus}
-                />
-              </div>
-              <div className="border rounded-md p-2 hover:shadow-md transition-shadow duration-300 flex justify-center">
-                <Stripe
-                  data={order}
-                  setPaymentStatus={setPaymentStatus}
-                />
-              </div>
+              <BDGate data={order} setPaymentStatus={setPaymentStatus} />
             </div>
           </div>
         </Col>
 
-        <Col xs={24} md={10}>
+        <Col xs={24} md={12}>
           <div className="bg-[#23618b] text-white rounded-md">
             <div className="lg:px-5 px-2 pt-2 lg:pt-5">
               <h2 className="font-bold lg:text-xl pb-2 my-2 text-white border-b-[0.5px] border-green-900">
@@ -81,7 +69,7 @@ const PaymentModal: React.FC<OrderSummaryModalProps> = ({
               <h2 className="flex items-center justify-between font-semibold ">
                 <span>Total Price</span>
                 <span className="font-bold text-xl lg:text-2xl">
-                  ${order?.totalAmount} USD
+                  BDT {Number(order?.totalAmount || 0).toLocaleString("en-US")}
                 </span>
               </h2>
               <button className="py-3 text-sm md:text-md xl:text-lg text-center text-gray-800 font-bold mt-5 w-full rounded-full bg-orange-400 hover:bg-orange-300 transition-colors duration-300">

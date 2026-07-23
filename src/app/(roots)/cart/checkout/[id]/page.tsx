@@ -1,7 +1,6 @@
 "use client";
 
-import PayPal from "@/components/Cart/Paypal";
-import Stripe from "@/components/Cart/Stripe";
+import BDGate from "@/components/Cart/BDGate";
 import { useOrderQuery } from "@/Redux/api/orderApi";
 import { Col, Row } from "antd";
 import { useState } from "react";
@@ -9,11 +8,8 @@ import { useState } from "react";
 const CheckoutPage = ({ params }: any) => {
 
   const { data, isLoading, } = useOrderQuery(params?.id)
+  const order = data?.data || data;
 
-  console.log("data:", data);
-
-
-  const base = "buyer";
   const [paymentStatus, setPaymentStatus] = useState("");
   return (
     <div>
@@ -26,36 +22,25 @@ const CheckoutPage = ({ params }: any) => {
           <Row gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
             <Col span={12} >
 
-              <h3>Payment Selection</h3>
+              <h3>BDGate Payment</h3>
 
               <Row gutter={20} className=" bg-white my-4 p-8">
                 <Col span={24}>
-                  <div className=" flex gap-4 items-center">
-                    <div>
-                      <PayPal
-                        data={data}
-                        setPaymentStatus={setPaymentStatus}
-                      />
-
-                    </div>
-                    <div>
-                      <Stripe data={data} setPaymentStatus={setPaymentStatus} />
-                    </div>
-                    {/* <div>
-                      <Image
-                        src={BankTransfer}
-                        width={100}
-                        height={44}
-                        alt=''
-                      />
-                    </div> */}
+                  <div>
+                    <BDGate
+                      data={order}
+                      setPaymentStatus={setPaymentStatus}
+                    />
                   </div>
                 </Col>
               </Row>
               <Row gutter={20} className=" bg-white px-8 py-8 my-4">
                 <Col>
                   <div>
-                    <h2>paidAmount: {data?.totalAmount}</h2>
+                    <h2>
+                      Payable amount: BDT{" "}
+                      {Number(order?.totalAmount || 0).toLocaleString("en-US")}
+                    </h2>
                   </div>
                 </Col>
               </Row>

@@ -31,6 +31,32 @@ const paymentApi = baseApi.injectEndpoints({
       invalidatesTags: ["payment"],
     }),
 
+    initBdGatePayment: build.mutation({
+      query: (items: any) => ({
+        url: `${PAYMENT}/bdgate/init`,
+        method: "POST",
+        data: items,
+      }),
+      invalidatesTags: ["payment"],
+    }),
+
+    initBdGateTestPayment: build.mutation({
+      query: (items: any) => ({
+        url: `${PAYMENT}/bdgate/test`,
+        method: "POST",
+        data: items,
+      }),
+      invalidatesTags: ["payment"],
+    }),
+
+    syncBdGatePaymentStatus: build.mutation({
+      query: (token: string) => ({
+        url: `${PAYMENT}/bdgate/status/${token}`,
+        method: "GET",
+      }),
+      invalidatesTags: ["payment", "order"],
+    }),
+
     createPayment: build.mutation({
       query: (item: any) => ({
         url: `${PAYMENT}/create`,
@@ -45,6 +71,9 @@ const paymentApi = baseApi.injectEndpoints({
 export const {
   useGetPaymentQuery,
   useInitPaymentMutation,
+  useInitBdGatePaymentMutation,
+  useInitBdGateTestPaymentMutation,
+  useSyncBdGatePaymentStatusMutation,
   useCreatePaymentMutation
 } = paymentApi;
 

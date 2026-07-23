@@ -25,6 +25,8 @@ export type IProduct = {
     others: string[];
   };
   mainPrice: number;
+  price?: number | string;
+  fixedPrice?: number | string;
   isAuction: boolean;
   isSoldOut: boolean;
   status?: ProductListingStatus;
