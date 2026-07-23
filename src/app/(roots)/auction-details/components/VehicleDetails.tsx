@@ -4,7 +4,23 @@ const getValue = (...values: any[]) =>
   values.find((value) => value !== undefined && value !== null && value !== "") ||
   "N/A";
 
+const getNumericPrice = (product: any) => {
+  const value =
+    product?.mainPrice ||
+    product?.price ||
+    product?.fixedPrice ||
+    product?.highestBid ||
+    product?.minBid ||
+    0;
+  const numeric = Number(String(value).replace(/[^\d.]/g, ""));
+  return Number.isFinite(numeric) ? numeric : 0;
+};
+
+const formatBdt = (value: number) =>
+  `BDT ${Math.max(0, Math.round(value)).toLocaleString("en-US")}/-`;
+
 export default function VehicleDetails({ product }: { product: any }) {
+  const price = getNumericPrice(product);
   const specs = [
     ["Title", product?.title],
     ["Maker", getValue(product?.maker, product?.make)],
@@ -32,7 +48,7 @@ export default function VehicleDetails({ product }: { product: any }) {
 
   return (
     <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-[0_16px_45px_rgba(15,23,42,0.08)]">
-      <div className="mb-5 flex items-center justify-between gap-4">
+      <div className="mb-5 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.18em] text-sky-600">
             Specification
@@ -40,6 +56,14 @@ export default function VehicleDetails({ product }: { product: any }) {
           <h2 className="mt-1 text-2xl font-extrabold text-slate-950">
             Vehicle details
           </h2>
+        </div>
+        <div className="rounded-lg border border-[#f0b90b]/60 bg-gradient-to-br from-[#fff8df] to-white px-5 py-4 shadow-[0_14px_35px_rgba(245,189,5,0.16)] md:min-w-[260px]">
+          <p className="text-[11px] font-black uppercase tracking-[0.18em] text-[#003399]">
+            Vehicle price
+          </p>
+          <p className="mt-1 text-2xl font-black leading-none text-slate-950">
+            {formatBdt(price)}
+          </p>
         </div>
       </div>
 
