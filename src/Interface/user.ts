@@ -25,7 +25,10 @@ export type IUser = {
 
 export type ICommonProfile = {
   id: string;
-  name: string;
+  _id?: string;
+  name?: string;
+  businessName?: string;
+  email?: string;
   profilePhoto?: string;
 };
 

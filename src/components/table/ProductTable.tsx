@@ -82,6 +82,21 @@ const formatViews = (value?: number | string) => {
 const getLocation = (product: IProduct) =>
   [product.location?.city, product.location?.zipCode].filter(Boolean).join(", ");
 
+const getSellerInfo = (product: IProduct) => {
+  const seller = product.seller;
+  if (!seller || typeof seller === "string") {
+    return {
+      name: "N/A",
+      company: "N/A",
+    };
+  }
+
+  return {
+    name: seller.name || seller.email || "N/A",
+    company: seller.businessName || "N/A",
+  };
+};
+
 const ProductTable: React.FC<ProductTableProps> = ({
   products,
   loading,
@@ -119,6 +134,8 @@ const ProductTable: React.FC<ProductTableProps> = ({
         product.engine,
         product.stockNumber,
         product.referenceNumber,
+        getSellerInfo(product).name,
+        getSellerInfo(product).company,
         getLocation(product),
       ]
         .filter(Boolean)
@@ -309,19 +326,30 @@ const ProductTable: React.FC<ProductTableProps> = ({
       sorter: (a, b) => Number(a.views || 0) - Number(b.views || 0),
     },
     {
-      title: "Specs",
-      key: "specs",
-      width: 190,
+      title: "Seller Name",
+      key: "sellerName",
+      width: 170,
       responsive: ["lg"],
       render: (_, record) => (
-        <div className="space-y-1 text-xs text-slate-600">
-          <p>{record.engine || "Engine N/A"}</p>
-          <p className="capitalize">
-            {[record.transmission, record.drivetrain].filter(Boolean).join(" / ") ||
-              "Drive N/A"}
-          </p>
-        </div>
+        <span className="font-semibold text-slate-900">
+          {getSellerInfo(record).name}
+        </span>
       ),
+      sorter: (a, b) =>
+        getSellerInfo(a).name.localeCompare(getSellerInfo(b).name),
+    },
+    {
+      title: "Company",
+      key: "sellerCompany",
+      width: 180,
+      responsive: ["lg"],
+      render: (_, record) => (
+        <span className="font-medium text-slate-700">
+          {getSellerInfo(record).company}
+        </span>
+      ),
+      sorter: (a, b) =>
+        getSellerInfo(a).company.localeCompare(getSellerInfo(b).company),
     },
     {
       title: "Location",
@@ -352,24 +380,6 @@ const ProductTable: React.FC<ProductTableProps> = ({
           },
         ]
       : []),
-    {
-      title: "Badges",
-      key: "badges",
-      width: 160,
-      render: (_, record) => (
-        <Space size={[0, 4]} wrap>
-          {record.isFeatured && <Tag color="gold">Featured</Tag>}
-          {record.isSoldOut && <Tag color="orange">Reserved</Tag>}
-          {!record.isFeatured && !record.isSoldOut && <Tag>Standard</Tag>}
-        </Space>
-      ),
-      filters: [
-        { text: "Featured", value: "featured" },
-        { text: "Reserved", value: "reserved" },
-      ],
-      onFilter: (value, record) =>
-        value === "featured" ? record.isFeatured : record.isSoldOut,
-    },
     {
       title: "Status",
       key: "status",
@@ -568,7 +578,7 @@ const ProductTable: React.FC<ProductTableProps> = ({
           showTotal: (total) => `Total ${total} products`,
         }}
         onChange={onChange}
-        scroll={{ x: 1450 }}
+        scroll={{ x: 1420 }}
       />
 
       <ProductDetailsModal

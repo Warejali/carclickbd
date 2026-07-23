@@ -39,6 +39,62 @@ const createStockNumber = (values: any) => {
   return `CCBD-${maker}${model}-${suffix}`;
 };
 
+const firstValue = (...values: any[]) =>
+  values.find((value) => value !== undefined && value !== null && value !== "");
+
+const firstPriceValue = (...values: any[]) => {
+  const pricedValue = values.find((value) => {
+    if (value === undefined || value === null || value === "") return false;
+    return Number(value) > 0;
+  });
+
+  return pricedValue ?? firstValue(...values);
+};
+
+const matchSelectValue = (value: any, options: string[]) => {
+  if (value === undefined || value === null || value === "") return value;
+  const normalizedValue = String(value).replace(/[^a-z0-9]/gi, "").toLowerCase();
+  return (
+    options.find(
+      (option) =>
+        option.replace(/[^a-z0-9]/gi, "").toLowerCase() === normalizedValue
+    ) || value
+  );
+};
+
+const fuelTypeOptions = [
+  "Petrol",
+  "Octane",
+  "Diesel",
+  "Hybrid",
+  "Electric",
+  "EV",
+  "HEV",
+  "CNG",
+  "LPG",
+];
+const transmissionOptions = ["Automatic", "Manual"];
+const driveTypeOptions = ["4WD", "2WD"];
+const steeringOptions = ["LEFT", "RIGHT", "OTHER"];
+const bodyTypeOptions = [
+  "Sedan",
+  "SUV",
+  "Coupe",
+  "Convertible",
+  "SUV/Crossover",
+  "Van/Minivan",
+  "Truck",
+  "Hatchback",
+  "Wagon",
+];
+const conditionOptions = [
+  "New",
+  "Reconditioned",
+  "Local Used",
+  "Pre Owned",
+  "Used",
+];
+
 const ProductCreateForm: React.FC<ProductCreateFormProps> = ({ productId }) => {
   const [form] = Form.useForm();
   const router = useRouter();
@@ -63,12 +119,45 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({ productId }) => {
     form.setFieldsValue({
       ...product,
       make: product.make || product.maker,
+      model: product.model || product.carName || product.car_name,
       productionYear: product.productionYear || product.year || product.launchingYear,
       registrationYear: product.registrationYear,
       stockNumber: product.stockNumber || product.referenceNumber,
-      modelCode: product.modelCode,
+      mainPrice: firstPriceValue(
+        product.mainPrice,
+        product.price,
+        product.fixedPrice,
+        product.salePrice,
+        product.askingPrice,
+        product.highestBid,
+        product.minBid
+      ),
+      engine: firstValue(
+        product.engine,
+        product.engineCc,
+        product.engineCC,
+        product.engineSize,
+        product.engineCapacity
+      ),
+      modelCode: firstValue(product.modelCode, product.model_code),
+      fuelType: matchSelectValue(product.fuelType || product.fuel, fuelTypeOptions),
+      transmission: matchSelectValue(product.transmission, transmissionOptions),
+      drivetrain: matchSelectValue(
+        product.drivetrain || product.driveType || product.drive,
+        driveTypeOptions
+      ),
+      steering: matchSelectValue(
+        product.steering || product.steeringType,
+        steeringOptions
+      ),
+      seats: product.seats || product.seatCount,
+      bodyStyle: matchSelectValue(
+        product.bodyStyle || product.bodyType || product.body,
+        bodyTypeOptions
+      ),
       color: product.color || product.exteriorColor,
       vin: product.vin || product.vinChassisNumber,
+      condition: matchSelectValue(product.condition, conditionOptions),
       featuresAndOptions:
         product.featuresAndOptions || product.equipment || product.highlights,
       accessories: product.accessories || product.optionsList,
