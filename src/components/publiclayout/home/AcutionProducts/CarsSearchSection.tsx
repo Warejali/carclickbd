@@ -24,6 +24,15 @@ const statuses = [
   { value: "sold", label: "Sold" },
 ];
 
+const conditions = [
+  { value: "all", label: "All Conditions" },
+  { value: "new", label: "New" },
+  { value: "reconditioned", label: "Reconditioned" },
+  { value: "local-used", label: "Local Used" },
+  { value: "pre-owned", label: "Pre Owned" },
+  { value: "used", label: "Used" },
+];
+
 const CarsSearchSection = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -31,6 +40,7 @@ const CarsSearchSection = () => {
   const [model, setModel] = useState(searchParams.get("model") || "all");
   const [year, setYear] = useState(searchParams.get("startYear") || "all");
   const [status, setStatus] = useState(searchParams.get("status") || "all");
+  const [condition, setCondition] = useState(searchParams.get("condition") || "all");
   const [referenceId, setReferenceId] = useState(searchParams.get("searchTerm") || "");
 
   const modelOptions = useMemo(() => {
@@ -69,6 +79,9 @@ const CarsSearchSection = () => {
     if (status === "all") params.delete("status");
     else params.set("status", status);
 
+    if (condition === "all") params.delete("condition");
+    else params.set("condition", condition);
+
     const trimmedReferenceId = referenceId.trim();
     if (trimmedReferenceId) params.set("searchTerm", trimmedReferenceId);
     else params.delete("searchTerm");
@@ -101,7 +114,7 @@ const CarsSearchSection = () => {
             </h1>
           </div>
 
-          <div className="grid gap-4 lg:grid-cols-[1fr_1fr_1fr_1fr_1fr_auto]">
+          <div className="grid gap-4 lg:grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr_auto]">
             <FilterSelect
               label="Maker"
               value={maker}
@@ -131,6 +144,12 @@ const CarsSearchSection = () => {
               value={status}
               options={statuses}
               onChange={setStatus}
+            />
+            <FilterSelect
+              label="Condition"
+              value={condition}
+              options={conditions}
+              onChange={setCondition}
             />
 
             <label className="grid gap-2">

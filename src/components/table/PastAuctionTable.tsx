@@ -7,8 +7,10 @@ import {
   Avatar,
   Button,
   Card,
+  Dropdown,
   Flex,
   Input,
+  Menu,
   Modal,
   Popconfirm,
   Row,
@@ -20,7 +22,10 @@ import {
 } from "antd";
 import { MdOutlineDelete } from "react-icons/md";
 import { IoEye } from "react-icons/io5";
-import { useDeleteProductMutation } from "@/Redux/api/productApi";
+import {
+  useDeleteProductMutation,
+  useUpdateProductStatusMutation,
+} from "@/Redux/api/productApi";
 import { IProduct, ProductListingStatus } from "@/Interface/product";
 import {
   getProductStatusMeta,
@@ -52,6 +57,7 @@ const PastAuctionTable: React.FC<ProductTableProps> = ({
   const pathname = usePathname();
   const [searchText, setSearchText] = useState("");
   const [deleteProduct] = useDeleteProductMutation();
+  const [updateProductStatus] = useUpdateProductStatusMutation();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [bulkLoading, setBulkLoading] = useState(false);
 
@@ -101,6 +107,21 @@ const PastAuctionTable: React.FC<ProductTableProps> = ({
       ? "/seller/my-product/edit"
       : "/admin/product/edit";
     router.push(`${basePath}/${record._id}`);
+  };
+
+  const handleSetStatus = async (
+    product: IProduct,
+    status: ProductListingStatus
+  ) => {
+    try {
+      await updateProductStatus({
+        id: product._id,
+        status,
+      }).unwrap();
+      message.success(`Product status updated to ${productStatusMeta[status].label}`);
+    } catch (error) {
+      message.error("Failed to update product status");
+    }
   };
 
   const columns: ColumnsType<IProduct> = [
@@ -169,8 +190,27 @@ const PastAuctionTable: React.FC<ProductTableProps> = ({
       title: "Action",
       key: "action",
       responsive: ["xs", "sm", "md", "lg", "xl"],
-      render: (_, record) => (
-        <div className="flex gap-2">
+      render: (_, record) => {
+        const statusMenu = (
+          <Menu>
+            {productStatuses.map((status) => (
+              <Menu.Item
+                key={`status-${status}`}
+                onClick={() => handleSetStatus(record, status)}
+              >
+                {productStatusMeta[status].label}
+              </Menu.Item>
+            ))}
+          </Menu>
+        );
+
+        return (
+        <div className="flex flex-wrap items-center gap-2">
+          <Dropdown overlay={statusMenu} trigger={["click"]}>
+            <Button size="small" className="!border-sky-200 !bg-sky-50 !font-semibold !text-sky-700">
+              Set Status
+            </Button>
+          </Dropdown>
           <Button
             variant="filled"
             color="default"
@@ -208,7 +248,8 @@ const PastAuctionTable: React.FC<ProductTableProps> = ({
             </Button>
           </Popconfirm>
         </div>
-      ),
+        );
+      },
     },
   ];
 
