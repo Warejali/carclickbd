@@ -16,9 +16,12 @@ const years = Array.from(
 
 const statuses = [
   { value: "all", label: "All Status" },
-  { value: "new", label: "New" },
-  { value: "reconditioned", label: "Reconditioned" },
-  { value: "local-used", label: "Local Used" },
+  { value: "pending", label: "Pending" },
+  { value: "upcoming", label: "Upcoming" },
+  { value: "approval", label: "Available" },
+  { value: "reserve", label: "Reserve" },
+  { value: "under_negotiations", label: "Under Negotiation" },
+  { value: "sold", label: "Sold" },
 ];
 
 const CarsSearchSection = () => {
@@ -27,7 +30,7 @@ const CarsSearchSection = () => {
   const [maker, setMaker] = useState(searchParams.get("make") || "all");
   const [model, setModel] = useState(searchParams.get("model") || "all");
   const [year, setYear] = useState(searchParams.get("startYear") || "all");
-  const [status, setStatus] = useState(searchParams.get("condition") || "all");
+  const [status, setStatus] = useState(searchParams.get("status") || "all");
   const [referenceId, setReferenceId] = useState(searchParams.get("searchTerm") || "");
 
   const modelOptions = useMemo(() => {
@@ -63,8 +66,8 @@ const CarsSearchSection = () => {
       params.set("endYear", year);
     }
 
-    if (status === "all") params.delete("condition");
-    else params.set("condition", status);
+    if (status === "all") params.delete("status");
+    else params.set("status", status);
 
     const trimmedReferenceId = referenceId.trim();
     if (trimmedReferenceId) params.set("searchTerm", trimmedReferenceId);

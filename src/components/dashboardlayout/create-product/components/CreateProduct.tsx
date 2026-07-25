@@ -8,7 +8,6 @@ import {
   useGetProductByIdQuery,
   useUpdateProductMutation,
 } from "@/Redux/api/productApi";
-import { getTokenInfo } from "@/service/auth.service";
 import BasicInfoSection from "./BasicInfoSection";
 import AccessoriesSection from "./AccessoriesSection";
 import FeatureTagsSection from "./FeatureTagsSection";
@@ -16,6 +15,7 @@ import InternalNoteSection from "./InternalNoteSection";
 import LocationSection from "./LocationSection";
 import MediaSection from "./MediaSection";
 import PricingSection from "./PricingSection";
+import StatusSection from "./StatusSection";
 import VehicleDetailsSection from "./VehicleDetailsSection";
 import { getMediaUrl } from "@/utils/media";
 
@@ -98,9 +98,7 @@ const conditionOptions = [
 const ProductCreateForm: React.FC<ProductCreateFormProps> = ({ productId }) => {
   const [form] = Form.useForm();
   const router = useRouter();
-  const user = getTokenInfo();
   const isEditMode = Boolean(productId);
-  const isSeller = user?.role === "seller";
   const [autoStockNumber] = useState(() => createStockNumber({}));
   const [previewImage, setPreviewImage] = useState("");
   const [previewVisible, setPreviewVisible] = useState(false);
@@ -208,7 +206,7 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({ productId }) => {
       .join(" ");
     const title = values.title?.trim() || generatedTitle;
 
-    const status = !isEditMode || isSeller ? "pending" : values.status || "pending";
+    const status = values.status || "pending";
 
     return {
       ...productValues,
@@ -327,8 +325,8 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({ productId }) => {
       if (res?.statusCode === 201 || res?.statusCode === 200 || res?.success) {
         message.success(
           isEditMode
-            ? "Product updated and sent for admin approval."
-            : "Product created and sent for admin approval."
+            ? "Product updated successfully."
+            : "Product created successfully."
         );
         form.resetFields();
         setMainPhotoFile(null);
@@ -380,6 +378,7 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({ productId }) => {
               videoLinks={videoLinks}
               setVideoLinks={setVideoLinks}
             />
+            <StatusSection />
             <AccessoriesSection />
             <InternalNoteSection />
           </Col>

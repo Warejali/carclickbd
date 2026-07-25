@@ -15,6 +15,12 @@ const conditionQueryMap: Record<string, string> = {
   used: "Used",
 };
 
+const statusQueryMap: Record<string, string> = {
+  available: "approval",
+  "under-negotiation": "under_negotiations",
+  "under-negotiations": "under_negotiations",
+};
+
 const ProductsResult = ({
   isPaginate,
   isShowAll,
@@ -41,6 +47,13 @@ const ProductsResult = ({
       baseFilters.push({
         name: "condition",
         value: conditionQueryMap[condition] || condition,
+      });
+    }
+    if (searchParams.get("status")) {
+      const status = searchParams.get("status") as string;
+      baseFilters.push({
+        name: "status",
+        value: statusQueryMap[status] || status,
       });
     }
     if (searchParams.get("searchTerm")) baseFilters.push({ name: "searchTerm", value: searchParams.get("searchTerm") });

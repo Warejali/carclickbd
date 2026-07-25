@@ -5,6 +5,7 @@ import { WhatsAppOutlined } from "@ant-design/icons";
 import { Calculator, CalendarClock, Percent, UserRound } from "lucide-react";
 import { useMemo, useState } from "react";
 import { getWhatsAppUrl, siteContact } from "@/constants/siteContact";
+import { useCreateProductInquiryNotificationMutation } from "@/Redux/api/notificationApi";
 
 const getNumericPrice = (product: any) => {
   const value =
@@ -23,6 +24,8 @@ const formatBdt = (value: number) =>
 
 export default function BidInformation({ product }: { product: any }) {
   const vehiclePrice = getNumericPrice(product);
+  const [createInquiryNotification, { isLoading: isSendingInquiry }] =
+    useCreateProductInquiryNotificationMutation();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [messageText, setMessageText] = useState("");
@@ -50,16 +53,27 @@ export default function BidInformation({ product }: { product: any }) {
     };
   }, [downPayment, interestRate, loanAmount, loanTerm]);
 
-  const handleInquiry = () => {
+  const handleInquiry = async () => {
     if (!name.trim() || !phone.trim()) {
       antMessage.error("Please enter your name and phone number.");
       return;
     }
 
-    antMessage.success("Inquiry saved. Our team will respond within 24 hours.");
-    setName("");
-    setPhone("");
-    setMessageText("");
+    try {
+      await createInquiryNotification({
+        product: product?._id,
+        itemName: product?.title,
+        name: name.trim(),
+        phone: phone.trim(),
+        message: messageText.trim(),
+      }).unwrap();
+      antMessage.success("Inquiry saved. Our team will respond within 24 hours.");
+      setName("");
+      setPhone("");
+      setMessageText("");
+    } catch (error) {
+      antMessage.error("Failed to send inquiry. Please try again.");
+    }
   };
 
   return (
@@ -102,6 +116,7 @@ export default function BidInformation({ product }: { product: any }) {
           type="primary"
           className="!h-12 !w-full !rounded-md !bg-slate-950 !font-bold hover:!bg-sky-600"
           onClick={handleInquiry}
+          loading={isSendingInquiry}
         >
           Send inquiry
         </Button>
