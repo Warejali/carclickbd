@@ -4,7 +4,7 @@ import { setOpenLeftSidebar } from "@/Redux/Slices/dashboardLayout/layoutSlice";
 import { CgMenuLeft, CgMenuRight } from "react-icons/cg";
 import { IoGlobeOutline } from "react-icons/io5";
 import { Dropdown, Menu, Tooltip, Button } from "antd";
-import { BellOutlined, PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
 import NavProfile from "./DNavPrfile";
 import ScreenMode from "./ScreenMode";
 import Image from "next/image";
@@ -21,18 +21,12 @@ import {
   LOCAL_WISHLIST_UPDATED_EVENT,
 } from "@/utils/localWishlist";
 
+const asArray = <T,>(value: unknown): T[] => (Array.isArray(value) ? value : []);
+
 const languageMenu = (
   <Menu>
     <Menu.Item key="en">English</Menu.Item>
     <Menu.Item key="bn">বাংলা</Menu.Item>
-  </Menu>
-);
-
-const notificationMenu = (
-  <Menu>
-    <Menu.Item key="1">New message received</Menu.Item>
-    <Menu.Item key="2">Server maintenance scheduled</Menu.Item>
-    <Menu.Item key="3">Update available</Menu.Item>
   </Menu>
 );
 
@@ -44,11 +38,13 @@ const DashboardWishlistIcon = () => {
   const { data } = useGetUserWatchListQuery([], {
     skip: !isLoggedIn || profile?.role === "seller",
   });
-  const apiProductIds = (data?.data || [])
+  const apiItems = asArray<any>(data?.data);
+  const localItems = asArray<any>(getLocalWishlist(wishlistUserKey));
+  const apiProductIds = apiItems
     .map((item: any) => item?.product?._id)
     .filter(Boolean);
   const count = isLoggedIn
-    ? new Set([...apiProductIds, ...getLocalWishlist(wishlistUserKey).map((item) => item._id)]).size || localCount
+    ? new Set([...apiProductIds, ...localItems.map((item) => item?._id).filter(Boolean)]).size || localCount
     : 0;
   const hasItems = count > 0;
 
@@ -103,6 +99,7 @@ const NavTopSection = () => {
   // Memoized user role
   const user = useMemo(() => getTokenInfo(), []);
   const userRole = user?.role;
+  const isAdminPanelUser = userRole === "super-admin" || userRole === "admin";
 
   // Role-based Add New Menu
   const addNewMenu = (
@@ -177,7 +174,7 @@ const NavTopSection = () => {
         )}
 
         <DashboardWishlistIcon />
-        <NotificationDropdown />
+        {isAdminPanelUser && <NotificationDropdown />}
 
         <Dropdown
           overlay={languageMenu}

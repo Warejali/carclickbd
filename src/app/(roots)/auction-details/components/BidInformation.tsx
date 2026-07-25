@@ -2,7 +2,7 @@
 
 import { Button, Input, message as antMessage } from "antd";
 import { WhatsAppOutlined } from "@ant-design/icons";
-import { Calculator, CalendarClock, Percent, UserRound } from "lucide-react";
+import { Calculator, CalendarClock, Mail, Percent, UserRound } from "lucide-react";
 import { useMemo, useState } from "react";
 import { getWhatsAppUrl, siteContact } from "@/constants/siteContact";
 import { useCreateProductInquiryNotificationMutation } from "@/Redux/api/notificationApi";
@@ -27,6 +27,7 @@ export default function BidInformation({ product }: { product: any }) {
   const [createInquiryNotification, { isLoading: isSendingInquiry }] =
     useCreateProductInquiryNotificationMutation();
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [messageText, setMessageText] = useState("");
   const [loanAmount, setLoanAmount] = useState(vehiclePrice);
@@ -64,11 +65,13 @@ export default function BidInformation({ product }: { product: any }) {
         product: product?._id,
         itemName: product?.title,
         name: name.trim(),
+        email: email.trim(),
         phone: phone.trim(),
         message: messageText.trim(),
       }).unwrap();
       antMessage.success("Inquiry saved. Our team will respond within 24 hours.");
       setName("");
+      setEmail("");
       setPhone("");
       setMessageText("");
     } catch (error) {
@@ -96,6 +99,13 @@ export default function BidInformation({ product }: { product: any }) {
           onChange={(e) => setName(e.target.value)}
           placeholder="Your name"
           prefix={<UserRound size={16} className="text-slate-400" />}
+          className="!rounded-md !py-3"
+        />
+        <Input
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email address"
+          prefix={<Mail size={16} className="text-slate-400" />}
           className="!rounded-md !py-3"
         />
         <Input

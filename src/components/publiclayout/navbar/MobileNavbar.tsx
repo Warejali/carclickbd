@@ -6,7 +6,6 @@ import { useAppSelector } from "@/Redux/hooks";
 import ProfileDropdown from "./ProfileDropdown";
 import NavAuth from "./NavAuth";
 import { Drawer } from "antd";
-import NotificationDropdown from "../../notifications/NavNotification";
 import NavSearchBar from "./NavSearchBar";
 import NavMenu from "./NavMenu";
 
@@ -25,10 +24,7 @@ const MobileNavbar = () => {
       <div className="flex items-center gap-3 ">
         <NavSearchBar />
         {isLoggedIn ? (
-          <>
-            <NotificationDropdown />
-            <ProfileDropdown />{" "}
-          </>
+          <ProfileDropdown />
         ) : (
           <NavAuth />
         )}

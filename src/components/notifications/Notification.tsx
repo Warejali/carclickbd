@@ -29,8 +29,37 @@ import { useState, useEffect } from "react";
 
 dayjs.extend(relativeTime);
 
-const Notifications = () => {
-  const { data: response, isLoading } = useGetNotificationsQuery({
+type NotificationCategory = "messages" | "inquiries" | "products" | "all";
+
+const getNotificationCategory = (notification: INotification): NotificationCategory => {
+  const message = (notification?.message || "").toLowerCase();
+
+  if (message.includes("inquiry")) return "inquiries";
+  if (
+    message.includes("new listing") ||
+    message.includes("listing added") ||
+    message.includes("product") ||
+    message.includes("vehicle")
+  ) {
+    return "products";
+  }
+
+  return "messages";
+};
+
+const categoryLabels: Record<NotificationCategory, string> = {
+  all: "Notifications",
+  messages: "Messages",
+  inquiries: "Inquiries",
+  products: "Product Add Notifications",
+};
+
+const Notifications = ({
+  category = "all",
+}: {
+  category?: NotificationCategory;
+}) => {
+  const { data: response = [], isLoading } = useGetNotificationsQuery(undefined, {
     pollingInterval: 1000,
   });
   const [updateNotifications] = useUpdateNotificationsMutation();
@@ -39,13 +68,21 @@ const Notifications = () => {
   const [filteredData, setFilteredData] = useState<INotification[]>([]);
 
   useEffect(() => {
-    if (response) {
-      const filtered = response.filter((notification: INotification) =>
-        (notification.message ?? "").toLowerCase().includes(searchText.toLowerCase())
-      );
+    if (Array.isArray(response)) {
+      const filtered = response.filter((notification: INotification) => {
+        const matchesCategory =
+          category === "all" || getNotificationCategory(notification) === category;
+        const matchesSearch = (notification.message ?? "")
+          .toLowerCase()
+          .includes(searchText.toLowerCase());
+
+        return matchesCategory && matchesSearch;
+      });
       setFilteredData(filtered);
+    } else {
+      setFilteredData([]);
     }
-  }, [response, searchText]);
+  }, [category, response, searchText]);
 
   const markAsRead = async (id: string) => {
     try {
@@ -181,9 +218,20 @@ const Notifications = () => {
   ];
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      <div className="flex justify-between items-center mb-4 gap-2">
-        <h1 className="md:text-2xl font-semibold">Notifications</h1>
+    <div className="min-h-screen bg-slate-100 p-4 md:p-6">
+      <div className="mb-5 rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_16px_45px_rgba(15,23,42,0.08)]">
+        <p className="text-xs font-black uppercase tracking-[0.18em] text-[#003399]">
+          Notification Center
+        </p>
+        <div className="mt-2 flex flex-col justify-between gap-3 md:flex-row md:items-center">
+          <div>
+            <h1 className="text-2xl font-black text-slate-950">
+              {categoryLabels[category]}
+            </h1>
+            <p className="mt-1 text-sm font-medium text-slate-500">
+              Review latest updates and mark important items when handled.
+            </p>
+          </div>
         <Input
           placeholder="Search notifications..."
           prefix={<SearchOutlined />}
@@ -191,6 +239,7 @@ const Notifications = () => {
           onChange={handleSearch}
           className="max-w-md"
         />
+        </div>
       </div>
       {isLoading ? (
         <div className="flex justify-center items-center">
@@ -206,7 +255,7 @@ const Notifications = () => {
           columns={columns}
           rowKey="_id"
           pagination={{ pageSize: 10 }}
-          className="bg-white shadow-md rounded-lg p-4"
+          className="rounded-2xl bg-white p-4 shadow-[0_16px_45px_rgba(15,23,42,0.08)]"
         />
       )}
     </div>

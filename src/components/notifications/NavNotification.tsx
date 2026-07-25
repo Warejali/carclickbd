@@ -1,115 +1,120 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
-import { Dropdown, Badge, Card } from "antd";
-import { AiOutlineBell } from "react-icons/ai";
 import Link from "next/link";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-import useFormatTime from "@/hooks/useFormatTime";
+import { Tooltip } from "antd";
+import { CarFront, ClipboardList, MessageCircle } from "lucide-react";
+import { useMemo } from "react";
+import type React from "react";
 import { useGetNotificationsQuery } from "@/Redux/api/notificationApi";
 import { getTokenInfo } from "@/service/auth.service";
 import { INotification } from "@/Interface/notification";
 
-dayjs.extend(relativeTime);
+const asNotificationArray = (value: unknown): INotification[] =>
+  Array.isArray(value) ? value : [];
 
+const getNotificationCategory = (notification: INotification) => {
+  const message = (notification?.message || "").toLowerCase();
 
-interface MenuItem {
-  key: string;
-  label: React.ReactNode;
-}
+  if (message.includes("inquiry")) return "inquiries";
+  if (
+    message.includes("new listing") ||
+    message.includes("listing added") ||
+    message.includes("product") ||
+    message.includes("vehicle")
+  ) {
+    return "products";
+  }
 
-const NotificationDropdown: React.FC = () => {
-  const { data: notifications = [], isLoading } = useGetNotificationsQuery({
-    pollingInterval: 1000,
-  });
-  const { formatTime } = useFormatTime();
+  return "messages";
+};
 
-   const user = useMemo(() => getTokenInfo(), []);
-    const userRole = user?.role;
+const getRoleBasePath = (role?: string) => {
+  if (role === "super-admin" || role === "admin") return "/admin";
+  if (role === "seller") return "/seller";
+  if (role === "customer") return "/customer";
+  return "/customer";
+};
 
-  const [dropdownPlacement, setDropdownPlacement] = useState<"bottom" | "bottomCenter">("bottomCenter");
-  const [mounted, setMounted] = useState(false);
-  const [tick, setTick] = useState(0); // Force re-render every 30s to update relative time
-
-  useEffect(() => {
-    setMounted(true);
-
-    const updatePlacement = () => {
-      setDropdownPlacement(window.innerWidth <= 768 ? "bottom" : "bottomCenter");
-    };
-
-    const interval = setInterval(() => {
-      setTick((prev) => prev + 1); // Re-render trigger
-    }, 30000);
-
-    updatePlacement();
-    window.addEventListener("resize", updatePlacement);
-
-    return () => {
-      clearInterval(interval);
-      window.removeEventListener("resize", updatePlacement);
-    };
-  }, []);
-
-  if (!mounted || typeof window === "undefined") return null;
-  const unreadCount: number = notifications.filter((n: INotification) => !n.isRead).length;
-  const sortedNotifications: INotification[] = notifications
-    .slice(0, 5);
-
-  const menuItems: MenuItem[] = sortedNotifications.map((item: INotification) => ({
-    key: item?._id?.toString(),
-    label: (
-      <Link
-      href={`/${userRole === 'super-admin' ? 'admin' : userRole}/notification`}
-        className="block py-2 px-3 hover:bg-gray-100 transition-all cursor-pointer"
-      >
-        <div>
-          {!item.isRead ? (
-            
-            <Badge status="success">
-              <NotificationCard message={item?.message || "No message"} time={formatTime(item?.createdAt || "")} isRead={item?.isRead || false} />
-            </Badge>
-          ) : (
-            <NotificationCard message={item?.message || ""} time={formatTime(item?.createdAt || "")} isRead={item?.isRead || false} />
-          )}
-        </div>
-      </Link>
-    ),
-  }));
+const NotificationShortcut = ({
+  href,
+  label,
+  count,
+  icon,
+  tone,
+}: {
+  href: string;
+  label: string;
+  count: number;
+  icon: React.ReactNode;
+  tone: "blue" | "emerald" | "amber";
+}) => {
+  const toneClasses = {
+    blue: "border-sky-200 bg-sky-50 text-sky-700 shadow-sky-500/10",
+    emerald: "border-emerald-200 bg-emerald-50 text-emerald-700 shadow-emerald-500/10",
+    amber: "border-[#f5bd05]/40 bg-[#fff8df] text-slate-950 shadow-[#f5bd05]/10",
+  };
 
   return (
-    <div className="flex items-center space-x-3">
-      <Dropdown
-        menu={{ items: menuItems }}
-        trigger={["click"]}
-        placement={dropdownPlacement}
+    <Tooltip title={label}>
+      <Link
+        href={href}
+        aria-label={label}
+        className={`relative flex h-10 w-10 items-center justify-center rounded-full border shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ${toneClasses[tone]}`}
       >
-        <Badge size="small" count={unreadCount} overflowCount={9} className="cursor-pointer">
-          <AiOutlineBell className="text-xl text-white lg:text-2xl transition-all duration-200" />
-        </Badge>
-      </Dropdown>
-    </div>
+        {icon}
+        {count > 0 && (
+          <span className="absolute -right-1.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-rose-600 px-1 text-[10px] font-black leading-none text-white ring-2 ring-white">
+            {count > 99 ? "99+" : count}
+          </span>
+        )}
+      </Link>
+    </Tooltip>
   );
 };
 
+const NotificationDropdown: React.FC = () => {
+  const { data: response } = useGetNotificationsQuery(undefined, {
+    pollingInterval: 30000,
+  });
+  const notifications = asNotificationArray(response);
+  const user = useMemo(() => getTokenInfo(), []);
+  const basePath = getRoleBasePath(user?.role);
 
-const NotificationCard: React.FC<{ message: string; time: string; isRead: boolean }> = ({
-  message,
-  time,
-  isRead,
-}) => (
-  <div className="flex items-start space-x-2">
-    {!isRead && (
-      <span className="w-2 h-2 mt-1 rounded-full bg-green-500 flex-shrink-0" />
-    )}
-    <div>
-      <p className="text-gray-600 pe-10">
-        {message.length > 25 ? `${message.slice(0, 25)}...` : message}
-      </p>
-      <span className="text-xs text-gray-400">{time}</span>
+  const unreadCounts = notifications.reduce(
+    (counts, notification) => {
+      if (notification?.isRead) return counts;
+      const category = getNotificationCategory(notification);
+      counts[category] += 1;
+      return counts;
+    },
+    { messages: 0, inquiries: 0, products: 0 },
+  );
+
+  return (
+    <div className="flex items-center gap-2">
+      <NotificationShortcut
+        href={`${basePath}/messages`}
+        label="Messages"
+        count={unreadCounts.messages}
+        icon={<MessageCircle size={18} strokeWidth={2.4} />}
+        tone="blue"
+      />
+      <NotificationShortcut
+        href={`${basePath}/inquiries`}
+        label="Inquiries"
+        count={unreadCounts.inquiries}
+        icon={<ClipboardList size={18} strokeWidth={2.4} />}
+        tone="emerald"
+      />
+      <NotificationShortcut
+        href={`${basePath}/product-notifications`}
+        label="Product add notifications"
+        count={unreadCounts.products}
+        icon={<CarFront size={18} strokeWidth={2.4} />}
+        tone="amber"
+      />
     </div>
-  </div>
-);
+  );
+};
 
 export default NotificationDropdown;

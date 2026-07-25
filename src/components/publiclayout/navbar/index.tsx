@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Dropdown, Drawer, MenuProps } from "antd";
 import { DownOutlined, GlobalOutlined, MenuOutlined } from "@ant-design/icons";
-import dynamic from "next/dynamic";
 import { useAppSelector } from "@/Redux/hooks";
 import CarClickBDLogo from "@/components/shared/CarClickBDLogo";
 import { Heart } from "lucide-react";
@@ -15,13 +14,9 @@ import {
   LOCAL_WISHLIST_UPDATED_EVENT,
 } from "@/utils/localWishlist";
 
-const NotificationDropdown = dynamic(
-  () => import("../../notifications/NavNotification"),
-  { ssr: false }
-);
-const ProfileDropdown = dynamic(() => import("./ProfileDropdown"), {
-  ssr: false,
-});
+import dynamic from "next/dynamic";
+
+const ProfileDropdown = dynamic(() => import("./ProfileDropdown"), { ssr: false });
 const NavAuth = dynamic(() => import("./NavAuth"), { ssr: false });
 
 const WishlistNavIcon = ({ compact = false }: { compact?: boolean }) => {
@@ -240,10 +235,7 @@ const Header: React.FC = () => {
           <WishlistNavIcon />
 
           {isLoggedIn ? (
-            <>
-              <NotificationDropdown />
-              <ProfileDropdown />
-            </>
+            <ProfileDropdown />
           ) : (
             <NavAuth />
           )}

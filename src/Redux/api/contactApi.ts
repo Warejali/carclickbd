@@ -1,81 +1,81 @@
 
 import { baseApi } from "./baseApi";
 
-const ORDER_URL = "/contact";
-export const orderApi = baseApi.injectEndpoints({
+const CONTACT_URL = "/contact";
+export const contactApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    orders: build.query({
+    messages: build.query({
       query: (arg: Record<string, any>) => {
         return {
-          url: `${ORDER_URL}`,
+          url: `${CONTACT_URL}`,
           method: "GET",
           params: arg,
         };
       },
       transformResponse: (response) => {
         return {
-          orders: response,
+          messages: response,
         };
       },
-      providesTags: ["order"],
+      providesTags: ["message"],
     }),
     
-    getMyOrders: build.query({
+    getMyMessages: build.query({
       query: (arg: Record<string, any>) => {
         return {
-          url: `${ORDER_URL}/my-order`,
+          url: `${CONTACT_URL}/my-message`,
           method: "GET",
           params: arg,
         };
       },
       transformResponse: (response) => {
         return {
-          orders: response,
+          messages: response,
         };
       },
-      providesTags: ["order"],
+      providesTags: ["message"],
     }),
 
 
 
     // get single order
-    order: build.query({
+    contactMessage: build.query({
       query: (id: string | string[] | undefined) => ({
-        url: `/${ORDER_URL}/${id}`,
+        url: `${CONTACT_URL}/${id}`,
         method: "GET",
       }),
-      providesTags: ["order"],
+      providesTags: ["message"],
     }),
 
 
     // create a new order
     sendMessage: build.mutation({
       query: (data) => ({
-        url: `/${ORDER_URL}/create-order`,
+        url: `${CONTACT_URL}/create-order`,
         method: "POST",
         data,
       }),
-      invalidatesTags: ["order"],
+      invalidatesTags: ["message", "notification"],
     }),
 
 
     // update order
-    updateOrder: build.mutation({
+    updateMessage: build.mutation({
       query: (data) => ({
-        url: `/${ORDER_URL}/${data.id}`,
+        url: `${CONTACT_URL}/${data.id}`,
         method: "PATCH",
         data: data.body,
       }),
-      invalidatesTags: ["order"],
+      invalidatesTags: ["message"],
     }),
 
     // delete order
-    deleteOrder: build.mutation({
+    deleteMessage: build.mutation({
       query: (id) => ({
-        url: `/${ORDER_URL}/${id}`,
+        url: `${CONTACT_URL}/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["order"],
+      invalidatesTags: ["message"],
     }),
 
   }),
@@ -83,9 +83,9 @@ export const orderApi = baseApi.injectEndpoints({
 
 export const {
   useSendMessageMutation,
-  useDeleteOrderMutation,
-  useOrderQuery,
-  useOrdersQuery,
-  useUpdateOrderMutation,
-  useGetMyOrdersQuery
-} = orderApi;
+  useDeleteMessageMutation,
+  useContactMessageQuery,
+  useMessagesQuery,
+  useUpdateMessageMutation,
+  useGetMyMessagesQuery,
+} = contactApi;

@@ -6,7 +6,6 @@ import Logo from "@/components/shared/Logo";
 import NavSearchBar from "./NavSearchBar";
 import NavMenu from "./NavMenu";
 
-const NotificationDropdown = dynamic(() => import("../../notifications/NavNotification"), { ssr: false });
 const ProfileDropdown = dynamic(() => import("./ProfileDropdown"), { ssr: false });
 const NavAuth = dynamic(() => import("./NavAuth"), { ssr: false });
 
@@ -22,10 +21,7 @@ const DeskTopNavbar = () => {
         <NavSearchBar />
         <div className="flex items-center gap-6">
           {isLoggedIn ? (
-            <>
-              <NotificationDropdown />
-              <ProfileDropdown />
-            </>
+            <ProfileDropdown />
           ) : (
             <NavAuth />
           )}

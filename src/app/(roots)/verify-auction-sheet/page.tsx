@@ -2,53 +2,29 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { CreditCard, FileSearch, Search, ShieldCheck } from "lucide-react";
-import { message } from "antd";
+import { ArrowRight, FileSearch, Search, ShieldCheck } from "lucide-react";
+import { useRouter } from "next/navigation";
 import AuctionSheetVerification from "@/components/publiclayout/home/AuctionSheetVerification";
-import { useInitBdGateTestPaymentMutation } from "@/Redux/api/paymentApi";
 
 const VerifyAuctionSheetPage = () => {
+  const router = useRouter();
   const [chassisNo, setChassisNo] = useState("");
   const [searchedChassis, setSearchedChassis] = useState("");
-  const [initBdGateTestPayment, { isLoading: isTestPaymentLoading }] =
-    useInitBdGateTestPaymentMutation();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSearchedChassis(chassisNo.trim());
   };
 
-  const handleDemoPayment = async () => {
-    try {
-      const result = await initBdGateTestPayment({
-        amount: 10,
-        customer_name: "CarClickBD Demo Customer",
-        customer_email: "demo@carclickbd.com",
-        customer_phone: "01576611703",
-        description: "CarClickBD real BDGate test payment",
-        redirect_url: `${window.location.origin}/payments?status=success&provider=bdgate&test=1`,
-        cancel_url: `${window.location.origin}/payments?status=cancelled&provider=bdgate&test=1`,
-      }).unwrap();
+  const handleContinue = () => {
+    const chassis = (searchedChassis || chassisNo).trim();
+    const query = new URLSearchParams({ type: "auction-sheet" });
 
-      const paymentUrl =
-        result?.data?.payment_url ||
-        result?.data?.paymentUrl ||
-        result?.data?.redirect_url ||
-        result?.payment_url;
-
-      if (!paymentUrl) {
-        message.error("BDGate demo payment URL was not returned");
-        return;
-      }
-
-      window.location.href = paymentUrl;
-    } catch (error: any) {
-      message.error(
-        error?.data?.message ||
-          error?.message ||
-          "Could not start BDGate test payment",
-      );
+    if (chassis) {
+      query.set("chassis", chassis);
     }
+
+    router.push(`/payments?${query.toString()}`);
   };
 
   return (
@@ -131,24 +107,24 @@ const VerifyAuctionSheetPage = () => {
                   </div>
                 )}
 
-                <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                <div className="mt-6 rounded-2xl border border-[#f0b90b]/40 bg-[#fff9e8] p-4">
                   <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <div>
                       <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-[#003399]">
-                        BDGate real payment test
+                        Ready for verification
                       </p>
                       <p className="mt-1 text-sm font-medium text-slate-600">
-                        This opens a real BDGate checkout for BDT 10.
+                        Continue to secure payment and submit your auction sheet
+                        verification request.
                       </p>
                     </div>
                     <button
                       type="button"
-                      onClick={handleDemoPayment}
-                      disabled={isTestPaymentLoading}
+                      onClick={handleContinue}
                       className="inline-flex h-12 shrink-0 items-center justify-center gap-2 rounded-xl bg-[#f5bd05] px-5 text-sm font-extrabold text-slate-950 shadow-[0_12px_26px_rgba(245,189,5,0.28)] transition hover:-translate-y-0.5 hover:bg-[#e4ad00] disabled:cursor-not-allowed disabled:opacity-70"
                     >
-                      <CreditCard size={17} />
-                      {isTestPaymentLoading ? "Starting..." : "Test Real Payment"}
+                      Continue
+                      <ArrowRight size={17} />
                     </button>
                   </div>
                 </div>

@@ -9,11 +9,17 @@ export const notificationApi: any = baseApi.injectEndpoints({
       }),
       // Modify the transformResponse to only return 'data' from the response object
       transformResponse: (response: any) => {
-        // Ensure you only return the 'data' from the response
-        if (response && response.data) {
-          return response.data;
+        const data = response?.data;
+
+        if (Array.isArray(data)) {
+          return data;
         }
-        return []; // Return an empty array if no data is found
+
+        if (Array.isArray(data?.data)) {
+          return data.data;
+        }
+
+        return [];
       },
       providesTags: ["notification"],
     }),
