@@ -32,6 +32,14 @@ export const notificationApi: any = baseApi.injectEndpoints({
       invalidatesTags: ["notification"],
     }),
 
+    deleteNotification: build.mutation({
+      query: (id: string) => ({
+        url: `/notification/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["notification"],
+    }),
+
     createProductInquiryNotification: build.mutation({
       query: (data: any) => ({
         url: `/notification/product-inquiry`,
@@ -47,5 +55,6 @@ export const notificationApi: any = baseApi.injectEndpoints({
 export const {
   useGetNotificationsQuery,
   useUpdateNotificationsMutation,
+  useDeleteNotificationMutation,
   useCreateProductInquiryNotificationMutation,
 } = notificationApi;

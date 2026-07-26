@@ -18,6 +18,7 @@ import {
   SearchOutlined,
 } from "@ant-design/icons";
 import {
+  useDeleteNotificationMutation,
   useGetNotificationsQuery,
   useUpdateNotificationsMutation,
 } from "@/Redux/api/notificationApi";
@@ -63,6 +64,7 @@ const Notifications = ({
     pollingInterval: 1000,
   });
   const [updateNotifications] = useUpdateNotificationsMutation();
+  const [removeNotification] = useDeleteNotificationMutation();
   const { formatTime } = useFormatTime();
   const [searchText, setSearchText] = useState("");
   const [filteredData, setFilteredData] = useState<INotification[]>([]);
@@ -86,7 +88,7 @@ const Notifications = ({
 
   const markAsRead = async (id: string) => {
     try {
-      await updateNotifications(id);
+      await updateNotifications(id).unwrap();
       message.success("Notification marked as read!");
     } catch (error) {
       message.error("Failed to update notification.");
@@ -95,7 +97,7 @@ const Notifications = ({
 
   const deleteNotification = async (id: string) => {
     try {
-      await updateNotifications({ id, delete: true });
+      await removeNotification(id).unwrap();
       message.success("Notification deleted!");
     } catch (error) {
       message.error("Failed to delete notification.");
