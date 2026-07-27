@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Providers from "@/lib/Providers";
 import QueryProvider from "@/lib/query-provider";
+import ChunkLoadRecovery from "@/components/ChunkLoadRecovery";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -47,6 +48,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <ChunkLoadRecovery />
         <QueryProvider>
           <Providers>{children}</Providers>
         </QueryProvider>
