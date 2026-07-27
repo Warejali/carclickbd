@@ -7,7 +7,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { CreditCard, FileSearch, ShieldCheck } from "lucide-react";
 import { useSyncBdGatePaymentStatusMutation } from "@/Redux/api/paymentApi";
 
-const AUCTION_SHEET_PAYMENT_AMOUNT = 10;
+const AUCTION_SHEET_PAYMENT_AMOUNT = 800;
 const DIRECT_BDGATE_AUCTION_SHEET_PAYMENT_URL =
   "https://pay.bdgate.net/p/test-941a828d";
 

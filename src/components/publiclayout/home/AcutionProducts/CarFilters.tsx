@@ -37,6 +37,17 @@ const conditions = [
   { value: "used", label: "Used" },
 ];
 
+const uniqueOptions = (options: { value: string; label: string }[]) => {
+  const seen = new Set<string>();
+
+  return options.filter((option) => {
+    const key = option.value.trim().toLowerCase();
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+};
+
 export default function CarFilters(_props: { isWinner?: boolean }) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -51,16 +62,16 @@ export default function CarFilters(_props: { isWinner?: boolean }) {
 
   const modelOptions = useMemo(() => {
     if (maker === "all") {
-      return [
+      return uniqueOptions([
         { value: "all", label: "All Car Names" },
         ...Object.values(homeFilterModelsByMaker).flat(),
-      ];
+      ]);
     }
 
-    return [
+    return uniqueOptions([
       { value: "all", label: "All Car Names" },
       ...(homeFilterModelsByMaker[maker] || []),
-    ];
+    ]);
   }, [maker]);
 
   const updateParams = (params: URLSearchParams) => {
