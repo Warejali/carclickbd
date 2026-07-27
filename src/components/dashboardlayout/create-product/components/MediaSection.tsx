@@ -66,7 +66,14 @@ const MediaSection: React.FC<MediaSectionProps> = ({
       <Form.Item
         name="mainPhoto"
         label="Main photo (only one)"
-        rules={[{ required: true, message: "Please upload the main photo" }]}
+        rules={[
+          {
+            validator: () =>
+              mainPhotoFile
+                ? Promise.resolve()
+                : Promise.reject(new Error("Please upload the main photo")),
+          },
+        ]}
       >
         <Upload
           listType="picture-card"
@@ -84,7 +91,16 @@ const MediaSection: React.FC<MediaSectionProps> = ({
       <Form.Item
         name="otherPhotos"
         label="Others Photos (up to 40)"
-        rules={[{ required: true, message: "Please upload at least one other photo" }]}
+        rules={[
+          {
+            validator: () =>
+              otherPhotoFiles.length
+                ? Promise.resolve()
+                : Promise.reject(
+                    new Error("Please upload at least one other photo"),
+                  ),
+          },
+        ]}
       >
         <Upload
           listType="picture-card"

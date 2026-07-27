@@ -166,14 +166,16 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({ productId }) => {
     });
 
     if (product.photos?.mainPhoto) {
-      setMainPhotoFile(toUploadFile(product.photos.mainPhoto, 0, "main-photo"));
+      const mainPhoto = toUploadFile(product.photos.mainPhoto, 0, "main-photo");
+      setMainPhotoFile(mainPhoto);
+      form.setFieldsValue({ mainPhoto: [mainPhoto] });
     }
     if (product.photos?.others?.length) {
-      setOtherPhotoFiles(
-        product.photos.others.map((url: string, index: number) =>
-          toUploadFile(url, index, "other-photo")
-        )
+      const otherPhotos = product.photos.others.map((url: string, index: number) =>
+        toUploadFile(url, index, "other-photo")
       );
+      setOtherPhotoFiles(otherPhotos);
+      form.setFieldsValue({ otherPhotos });
     }
     setVideoLinks(product.videos || []);
   }, [form, productResponse]);
