@@ -1,89 +1,21 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { Search } from "lucide-react";
-import {
-  homeFilterMakers,
-  homeFilterModelsByMaker,
-} from "@/content/product.constant";
-
-const years = Array.from(
-  { length: new Date().getFullYear() - 1989 },
-  (_, index) => String(new Date().getFullYear() - index)
-);
-
-const statuses = [
-  { value: "all", label: "All Status" },
-  { value: "pending", label: "Pending" },
-  { value: "upcoming", label: "Upcoming" },
-  { value: "approval", label: "Available" },
-  { value: "reserve", label: "Reserve" },
-  { value: "under_negotiations", label: "Under Negotiation" },
-  { value: "sold", label: "Sold" },
-];
-
-const conditions = [
-  { value: "all", label: "All Conditions" },
-  { value: "new", label: "New" },
-  { value: "reconditioned", label: "Reconditioned" },
-  { value: "local-used", label: "Local Used" },
-  { value: "pre-owned", label: "Pre Owned" },
-  { value: "used", label: "Used" },
-];
 
 const CarsSearchSection = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [maker, setMaker] = useState(searchParams.get("make") || "all");
-  const [model, setModel] = useState(searchParams.get("model") || "all");
-  const [year, setYear] = useState(searchParams.get("startYear") || "all");
-  const [status, setStatus] = useState(searchParams.get("status") || "all");
-  const [condition, setCondition] = useState(searchParams.get("condition") || "all");
-  const [referenceId, setReferenceId] = useState(searchParams.get("searchTerm") || "");
-
-  const modelOptions = useMemo(() => {
-    if (maker === "all") {
-      return [
-        { value: "all", label: "All Car Names" },
-        ...Object.values(homeFilterModelsByMaker).flat(),
-      ];
-    }
-
-    return [
-      { value: "all", label: "All Car Names" },
-      ...(homeFilterModelsByMaker[maker] || []),
-    ];
-  }, [maker]);
+  const [keyword, setKeyword] = useState(searchParams.get("searchTerm") || "");
 
   const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const params = new URLSearchParams(searchParams.toString());
-
-    if (maker === "all") params.delete("make");
-    else params.set("make", maker);
-
-    if (model === "all") params.delete("model");
-    else params.set("model", model);
-
-    if (year === "all") {
-      params.delete("startYear");
-      params.delete("endYear");
-    } else {
-      params.set("startYear", year);
-      params.set("endYear", year);
-    }
-
-    if (status === "all") params.delete("status");
-    else params.set("status", status);
-
-    if (condition === "all") params.delete("condition");
-    else params.set("condition", condition);
-
-    const trimmedReferenceId = referenceId.trim();
-    if (trimmedReferenceId) params.set("searchTerm", trimmedReferenceId);
+    const trimmedKeyword = keyword.trim();
+    if (trimmedKeyword) params.set("searchTerm", trimmedKeyword);
     else params.delete("searchTerm");
 
     router.push(`/cars?${params.toString()}`);
@@ -105,7 +37,7 @@ const CarsSearchSection = () => {
           onSubmit={handleSearch}
           className="rounded-lg border border-white/15 bg-white/95 p-5 shadow-2xl backdrop-blur md:p-6"
         >
-          <div className="mb-5">
+          <div className="mb-5 max-w-2xl">
             <p className="text-xs font-bold uppercase tracking-[0.18em] text-sky-600">
               Search Inventory
             </p>
@@ -114,59 +46,23 @@ const CarsSearchSection = () => {
             </h1>
           </div>
 
-          <div className="grid gap-4 lg:grid-cols-[1fr_1fr_1fr_1fr_1fr_1fr_auto]">
-            <FilterSelect
-              label="Maker"
-              value={maker}
-              options={homeFilterMakers}
-              onChange={(value) => {
-                setMaker(value);
-                setModel("all");
-              }}
-            />
-            <FilterSelect
-              label="Car Name"
-              value={model}
-              options={modelOptions}
-              onChange={setModel}
-            />
-            <FilterSelect
-              label="Year"
-              value={year}
-              options={[
-                { value: "all", label: "All Years" },
-                ...years.map((item) => ({ value: item, label: item })),
-              ]}
-              onChange={setYear}
-            />
-            <FilterSelect
-              label="Status"
-              value={status}
-              options={statuses}
-              onChange={setStatus}
-            />
-            <FilterSelect
-              label="Condition"
-              value={condition}
-              options={conditions}
-              onChange={setCondition}
-            />
-
-            <label className="grid gap-2">
-              <span className="text-xs font-bold uppercase text-slate-700">
-                Reference ID
-              </span>
+          <div className="grid gap-3 md:grid-cols-[1fr_auto]">
+            <label className="relative">
+              <Search
+                size={18}
+                className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+              />
               <input
-                value={referenceId}
-                onChange={(event) => setReferenceId(event.target.value)}
-                placeholder="e.g. CCBD-TOYPRI-123456"
-                className="h-12 rounded-md border border-slate-200 bg-white px-4 text-sm outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
+                value={keyword}
+                onChange={(event) => setKeyword(event.target.value)}
+                placeholder="Search by car name, maker, title, or reference ID"
+                className="h-12 w-full rounded-md border border-slate-200 bg-white pl-12 pr-4 text-sm font-medium outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
               />
             </label>
 
             <button
               type="submit"
-              className="mt-6 inline-flex h-12 items-center justify-center gap-2 rounded-md bg-slate-950 px-6 text-sm font-bold text-white shadow-lg transition hover:bg-sky-600 lg:mt-auto"
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-md bg-slate-950 px-8 text-sm font-bold text-white shadow-lg transition hover:bg-sky-600"
             >
               <Search size={16} />
               Search
@@ -175,35 +71,6 @@ const CarsSearchSection = () => {
         </form>
       </div>
     </section>
-  );
-};
-
-const FilterSelect = ({
-  label,
-  value,
-  options,
-  onChange,
-}: {
-  label: string;
-  value: string;
-  options: { value: string; label: string }[];
-  onChange: (value: string) => void;
-}) => {
-  return (
-    <label className="grid gap-2">
-      <span className="text-xs font-bold uppercase text-slate-700">{label}</span>
-      <select
-        value={value}
-        onChange={(event) => onChange(event.target.value)}
-        className="h-12 rounded-md border border-slate-200 bg-white px-4 text-sm outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
-      >
-        {options.map((option) => (
-          <option key={`${label}-${option.value}`} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
-    </label>
   );
 };
 

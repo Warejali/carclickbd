@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
-import { ArrowRight, BadgeCheck, FileSearch, Search, ShieldCheck } from "lucide-react";
+import { ArrowRight, BadgeCheck, FileSearch, Search } from "lucide-react";
 import banner01 from "@/assets/banner/banner-01.png";
 import banner02 from "@/assets/banner/banner-02.png";
 import banner03 from "@/assets/banner/banner-03.png";
@@ -96,7 +96,7 @@ export default function HeroSlider() {
   };
 
   return (
-    <section className="relative h-auto w-full overflow-hidden bg-slate-950 lg:h-[480px]">
+    <section className="relative h-auto w-full overflow-hidden bg-slate-950 lg:h-[280px]">
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         navigation
@@ -107,13 +107,13 @@ export default function HeroSlider() {
       >
         {slides.map((slide) => (
           <SwiperSlide key={slide.title}>
-            <div className="relative min-h-[620px] overflow-hidden bg-gradient-to-br from-[#001b46] via-[#003399] to-[#00142f] text-white sm:min-h-[560px] lg:h-[480px] lg:min-h-[480px]">
+            <div className="relative min-h-[430px] overflow-hidden bg-gradient-to-br from-[#001b46] via-[#003399] to-[#00142f] text-white sm:min-h-[400px] lg:h-[280px] lg:min-h-[280px]">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_74%_48%,rgba(255,255,255,0.18),transparent_30%),linear-gradient(90deg,rgba(0,0,0,0.22),transparent)]" />
               <div className="absolute inset-0 opacity-20 [background-image:linear-gradient(rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.08)_1px,transparent_1px)] [background-size:48px_48px]" />
 
-              <div className="relative grid min-h-[620px] w-full grid-cols-1 items-center gap-4 px-4 py-6 sm:min-h-[560px] sm:px-5 md:px-10 lg:min-h-[480px] lg:grid-cols-[0.72fr_1.28fr] lg:gap-6 lg:px-16 lg:py-0">
+              <div className="relative grid min-h-[430px] w-full grid-cols-1 items-center gap-3 px-4 py-5 sm:min-h-[400px] sm:px-5 md:px-10 lg:min-h-[280px] lg:grid-cols-[0.74fr_1.26fr] lg:gap-5 lg:px-16 lg:py-0">
                 <div className="z-20">
-                  <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3.5 py-1.5 text-xs font-bold backdrop-blur">
+                  <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[11px] font-bold backdrop-blur">
                     {slide.primaryHref.includes("verify") ? (
                       <FileSearch size={16} className="text-[#f0b90b]" />
                     ) : (
@@ -122,17 +122,17 @@ export default function HeroSlider() {
                     {slide.eyebrow}
                   </div>
 
-                  <h1 className="max-w-2xl text-2xl font-black leading-tight tracking-normal sm:text-3xl md:text-4xl">
+                  <h1 className="max-w-xl text-xl font-black leading-tight tracking-normal sm:text-2xl lg:text-[30px]">
                     {slide.title}
                   </h1>
-                  <p className="mt-3 max-w-xl text-sm font-medium leading-6 text-slate-200 md:text-base">
+                  <p className="mt-2 max-w-lg text-xs font-medium leading-5 text-slate-200 lg:text-sm">
                     {slide.description}
                   </p>
 
                   {slide.showChassisForm ? (
                     <form
                       onSubmit={handleChassisSubmit}
-                      className="mt-5 max-w-xl rounded-xl border border-white/20 bg-white/95 p-2 shadow-[0_20px_55px_rgba(0,0,0,0.32)] backdrop-blur"
+                      className="mt-3 max-w-xl rounded-xl border border-white/20 bg-white/95 p-1.5 shadow-[0_16px_45px_rgba(0,0,0,0.28)] backdrop-blur"
                     >
                       <div className="flex flex-col gap-2 sm:flex-row">
                         <label className="relative flex-1">
@@ -146,24 +146,24 @@ export default function HeroSlider() {
                               setChassisNumber(event.target.value)
                             }
                             placeholder="Enter chassis number e.g. NKE165-7245648"
-                            className="h-12 w-full rounded-lg border border-slate-200 bg-white pl-12 pr-4 text-sm font-bold uppercase tracking-wide text-slate-900 outline-none transition placeholder:normal-case placeholder:font-semibold placeholder:tracking-normal placeholder:text-slate-400 focus:border-[#e50914] focus:ring-2 focus:ring-red-100"
+                            className="h-10 w-full rounded-lg border border-slate-200 bg-white pl-12 pr-4 text-xs font-bold uppercase tracking-wide text-slate-900 outline-none transition placeholder:normal-case placeholder:font-semibold placeholder:tracking-normal placeholder:text-slate-400 focus:border-[#e50914] focus:ring-2 focus:ring-red-100"
                           />
                         </label>
                         <button
                           type="submit"
-                          className="inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-[#e50914] px-6 text-sm font-black uppercase text-white shadow-[0_12px_24px_rgba(229,9,20,0.26)] transition hover:bg-[#b80f17]"
+                          className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-[#e50914] px-5 text-xs font-black uppercase text-white shadow-[0_12px_24px_rgba(229,9,20,0.26)] transition hover:bg-[#b80f17]"
                         >
                           <Search size={17} />
                           Search
                         </button>
                       </div>
-                      <p className="mt-2 px-1 text-xs font-semibold leading-5 text-slate-600">
+                      <p className="mt-1.5 px-1 text-[11px] font-semibold leading-4 text-slate-600">
                         Enter the full chassis number exactly as shown on the
                         vehicle documents.
                       </p>
                     </form>
                   ) : (
-                    <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+                    <div className="mt-4 flex flex-col gap-3 sm:flex-row">
                       <Link
                         href={slide.primaryHref}
                         className={`inline-flex h-10 items-center justify-center gap-2 rounded-md bg-[#e50914] px-5 text-sm font-extrabold text-white shadow-lg shadow-red-950/20 transition hover:bg-[#b80f17] ${
@@ -183,35 +183,11 @@ export default function HeroSlider() {
                       </Link>
                     </div>
                   )}
-
-                  <div className="mt-5 hidden max-w-xl grid-cols-3 gap-2 sm:grid">
-                    {[
-                      ["Verified", ShieldCheck],
-                      ["Search", Search],
-                      ["Support", BadgeCheck],
-                    ].map(([label, Icon]) => {
-                      const DisplayIcon = Icon as typeof ShieldCheck;
-                      return (
-                        <div
-                          key={label as string}
-                          className="flex h-11 items-center gap-2.5 rounded-md border border-white/10 bg-white/10 px-3 backdrop-blur"
-                        >
-                          <DisplayIcon
-                            size={17}
-                            className="shrink-0 text-[#f0b90b]"
-                          />
-                          <p className="text-xs font-bold uppercase tracking-wide text-slate-200">
-                            {label as string}
-                          </p>
-                        </div>
-                      );
-                    })}
-                  </div>
                 </div>
 
-                <div className="relative z-10 flex min-h-[230px] items-center justify-center sm:min-h-[300px] lg:min-h-[450px]">
-                  <div className="relative h-[230px] w-full sm:h-[300px] md:h-[340px] lg:h-[450px]">
-                    <div className="absolute inset-x-6 bottom-8 h-20 rounded-full bg-black/30 blur-3xl" />
+                <div className="relative z-10 flex min-h-[180px] items-center justify-center sm:min-h-[220px] lg:min-h-[270px]">
+                  <div className="relative h-[180px] w-full sm:h-[220px] md:h-[250px] lg:h-[270px]">
+                    <div className="absolute inset-x-10 bottom-6 h-14 rounded-full bg-black/30 blur-3xl" />
                     <Image
                       src={slide.image}
                       alt={slide.imageAlt}
