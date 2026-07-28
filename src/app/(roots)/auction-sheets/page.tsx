@@ -23,6 +23,7 @@ import {
   useCreateAuctionSheetOrderMutation,
   useLazyGetAuctionSheetReportQuery,
 } from "@/Redux/api/auctionSheetApi";
+import { useInitBdGateAuctionSheetPaymentMutation } from "@/Redux/api/paymentApi";
 import { getWhatsAppUrl } from "@/constants/siteContact";
 
 type ReportValue = string | number | boolean | null | undefined;
@@ -157,6 +158,9 @@ const AuctionSheetsPageContent = () => {
     useLazyGetAuctionSheetReportQuery();
   const [createAuctionSheetOrder, { isLoading: isCreatingOrder }] =
     useCreateAuctionSheetOrderMutation();
+  const [initBdGateAuctionSheetPayment, { isLoading: isStartingPayment }] =
+    useInitBdGateAuctionSheetPaymentMutation();
+  const isPurchasing = isCreatingOrder || isStartingPayment;
 
   useEffect(() => {
     const cleanChassis = chassis.trim();
@@ -183,10 +187,6 @@ const AuctionSheetsPageContent = () => {
   ]);
   const color = getNestedValue(reportSource, ["color", "colour"]);
   const sheetImage = getNestedImage(reportSource);
-  const paymentHref = chassis
-    ? `/payments?type=auction-sheet&chassis=${encodeURIComponent(chassis)}`
-    : "/payments?type=auction-sheet";
-
   const handlePurchaseSubmit = async (
     event: React.FormEvent<HTMLFormElement>,
   ) => {
@@ -207,17 +207,40 @@ const AuctionSheetsPageContent = () => {
         termsAccepted: formData.get("termsAccepted") === "on",
       }).unwrap();
 
-      const order = response?.data?.order || response?.data;
-      const paymentParams = new URLSearchParams({
-        type: "auction-sheet",
-        chassis: cleanChassis,
-      });
+      const order =
+        response?.data?.data?.order ||
+        response?.data?.order ||
+        response?.order ||
+        response?.data;
+      const orderId = order?._id || order?.id;
 
-      if (order?._id) {
-        paymentParams.set("order", String(order._id));
+      if (!orderId) {
+        throw new Error("Order reference was not returned. Please try again.");
       }
 
-      window.location.href = `/payments?${paymentParams.toString()}`;
+      const paymentResponse = await initBdGateAuctionSheetPayment({
+        orderId,
+        chassis: cleanChassis,
+        amount: 800,
+        description: `CarClickBD auction sheet verification${
+          cleanChassis ? ` for ${cleanChassis}` : ""
+        }`,
+      }).unwrap();
+
+      const paymentData =
+        paymentResponse?.data?.data || paymentResponse?.data || paymentResponse;
+      const paymentUrl =
+        paymentData?.payment_url ||
+        paymentData?.paymentUrl ||
+        paymentData?.checkout_url ||
+        paymentData?.checkoutUrl ||
+        paymentData?.url;
+
+      if (!paymentUrl) {
+        throw new Error("BDGate did not return a payment URL.");
+      }
+
+      window.location.href = paymentUrl;
     } catch (error: any) {
       const message =
         error?.data?.message ||
@@ -226,7 +249,7 @@ const AuctionSheetsPageContent = () => {
 
       setPurchaseError(
         message === "Not Found"
-          ? "Auction sheet order API is not available yet. Please deploy or restart the v-07 backend, then try again."
+          ? "BDGate payment API is not available yet. Please deploy or restart the v-07 backend, then try again."
           : message,
       );
     }
@@ -639,11 +662,15 @@ const AuctionSheetsPageContent = () => {
 
               <button
                 type="submit"
-                disabled={isCreatingOrder}
-                className="inline-flex h-13 min-h-13 w-full items-center justify-center gap-2 rounded-xl bg-[#f5bd05] px-6 py-4 text-base font-black text-slate-950 shadow-[0_14px_30px_rgba(245,189,5,0.28)] transition hover:-translate-y-0.5 hover:bg-[#e4ad00]"
+                disabled={isPurchasing}
+                className="inline-flex h-13 min-h-13 w-full items-center justify-center gap-2 rounded-xl bg-[#f5bd05] px-6 py-4 text-base font-black text-slate-950 shadow-[0_14px_30px_rgba(245,189,5,0.28)] transition hover:-translate-y-0.5 hover:bg-[#e4ad00] disabled:cursor-not-allowed disabled:opacity-70"
               >
                 <CreditCard size={19} />
-                {isCreatingOrder ? "Creating order..." : "Purchase"}
+                {isCreatingOrder
+                  ? "Creating order..."
+                  : isStartingPayment
+                    ? "Opening BDGate..."
+                    : "Purchase"}
               </button>
             </form>
           </div>

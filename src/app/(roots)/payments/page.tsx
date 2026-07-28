@@ -27,7 +27,7 @@ function PaymentPageContent() {
     useInitBdGateAuctionSheetPaymentMutation();
 
   useEffect(() => {
-    if (!token || token === "{session_token}" || isAuctionSheetPayment) return;
+    if (!token || token === "{session_token}") return;
 
     syncBdGatePaymentStatus(token)
       .unwrap()
@@ -38,7 +38,7 @@ function PaymentPageContent() {
             "Could not verify BDGate payment status",
         );
       });
-  }, [isAuctionSheetPayment, syncBdGatePaymentStatus, token]);
+  }, [syncBdGatePaymentStatus, token]);
 
   useEffect(() => {
     if (status !== "success" || !isAuctionSheetPayment) return;
