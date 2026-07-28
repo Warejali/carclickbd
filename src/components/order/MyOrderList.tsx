@@ -4,6 +4,17 @@ import OrderTable from "@/components/table/OrderTable";
 import { useGetMyOrdersQuery } from "@/Redux/api/orderApi";
 import { IOrder } from "@/Interface/order";
 
+const getOrders = (response: any): IOrder[] => {
+  if (Array.isArray(response?.orders?.data)) return response.orders.data;
+  if (Array.isArray(response?.data)) return response.data;
+  if (Array.isArray(response?.orders)) return response.orders;
+  if (Array.isArray(response)) return response;
+  return [];
+};
+
+const getTotal = (response: any, fallback: number) =>
+  response?.orders?.meta?.total || response?.meta?.total || fallback;
+
 const MyOrderList: React.FC = () => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -13,10 +24,7 @@ const MyOrderList: React.FC = () => {
     page,
     limit: pageSize,
     searchTerm,
-  }) as { data: { orders: { data: IOrder[] } } | undefined; isLoading: boolean }; 
-
-  console.log("response", response);
-  
+  }) as { data: any; isLoading: boolean }; 
   
   const handleTableChange = (pagination: any) => {
     setPage(pagination.current);
@@ -30,10 +38,10 @@ const MyOrderList: React.FC = () => {
 
   //Filter customers only
   const orders = useMemo(() => {
-    return response?.orders?.data || [];
+    return getOrders(response);
   }, [response]);
 
-  const title = "Active User";
+  const title = "My Orders";
 
   return (
     <div className="p-6">
@@ -45,7 +53,7 @@ const MyOrderList: React.FC = () => {
         pagination={{
           current: page,
           pageSize,
-          total: response?.orders?.data?.length || 0, // Use filtered count
+          total: getTotal(response, orders.length),
         }}
         title={title}
         onChange={handleTableChange}

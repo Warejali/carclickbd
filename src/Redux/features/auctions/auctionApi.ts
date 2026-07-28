@@ -28,7 +28,7 @@ const userApi = baseApi.injectEndpoints({
     }),
     createSeller: build.mutation<any, any>({
       query: (data) => ({
-        url: "/seller",
+        url: "/auth/seller/register",
         method: "POST",
         data: data,
       }),

@@ -44,11 +44,19 @@ export default function CustomerRegistrationForm() {
   const onSubmit = async (data: FormData) => {
     try {
       setIsLoading(true);
-      await createUser(data).unwrap();
-      messageApi.success("created successfully");
+      await createUser({
+        ...data,
+        role: "customer",
+        accountType: "personal",
+      }).unwrap();
+      messageApi.success("Customer created successfully");
       reset();
     } catch (error: any) {
-      messageApi.error(error?.message || "Failed to create customer user");
+      messageApi.error(
+        error?.data?.message ||
+          error?.message ||
+          "Failed to create customer user"
+      );
     } finally {
       setIsLoading(false);
     }
@@ -77,7 +85,7 @@ export default function CustomerRegistrationForm() {
           <Space direction="vertical" size="middle" style={{ width: "100%" }}>
             <Space align="center">
               <FaUserShield size={20} />
-              <Text strong>Craete New customer</Text>
+              <Text strong>Create New Customer</Text>
             </Space>
 
             <Form

@@ -66,9 +66,22 @@ const OrderTable: React.FC<MyOrderTableProps> = ({
   };
 
   const filteredOrders = useMemo(() => {
-    return orders.filter((order) =>
-      order.orderNumber?.toLowerCase().includes(searchText.toLowerCase())
-    );
+    const keyword = searchText.toLowerCase();
+    return orders.filter((order) => {
+      const searchable = [
+        order.orderNumber,
+        order.orderType,
+        order.paymentStatus,
+        order.chassisNumber,
+        order.buyerInfo?.name,
+        order.buyerInfo?.email,
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+
+      return searchable.includes(keyword);
+    });
   }, [orders, searchText]);
 
   const columns: ColumnsType<IOrder> = [
@@ -76,7 +89,7 @@ const OrderTable: React.FC<MyOrderTableProps> = ({
       title: "Order ID",
       dataIndex: "orderNumber",
       key: "_id",
-      render: (id: string) => <Text code>{id}</Text>,
+      render: (id: string, record) => <Text code>{id || record._id}</Text>,
       sorter: (a, b) =>
         (a.orderNumber ?? "").localeCompare(b.orderNumber ?? ""),
     },
@@ -84,7 +97,7 @@ const OrderTable: React.FC<MyOrderTableProps> = ({
       title: "Order Type",
       dataIndex: "orderType",
       key: "orderType",
-      render: (type: string) => <Text>{type}</Text>,
+      render: (type: string) => <Text>{type || "Order"}</Text>,
       sorter: (a, b) => (a.orderType ?? "").localeCompare(b.orderType ?? ""),
     },
     {
@@ -93,19 +106,38 @@ const OrderTable: React.FC<MyOrderTableProps> = ({
       key: "totalAmount",
       render: (amount: number) => (
         <Text strong style={{ color: "#1890ff" }}>
-          ${amount?.toLocaleString()}
+          BDT {Number(amount || 0).toLocaleString("en-US")}
         </Text>
       ),
-      sorter: (a, b) => a.totalAmount - b.totalAmount,
+      sorter: (a, b) => Number(a.totalAmount || 0) - Number(b.totalAmount || 0),
       align: "right",
+    },
+    {
+      title: "Customer",
+      key: "customer",
+      render: (_, record) => (
+        <Space direction="vertical" size={0}>
+          <Text strong>{record.buyerInfo?.name || "N/A"}</Text>
+          <Text type="secondary">{record.buyerInfo?.email || ""}</Text>
+        </Space>
+      ),
     },
     {
       title: "Status",
       key: "isPending",
       render: (_, record) => (
         <Badge
-          status={record.isPending ? "processing" : "success"}
-          text={record.isPending ? "Pending" : "Paid"}
+          status={
+            record.paymentStatus === "PAID" || record.isPending === false
+              ? "success"
+              : record.paymentStatus === "FAILED"
+                ? "error"
+                : "processing"
+          }
+          text={
+            record.paymentStatus ||
+            (record.isPending === false ? "PAID" : "PENDING")
+          }
         />
       ),
       filters: [
@@ -127,7 +159,9 @@ const OrderTable: React.FC<MyOrderTableProps> = ({
       title: "Actions",
       key: "actions",
       render: (_, record) => {
-        const isMyOrder = record?.user === user?._id;
+        const orderUserId =
+          typeof record?.user === "string" ? record.user : record?.user?._id;
+        const isMyOrder = orderUserId === user?._id;
         return (
           <Space size="middle">
             <Button
@@ -170,7 +204,7 @@ const OrderTable: React.FC<MyOrderTableProps> = ({
       <Card>
         <div className="flex justify-between items-center">
           <h2 className="mb-4 text-xs lg:text-2xl font-bold">
-            My Orders
+            {title}
           </h2>
           <Input
             placeholder="Search by Order ID"
@@ -189,12 +223,15 @@ const OrderTable: React.FC<MyOrderTableProps> = ({
           dataSource={filteredOrders}
           rowKey="_id"
           pagination={{
-            pageSize: 10,
+            current: pagination.current,
+            pageSize: pagination.pageSize,
+            total: pagination.total,
             showTotal: (total, range) =>
               `Showing ${range[0]} to ${range[1]} of ${total} orders`,
           }}
           loading={loading}
           scroll={{ x: true }}
+          onChange={onChange}
         />
       </Card>
 

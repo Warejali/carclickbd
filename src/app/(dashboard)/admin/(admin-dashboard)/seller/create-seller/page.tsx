@@ -45,11 +45,17 @@ export default function AdminRegistrationForm() {
   const onSubmit = async (data: FormData) => {
     try {
       setIsLoading(true);
-      await createSeller(data).unwrap();
-      messageApi.success("created successfully");
+      await createSeller({
+        ...data,
+        sellerType: "dealer",
+        accountType: "dealer",
+      }).unwrap();
+      messageApi.success("Seller created successfully");
       reset();
     } catch (error: any) {
-      messageApi.error(error?.message || "Failed to create seller");
+      messageApi.error(
+        error?.data?.message || error?.message || "Failed to create seller",
+      );
     } finally {
       setIsLoading(false);
     }
@@ -138,7 +144,7 @@ export default function AdminRegistrationForm() {
                   loading={isLoading}
                   icon={<FaUserShield size={16} />}
                 >
-                  Create seller User
+                  Create Seller
                 </Button>
               </Form.Item>
             </Form>
