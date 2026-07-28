@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { ArrowRight, FileSearch, Search, ShieldCheck } from "lucide-react";
+import { FileSearch, Search, ShieldCheck } from "lucide-react";
 import { useRouter } from "next/navigation";
 import AuctionSheetVerification from "@/components/publiclayout/home/AuctionSheetVerification";
 
@@ -19,17 +19,6 @@ const VerifyAuctionSheetPage = () => {
     }
 
     router.push(`/auction-sheets?chassis=${encodeURIComponent(chassis)}`);
-  };
-
-  const handleContinue = () => {
-    const chassis = chassisNo.trim();
-    const query = new URLSearchParams({ type: "auction-sheet" });
-
-    if (chassis) {
-      query.set("chassis", chassis);
-    }
-
-    router.push(`/payments?${query.toString()}`);
   };
 
   return (
@@ -105,27 +94,6 @@ const VerifyAuctionSheetPage = () => {
                   details after submission.
                 </p>
 
-                <div className="mt-6 rounded-2xl border border-[#f0b90b]/40 bg-[#fff9e8] p-4">
-                  <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                    <div>
-                      <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-[#003399]">
-                        Ready for verification
-                      </p>
-                      <p className="mt-1 text-sm font-medium text-slate-600">
-                        Continue to secure payment and submit your auction sheet
-                        verification request.
-                      </p>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={handleContinue}
-                      className="inline-flex h-12 shrink-0 items-center justify-center gap-2 rounded-xl bg-[#f5bd05] px-5 text-sm font-extrabold text-slate-950 shadow-[0_12px_26px_rgba(245,189,5,0.28)] transition hover:-translate-y-0.5 hover:bg-[#e4ad00] disabled:cursor-not-allowed disabled:opacity-70"
-                    >
-                      Continue
-                      <ArrowRight size={17} />
-                    </button>
-                  </div>
-                </div>
               </div>
             </div>
           </div>

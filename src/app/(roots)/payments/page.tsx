@@ -5,11 +5,12 @@ import { Button, Result, Spin, message } from "antd";
 import { ResultStatusType } from "antd/es/result";
 import { useRouter, useSearchParams } from "next/navigation";
 import { CreditCard, FileSearch, ShieldCheck } from "lucide-react";
-import { useSyncBdGatePaymentStatusMutation } from "@/Redux/api/paymentApi";
+import {
+  useInitBdGateAuctionSheetPaymentMutation,
+  useSyncBdGatePaymentStatusMutation,
+} from "@/Redux/api/paymentApi";
 
 const AUCTION_SHEET_PAYMENT_AMOUNT = 800;
-const DIRECT_BDGATE_AUCTION_SHEET_PAYMENT_URL =
-  "https://pay.bdgate.net/p/test-941a828d";
 
 function PaymentPageContent() {
   const router = useRouter();
@@ -22,6 +23,8 @@ function PaymentPageContent() {
   const isAuctionSheetPayment = type === "auction-sheet";
   const [syncBdGatePaymentStatus, { isLoading: isSyncing }] =
     useSyncBdGatePaymentStatusMutation();
+  const [initBdGateAuctionSheetPayment, { isLoading: isStartingPayment }] =
+    useInitBdGateAuctionSheetPaymentMutation();
 
   useEffect(() => {
     if (!token || token === "{session_token}" || isAuctionSheetPayment) return;
@@ -51,8 +54,47 @@ function PaymentPageContent() {
     return () => window.clearTimeout(timeout);
   }, [chassis, isAuctionSheetPayment, router, status]);
 
-  const startAuctionSheetPayment = () => {
-    window.location.href = DIRECT_BDGATE_AUCTION_SHEET_PAYMENT_URL;
+  const startAuctionSheetPayment = async () => {
+    if (!orderId) {
+      message.error("Order reference is missing. Please submit the form again.");
+      router.push(
+        chassis
+          ? `/auction-sheets?chassis=${encodeURIComponent(chassis)}`
+          : "/verify-auction-sheet",
+      );
+      return;
+    }
+
+    try {
+      const response = await initBdGateAuctionSheetPayment({
+        orderId,
+        chassis,
+        amount: AUCTION_SHEET_PAYMENT_AMOUNT,
+        description: `CarClickBD auction sheet verification${chassis ? ` for ${chassis}` : ""}`,
+      }).unwrap();
+
+      const paymentUrl =
+        response?.data?.payment_url ||
+        response?.data?.paymentUrl ||
+        response?.data?.redirect_url ||
+        response?.data?.redirectUrl ||
+        response?.data?.checkout_url ||
+        response?.data?.checkoutUrl ||
+        response?.data?.url;
+
+      if (!paymentUrl) {
+        message.error("BDGate did not return a payment URL.");
+        return;
+      }
+
+      window.location.href = paymentUrl;
+    } catch (error: any) {
+      message.error(
+        error?.data?.message ||
+          error?.message ||
+          "Could not start BDGate payment. Please try again.",
+      );
+    }
   };
 
   if (!status && isAuctionSheetPayment) {
@@ -106,10 +148,11 @@ function PaymentPageContent() {
             <Button
               type="primary"
               onClick={startAuctionSheetPayment}
+              loading={isStartingPayment}
               className="!h-14 !rounded-xl !bg-[#f5bd05] !px-8 !text-base !font-black !text-slate-950 hover:!bg-[#e4ad00]"
               icon={<CreditCard size={18} />}
             >
-              Continue to Payment
+              {isStartingPayment ? "Creating BDGate session..." : "Continue to Payment"}
             </Button>
           </div>
         </section>
