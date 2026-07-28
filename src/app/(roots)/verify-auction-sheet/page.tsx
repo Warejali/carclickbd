@@ -9,15 +9,20 @@ import AuctionSheetVerification from "@/components/publiclayout/home/AuctionShee
 const VerifyAuctionSheetPage = () => {
   const router = useRouter();
   const [chassisNo, setChassisNo] = useState("");
-  const [searchedChassis, setSearchedChassis] = useState("");
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setSearchedChassis(chassisNo.trim());
+    const chassis = chassisNo.trim();
+
+    if (!chassis) {
+      return;
+    }
+
+    router.push(`/auction-sheets?chassis=${encodeURIComponent(chassis)}`);
   };
 
   const handleContinue = () => {
-    const chassis = (searchedChassis || chassisNo).trim();
+    const chassis = chassisNo.trim();
     const query = new URLSearchParams({ type: "auction-sheet" });
 
     if (chassis) {
@@ -99,13 +104,6 @@ const VerifyAuctionSheetPage = () => {
                   documents. Our team will review the available auction sheet
                   details after submission.
                 </p>
-
-                {searchedChassis && (
-                  <div className="mt-4 rounded-xl border border-[#f0b90b]/60 bg-[#fff7d6] px-4 py-3 text-sm font-semibold text-slate-800">
-                    Search request received for chassis:{" "}
-                    <span className="uppercase">{searchedChassis}</span>.
-                  </div>
-                )}
 
                 <div className="mt-6 rounded-2xl border border-[#f0b90b]/40 bg-[#fff9e8] p-4">
                   <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">

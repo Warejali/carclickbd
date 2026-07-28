@@ -25,5 +25,6 @@ export const baseApi = createApi({
     "event",
     "message",
     "chat",
+    "auctionSheet",
   ],
 });

@@ -18,6 +18,7 @@ function PaymentPageContent() {
   const type = searchParams.get("type");
   const token = searchParams.get("token") || searchParams.get("session_token");
   const chassis = searchParams.get("chassis") || "";
+  const orderId = searchParams.get("order") || "";
   const isAuctionSheetPayment = type === "auction-sheet";
   const [syncBdGatePaymentStatus, { isLoading: isSyncing }] =
     useSyncBdGatePaymentStatusMutation();
@@ -90,6 +91,16 @@ function PaymentPageContent() {
                   BDT {AUCTION_SHEET_PAYMENT_AMOUNT.toLocaleString("en-US")}/-
                 </p>
               </div>
+              {orderId && (
+                <div className="rounded-xl border border-slate-200 bg-white p-4">
+                  <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-slate-500">
+                    Order reference
+                  </p>
+                  <p className="mt-1 break-words text-sm font-black text-slate-950">
+                    {orderId}
+                  </p>
+                </div>
+              )}
             </div>
 
             <Button
