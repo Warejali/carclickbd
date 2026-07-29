@@ -42,7 +42,7 @@ const CarsSearchSection = () => {
               Search Inventory
             </p>
             <h1 className="mt-1 text-3xl font-extrabold text-slate-950 md:text-4xl">
-              Find Your Perfect Car
+              Find Your Next Car
             </h1>
           </div>
 

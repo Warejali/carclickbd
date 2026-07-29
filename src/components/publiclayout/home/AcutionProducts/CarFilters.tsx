@@ -6,6 +6,7 @@ import {
   homeFilterMakers,
   homeFilterModelsByMaker,
 } from "@/content/product.constant";
+import { ArrowUpDown, SlidersHorizontal } from "lucide-react";
 
 const sortFilters = [
   { label: "Newly listed", value: "listed" },
@@ -120,79 +121,97 @@ export default function CarFilters(_props: { isWinner?: boolean }) {
   };
 
   return (
-    <div className="mx-auto mb-6 w-full max-w-[1500px] rounded-lg border border-slate-200 bg-white px-4 py-4 shadow-sm md:px-6">
-      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-[1fr_1fr_0.75fr_1fr_1fr_auto_auto_auto_auto_auto]">
-        <FilterSelect
-          label="Maker"
-          value={maker}
-          options={homeFilterMakers}
-          onChange={(value) => {
-            setMaker(value);
-            setModel("all");
-          }}
-        />
-        <FilterSelect
-          label="Car Name"
-          value={model}
-          options={modelOptions}
-          onChange={setModel}
-        />
-        <FilterSelect
-          label="Year"
-          value={year}
-          options={[
-            { value: "all", label: "All Years" },
-            ...years.map((item) => ({ value: item, label: item })),
-          ]}
-          onChange={setYear}
-        />
-        <FilterSelect
-          label="Status"
-          value={status}
-          options={statuses}
-          onChange={setStatus}
-        />
-        <FilterSelect
-          label="Condition"
-          value={condition}
-          options={conditions}
-          onChange={setCondition}
-        />
+    <div className="mx-auto mb-8 w-full max-w-[1500px] px-4 sm:px-6 lg:px-8">
+      <div className="rounded-xl border border-slate-200/80 bg-white p-4 shadow-[0_18px_50px_rgba(15,23,42,0.08)] md:p-5">
+        <div className="flex flex-col gap-4 xl:flex-row xl:items-end">
+          <div className="min-w-0 flex-1">
+            <div className="mb-3 flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-[0.18em] text-slate-500">
+              <span className="flex h-7 w-7 items-center justify-center rounded-md bg-slate-950 text-white">
+                <SlidersHorizontal size={14} />
+              </span>
+              Refine Listings
+            </div>
 
-        {sortFilters.map((filter) => (
-          <div key={filter.value} className="flex items-end">
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+              <FilterSelect
+                label="Maker"
+                value={maker}
+                options={homeFilterMakers}
+                onChange={(value) => {
+                  setMaker(value);
+                  setModel("all");
+                }}
+              />
+              <FilterSelect
+                label="Car Name"
+                value={model}
+                options={modelOptions}
+                onChange={setModel}
+              />
+              <FilterSelect
+                label="Year"
+                value={year}
+                options={[
+                  { value: "all", label: "All Years" },
+                  ...years.map((item) => ({ value: item, label: item })),
+                ]}
+                onChange={setYear}
+              />
+              <FilterSelect
+                label="Status"
+                value={status}
+                options={statuses}
+                onChange={setStatus}
+              />
+              <FilterSelect
+                label="Condition"
+                value={condition}
+                options={conditions}
+                onChange={setCondition}
+              />
+            </div>
+          </div>
+
+          <div className="flex gap-2 xl:pb-0.5">
             <button
               type="button"
-              onClick={() => handleSortChange(filter.value)}
-              className={`h-10 w-full whitespace-nowrap rounded-md border px-4 text-sm font-bold transition xl:w-auto ${
-                activeSort === filter.value
-                  ? "border-[#e50914] bg-[#e50914] text-white"
-                  : "border-slate-200 bg-slate-50 text-slate-600 hover:border-slate-300 hover:bg-white"
-              }`}
+              onClick={handleFilterApply}
+              className="h-11 flex-1 rounded-md bg-slate-950 px-6 text-sm font-extrabold text-white shadow-lg shadow-slate-950/10 transition hover:bg-[#e50914] xl:flex-none"
             >
-              {filter.label}
+              Apply
+            </button>
+            <button
+              type="button"
+              onClick={handleReset}
+              className="h-11 flex-1 rounded-md border border-slate-200 bg-slate-50 px-5 text-sm font-extrabold text-slate-600 transition hover:border-slate-300 hover:bg-white xl:flex-none"
+            >
+              Reset
             </button>
           </div>
-        ))}
-
-        <div className="flex items-end">
-          <button
-            type="button"
-            onClick={handleFilterApply}
-            className="h-10 w-full rounded-md bg-slate-950 px-5 text-sm font-bold text-white transition hover:bg-sky-600 lg:w-auto"
-          >
-            Apply
-          </button>
         </div>
 
-        <div className="flex items-end">
-          <button
-            type="button"
-            onClick={handleReset}
-            className="h-10 w-full rounded-md border border-slate-200 bg-slate-50 px-4 text-sm font-bold text-slate-600 transition hover:bg-white lg:w-auto"
-          >
-            Reset
-          </button>
+        <div className="mt-4 flex flex-col gap-3 border-t border-slate-100 pt-4 lg:flex-row lg:items-center lg:justify-between">
+          <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-slate-400">
+            <ArrowUpDown size={14} />
+            Sort
+          </div>
+
+          <div className="grid gap-2 sm:grid-cols-3 lg:flex">
+            {sortFilters.map((filter) => (
+              <button
+                key={filter.value}
+                type="button"
+                onClick={() => handleSortChange(filter.value)}
+                className={`h-10 whitespace-nowrap rounded-md border px-4 text-sm font-bold transition ${
+                  activeSort === filter.value
+                    ? "border-[#e50914] bg-[#e50914] text-white shadow-md shadow-red-500/15"
+                    : "border-slate-200 bg-slate-50 text-slate-600 hover:border-slate-300 hover:bg-white hover:text-slate-950"
+                }`}
+              >
+                {filter.label}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </div>
@@ -212,13 +231,13 @@ const FilterSelect = ({
 }) => {
   return (
     <label className="grid gap-1.5">
-      <span className="text-[11px] font-bold uppercase text-slate-600">
+      <span className="text-[10px] font-extrabold uppercase tracking-[0.08em] text-slate-500">
         {label}
       </span>
       <select
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="h-10 rounded-md border border-slate-200 bg-white px-3 text-sm outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
+        className="h-11 rounded-md border border-slate-200 bg-slate-50 px-3 text-sm font-semibold text-slate-900 outline-none transition hover:bg-white focus:border-[#e50914] focus:bg-white focus:ring-2 focus:ring-red-100"
       >
         {options.map((option) => (
           <option key={`${label}-${option.value}`} value={option.value}>
