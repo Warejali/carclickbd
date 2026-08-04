@@ -234,6 +234,16 @@ const AuctionSheetsPageContent = () => {
         paymentData?.paymentUrl ||
         paymentData?.checkout_url ||
         paymentData?.checkoutUrl ||
+        paymentData?.payment_link ||
+        paymentData?.paymentLink ||
+        paymentData?.link ||
+        paymentData?.data?.payment_url ||
+        paymentData?.data?.paymentUrl ||
+        paymentData?.data?.checkout_url ||
+        paymentData?.data?.checkoutUrl ||
+        paymentData?.data?.payment_link ||
+        paymentData?.data?.paymentLink ||
+        paymentData?.data?.link ||
         paymentData?.url;
 
       if (!paymentUrl) {
