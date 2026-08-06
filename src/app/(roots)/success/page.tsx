@@ -1,35 +1,35 @@
-"use client"
+"use client";
 import { useCreatePaymentMutation } from "@/Redux/api/paymentApi";
 import { Card, message } from "antd";
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
 
 export default function Success() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const order = searchParams.get('ref');
-  const session_id = searchParams.get('session_id');
-  const amountParam = searchParams.get('amount');
+  const order = searchParams.get("ref");
+  const session_id = searchParams.get("session_id");
+  const amountParam = searchParams.get("amount");
   const amount = amountParam !== null ? parseFloat(amountParam) : 0;
 
   const [createPayment] = useCreatePaymentMutation();
-  const isPaymentInitiatedRef = useRef(false); 
+  const isPaymentInitiatedRef = useRef(false);
 
   useEffect(() => {
     if (!session_id || isPaymentInitiatedRef.current) {
-      return; 
+      return;
     }
 
     const paymentData = {
       amount,
-      paymentStatus: 'PAID',
+      paymentStatus: "PAID",
       transactionId: session_id,
       order,
-      paymentMethod: 'stripe',
+      paymentMethod: "bdgate",
     };
 
     const makePayment = async () => {
-      isPaymentInitiatedRef.current = true; 
+      isPaymentInitiatedRef.current = true;
       const res = await createPayment(paymentData).unwrap();
 
       if (res?._id) {
@@ -38,15 +38,15 @@ export default function Success() {
           router.push("/");
         }, 1000);
       } else {
-        isPaymentInitiatedRef.current = false; 
+        isPaymentInitiatedRef.current = false;
       }
     };
 
-    makePayment().catch(error => {
+    makePayment().catch((error) => {
       console.error("Payment failed:", error);
-      isPaymentInitiatedRef.current = false; 
+      isPaymentInitiatedRef.current = false;
     });
-  }, [session_id, amount, order, createPayment, router]); 
+  }, [session_id, amount, order, createPayment, router]);
 
   return (
     <div className="page-content">
@@ -54,7 +54,9 @@ export default function Success() {
         <div className="text-center">
           <h1 className="display-1">Thank You</h1>
           <p className="lead">Your payment has been successfully processed</p>
-          <p className="lead">You will be redirected to the dashboard in a few seconds</p>
+          <p className="lead">
+            You will be redirected to the dashboard in a few seconds
+          </p>
         </div>
       </Card>
     </div>

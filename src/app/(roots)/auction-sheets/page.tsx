@@ -45,7 +45,11 @@ const getNestedValue = (source: any, keys: string[]): ReportValue => {
   for (const value of Object.values(source)) {
     if (value && typeof value === "object" && !Array.isArray(value)) {
       const nestedValue = getNestedValue(value, keys);
-      if (nestedValue !== undefined && nestedValue !== null && nestedValue !== "") {
+      if (
+        nestedValue !== undefined &&
+        nestedValue !== null &&
+        nestedValue !== ""
+      ) {
         return nestedValue;
       }
     }
@@ -247,21 +251,19 @@ const AuctionSheetsPageContent = () => {
         paymentData?.url;
 
       if (!paymentUrl) {
-        throw new Error("BDGate did not return a payment URL.");
+        throw new Error(
+          "BDGate did not return a payment URL. Please check the backend BDGate response.",
+        );
       }
 
-      window.location.href = paymentUrl;
+      window.location.assign(paymentUrl);
     } catch (error: any) {
       const message =
         error?.data?.message ||
         error?.message ||
         "Could not create the auction sheet order. Please try again.";
 
-      setPurchaseError(
-        message === "Not Found"
-          ? "BDGate payment API is not available yet. Please deploy or restart the v-07 backend, then try again."
-          : message,
-      );
+      setPurchaseError(message);
     }
   };
 
@@ -288,10 +290,13 @@ const AuctionSheetsPageContent = () => {
               <div className="rounded-2xl border border-amber-200 bg-amber-50 p-6">
                 <div className="flex items-center gap-3 text-amber-700">
                   <AlertCircle size={22} />
-                  <h2 className="text-xl font-black">Chassis number required</h2>
+                  <h2 className="text-xl font-black">
+                    Chassis number required
+                  </h2>
                 </div>
                 <p className="mt-2 text-sm font-medium text-slate-600">
-                  Please enter a chassis number from the verification page first.
+                  Please enter a chassis number from the verification page
+                  first.
                 </p>
                 <Link
                   href="/verify-auction-sheet"
@@ -428,9 +433,7 @@ const AuctionSheetsPageContent = () => {
                 <p className="text-xs font-black uppercase tracking-[0.2em] text-[#f5bd05]">
                   How it works
                 </p>
-                <h3 className="mt-3 text-2xl font-black">
-                  Four simple steps
-                </h3>
+                <h3 className="mt-3 text-2xl font-black">Four simple steps</h3>
                 <div className="mt-6 space-y-4">
                   {processSteps.map((step, index) => (
                     <div key={step} className="flex gap-4">
@@ -546,8 +549,8 @@ const AuctionSheetsPageContent = () => {
               <div className="flex items-center gap-3">
                 <ShieldCheck size={20} className="text-[#003399]" />
                 <p className="text-sm font-bold">
-                  Always verify documents, chassis number, seller ownership,
-                  and vehicle condition before payment.
+                  Always verify documents, chassis number, seller ownership, and
+                  vehicle condition before payment.
                 </p>
               </div>
             </div>
@@ -588,12 +591,13 @@ const AuctionSheetsPageContent = () => {
               </div>
             </div>
 
-            <form onSubmit={handlePurchaseSubmit} className="space-y-5 p-6 md:p-8">
+            <form
+              onSubmit={handlePurchaseSubmit}
+              className="space-y-5 p-6 md:p-8"
+            >
               <div className="grid gap-4 md:grid-cols-2">
                 <label className="block">
-                  <span className="text-sm font-bold text-slate-700">
-                    Name
-                  </span>
+                  <span className="text-sm font-bold text-slate-700">Name</span>
                   <input
                     required
                     name="name"

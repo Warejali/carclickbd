@@ -1,4 +1,3 @@
-
 import { baseApi } from "./baseApi";
 
 export const PAYMENT = "/payment";
@@ -21,16 +20,6 @@ const paymentApi = baseApi.injectEndpoints({
       providesTags: ["payment"],
     }),
 
-
-    initPayment: build.mutation({
-      query: (items: any) => ({
-        url: `${PAYMENT}/init`,
-        method: "POST",
-        data: items
-      }),
-      invalidatesTags: ["payment"],
-    }),
-
     initBdGatePayment: build.mutation({
       query: (items: any) => ({
         url: `${PAYMENT}/bdgate/init`,
@@ -45,7 +34,7 @@ const paymentApi = baseApi.injectEndpoints({
         url: `${PAYMENT}/bdgate/auction-sheet`,
         method: "POST",
         data: items,
-        timeout: 20000,
+        timeout: 45000,
       }),
       invalidatesTags: ["payment"],
     }),
@@ -62,7 +51,7 @@ const paymentApi = baseApi.injectEndpoints({
       query: (item: any) => ({
         url: `${PAYMENT}/create`,
         method: "POST",
-        data: item
+        data: item,
       }),
       invalidatesTags: ["payment"],
     }),
@@ -71,11 +60,10 @@ const paymentApi = baseApi.injectEndpoints({
 
 export const {
   useGetPaymentQuery,
-  useInitPaymentMutation,
   useInitBdGatePaymentMutation,
   useInitBdGateAuctionSheetPaymentMutation,
   useSyncBdGatePaymentStatusMutation,
-  useCreatePaymentMutation
+  useCreatePaymentMutation,
 } = paymentApi;
 
 export default paymentApi;
