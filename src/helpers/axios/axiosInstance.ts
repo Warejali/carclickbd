@@ -57,9 +57,14 @@ instance.interceptors.response.use(
       if (error?.response?.status === 401) {
         removeFromLocalStorage(authKey);
       }
+      const hasServerResponse = Boolean(error?.response);
       let responseObject: any = {
         statusCode: error?.response?.status || 500,
-        message: "Something went wrong",
+        message: hasServerResponse
+          ? "Something went wrong"
+          : error?.code === "ECONNABORTED"
+            ? "The server is taking too long to respond. Please try again."
+            : error?.message || "Network request failed",
         success: false,
         errorMessages: [],
       };

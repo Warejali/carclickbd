@@ -14,6 +14,7 @@ export const auctionSheetApi = baseApi.injectEndpoints({
         url: "/auction-sheet/order",
         method: "POST",
         data,
+        timeout: 20000,
       }),
       invalidatesTags: ["order"],
     }),

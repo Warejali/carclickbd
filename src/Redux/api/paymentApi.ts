@@ -45,6 +45,7 @@ const paymentApi = baseApi.injectEndpoints({
         url: `${PAYMENT}/bdgate/auction-sheet`,
         method: "POST",
         data: items,
+        timeout: 20000,
       }),
       invalidatesTags: ["payment"],
     }),

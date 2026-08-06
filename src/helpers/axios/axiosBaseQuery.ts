@@ -12,17 +12,19 @@ export const axiosBaseQuery =
       data?: AxiosRequestConfig["data"];
       params?: AxiosRequestConfig["params"];
       contentType?: string;
+      timeout?: number;
     },
     unknown,
     unknown
   > =>
-  async ({ url, method, data, params, contentType }) => {
+  async ({ url, method, data, params, contentType, timeout }) => {
     try {
       const result = await axiosInstance({
         url: baseUrl + url,
         method,
         data,
         params,
+        timeout,
         headers: {
           "Content-Type": contentType || "application/json",
         },
