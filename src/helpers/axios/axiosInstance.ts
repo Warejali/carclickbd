@@ -1,17 +1,25 @@
-import { authKey } from "@/constant/storegeKey";
-import { getNewAccessToken, storeToken } from "@/service/auth.service";
-import { removeFromLocalStorage } from "@/utils/local-storage";
+import { authKey } from '@/constant/storegeKey';
+import { getNewAccessToken, storeToken } from '@/service/auth.service';
+import { removeFromLocalStorage } from '@/utils/local-storage';
 
-import axios from "axios";
+import axios from 'axios';
 
 const getCleanToken = (token?: string | null) => {
-  if (!token || token === "undefined" || token === "null") return "";
-  return token.startsWith("Bearer ") ? token.split(" ")[1] : token;
+  if (!token || token === 'undefined' || token === 'null') return '';
+  return token.startsWith('Bearer ') ? token.split(' ')[1] : token;
+};
+
+const isPublicAuctionSheetRequest = (config?: { url?: string }) => {
+  const url = config?.url || '';
+  return (
+    url.includes('/auction-sheet') ||
+    url.includes('/payment/bdgate/auction-sheet')
+  );
 };
 
 const instance = axios.create();
-instance.defaults.headers.post["Content-Type"] = "application/json";
-instance.defaults.headers["Accept"] = "application/json";
+instance.defaults.headers.post['Content-Type'] = 'application/json';
+instance.defaults.headers['Accept'] = 'application/json';
 instance.defaults.timeout = 90000;
 
 // Add a request interceptor
@@ -42,6 +50,15 @@ instance.interceptors.response.use(
   async function (error) {
     const config = error?.config;
 
+    // Auction-sheet search and payment are public flows. A failed request in
+    // this flow must not refresh or remove an unrelated signed-in user's token.
+    if (
+      error?.response?.status === 401 &&
+      isPublicAuctionSheetRequest(config)
+    ) {
+      return Promise.reject(error);
+    }
+
     if (error?.response?.status === 401 && !config?.sent) {
       config.sent = true;
       const accessToken = getCleanToken(await getNewAccessToken());
@@ -49,7 +66,7 @@ instance.interceptors.response.use(
         removeFromLocalStorage(authKey);
         return Promise.reject(error);
       }
-      config.headers["Authorization"] = accessToken;
+      config.headers['Authorization'] = accessToken;
       storeToken({ accessToken });
       return instance(config);
     } else {
@@ -58,13 +75,13 @@ instance.interceptors.response.use(
         removeFromLocalStorage(authKey);
       }
       const hasServerResponse = Boolean(error?.response);
-      let responseObject: any = {
+      const responseObject: any = {
         statusCode: error?.response?.status || 500,
         message: hasServerResponse
-          ? "Something went wrong"
-          : error?.code === "ECONNABORTED"
-            ? "The server is taking too long to respond. Please try again."
-            : error?.message || "Network request failed",
+          ? 'Something went wrong'
+          : error?.code === 'ECONNABORTED'
+            ? 'The server is taking too long to respond. Please try again.'
+            : error?.message || 'Network request failed',
         success: false,
         errorMessages: [],
       };

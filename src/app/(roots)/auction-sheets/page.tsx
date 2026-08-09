@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { Suspense, useEffect, useState, type FormEvent } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState, type FormEvent } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import {
   AlertCircle,
   ArrowRight,
@@ -18,40 +18,40 @@ import {
   MessageCircle,
   ShieldCheck,
   X,
-} from "lucide-react";
+} from 'lucide-react';
 import {
   useCreateAuctionSheetOrderMutation,
   useLazyGetAuctionSheetReportQuery,
-} from "@/Redux/api/auctionSheetApi";
+} from '@/Redux/api/auctionSheetApi';
 import {
   useInitBdGateAuctionSheetPaymentMutation,
   useLazyGetBdGateAuctionSheetPaymentStatusQuery,
-} from "@/Redux/api/paymentApi";
-import { getWhatsAppUrl } from "@/constants/siteContact";
+} from '@/Redux/api/paymentApi';
+import { getWhatsAppUrl } from '@/constants/siteContact';
 
 type ReportValue = string | number | boolean | null | undefined;
 
 const getNestedValue = (source: any, keys: string[]): ReportValue => {
-  if (!source || typeof source !== "object") return undefined;
+  if (!source || typeof source !== 'object') return undefined;
 
   for (const key of keys) {
     const value = source[key];
     if (
-      typeof value === "string" ||
-      typeof value === "number" ||
-      typeof value === "boolean"
+      typeof value === 'string' ||
+      typeof value === 'number' ||
+      typeof value === 'boolean'
     ) {
       return value;
     }
   }
 
   for (const value of Object.values(source)) {
-    if (value && typeof value === "object" && !Array.isArray(value)) {
+    if (value && typeof value === 'object' && !Array.isArray(value)) {
       const nestedValue = getNestedValue(value, keys);
       if (
         nestedValue !== undefined &&
         nestedValue !== null &&
-        nestedValue !== ""
+        nestedValue !== ''
       ) {
         return nestedValue;
       }
@@ -63,28 +63,28 @@ const getNestedValue = (source: any, keys: string[]): ReportValue => {
 
 const getNestedImage = (source: any): string => {
   const image = getNestedValue(source, [
-    "image",
-    "image_url",
-    "imageUrl",
-    "photo",
-    "photo_url",
-    "sheet_image",
-    "sheetImage",
-    "auction_sheet",
-    "auctionSheet",
+    'image',
+    'image_url',
+    'imageUrl',
+    'photo',
+    'photo_url',
+    'sheet_image',
+    'sheetImage',
+    'auction_sheet',
+    'auctionSheet',
   ]);
 
-  return typeof image === "string" && /^https?:\/\//i.test(image) ? image : "";
+  return typeof image === 'string' && /^https?:\/\//i.test(image) ? image : '';
 };
 
 const formatLabel = (label: string) =>
   label
-    .replace(/[_-]/g, " ")
-    .replace(/([a-z])([A-Z])/g, "$1 $2")
-    .replace(/\b\w/g, (char) => char.toUpperCase());
+    .replace(/[_-]/g, ' ')
+    .replace(/([a-z])([A-Z])/g, '$1 $2')
+    .replace(/\b\w/g, char => char.toUpperCase());
 
 const buildReportRows = (report: any) => {
-  if (!report || typeof report !== "object") return [];
+  if (!report || typeof report !== 'object') return [];
 
   const source = Array.isArray(report) ? report[0] : report;
 
@@ -93,9 +93,9 @@ const buildReportRows = (report: any) => {
       const valueType = typeof value;
       return (
         value === null ||
-        valueType === "string" ||
-        valueType === "number" ||
-        valueType === "boolean"
+        valueType === 'string' ||
+        valueType === 'number' ||
+        valueType === 'boolean'
       );
     })
     .slice(0, 12);
@@ -103,65 +103,65 @@ const buildReportRows = (report: any) => {
 
 const verificationFeatures = [
   {
-    title: "Auction record check",
+    title: 'Auction record check',
     description:
-      "Review available auction sheet records by chassis number before making a buying decision.",
+      'Review available auction sheet records by chassis number before making a buying decision.',
     icon: FileSearch,
   },
   {
-    title: "Mileage and grade review",
+    title: 'Mileage and grade review',
     description:
-      "Check mileage history, auction grade, repair marks, and condition notes where records are available.",
+      'Check mileage history, auction grade, repair marks, and condition notes where records are available.',
     icon: BadgeCheck,
   },
   {
-    title: "Translation support",
+    title: 'Translation support',
     description:
-      "Understand important Japanese sheet notes such as scratches, dents, rust, and replaced parts.",
+      'Understand important Japanese sheet notes such as scratches, dents, rust, and replaced parts.',
     icon: Languages,
   },
 ];
 
 const processSteps = [
-  "Enter the chassis number exactly as shown on the vehicle documents.",
-  "Review the available match and submit your verification request.",
-  "Complete payment and keep your WhatsApp available for follow-up.",
-  "Our team checks the report details and guides you with the next steps.",
+  'Enter the chassis number exactly as shown on the vehicle documents.',
+  'Review the available match and submit your verification request.',
+  'Complete payment and keep your WhatsApp available for follow-up.',
+  'Our team checks the report details and guides you with the next steps.',
 ];
 
 const infoSections = [
   {
-    title: "Why verify before buying?",
+    title: 'Why verify before buying?',
     description:
-      "A Japanese auction sheet can reveal mileage records, accident notes, repair marks, replaced parts, paint touch-ups, corrosion, and overall condition.",
+      'A Japanese auction sheet can reveal mileage records, accident notes, repair marks, replaced parts, paint touch-ups, corrosion, and overall condition.',
     icon: ShieldCheck,
   },
   {
-    title: "Manual review when needed",
+    title: 'Manual review when needed',
     description:
-      "If an auction sheet is not instantly available, CarClickBD can review the chassis request manually and contact you.",
+      'If an auction sheet is not instantly available, CarClickBD can review the chassis request manually and contact you.',
     icon: ClipboardCheck,
   },
   {
-    title: "For Japanese imports",
+    title: 'For Japanese imports',
     description:
-      "This service helps buyers make better decisions before purchasing reconditioned Japanese cars in Bangladesh.",
+      'This service helps buyers make better decisions before purchasing reconditioned Japanese cars in Bangladesh.',
     icon: Car,
   },
   {
-    title: "Production year confidence",
+    title: 'Production year confidence',
     description:
-      "Use auction sheet checks with production year, registration details, and seller documents to reduce costly mistakes.",
+      'Use auction sheet checks with production year, registration details, and seller documents to reduce costly mistakes.',
     icon: CalendarCheck,
   },
 ];
 
 const AuctionSheetsPageContent = () => {
   const searchParams = useSearchParams();
-  const chassis = searchParams.get("chassis") || "";
-  const paymentId = searchParams.get("payment_id") || "";
+  const chassis = searchParams.get('chassis') || '';
+  const paymentId = searchParams.get('payment_id') || '';
   const [isPurchaseModalOpen, setIsPurchaseModalOpen] = useState(false);
-  const [purchaseError, setPurchaseError] = useState("");
+  const [purchaseError, setPurchaseError] = useState('');
   const [getAuctionSheetReport, { data, error, isFetching }] =
     useLazyGetAuctionSheetReportQuery();
   const [createAuctionSheetOrder, { isLoading: isCreatingOrder }] =
@@ -201,24 +201,28 @@ const AuctionSheetsPageContent = () => {
   const reportRows = buildReportRows(report);
   const found = Boolean(reportData?.found);
   const model = getNestedValue(reportSource, [
-    "model",
-    "car_model",
-    "carModel",
-    "name",
+    'model',
+    'car_model',
+    'carModel',
+    'name',
   ]);
   const year = getNestedValue(reportSource, [
-    "year",
-    "production_year",
-    "productionYear",
-    "model_year",
+    'year',
+    'production_year',
+    'productionYear',
+    'model_year',
   ]);
-  const color = getNestedValue(reportSource, ["color", "colour"]);
+  const color = getNestedValue(reportSource, ['color', 'colour']);
+  const grade = getNestedValue(reportSource, [
+    'grade',
+    'auction_grade',
+    'auctionGrade',
+    'car_grade',
+  ]);
   const sheetImage = getNestedImage(reportSource);
-  const handlePurchaseSubmit = async (
-    event: FormEvent<HTMLFormElement>,
-  ) => {
+  const handlePurchaseSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setPurchaseError("");
+    setPurchaseError('');
 
     const formData = new FormData(event.currentTarget);
     const cleanChassis = reportData?.chassis || chassis;
@@ -226,12 +230,12 @@ const AuctionSheetsPageContent = () => {
     try {
       const response = await createAuctionSheetOrder({
         chassis: cleanChassis,
-        name: String(formData.get("name") || ""),
-        email: String(formData.get("email") || ""),
-        mobileNumber: String(formData.get("mobile") || ""),
-        address: String(formData.get("address") || ""),
+        name: String(formData.get('name') || ''),
+        email: String(formData.get('email') || ''),
+        mobileNumber: String(formData.get('mobile') || ''),
+        address: String(formData.get('address') || ''),
         amount: 800,
-        termsAccepted: formData.get("termsAccepted") === "on",
+        termsAccepted: formData.get('termsAccepted') === 'on',
       }).unwrap();
 
       const order =
@@ -242,7 +246,7 @@ const AuctionSheetsPageContent = () => {
       const orderId = order?._id || order?.id;
 
       if (!orderId) {
-        throw new Error("Order reference was not returned. Please try again.");
+        throw new Error('Order reference was not returned. Please try again.');
       }
 
       const paymentResponse = await initBdGateAuctionSheetPayment({
@@ -250,7 +254,7 @@ const AuctionSheetsPageContent = () => {
         chassis: cleanChassis,
         amount: 800,
         description: `CarClickBD auction sheet verification${
-          cleanChassis ? ` for ${cleanChassis}` : ""
+          cleanChassis ? ` for ${cleanChassis}` : ''
         }`,
       }).unwrap();
 
@@ -275,7 +279,7 @@ const AuctionSheetsPageContent = () => {
 
       if (!paymentUrl) {
         throw new Error(
-          "BDGate did not return a payment URL. Please check the backend BDGate response.",
+          'BDGate did not return a payment URL. Please check the backend BDGate response.',
         );
       }
 
@@ -284,7 +288,7 @@ const AuctionSheetsPageContent = () => {
       const message =
         error?.data?.message ||
         error?.message ||
-        "Could not create the auction sheet order. Please try again.";
+        'Could not create the auction sheet order. Please try again.';
 
       setPurchaseError(message);
     }
@@ -296,13 +300,13 @@ const AuctionSheetsPageContent = () => {
         window.location.assign(downloadUrl);
       } else {
         setPurchaseError(
-          "Payment is confirmed, but the auction sheet file is not available yet. Please contact CarClickBD.",
+          'Payment is confirmed, but the auction sheet file is not available yet. Please contact CarClickBD.',
         );
       }
       return;
     }
 
-    setPurchaseError("");
+    setPurchaseError('');
     setIsPurchaseModalOpen(true);
   };
 
@@ -382,31 +386,37 @@ const AuctionSheetsPageContent = () => {
                   <div className="space-y-3">
                     <div className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1 text-xs font-black uppercase text-emerald-700">
                       {isFetching ? (
-                        "Checking"
+                        'Checking'
                       ) : found ? (
                         <>
                           <CheckCircle2 size={14} /> Available
                         </>
                       ) : (
-                        "Request review"
+                        'Request review'
                       )}
                     </div>
                     <p className="text-2xl font-black text-slate-950">
-                      Model:{" "}
+                      Model:{' '}
                       <span className="uppercase text-[#e50914]">
-                        {model || "Pending review"}
+                        {model || 'Pending review'}
                       </span>
                     </p>
                     <p className="text-2xl font-black text-slate-950">
-                      Year:{" "}
+                      Year:{' '}
                       <span className="uppercase text-[#e50914]">
-                        {year || "Checking"}
+                        {year || 'Checking'}
                       </span>
                     </p>
                     <p className="text-2xl font-black text-slate-950">
-                      Color:{" "}
+                      Color:{' '}
                       <span className="uppercase text-[#e50914]">
-                        {color || "Checking"}
+                        {color || 'Checking'}
+                      </span>
+                    </p>
+                    <p className="text-2xl font-black text-slate-950">
+                      Grade:{' '}
+                      <span className="uppercase text-[#e50914]">
+                        {grade || 'Checking'}
                       </span>
                     </p>
                   </div>
@@ -445,7 +455,7 @@ const AuctionSheetsPageContent = () => {
             </div>
 
             <div className="grid gap-4 md:grid-cols-3">
-              {verificationFeatures.map((feature) => {
+              {verificationFeatures.map(feature => {
                 const Icon = feature.icon;
 
                 return (
@@ -488,7 +498,7 @@ const AuctionSheetsPageContent = () => {
               </div>
 
               <div className="grid gap-4 sm:grid-cols-2">
-                {infoSections.map((section) => {
+                {infoSections.map(section => {
                   const Icon = section.icon;
 
                   return (
@@ -541,7 +551,7 @@ const AuctionSheetsPageContent = () => {
                         {formatLabel(key)}
                       </p>
                       <p className="mt-2 break-words text-sm font-bold text-slate-900">
-                        {String(value ?? "N/A")}
+                        {String(value ?? 'N/A')}
                       </p>
                     </div>
                   ))}
@@ -574,7 +584,7 @@ const AuctionSheetsPageContent = () => {
 
             <a
               href={getWhatsAppUrl(
-                `Hello CarClickBD, I want to verify auction sheet for chassis ${chassis || ""}.`,
+                `Hello CarClickBD, I want to verify auction sheet for chassis ${chassis || ''}.`,
               )}
               target="_blank"
               rel="noreferrer"
@@ -625,7 +635,7 @@ const AuctionSheetsPageContent = () => {
                   Chassis number
                 </p>
                 <p className="mt-1 break-words text-lg font-black uppercase text-white">
-                  {reportData?.chassis || chassis || "Not provided"}
+                  {reportData?.chassis || chassis || 'Not provided'}
                 </p>
               </div>
             </div>
@@ -694,7 +704,7 @@ const AuctionSheetsPageContent = () => {
                   className="mt-1 h-4 w-4 rounded border-slate-300 text-[#003399]"
                 />
                 <span className="text-sm font-semibold leading-6 text-slate-700">
-                  I agree to the{" "}
+                  I agree to the{' '}
                   <a
                     href="https://carmodsbd.com/toc"
                     target="_blank"
@@ -720,10 +730,10 @@ const AuctionSheetsPageContent = () => {
               >
                 <CreditCard size={19} />
                 {isCreatingOrder
-                  ? "Creating order..."
+                  ? 'Creating order...'
                   : isStartingPayment
-                    ? "Opening BDGate..."
-                    : "Purchase"}
+                    ? 'Opening BDGate...'
+                    : 'Purchase'}
               </button>
             </form>
           </div>
