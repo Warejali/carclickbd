@@ -47,6 +47,14 @@ const paymentApi = baseApi.injectEndpoints({
       invalidatesTags: ["payment", "order"],
     }),
 
+    getBdGateAuctionSheetPaymentStatus: build.query({
+      query: (paymentId: string) => ({
+        url: `/auction-sheet/payment-status/${paymentId}`,
+        method: "GET",
+      }),
+      providesTags: ["payment", "auctionSheet"],
+    }),
+
     createPayment: build.mutation({
       query: (item: any) => ({
         url: `${PAYMENT}/create`,
@@ -63,6 +71,7 @@ export const {
   useInitBdGatePaymentMutation,
   useInitBdGateAuctionSheetPaymentMutation,
   useSyncBdGatePaymentStatusMutation,
+  useLazyGetBdGateAuctionSheetPaymentStatusQuery,
   useCreatePaymentMutation,
 } = paymentApi;
 

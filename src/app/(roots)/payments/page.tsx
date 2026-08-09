@@ -14,12 +14,13 @@ function PaymentPageContent() {
   const type = searchParams.get("type");
   const token = searchParams.get("token") || searchParams.get("session_token");
   const chassis = searchParams.get("chassis") || "";
+  const paymentId = searchParams.get("payment_id") || "";
   const isAuctionSheetPayment = type === "auction-sheet";
   const [syncBdGatePaymentStatus, { isLoading: isSyncing }] =
     useSyncBdGatePaymentStatusMutation();
 
   useEffect(() => {
-    if (!token || token === "{session_token}") return;
+    if (isAuctionSheetPayment || !token || token === "{session_token}") return;
 
     syncBdGatePaymentStatus(token)
       .unwrap()
@@ -30,21 +31,24 @@ function PaymentPageContent() {
             "Could not verify BDGate payment status",
         );
       });
-  }, [syncBdGatePaymentStatus, token]);
+  }, [isAuctionSheetPayment, syncBdGatePaymentStatus, token]);
 
   useEffect(() => {
     if (status !== "success" || !isAuctionSheetPayment) return;
 
     const timeout = window.setTimeout(() => {
       router.replace(
-        chassis
-          ? `/auction-sheets?chassis=${encodeURIComponent(chassis)}`
+        chassis || paymentId
+          ? `/auction-sheets?${new URLSearchParams({
+              ...(chassis ? { chassis } : {}),
+              ...(paymentId ? { payment_id: paymentId } : {}),
+            }).toString()}`
           : "/auction-sheets",
       );
     }, 1200);
 
     return () => window.clearTimeout(timeout);
-  }, [chassis, isAuctionSheetPayment, router, status]);
+  }, [chassis, isAuctionSheetPayment, paymentId, router, status]);
 
   const resultStatus: ResultStatusType =
     status === "success"
@@ -60,7 +64,7 @@ function PaymentPageContent() {
         : "Payment was not completed";
   const resultSubTitle =
     status === "success" && isAuctionSheetPayment
-      ? "Your payment was received. Redirecting to Auction Sheets..."
+      ? "Payment return received. Confirming BDGate payment and opening the protected download..."
       : status === "success"
         ? "BDGate has received your payment request. Your order will update after gateway confirmation."
         : "You can return and try the BDGate payment again.";

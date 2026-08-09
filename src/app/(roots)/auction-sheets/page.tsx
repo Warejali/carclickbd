@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useState, type FormEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -23,7 +23,10 @@ import {
   useCreateAuctionSheetOrderMutation,
   useLazyGetAuctionSheetReportQuery,
 } from "@/Redux/api/auctionSheetApi";
-import { useInitBdGateAuctionSheetPaymentMutation } from "@/Redux/api/paymentApi";
+import {
+  useInitBdGateAuctionSheetPaymentMutation,
+  useLazyGetBdGateAuctionSheetPaymentStatusQuery,
+} from "@/Redux/api/paymentApi";
 import { getWhatsAppUrl } from "@/constants/siteContact";
 
 type ReportValue = string | number | boolean | null | undefined;
@@ -156,6 +159,7 @@ const infoSections = [
 const AuctionSheetsPageContent = () => {
   const searchParams = useSearchParams();
   const chassis = searchParams.get("chassis") || "";
+  const paymentId = searchParams.get("payment_id") || "";
   const [isPurchaseModalOpen, setIsPurchaseModalOpen] = useState(false);
   const [purchaseError, setPurchaseError] = useState("");
   const [getAuctionSheetReport, { data, error, isFetching }] =
@@ -164,7 +168,14 @@ const AuctionSheetsPageContent = () => {
     useCreateAuctionSheetOrderMutation();
   const [initBdGateAuctionSheetPayment, { isLoading: isStartingPayment }] =
     useInitBdGateAuctionSheetPaymentMutation();
+  const [getAuctionSheetPaymentStatus, { data: paymentStatusResponse }] =
+    useLazyGetBdGateAuctionSheetPaymentStatusQuery();
   const isPurchasing = isCreatingOrder || isStartingPayment;
+
+  const paymentStatus =
+    paymentStatusResponse?.data?.data || paymentStatusResponse?.data;
+  const isPaymentPaid = paymentStatus?.paid === true;
+  const downloadUrl = paymentStatus?.download_url;
 
   useEffect(() => {
     const cleanChassis = chassis.trim();
@@ -172,7 +183,19 @@ const AuctionSheetsPageContent = () => {
     getAuctionSheetReport(cleanChassis);
   }, [chassis, getAuctionSheetReport]);
 
-  const reportData = data?.data;
+  useEffect(() => {
+    if (!paymentId) return;
+
+    getAuctionSheetPaymentStatus(paymentId);
+    const interval = window.setInterval(() => {
+      getAuctionSheetPaymentStatus(paymentId);
+    }, 3000);
+
+    return () => window.clearInterval(interval);
+  }, [getAuctionSheetPaymentStatus, paymentId]);
+
+  const reportEnvelope = data?.data;
+  const reportData = reportEnvelope?.data || reportEnvelope;
   const report = reportData?.report;
   const reportSource = Array.isArray(report) ? report[0] : report;
   const reportRows = buildReportRows(report);
@@ -192,7 +215,7 @@ const AuctionSheetsPageContent = () => {
   const color = getNestedValue(reportSource, ["color", "colour"]);
   const sheetImage = getNestedImage(reportSource);
   const handlePurchaseSubmit = async (
-    event: React.FormEvent<HTMLFormElement>,
+    event: FormEvent<HTMLFormElement>,
   ) => {
     event.preventDefault();
     setPurchaseError("");
@@ -265,6 +288,22 @@ const AuctionSheetsPageContent = () => {
 
       setPurchaseError(message);
     }
+  };
+
+  const handleDownloadOrPurchase = () => {
+    if (isPaymentPaid) {
+      if (downloadUrl) {
+        window.location.assign(downloadUrl);
+      } else {
+        setPurchaseError(
+          "Payment is confirmed, but the auction sheet file is not available yet. Please contact CarClickBD.",
+        );
+      }
+      return;
+    }
+
+    setPurchaseError("");
+    setIsPurchaseModalOpen(true);
   };
 
   return (
@@ -375,7 +414,7 @@ const AuctionSheetsPageContent = () => {
 
                 <button
                   type="button"
-                  onClick={() => setIsPurchaseModalOpen(true)}
+                  onClick={handleDownloadOrPurchase}
                   className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#f5bd05] px-5 text-sm font-black text-slate-950 shadow-[0_14px_30px_rgba(245,189,5,0.25)] transition hover:-translate-y-0.5 hover:bg-[#e4ad00] sm:w-auto"
                 >
                   Download Auction Sheet
@@ -525,7 +564,7 @@ const AuctionSheetsPageContent = () => {
               </p>
               <button
                 type="button"
-                onClick={() => setIsPurchaseModalOpen(true)}
+                onClick={handleDownloadOrPurchase}
                 className="mt-5 inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#f5bd05] px-5 text-sm font-black text-slate-950 transition hover:bg-[#e4ad00]"
               >
                 Download Auction Sheet
