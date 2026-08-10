@@ -706,9 +706,7 @@ const AuctionSheetsPageContent = () => {
                 <span className="text-sm font-semibold leading-6 text-slate-700">
                   I agree to the{' '}
                   <a
-                    href="https://carmodsbd.com/toc"
-                    target="_blank"
-                    rel="noreferrer"
+                    href="/terms-privacy-refund"
                     className="font-black text-[#003399] underline"
                   >
                     Terms and Policies
