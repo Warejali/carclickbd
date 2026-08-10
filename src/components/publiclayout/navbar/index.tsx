@@ -172,9 +172,9 @@ const Header: React.FC = () => {
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-black shadow-lg backdrop-blur-sm">
-      <div className="flex min-h-[72px] items-center justify-between gap-3 px-3 py-2 sm:px-4 md:min-h-[84px] md:gap-5 md:px-8 md:py-3">
+      <div className="flex min-h-[72px] items-center justify-between gap-2 px-2 py-2 min-[360px]:gap-3 min-[360px]:px-3 sm:px-4 md:min-h-[84px] md:gap-5 md:px-8 md:py-3">
         <Link href="/" className="flex shrink-0 items-center">
-          <CarClickBDLogo className="h-[58px] w-[185px] sm:h-[68px] sm:w-[220px] md:h-[82px] md:w-[260px]" priority />
+          <CarClickBDLogo className="h-12 w-36 min-[360px]:h-[58px] min-[360px]:w-[185px] sm:h-[68px] sm:w-[220px] md:h-[82px] md:w-[260px]" priority />
         </Link>
 
         <nav className="hidden flex-1 items-center justify-center gap-4 2xl:flex">
@@ -202,7 +202,7 @@ const Header: React.FC = () => {
           </Dropdown>
         </nav>
 
-        <div className="hidden shrink-0 items-center gap-3 md:flex">
+        <div className="hidden shrink-0 items-center gap-3 lg:flex">
           <Link href="/verify-auction-sheet" className="hidden lg:block">
             <button className={btnOutline}>
               <span className="relative z-10 animate-[verify-text-flicker_1.55s_ease-in-out_infinite]">
@@ -243,22 +243,24 @@ const Header: React.FC = () => {
 
         <button
           onClick={() => setOpen(true)}
-          className="hidden text-xl text-white 2xl:hidden md:block"
+          className="hidden text-xl text-white 2xl:hidden lg:block"
           aria-label="Open navigation menu"
         >
           <MenuOutlined />
         </button>
 
-        <div className="flex items-center gap-2 md:hidden">
+        <div className="flex items-center gap-1.5 lg:hidden min-[360px]:gap-2">
           <Dropdown menu={{ items: languageMenu }}>
             <button
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/10 text-white hover:text-[#ff2a35]"
+              className="hidden h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/10 text-white hover:text-[#ff2a35] min-[360px]:flex"
               aria-label="Change language"
             >
               <GlobalOutlined />
             </button>
           </Dropdown>
-          <WishlistNavIcon compact />
+          <span className="hidden min-[360px]:inline-flex">
+            <WishlistNavIcon compact />
+          </span>
           {isLoggedIn ? <ProfileDropdown /> : <NavAuth />}
           <button onClick={() => setOpen(true)} className="text-xl text-white" aria-label="Open navigation menu">
             <MenuOutlined />
