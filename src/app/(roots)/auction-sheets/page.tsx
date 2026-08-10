@@ -360,7 +360,19 @@ const AuctionSheetsPageContent = () => {
                 </div>
 
                 <div className="grid gap-5 rounded-2xl border border-slate-200 bg-slate-50 p-4 text-left md:grid-cols-[1.05fr_0.95fr] md:p-5">
-                  <div className="relative flex min-h-32 items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-white">
+                  <div
+                    role="button"
+                    tabIndex={0}
+                    aria-label="Download auction sheet"
+                    onClick={handleDownloadOrPurchase}
+                    onKeyDown={event => {
+                      if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        handleDownloadOrPurchase();
+                      }
+                    }}
+                    className="relative flex min-h-32 cursor-pointer items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-white transition hover:border-[#f5bd05] hover:shadow-[0_0_0_3px_rgba(245,189,5,0.18)] focus:outline-none focus:ring-2 focus:ring-[#f5bd05]"
+                  >
                     {sheetImage ? (
                       <Image
                         src={sheetImage}
