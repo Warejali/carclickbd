@@ -5,20 +5,44 @@ import Image from "next/image";
 import { FileSearch, Search, ShieldCheck } from "lucide-react";
 import { useRouter } from "next/navigation";
 import AuctionSheetVerification from "@/components/publiclayout/home/AuctionSheetVerification";
+import { useLazyGetAuctionSheetReportQuery } from "@/Redux/api/auctionSheetApi";
 
 const VerifyAuctionSheetPage = () => {
   const router = useRouter();
   const [chassisNo, setChassisNo] = useState("");
+  const [searchError, setSearchError] = useState("");
+  const [checkChassis, { isFetching: isCheckingChassis }] =
+    useLazyGetAuctionSheetReportQuery();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const chassis = chassisNo.trim();
+    setSearchError("");
 
     if (!chassis) {
+      setSearchError("Please enter a chassis number.");
       return;
     }
 
-    router.push(`/auction-sheets?chassis=${encodeURIComponent(chassis)}`);
+    try {
+      const response = await checkChassis(chassis).unwrap();
+      const lookup = response?.data?.data || response?.data;
+
+      if (!lookup?.found) {
+        setSearchError(
+          "এই chassis number-এর কোনো auction record পাওয়া যায়নি। সঠিক chassis number দিয়ে আবার চেষ্টা করুন.",
+        );
+        return;
+      }
+
+      router.push(`/auction-sheets?chassis=${encodeURIComponent(chassis)}`);
+    } catch (error: any) {
+      setSearchError(
+        error?.data?.message ||
+          error?.message ||
+          "Chassis number যাচাই করা যায়নি। কিছুক্ষণ পর আবার চেষ্টা করুন.",
+      );
+    }
   };
 
   return (
@@ -73,7 +97,10 @@ const VerifyAuctionSheetPage = () => {
                     />
                     <input
                       value={chassisNo}
-                      onChange={(event) => setChassisNo(event.target.value)}
+                      onChange={(event) => {
+                        setChassisNo(event.target.value);
+                        if (searchError) setSearchError("");
+                      }}
                       placeholder="e.g. NKE165-7245648"
                       className="h-14 w-full rounded-xl border border-slate-300 bg-white pl-12 pr-4 text-sm font-semibold uppercase tracking-wide text-slate-800 outline-none transition placeholder:normal-case placeholder:text-slate-400 focus:border-[#003399] focus:ring-2 focus:ring-blue-100"
                     />
@@ -81,11 +108,21 @@ const VerifyAuctionSheetPage = () => {
 
                   <button
                     type="submit"
+                    disabled={isCheckingChassis}
                     className="inline-flex h-14 items-center justify-center gap-2 rounded-xl bg-[#e50914] px-8 text-sm font-extrabold uppercase text-white shadow-[0_14px_30px_rgba(229,9,20,0.28)] transition hover:-translate-y-0.5 hover:bg-[#b80f17]"
                   >
                     <Search size={17} />
-                    Search
+                    {isCheckingChassis ? "Checking..." : "Search"}
                   </button>
+
+                  {searchError && (
+                    <p
+                      role="alert"
+                      className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-bold leading-6 text-red-700"
+                    >
+                      {searchError}
+                    </p>
+                  )}
                 </form>
 
                 <p className="mt-4 text-xs font-medium leading-6 text-slate-500">
