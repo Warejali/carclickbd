@@ -1,26 +1,26 @@
-"use client";
+'use client';
 
-import { Suspense, useEffect } from "react";
-import { Button, Result, Spin, message } from "antd";
-import { ResultStatusType } from "antd/es/result";
-import { useRouter, useSearchParams } from "next/navigation";
-import { FileSearch } from "lucide-react";
-import { useSyncBdGatePaymentStatusMutation } from "@/Redux/api/paymentApi";
+import { Suspense, useEffect } from 'react';
+import { Button, Result, Spin, message } from 'antd';
+import { ResultStatusType } from 'antd/es/result';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { FileSearch } from 'lucide-react';
+import { useSyncBdGatePaymentStatusMutation } from '@/Redux/api/paymentApi';
 
 function PaymentPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const status = searchParams.get("status");
-  const type = searchParams.get("type");
-  const token = searchParams.get("token") || searchParams.get("session_token");
-  const chassis = searchParams.get("chassis") || "";
-  const paymentId = searchParams.get("payment_id") || "";
-  const isAuctionSheetPayment = type === "auction-sheet";
+  const status = searchParams.get('status');
+  const type = searchParams.get('type');
+  const token = searchParams.get('token') || searchParams.get('session_token');
+  const chassis = searchParams.get('chassis') || '';
+  const paymentId = searchParams.get('payment_id') || '';
+  const isAuctionSheetPayment = type === 'auction-sheet';
   const [syncBdGatePaymentStatus, { isLoading: isSyncing }] =
     useSyncBdGatePaymentStatusMutation();
 
   useEffect(() => {
-    if (isAuctionSheetPayment || !token || token === "{session_token}") return;
+    if (isAuctionSheetPayment || !token || token === '{session_token}') return;
 
     syncBdGatePaymentStatus(token)
       .unwrap()
@@ -28,13 +28,13 @@ function PaymentPageContent() {
         message.error(
           error?.data?.message ||
             error?.message ||
-            "Could not verify BDGate payment status",
+            'Could not verify BDGate payment status',
         );
       });
   }, [isAuctionSheetPayment, syncBdGatePaymentStatus, token]);
 
   useEffect(() => {
-    if (status !== "success" || !isAuctionSheetPayment) return;
+    if (status !== 'success' || !isAuctionSheetPayment) return;
 
     const timeout = window.setTimeout(() => {
       router.replace(
@@ -43,7 +43,7 @@ function PaymentPageContent() {
               ...(chassis ? { chassis } : {}),
               ...(paymentId ? { payment_id: paymentId } : {}),
             }).toString()}`
-          : "/auction-sheets",
+          : '/auction-sheets',
       );
     }, 1200);
 
@@ -51,23 +51,25 @@ function PaymentPageContent() {
   }, [chassis, isAuctionSheetPayment, paymentId, router, status]);
 
   const resultStatus: ResultStatusType =
-    status === "success"
-      ? "success"
-      : status === "cancelled"
-        ? "warning"
-        : "error";
+    status === 'success'
+      ? 'success'
+      : status === 'cancelled'
+        ? 'warning'
+        : 'error';
   const resultTitle =
-    status === "success"
-      ? "Payment submitted successfully"
-      : status === "cancelled"
-        ? "Payment cancelled"
-        : "Payment was not completed";
+    status === 'success'
+      ? isAuctionSheetPayment
+        ? 'Payment return received'
+        : 'Payment submitted successfully'
+      : status === 'cancelled'
+        ? 'Payment cancelled'
+        : 'Payment was not completed';
   const resultSubTitle =
-    status === "success" && isAuctionSheetPayment
-      ? "Payment return received. Confirming BDGate payment and opening the protected download..."
-      : status === "success"
-        ? "BDGate has received your payment request. Your order will update after gateway confirmation."
-        : "You can return and try the BDGate payment again.";
+    status === 'success' && isAuctionSheetPayment
+      ? 'Payment return received. Confirming BDGate payment and opening the protected download...'
+      : status === 'success'
+        ? 'BDGate has received your payment request. Your order will update after gateway confirmation.'
+        : 'You can return and try the BDGate payment again.';
 
   return (
     <div className="min-h-[55vh] bg-slate-50 px-4 py-16">
@@ -78,7 +80,7 @@ function PaymentPageContent() {
       )}
       <Result
         icon={
-          status === "success" && isAuctionSheetPayment ? (
+          status === 'success' && isAuctionSheetPayment ? (
             <FileSearch />
           ) : undefined
         }
@@ -92,9 +94,12 @@ function PaymentPageContent() {
               key="auction-sheets"
               onClick={() => {
                 router.push(
-                  chassis
-                    ? `/auction-sheets?chassis=${encodeURIComponent(chassis)}`
-                    : "/auction-sheets",
+                  chassis || paymentId
+                    ? `/auction-sheets?${new URLSearchParams({
+                        ...(chassis ? { chassis } : {}),
+                        ...(paymentId ? { payment_id: paymentId } : {}),
+                      }).toString()}`
+                    : '/auction-sheets',
                 );
               }}
             >
@@ -105,7 +110,7 @@ function PaymentPageContent() {
               type="primary"
               key="console"
               onClick={() => {
-                router.push("/customer/order");
+                router.push('/customer/order');
               }}
             >
               View my orders
@@ -115,11 +120,11 @@ function PaymentPageContent() {
             key="cars"
             onClick={() => {
               router.push(
-                isAuctionSheetPayment ? "/verify-auction-sheet" : "/cars",
+                isAuctionSheetPayment ? '/verify-auction-sheet' : '/cars',
               );
             }}
           >
-            {isAuctionSheetPayment ? "Verify another sheet" : "Browse cars"}
+            {isAuctionSheetPayment ? 'Verify another sheet' : 'Browse cars'}
           </Button>,
         ]}
       />

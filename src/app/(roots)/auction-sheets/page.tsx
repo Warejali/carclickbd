@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useEffect, useState, type FormEvent } from 'react';
+import { Suspense, useEffect, useRef, useState, type FormEvent } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
@@ -162,6 +162,7 @@ const AuctionSheetsPageContent = () => {
   const paymentId = searchParams.get('payment_id') || '';
   const [isPurchaseModalOpen, setIsPurchaseModalOpen] = useState(false);
   const [purchaseError, setPurchaseError] = useState('');
+  const automaticDownloadStarted = useRef(false);
   const [getAuctionSheetReport, { data, error, isFetching }] =
     useLazyGetAuctionSheetReportQuery();
   const [createAuctionSheetOrder, { isLoading: isCreatingOrder }] =
@@ -184,7 +185,7 @@ const AuctionSheetsPageContent = () => {
   }, [chassis, getAuctionSheetReport]);
 
   useEffect(() => {
-    if (!paymentId) return;
+    if (!paymentId || isPaymentPaid) return;
 
     getAuctionSheetPaymentStatus(paymentId);
     const interval = window.setInterval(() => {
@@ -192,7 +193,32 @@ const AuctionSheetsPageContent = () => {
     }, 3000);
 
     return () => window.clearInterval(interval);
-  }, [getAuctionSheetPaymentStatus, paymentId]);
+  }, [getAuctionSheetPaymentStatus, isPaymentPaid, paymentId]);
+
+  useEffect(() => {
+    automaticDownloadStarted.current = false;
+  }, [paymentId]);
+
+  useEffect(() => {
+    if (
+      !paymentId ||
+      !isPaymentPaid ||
+      !downloadUrl ||
+      automaticDownloadStarted.current
+    ) {
+      return;
+    }
+
+    automaticDownloadStarted.current = true;
+    setPurchaseError('');
+    const downloadLink = document.createElement('a');
+    downloadLink.href = downloadUrl;
+    downloadLink.download = '';
+    downloadLink.rel = 'noopener';
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    downloadLink.remove();
+  }, [downloadUrl, isPaymentPaid, paymentId]);
 
   const reportEnvelope = data?.data;
   const reportData = reportEnvelope?.data || reportEnvelope;
