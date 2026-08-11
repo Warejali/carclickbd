@@ -9,6 +9,7 @@ import BidInformation from "../components/BidInformation";
 import SaleInformation from "../components/SaleInformation";
 import ProductsResult from "@/components/publiclayout/home/AcutionProducts/ProductsResult";
 import { DetailProductItemParents } from "@/components/product/DetailProductItemParents";
+import FacebookShareButton from "@/components/product/FacebookShareButton";
 import { getProductStatusMeta } from "@/utils/productStatus";
 
 export default function ProductDetailsPage() {
@@ -52,6 +53,7 @@ export default function ProductDetailsPage() {
 
           <div className="flex flex-col items-start gap-2 lg:items-end">
             <div className="flex flex-wrap items-center gap-2 lg:justify-end">
+              <FacebookShareButton />
               <span
                 className={`rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wide ring-1 ${statusMeta.badgeClass}`}
                 style={statusMeta.badgeStyle}
