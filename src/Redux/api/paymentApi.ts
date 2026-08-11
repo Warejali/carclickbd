@@ -1,67 +1,67 @@
-import { baseApi } from "./baseApi";
+import { baseApi } from './baseApi';
 
-export const PAYMENT = "/payment";
+export const PAYMENT = '/payment';
 
 const paymentApi = baseApi.injectEndpoints({
-  endpoints: (build) => ({
+  endpoints: build => ({
     getPayment: build.query({
       query: (arg: Record<string, any>) => {
         return {
           url: `${PAYMENT}/`,
-          method: "GET",
+          method: 'GET',
           params: arg,
         };
       },
-      transformResponse: (response) => {
+      transformResponse: response => {
         return {
           myPayments: response,
         };
       },
-      providesTags: ["payment"],
+      providesTags: ['payment'],
     }),
 
     initBdGatePayment: build.mutation({
       query: (items: any) => ({
         url: `${PAYMENT}/bdgate/init`,
-        method: "POST",
+        method: 'POST',
         data: items,
       }),
-      invalidatesTags: ["payment"],
+      invalidatesTags: ['payment'],
     }),
 
     initBdGateAuctionSheetPayment: build.mutation({
       query: (items: any) => ({
         url: `${PAYMENT}/bdgate/auction-sheet`,
-        method: "POST",
+        method: 'POST',
         data: items,
         timeout: 90000,
       }),
-      invalidatesTags: ["payment"],
+      invalidatesTags: ['payment'],
     }),
 
     syncBdGatePaymentStatus: build.mutation({
       query: (token: string) => ({
         url: `${PAYMENT}/bdgate/status/${token}`,
-        method: "GET",
+        method: 'GET',
       }),
-      invalidatesTags: ["payment", "order"],
+      invalidatesTags: ['payment', 'order'],
     }),
 
     getBdGateAuctionSheetPaymentStatus: build.query({
       query: (paymentId: string) => ({
-        url: `/auction-sheet/payment-status/${paymentId}`,
-        method: "GET",
+        url: `${PAYMENT}/bdgate/auction-sheet/status/${paymentId}`,
+        method: 'GET',
       }),
-      providesTags: ["payment", "auctionSheet"],
+      providesTags: ['payment', 'auctionSheet'],
     }),
 
     createPayment: build.mutation({
       query: (item: any) => ({
         url: `${PAYMENT}/create`,
-        method: "POST",
+        method: 'POST',
         data: item,
       }),
-      invalidatesTags: ["payment"],
+      invalidatesTags: ['payment'],
     }),
   }),
 });

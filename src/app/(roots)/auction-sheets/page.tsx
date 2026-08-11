@@ -220,12 +220,20 @@ const AuctionSheetsPageContent = () => {
     'car_grade',
   ]);
   const sheetImage = getNestedImage(reportSource);
+  const downloadAvailable = reportData?.download_available === true;
   const handlePurchaseSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setPurchaseError('');
 
     const formData = new FormData(event.currentTarget);
     const cleanChassis = reportData?.chassis || chassis;
+
+    if (!downloadAvailable) {
+      setPurchaseError(
+        'The auction sheet file is not available for this chassis yet. Payment has not been started.',
+      );
+      return;
+    }
 
     try {
       const response = await createAuctionSheetOrder({
@@ -303,6 +311,13 @@ const AuctionSheetsPageContent = () => {
           'Payment is confirmed, but the auction sheet file is not available yet. Please contact CarClickBD.',
         );
       }
+      return;
+    }
+
+    if (!downloadAvailable) {
+      setPurchaseError(
+        'The auction sheet file is not available for this chassis yet. Payment has not been started.',
+      );
       return;
     }
 
@@ -399,10 +414,12 @@ const AuctionSheetsPageContent = () => {
                     <div className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1 text-xs font-black uppercase text-emerald-700">
                       {isFetching ? (
                         'Checking'
-                      ) : found ? (
+                      ) : found && downloadAvailable ? (
                         <>
                           <CheckCircle2 size={14} /> Available
                         </>
+                      ) : found ? (
+                        'Report found — sheet pending'
                       ) : (
                         'Request review'
                       )}
