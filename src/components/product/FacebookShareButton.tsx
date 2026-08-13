@@ -5,9 +5,12 @@ import { Button } from "antd";
 
 export default function FacebookShareButton() {
   const shareOnFacebook = () => {
-    const shareUrl = window.location.href;
+    const shareUrl = new URL(window.location.href);
+    // Facebook may keep the first scraped preview for a URL. A stable preview
+    // version bypasses the older cached page that had no product image.
+    shareUrl.searchParams.set("fb_preview", "2");
     const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-      shareUrl,
+      shareUrl.toString(),
     )}`;
 
     window.open(
