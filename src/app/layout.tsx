@@ -8,6 +8,7 @@ import ChunkLoadRecovery from "@/components/ChunkLoadRecovery";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://carclickbd.com"),
   title: "CarClickBD",
   description:
     "CarClickBD is a car marketplace for browsing verified vehicle listings, comparing details, contacting sellers, and managing dealer or private seller listings from one simple platform.",
@@ -29,14 +30,19 @@ export const metadata: Metadata = {
     siteName: "CarClickBD",
     images: [
       {
-        url: "https://carclickbd.com/og-image.png",
-        width: 1200,
-        height: 630,
+        url: "/assets/shared/car.png",
         alt: "CarClickBD",
       },
     ],
     locale: "en_US",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "CarClickBD",
+    description:
+      "Browse verified vehicle listings and compare car details on CarClickBD.",
+    images: ["/assets/shared/car.png"],
   },
 };
 

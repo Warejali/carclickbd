@@ -256,7 +256,7 @@ const AuctionSheetsPageContent = () => {
 
     if (!downloadAvailable) {
       setPurchaseError(
-        'The auction sheet file is not available for this chassis yet. Payment has not been started.',
+        'JPCenter does not have a downloadable auction sheet for this chassis yet. No payment was started. Please contact CarClickBD for a manual review.',
       );
       return;
     }
@@ -482,7 +482,9 @@ const AuctionSheetsPageContent = () => {
                   onClick={handleDownloadOrPurchase}
                   className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#f5bd05] px-5 text-sm font-black text-slate-950 shadow-[0_14px_30px_rgba(245,189,5,0.25)] transition hover:-translate-y-0.5 hover:bg-[#e4ad00] sm:w-auto"
                 >
-                  Download Auction Sheet
+                  {downloadAvailable
+                    ? 'Download Auction Sheet'
+                    : 'Auction Sheet Pending'}
                   <ArrowRight size={17} />
                 </button>
               </div>
@@ -632,7 +634,9 @@ const AuctionSheetsPageContent = () => {
                 onClick={handleDownloadOrPurchase}
                 className="mt-5 inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#f5bd05] px-5 text-sm font-black text-slate-950 transition hover:bg-[#e4ad00]"
               >
-                Download Auction Sheet
+                {downloadAvailable
+                  ? 'Download Auction Sheet'
+                  : 'Auction Sheet Pending'}
                 <ArrowRight size={17} />
               </button>
             </div>
@@ -789,6 +793,42 @@ const AuctionSheetsPageContent = () => {
                     : 'Purchase'}
               </button>
             </form>
+          </div>
+        </div>
+      )}
+
+      {purchaseError && !isPurchaseModalOpen && (
+        <div
+          role="alert"
+          className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-xl rounded-2xl border border-amber-300 bg-amber-50 p-4 text-slate-900 shadow-[0_20px_60px_rgba(15,23,42,0.28)]"
+        >
+          <div className="flex items-start gap-3">
+            <AlertCircle className="mt-0.5 shrink-0 text-amber-600" size={22} />
+            <div className="min-w-0 flex-1">
+              <p className="font-black">Auction sheet is not ready</p>
+              <p className="mt-1 text-sm font-semibold leading-6 text-slate-700">
+                {purchaseError}
+              </p>
+              <a
+                href={getWhatsAppUrl(
+                  `Hello CarClickBD, please manually check auction sheet availability for chassis ${chassis || ''}.`,
+                )}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-3 inline-flex items-center gap-2 rounded-xl bg-[#25D366] px-4 py-2 text-sm font-black text-white"
+              >
+                <MessageCircle size={16} />
+                Request manual review
+              </a>
+            </div>
+            <button
+              type="button"
+              onClick={() => setPurchaseError('')}
+              aria-label="Close message"
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white text-slate-600 shadow-sm"
+            >
+              <X size={16} />
+            </button>
           </div>
         </div>
       )}
