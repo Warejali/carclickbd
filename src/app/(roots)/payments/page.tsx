@@ -1,130 +1,117 @@
-'use client';
+"use client";
 
-import { Suspense, useEffect } from 'react';
-import { Button, Result, Spin, message } from 'antd';
-import { ResultStatusType } from 'antd/es/result';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { FileSearch } from 'lucide-react';
-import { useSyncBdGatePaymentStatusMutation } from '@/Redux/api/paymentApi';
+import { Suspense, useEffect, useState } from "react";
+import { Button, Result, Spin } from "antd";
+import { useRouter, useSearchParams } from "next/navigation";
+import {
+  useSyncEpsPaymentStatusMutation,
+  useLazyGetEpsAuctionSheetPaymentStatusQuery,
+} from "@/Redux/api/paymentApi";
 
 function PaymentPageContent() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const status = searchParams.get('status');
-  const type = searchParams.get('type');
-  const token = searchParams.get('token') || searchParams.get('session_token');
-  const chassis = searchParams.get('chassis') || '';
-  const paymentId = searchParams.get('payment_id') || '';
-  const isAuctionSheetPayment = type === 'auction-sheet';
-  const [syncBdGatePaymentStatus, { isLoading: isSyncing }] =
-    useSyncBdGatePaymentStatusMutation();
+  const params = useSearchParams();
+  const token = params.get("token");
+  const chassis = params.get("chassis") || "";
+  const paymentId = params.get("payment_id") || "";
+  const auction = params.get("type") === "auction-sheet";
+  const [sync] = useSyncEpsPaymentStatusMutation();
+  const [syncAuction] = useLazyGetEpsAuctionSheetPaymentStatusQuery();
+  const [status, setStatus] = useState("PENDING");
+  const [error, setError] = useState("");
+  const [checking, setChecking] = useState(true);
+  const [retry, setRetry] = useState(0);
+  const destination = auction
+    ? `/auction-sheets?${new URLSearchParams({ payment_id: paymentId, chassis })}`
+    : "/customer/order";
 
   useEffect(() => {
-    if (isAuctionSheetPayment || !token || token === '{session_token}') return;
-
-    syncBdGatePaymentStatus(token)
-      .unwrap()
-      .catch((error: any) => {
-        message.error(
-          error?.data?.message ||
-            error?.message ||
-            'Could not verify BDGate payment status',
-        );
-      });
-  }, [isAuctionSheetPayment, syncBdGatePaymentStatus, token]);
-
-  useEffect(() => {
-    if (status !== 'success' || !isAuctionSheetPayment) return;
-
-    const timeout = window.setTimeout(() => {
-      router.replace(
-        chassis || paymentId
-          ? `/auction-sheets?${new URLSearchParams({
-              ...(chassis ? { chassis } : {}),
-              ...(paymentId ? { payment_id: paymentId } : {}),
-            }).toString()}`
-          : '/auction-sheets',
-      );
-    }, 1200);
-
-    return () => window.clearTimeout(timeout);
-  }, [chassis, isAuctionSheetPayment, paymentId, router, status]);
-
-  const resultStatus: ResultStatusType =
-    status === 'success'
-      ? 'success'
-      : status === 'cancelled'
-        ? 'warning'
-        : 'error';
-  const resultTitle =
-    status === 'success'
-      ? isAuctionSheetPayment
-        ? 'Payment return received'
-        : 'Payment submitted successfully'
-      : status === 'cancelled'
-        ? 'Payment cancelled'
-        : 'Payment was not completed';
-  const resultSubTitle =
-    status === 'success' && isAuctionSheetPayment
-      ? 'Payment return received. Confirming BDGate payment and opening the protected download...'
-      : status === 'success'
-        ? 'BDGate has received your payment request. Your order will update after gateway confirmation.'
-        : 'You can return and try the BDGate payment again.';
+    let active = true;
+    let timer: ReturnType<typeof setTimeout>;
+    let attempts = 0;
+    setError("");
+    setStatus("PENDING");
+    setChecking(true);
+    const check = async () => {
+      try {
+        if (auction ? !paymentId : !token)
+          throw new Error(
+            "Payment reference is missing. Open your order to check its status.",
+          );
+        const response = auction
+          ? await syncAuction(paymentId).unwrap()
+          : await sync(token!).unwrap();
+        const data = response?.data?.data || response?.data || response;
+        const verified =
+          data?.payment?.paymentStatus || data?.status || "PENDING";
+        if (!active) return;
+        setStatus(verified);
+        if (verified === "PAID" && auction) {
+          router.replace(
+            `/auction-sheets?${new URLSearchParams({ payment_id: paymentId, chassis })}`,
+          );
+        }
+        if (verified === "PENDING" && ++attempts < 10)
+          timer = setTimeout(check, 3000);
+        else setChecking(false);
+      } catch (e: any) {
+        if (active) {
+          setError(
+            e?.data?.message ||
+              e?.message ||
+              "EPS verification is unavailable. Please check again.",
+          );
+          setChecking(false);
+        }
+      }
+    };
+    check();
+    return () => {
+      active = false;
+      clearTimeout(timer);
+    };
+  }, [auction, chassis, paymentId, token, sync, syncAuction, router, retry]);
 
   return (
     <div className="min-h-[55vh] bg-slate-50 px-4 py-16">
-      {isSyncing && (
-        <div className="mb-6 flex justify-center">
+      {checking && (
+        <div className="flex justify-center">
           <Spin />
         </div>
       )}
       <Result
-        icon={
-          status === 'success' && isAuctionSheetPayment ? (
-            <FileSearch />
-          ) : undefined
+        status={
+          status === "PAID" ? "success" : status === "FAILED" ? "error" : "info"
         }
-        status={resultStatus}
-        title={resultTitle}
-        subTitle={resultSubTitle}
+        title={
+          status === "PAID"
+            ? "Payment confirmed"
+            : status === "FAILED"
+              ? "Payment was not completed"
+              : "Payment verification pending"
+        }
+        subTitle={
+          error ||
+          (status === "PAID"
+            ? "EPS has confirmed your payment."
+            : status === "FAILED"
+              ? "EPS reports this payment as failed or cancelled."
+              : "Your order will update after EPS confirms payment.")
+        }
         extra={[
-          isAuctionSheetPayment ? (
-            <Button
-              type="primary"
-              key="auction-sheets"
-              onClick={() => {
-                router.push(
-                  chassis || paymentId
-                    ? `/auction-sheets?${new URLSearchParams({
-                        ...(chassis ? { chassis } : {}),
-                        ...(paymentId ? { payment_id: paymentId } : {}),
-                      }).toString()}`
-                    : '/auction-sheets',
-                );
-              }}
-            >
-              Go to Auction Sheets
-            </Button>
-          ) : (
-            <Button
-              type="primary"
-              key="console"
-              onClick={() => {
-                router.push('/customer/order');
-              }}
-            >
-              View my orders
-            </Button>
-          ),
           <Button
-            key="cars"
-            onClick={() => {
-              router.push(
-                isAuctionSheetPayment ? '/verify-auction-sheet' : '/cars',
-              );
-            }}
+            key="orders"
+            type="primary"
+            onClick={() => router.push(destination)}
           >
-            {isAuctionSheetPayment ? 'Verify another sheet' : 'Browse cars'}
+            {auction ? "Go to Auction Sheets" : "View my orders"}
+          </Button>,
+          <Button
+            key="retry"
+            disabled={checking}
+            onClick={() => setRetry((x) => x + 1)}
+          >
+            Check again
           </Button>,
         ]}
       />
@@ -134,7 +121,7 @@ function PaymentPageContent() {
 
 export default function PaymentPage() {
   return (
-    <Suspense fallback={<div className="min-h-[55vh] bg-slate-50" />}>
+    <Suspense fallback={<Spin />}>
       <PaymentPageContent />
     </Suspense>
   );

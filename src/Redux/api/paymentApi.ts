@@ -1,77 +1,77 @@
-import { baseApi } from './baseApi';
+import { baseApi } from "./baseApi";
 
-export const PAYMENT = '/payment';
+export const PAYMENT = "/payment";
 
 const paymentApi = baseApi.injectEndpoints({
-  endpoints: build => ({
+  endpoints: (build) => ({
     getPayment: build.query({
       query: (arg: Record<string, any>) => {
         return {
           url: `${PAYMENT}/`,
-          method: 'GET',
+          method: "GET",
           params: arg,
         };
       },
-      transformResponse: response => {
+      transformResponse: (response) => {
         return {
           myPayments: response,
         };
       },
-      providesTags: ['payment'],
+      providesTags: ["payment"],
     }),
 
-    initBdGatePayment: build.mutation({
+    initEpsPayment: build.mutation({
       query: (items: any) => ({
-        url: `${PAYMENT}/bdgate/init`,
-        method: 'POST',
+        url: `${PAYMENT}/eps/init`,
+        method: "POST",
         data: items,
       }),
-      invalidatesTags: ['payment'],
+      invalidatesTags: ["payment"],
     }),
 
-    initBdGateAuctionSheetPayment: build.mutation({
+    initEpsAuctionSheetPayment: build.mutation({
       query: (items: any) => ({
-        url: `${PAYMENT}/bdgate/auction-sheet`,
-        method: 'POST',
+        url: `${PAYMENT}/eps/auction-sheet`,
+        method: "POST",
         data: items,
         timeout: 90000,
       }),
-      invalidatesTags: ['payment'],
+      invalidatesTags: ["payment"],
     }),
 
-    syncBdGatePaymentStatus: build.mutation({
+    syncEpsPaymentStatus: build.mutation({
       query: (token: string) => ({
-        url: `${PAYMENT}/bdgate/status/${token}`,
-        method: 'GET',
+        url: `${PAYMENT}/eps/status/${token}`,
+        method: "GET",
       }),
-      invalidatesTags: ['payment', 'order'],
+      invalidatesTags: ["payment", "order"],
     }),
 
-    getBdGateAuctionSheetPaymentStatus: build.query({
+    getEpsAuctionSheetPaymentStatus: build.query({
       query: (paymentId: string) => ({
-        url: `${PAYMENT}/bdgate/auction-sheet/status/${paymentId}`,
-        method: 'GET',
+        url: `${PAYMENT}/eps/auction-sheet/status/${paymentId}`,
+        method: "GET",
       }),
-      providesTags: ['payment', 'auctionSheet'],
+      providesTags: ["payment", "auctionSheet"],
     }),
 
     createPayment: build.mutation({
       query: (item: any) => ({
         url: `${PAYMENT}/create`,
-        method: 'POST',
+        method: "POST",
         data: item,
       }),
-      invalidatesTags: ['payment'],
+      invalidatesTags: ["payment"],
     }),
   }),
 });
 
 export const {
   useGetPaymentQuery,
-  useInitBdGatePaymentMutation,
-  useInitBdGateAuctionSheetPaymentMutation,
-  useSyncBdGatePaymentStatusMutation,
-  useLazyGetBdGateAuctionSheetPaymentStatusQuery,
+  useInitEpsPaymentMutation,
+  useInitEpsAuctionSheetPaymentMutation,
+  useSyncEpsPaymentStatusMutation,
+  useLazyGetEpsAuctionSheetPaymentStatusQuery,
   useCreatePaymentMutation,
 } = paymentApi;
 
