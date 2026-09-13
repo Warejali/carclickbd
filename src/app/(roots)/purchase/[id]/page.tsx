@@ -46,7 +46,7 @@ export default function PurchasePage({ params }: { params: { id: string } }) {
 
   const product = data.data as IProduct;
 
-  const vehiclePrice = product.mainPrice;
+  const vehiclePrice = Number(String((product as any).price ?? product.mainPrice ?? '').replace(/,/g, ''));
   const loanAmount = vehiclePrice - downPayment;
   const monthlyRate = apr / 100 / 12;
   const numberOfPayments = loanTerm;
